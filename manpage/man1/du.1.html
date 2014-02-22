@@ -1,0 +1,135 @@
+<HTML><HEAD><TITLE>Manpage of DU</TITLE>
+</HEAD><BODY>
+<H1>DU</H1>
+Section: User Commands  (1)<BR>Updated: GNU File Utilities<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+du - 디스크 사용 공간에 대한 정보를 보여준다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>du</B>
+
+[-abcklsxDLS] [--all] [--total] [--count-links] [--summarize]
+[--bytes] [--kilobytes] [--one-file-system] [--separate-dirs]
+[--dereference] [--dereference-args] [--help] [--version] [filename...]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+이 문서는 더이상 최신 정보를 담고 있지않다.  그래서,  몇몇
+틀릴  경우도  있고,  부족한  경우도  있을  것이다.  완전한
+매뉴얼을 원하면, Texinfo 문서를 참조하기 바란다.
+<P>
+
+이 매뉴얼 페이지는
+<B>du</B>
+
+명령의 GNU  버전에  대한  것이다.
+<B>du</B>
+
+명령은 지정한 <I>filename</I>의 사용 공간을 보여준다. 
+아무 인자가 없으면 현재 경로의 사용 공간을, 마지막 인자가 경로 이름이면
+그 경로의 사용 공간을 보여준다. 
+나타나는 숫자들의 기본 단위는 1KB이다. 물론이 단위는 
+<B>POSIXLY_CORRECT</B>
+
+환경 변수의 설정으로 512Byte로 바꿀 수 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>OPTIONS</H3>
+
+<DL COMPACT>
+<DT><I>-a, --all</I>
+
+<DD>
+모든 파일들의 정보를 보여준다. 초기값은(이 옵션을 사용하지 않으면)
+경로에 대한 정보만 보여준다.
+<DT><I>-b, --bytes</I>
+
+<DD>
+보여주는 크기 단위를 KB 대신 Byte로 한다.
+<DT><I>-c, --total</I>
+
+<DD>
+모든 파일의 디스크 사용 정보를 보여주고 나서 합계를 보여준다. 
+이것은 그 해당 경로가 얼마만큼 디스크 공간을 사용하고 있는지를 
+아는데 사용된다. (이것은 초기값이다)
+<DT><I>-k, --kilobytes</I>
+
+<DD>
+보여주는 숫자들의 단위를 512 바이트 블럭 단위 대신 1KB 단위로 보여준다.
+이 옵션은
+<B>POSIXLY_CORRECT</B>
+
+환경 변수를 무시한다.
+<DT><I>-l, --count-links</I>
+
+<DD>
+만약 계산 되는 파일 중에 하드 링크되어 있는 파일이 있다면, 
+그것을 그대로 계산한다.
+<DT><I>-s, --summarize</I>
+
+<DD>
+단지 총 사용량만 보여준다.
+<DT><I>-x, --one-file-system</I>
+
+<DD>
+이 명령이 사용되는 경로 안에 다른 파일 시스템이 있으면, 
+그것은 생략한다. ( ``du -x / '' 명령에서 아주 요용하게 쓰인다.)
+<DT><I>-D, --dereference-args</I>
+
+<DD>
+계산 되는 파일이나, 경로가 심블릭 링크 파일이면, 그 원본의 값을 
+보여준다. 이것은 /usr/src/linux 같은 심블릭 경로들에 대해서 
+조사하는데, 유용하게 쓰인다.
+<DT><I>-L, --dereference</I>
+
+<DD>
+위의 -D 옵션과 같다.
+<DT><I>-S, --separate-dirs</I>
+
+<DD>
+하위 경로를 합쳐서 계산하지 않고, 각각 나누워 경로별로 계산한다.
+<DT><I>--help</I>
+
+<DD>
+도움말을 보여주고 마친다.
+<DT><I>--version</I>
+
+<DD>
+버전 정보를 보여주고 마친다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>BUGS</H2>
+
+BSD 시스템에서는 
+<B>du</B>
+
+명령이 HP-UX 시스템에서 NFS 마운트 된 파일에 대해서는 
+그 값을 반으로 줄여서 보여준다고 보고 되었다.
+이와 반대로 HP-UX 시스템에서는 BSD 시스템에서  NFS 마운트 된 파일에 대해서는
+그 값을 배로 늘려서 보여준다고 보고 되었다.
+이것은 HP-UX 용 du에서도 마찬가지라고 한다.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DL>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+</DL>
+<DT><A HREF="#lbAF">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

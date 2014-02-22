@@ -1,0 +1,291 @@
+<HTML><HEAD><TITLE>Manpage of IPC</TITLE>
+</HEAD><BODY>
+<H1>IPC</H1>
+Section: 리눅스 프로그래머 메뉴얼 (5)<BR>Updated: 1993년 11월 1일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ipc - System V 상호프로세스(interprocess) 통신 메카니즘.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+# include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;
+# include &lt;<A HREF="file:/usr/include/sys/ipc.h">sys/ipc.h</A>&gt;
+# include &lt;<A HREF="file:/usr/include/sys/msg.h">sys/msg.h</A>&gt;
+# include &lt;<A HREF="file:/usr/include/sys/sem.h">sys/sem.h</A>&gt;
+# include &lt;<A HREF="file:/usr/include/sys/shm.h">sys/shm.h</A>&gt;
+</PRE><A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+메뉴얼은 메시지큐, 신호설정과 공유메모리분할과 같은 System V 상호프로세스(interprocess) 
+통신 메카니즘의 리눅스 구현을 참조한다.
+<B>자원</B>
+
+은 이러한 메카니즘에서 하나의 예이다.
+<I>&lt;<A HREF="file:/usr/include/sys/ipc.h">sys/ipc.h</A>&gt;</I>
+
+시스템 헤더파일에 의해 정의되는 
+<B>ipc_perm</B>
+
+구조는 다음의 멤버들을 포함한다:
+<P>
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>ushort cuid;<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT><BR>
+/* 만든 사용자 id */
+<BR>
+
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>ushort cgid;<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT><BR>
+/* 만든 그룹 id */
+<BR>
+
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>ushort uid;<BR>
+/* 소유자 id */
+<BR>
+
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>ushort gid;<BR>
+/* 소유그룹 id */
+<BR>
+
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>ushort mode;<BR>
+/* 읽기/쓰기 권한 */
+<P>
+
+<B>mode</B>
+
+member of the
+<B>ipc_perm</B>
+
+구조는 ipc시스템 호출을 실행하는 프로세스를 위한 자원의 접근 권한을 정의한다.
+권한은 다음과 같이 해석된다:
+<P>
+<PRE>
+        0400    Read by user.
+        0200    Write by user.
+
+        0040    Read by group.
+        0020    Write by group.
+
+        0004    Read by others.
+        0002    Write by others.
+</PRE>
+
+<P>
+
+비트 0100, 0010 and 0001 (실행 비트)는 시스템의 의해 사용되지 않는다.
+덪붙여 
+&quot;write&quot;
+는 시그널 설정을 위한 &quot;alter&quot;를  의미한다.
+<P>
+
+같은 시스템 헤더파일은 또한 다음의 심볼릭 상수를 정의한다.
+<DL COMPACT>
+<DT><B>IPC_CREAT</B>
+
+<DD>
+키(key)가 없다면 entry를 생성한다.
+<DT><B>IPC_EXCL</B>
+
+<DD>
+키가 있으면 실패한다.
+<DT><B>IPC_NOWAIT</B>
+
+<DD>
+요청이 대기되어져야만 에러가 난다.
+<DT><B>IPC_PRIVATE</B>
+
+<DD>
+개인 키.
+<DT><B>IPC_RMID</B>
+
+<DD>
+자원 삭제.
+<DT><B>IPC_SET</B>
+
+<DD>
+자원 옵션 설정.
+<DT><B>IPC_STAT</B>
+
+<DD>
+자원 옵션을 갖는다.
+<DT><B>msg_perm</B>
+
+<DD>
+메세지 큐에 접근권한을 지정하는 
+<B>ipc_perm</B>
+
+구조.
+<DT><B>msg_qnum</B>
+
+<DD>
+메세지 큐의 메세지 번호.
+<DT><B>msg_qbytes</B>
+
+<DD>
+메세지 큐에 허용된 메세지 텍스트의 최대크기.
+<DT><B>msg_lspid</B>
+
+<DD>
+마지막
+<B>msgsnd</B>
+
+시스템 호출을 실행하는 프로세스의 ID.
+<DT><B>msg_lrpid</B>
+
+<DD>
+마지막
+<B>msgrcv</B>
+
+시스템 호출을 실행하는 프로세스의 ID.
+<DT><B>msg_stime</B>
+
+<DD>
+마지막
+<B>msgsnd</B>
+
+시스템 호출의 시간.
+<DT><B>msg_rtime</B>
+
+<DD>
+마지막
+<B>msgcv</B>
+
+시스템 호출의 시간.
+<DT><B>msg_ctime</B>
+
+<DD>
+<B>msqid_ds</B>
+
+구조의 멤버를 바꾸는 마지막 시스템 호출의 시간.
+<DT><B>sem_perm</B>
+
+<DD>
+시그널 설정의 접근 권한을 지정하는 
+<B>ipc_perm</B>
+
+구조.
+<DT><B>sem_otime</B>
+
+<DD>
+마지막
+<B>semop</B>
+
+시스템 호출의 시간.
+<DT><B>sem_ctime</B>
+
+<DD>
+마지막
+<B>semctl</B>
+
+시스템 호출의 시간.
+<DT><B>semval</B>
+
+<DD>
+시그널 값: 0이나 양의 정수.
+<DT><B>semncnt</B>
+
+<DD>
+증가하는 
+<B>semval</B>
+
+를 위해 정지된 프로세스의 수.
+<DT><B>shm_perm</B>
+
+<DD>
+고유메모리 구간에 접근 권한을 지정하는 
+<B>ipc_perm</B>
+
+구조.
+<DT><B>shm_segsz</B>
+
+<DD>
+공유메모리 구간의 크기.
+<DT><B>shm_cpid</B>
+
+<DD>
+공유메모리 구간을 생성하는 프로세스의 ID.
+<DT><B>shm_lpid</B>
+
+<DD>
+<B>shmat</B>
+
+나
+<B>shmdt</B>
+
+시스템 호출을 실행하는 마지막 프로세스의 ID.
+<DT><B>shm_atime</B>
+
+<DD>
+마지막
+<B>shmat</B>
+
+시스템 호출의 시간.
+<DT><B>shm_dtime</B>
+
+<DD>
+마지막
+<B>shmdt</B>
+
+시스템 호출의 시간.
+<DT><B>shm_ctime</B>
+
+<DD>
+<B>shmid_ds</B>
+
+을 바꾸는 마지막
+<B>shmctl</B>
+
+시스템 호출의 시간.
+
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+ftok">ftok</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+msgctl">msgctl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+msgget">msgget</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+msgrcv">msgrcv</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+msgsnd">msgsnd</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+semctl">semctl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+semget">semget</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+semop">semop</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmat">shmat</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmctl">shmctl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmget">shmget</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmdt">shmdt</A></B>(2).
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

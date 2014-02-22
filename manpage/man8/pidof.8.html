@@ -1,0 +1,87 @@
+<HTML><HEAD><TITLE>Manpage of PIDOF</TITLE>
+</HEAD><BODY>
+<H1>PIDOF</H1>
+Section: Linux System Administrator's Manual (8)<BR>Updated: 14 June 1996<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+pidof -- 현재 실행중인 풀그림의 프로세스 ID를 찾는다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>pidof</B>
+
+[<B>-s</B>]
+
+[<B>-x</B>]
+
+[<B>-o</B>
+
+<I>omitpid</I>]
+
+[<B>-o</B>
+
+<I>omitpid..</I>]
+
+<B>program</B>
+
+[<B>program..</B>]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Pidof</B>
+
+명령은 <B>program</B>의 프로세스 ID를 찾는다. 
+이것은 그 찾은 ID를 표준 출력으로 보낸다.
+이 풀그림은 runlevel을 바꾸는 스크립트에서 전형적으로 사용된다.
+이 스크립트는 /etc/rc.d 경로 아에 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT>-s<DD>
+지정한 <B>program</B>의 <I>pid</I>가 여러개 있을 경우 하나만 보여준다.
+<DT>-x<DD>
+스크립트와 함께 실행 중인 <B>program</B>이면 그 쉘의 id도 함께 보여준다.
+<DT>-o<DD>
+Tells <I>pidof</I> to omit processes with that process id. The special
+pid <B>%PPID</B> can be used to name the parent process of the <I>pidof</I>
+program, in other words the calling shell or shell script.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>NOTES</H2>
+
+<I>pidof</I> 풀그림은 /sbin/killall5 파일의 단순한 심블릭 링크 
+파일이다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?8+shutdown">shutdown</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?8+halt">halt</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?8+reboot">reboot</A>(8).
+<A NAME="lbAH">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Miquel van Smoorenburg, <A HREF="mailto:miquels@cistron.nl">miquels@cistron.nl</A>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">NOTES</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">AUTHOR</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

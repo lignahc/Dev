@@ -1,0 +1,223 @@
+<HTML><HEAD><TITLE>Manpage of RDEV</TITLE>
+</HEAD><BODY>
+<H1>RDEV</H1>
+Section: Linux Programmer's Manual (8)<BR>Updated: 20 November 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+rdev - root 장치, 스왑 장치, RAM 디스크 크기, 비디오 모드 조사/설정
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>rdev [ -rsvh ] [ -o </B>offset<B> ] [ </B>image<B> [ </B>value<B> [ </B>offset<B> ] ] ]</B>
+<B>rdev [ -o </B>offset<B> ] [ </B>image<B> [ </B>root_device<B> [ </B>offset<B> ] ] ]</B>
+<B>swapdev [ -o </B>offset<B> ] [ </B>image<B> [ </B>swap_device<B> [ </B>offset<B> ] ] ]</B>
+<B>ramsize [ -o </B>offset<B> ] [ </B>image<B> [ </B>size<B> [ </B>offset<B> ] ] ]</B>
+<B>vidmode [ -o </B>offset<B> ] [ </B>image<B> [ </B>mode<B> [ </B>offset<B> ] ] ]</B>
+<B>rootflags [ -o </B>offset<B> ] [ </B>image<B> [ </B>flags<B> [ </B>offset<B> ] ] ]</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+
+단독으로 
+<B>rdev</B>
+
+명령을 내리면 
+<I>/etc/mtab</I>
+
+파일에서 root 파일 시스템 부분을 찾아 그 정보를 보여준다.
+단독으로
+<B>swapdev</B>, <B>ramsize</B>, <B>vidmode</B>, <B>rootflags</B>
+
+명령을 내리면 그 사용법을 보여주고 마친다.
+<P>
+리눅스 커널을 위한 부트 이미지 안에는, root 장치, 비디오 모드, 
+RAM 디스크 크기, 스왑 장치를 지정하는 여러개의 2 바이트가 있다.
+초기값으로 이 바이트들은 아래와 같이
+커널 이미지 안의 504(십진수) 옵셋에서 시작한다.
+<P>
+<PRE>
+<DL COMPACT><DT><DD> 498 Root flags
+(500 and 502 Reserved)
+ 504 RAM 디스크 크기
+ 506 VGA 모드
+ 508 Root 장치
+(510 Boot Signature)
+</DL>
+</PRE>
+
+<P>
+<B>rdev</B>
+
+명령으로 이들 값을 바꿀 수가 있다.
+<P>
+<I>image</I>
+
+인자는 리눅스 커널 이미지를 말하는데, 이것은 일반적으로 
+다음중 하나다.
+<P>
+<PRE>
+<DL COMPACT><DT><DD>/vmlinux
+/vmlinux.test
+/vmunix
+/vmunix.test
+/dev/fd0
+/dev/fd1
+</DL>
+</PRE>
+
+<P>
+<B>rdev</B>, 나 <B>swapdev</B>
+
+명령을 사용할 때, 
+<I>root_device</I> 나 <I>swap_device</I>
+
+인자 값으로 사용될 수 있는 장치는 일반적으로 다음과 같다:
+<P>
+<PRE>
+<DL COMPACT><DT><DD>/dev/hda[1-8]
+/dev/hdb[1-8]
+/dev/sda[1-8]
+/dev/sdb[1-8]
+</DL>
+</PRE>
+
+<P>
+<B>ramsize</B>
+
+명령에서 사용되는 
+<B>size</B>
+
+인자 값은 RAM 디스크의 KB 단위의 크기이다. 
+<P>
+<B>rootflags</B>
+
+명령에서 사용되는
+<B>flags</B>
+
+인자 값은 root 파일 시스템을 마운트 할 때 추가적인 정보를 
+담고있는 값이다. 일반적으로 
+<B>flags </B>
+
+값이 0이 아니라면 이 값은 커널이 root 파일 시스템을 읽기전용으로 
+마운트하도록 한다.
+<P>
+<B>vidmode</B>
+
+명령에서 사용되는 
+<B>mode</B>
+
+인자 값은 다음과 같은 비디오 모드를 지정한다:
+<P>
+<PRE>
+<DL COMPACT><DT><DD>-3 = Prompt
+-2 = Extended VGA
+-1 = Normal VGA
+ 0 = as if &quot;0&quot; was pressed at the prompt
+ 1 = as if &quot;1&quot; was pressed at the prompt
+ 2 = as if &quot;2&quot; was pressed at the prompt
+ n = as if &quot;n&quot; was pressed at the prompt
+</DL>
+</PRE>
+
+<P>
+<I>value</I>
+
+인자 값이 지정되지 않으면, 
+<I>image</I>
+
+인자 값은 단지 현재 설정을 알기위해서 쓰인다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-s</B>
+
+<DD>
+<B>rdev</B>
+
+명령을 
+<B>swapdev</B>
+
+명령으로 사용한다.
+<DT><B>-r</B>
+
+<DD>
+<B>rdev</B>
+
+명령을
+<B>ramsize</B>
+
+명령으로 사용한다.
+<DT><B>-R</B>
+
+<DD>
+<B>rdev</B>
+
+명령을
+<B>rootflags</B>
+
+명령으로 사용한다.
+<DT><B>-v</B>
+
+<DD>
+<B>rdev</B>
+
+명령을
+<B>vidmode</B>
+
+명령으로 사용한다.
+<DT><B>-h</B>
+
+<DD>
+도움말을 보여주고 마친다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>벌레</H2>
+
+리눅스 환경이 많이 바뀌었기에, 
+이들 값을 지정하는 방법에는 두가지가 있다.
+<P>
+사용자 인터페이스가 직관적인 형태로 바뀌어가고 있는 상황에서 
+한줄의 명령행으로 커널 이미지의 설정값들을 바꾸는 것도 바뀌어가야 
+할 것이다.
+<P>
+LILO를 사용한다면, VGA 모드와 root 장치 설정을 하는데에 더이상 
+<B>rdev</B>가 필요 없을 것이다. 하지만, RAM 디스크 크기를 지정하는데는
+아직도 이 명령이 필요하다. LILO에 대한 설명은 그 관련 문서를 읽어 보기 
+바란다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>만든이</H2>
+
+<PRE>
+Werner Almesberger (<A HREF="mailto:almesber@nessie.cs.id.ethz.ch">almesber@nessie.cs.id.ethz.ch</A>)가 처음 만들었으며,
+Peter MacDonald (<A HREF="mailto:pmacdona@sanjuan.UVic.CA">pmacdona@sanjuan.UVic.CA</A>)가 수정했고,
+Stephen Tweedie (<A HREF="mailto:sct@dcs.ed.ac.uk">sct@dcs.ed.ac.uk</A>) rootflag 부분을 추가했다.
+</PRE>
+
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">벌레</A><DD>
+<DT><A HREF="#lbAG">만든이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

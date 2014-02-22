@@ -1,0 +1,404 @@
+<HTML><HEAD><TITLE>Manpage of SHMGET</TITLE>
+</HEAD><BODY>
+<H1>SHMGET</H1>
+Section: 리눅스 프로그래머 메뉴얼 (2)<BR>Updated: November 28, 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+shmget - 공유 메모리 세그먼트를 할당한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/ipc.h">sys/ipc.h</A>&gt;</B>
+
+<P>
+<B>#include &lt;<A HREF="file:/usr/include/sys/shm.h">sys/shm.h</A>&gt;</B>
+
+<P>
+<B>int shmget(key_t </B><I>key</I><B>, int </B><I>size</I><B>, int </B><I>shmflg</I><B>);</B>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>shmget()</B>
+
+는
+<I>key</I>
+
+인자값과 관련된 공유 메모리 세그먼트 식별자를 반환한다.
+만일,
+<I>key</I>
+
+가
+<B>IPC_PRIVATE</B>
+
+값을 가지고 있거나 또는
+<I>key</I>
+
+가
+<B>IPC_PRIVATE</B>
+
+가 아니고,
+<I>key</I>
+
+와 연계되어 있는 공유메모리 세그먼트가 없다면
+<B>PAGE_SIZE</B>
+
+의 배수만큼의
+<I>size</I>
+
+를 가지고 있는 새로운 공유 메모리 세그먼트가 만들어진다.
+<B>IPC_CREAT</B>
+
+는
+<I>shmflg</I>
+
+에 명시되어 있다.
+(즉, 
+<I>shmflg</I><B>&amp;</B><I>IPC_CREAT</I>
+
+는 0이 아니다.)
+<P>
+
+<I>shmflg</I>
+
+의 구성은 다음과 같다:
+<DL COMPACT>
+<DT><B>IPC_CREAT</B>
+
+<DD>
+새로운 세그먼트를 만든다. 만일 이 플래그가 사용되지 않는다면,
+<B>shmget()</B>
+
+는 <I>key</I>와 관련된 세그먼트를 찾을 것이며,
+사용자가 그 세그먼트와 관련된 <I>shmid</I> 를 받을
+허가권이 있는지 알기 위해서 검사한다.
+그리고 세그먼트가 파괴되었다는 표시를 하지 않도록 보장한다.
+<DT><B>IPC_EXCL</B>
+
+<DD>
+세그먼트가 존재할경우 실패를 보장하기 위해 <B>IPC_CREAT</B>와 함께
+사용된다.
+<DT><B>mode_flags (lowest 9 bits)</B>
+
+<DD>
+소유자, 그룹, 그 외들을 보장하기 위해 허가권을 지정한다.
+현재, 실행 허가권은 시스템에 의해 사용되지 않는다.
+</DL>
+<P>
+
+새로운 세그먼트가 생성된다면,
+<I>shmflg</I>
+
+의 접근 허가권은
+세그먼트에 정의되어 있는
+<I>shmid_ds</I>
+
+의
+<I>shm_perm</I>
+
+멤버로 복사된다.
+<I>shmid_ds</I> 구조체:
+<P>
+
+
+<PRE>
+struct shmid_ds {
+        struct  ipc_perm shm_perm;      /* 퍼미션 */
+        int     shm_segsz;              /* 세그먼트의 크기(bytes) */
+        time_t  shm_atime;              /* 마지막 접근 시간 */
+        time_t  shm_dtime;              /* 마지막 제거 시간 */
+        time_t  shm_ctime;              /* 마지막 변경 시간 */
+        unsigned short  shm_cpid;       /* 생성자의 pid */
+        unsigned short  shm_lpid;       /* 마지막으로 작동한 프로세스 pid */
+        short   shm_nattch;             /* 현재 접근한 프로세스의 수 */
+};
+</PRE>
+
+
+<P>
+
+
+<PRE>
+struct ipc_perm
+{
+  key_t  key;
+  ushort uid;   /* 소유자의 euid 와 egid */
+  ushort gid;
+  ushort cuid;  /* 생성자의 euid 와 egid */
+  ushort cgid;
+  ushort mode;  /* <I>shmflg</I>의 하위 9비트 */
+  ushort seq;   /* 연속 수(sequence number) */
+};
+</PRE>
+
+<P>
+
+게다가, 생성되는 동안 시스템 콜은 시스템 공유 메모리 세그먼트 데이터 구조
+<B>shmid_ds</B>
+
+를 다음과 같이 초기화한다.
+<DL COMPACT>
+<DT><DD>
+<B>shm_perm.cuid</B>
+
+와
+<B>shm_perm.uid</B>
+
+는 호출 프로세스의 유효 user-ID로 설정된다.
+<DT><DD>
+<B>shm_perm.cgid</B>
+
+와
+<B>shm_perm.gid</B>
+
+는 호출 프로세스의 유효 group-ID로 설정된다.
+<DT><DD>
+<B>shm_perm.mode</B>
+
+의 하위 9비트들은
+<I>shmflg</I>
+
+의 하위 9비트들로 설정된다.
+<DT><DD>
+<B>shm_segsz</B>
+
+는
+<I>size</I>
+
+값으로 설정된다.
+<DT><DD>
+<B>shm_lpid</B>,
+
+<B>shm_nattch</B>,
+
+<B>shm_atime</B>
+
+그리고
+<B>shm_dtime</B>
+
+는
+<B>0</B>
+
+으로 설정된다.
+<DT><DD>
+<B>shm_ctime</B>
+
+는 현재 시간으로 설정된다.
+</DL>
+<P>
+
+만일 공유 메모리 세그먼트가 이미 존재한다면, 접근 허가권이 조사되며,
+파괴도도록 표시되어 있는지 알아보기 위해 검사한다.
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>SYSTEM CALLS</H2>
+
+<DL COMPACT>
+<DT><B>fork()</B>
+
+<DD>
+<B>fork()</B>
+
+후에 자식 프로세스는 연결된 공유 메모리 세그먼트들을 상속한다.
+<DT><B>exec()</B>
+
+<DD>
+<B>exec()</B>
+
+후에 연결된 모든 공유 메모리 세그먼트는 분리된다.(파괴되는것이 아니다)
+<DT><B>exit()</B>
+
+<DD>
+<B>exit()</B>
+
+시  연결된 모든 공유 메모리 세그먼트는 분리된다.(파괴되는것이 아니다)
+</DL>
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시 유효한 세그먼트 식별자
+<I>shmid</I>
+
+가 반환되며, 에러시 -1이 반환된다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>에러</H2>
+
+실패시,
+<B>errno</B>
+
+는 다음중 하나로 설정된다:
+<DL COMPACT>
+<DT><B>EINVAL</B>
+
+<DD>
+만일 <B>SHMMIN</B> &gt; <I>size</I>, 또는
+<I>size</I> &gt; <B>SHMMAX</B>, 또는 <I>size</I>이 세그먼트의 크기보다 크다면 이
+에러가 반환된다.
+<DT><B>EEXIST</B>
+
+<DD>
+<B>IPC_CREAT | IPC_EXCL</B>
+
+이 지정되어 있고, 세그먼트가 존재하면 이 에러가 반환된다.
+<DT><B>EIDRM</B>
+
+<DD>
+세그먼트가 파괴나 제거되도록 표시되어 있다면 이 에러가 반환된다.
+<DT><B>ENOSPC</B>
+
+<DD>
+가능한 모든 공유 메모리 id
+<B></B>(<B>SHMMNI</B>)
+
+를 가졌거나 요청된
+<I>size</I>
+
+의 세그먼트 할당이 시스템 전체 공유 메모리 제한값
+<B></B>(<B>SHMALL</B>)
+
+을 초과할경우 반환된다.
+<DT><B>ENOENT</B>
+
+<DD>
+주어진 <I>key</I>에 해당하는 세그먼트가 존재하지 않고,
+<B>IPC_CREAT</B>
+
+가 지정되지 않았다면 반환된다.
+<DT><B>EACCES</B>
+
+<DD>
+사용자가 공유 메모리 세그먼트에 대한 접근 허가권이 없을때 반환된다.
+<DT><B>ENOMEM</B>
+
+<DD>
+세그먼트를 위해 할당할 메모리가 없을때 반환된다.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>주의</H2>
+
+<B>IPC_PRIVATE</B>
+
+는 플레그 필드가 아니라
+<B>key_t</B>
+
+타입이다.
+이 특별한 값이
+<I>key</I>
+
+에 사용된다면,
+시스템 콜은
+<I>shmflg</I>
+
+의 하위 9비트들외 모든것을 무시한다.
+그리고 새 공유 메모리 세그먼트를 생성(성공시)한다.
+<P>
+
+다음은
+<B>shmget</B>
+
+시스템 콜에 영향을 주는 공유 메모리 세그먼트 자원들의 제한값들이다:
+<DL COMPACT>
+<DT><B>SHMALL</B>
+
+<DD>
+시스템 전체의 공유 메모리 세그먼트 최대 값: 정책 의존적이다.
+<DT><B>SHMMAX</B>
+
+<DD>
+공유 메모리 세그먼트의 최대 크기(바이트수): 수행 의존적이다.(현재 4M)
+<DT><B>SHMMIN</B>
+
+<DD>
+공유 메모리 세그먼트의 최소 크기(바이트수): 수행 의존적이다.(
+<B>PAGE_SIZE</B>
+
+가 유효한 최소 크기이지만, 현재는 1byte이다.)
+<DT><B>SHMMNI</B>
+
+<DD>
+시스템 전체의 공유 메모리 세그먼트 최대 수: 수행 의존적이다(현재 4096)
+</DL>
+<P>
+
+수행시 프로세스당 공유 메모리 세그먼트의 특별한 제한은 없다.
+(<B>SHMSEG</B>)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>버그</H2>
+
+<B>IPC_PRIVATE</B>
+
+를  사용하면 할당된 공유 메모리 세그먼트를 접근하는 다른 프로세스들을 저지하지
+않는다.
+<P>
+
+파일들 때문에, 프로세스를 위해 공유 메모리 세그먼트에 대한 배타적 접근을
+보장하기 위한 방법이 현재는 없다.
+<I>shmflg</I>
+
+비트에
+<B>IPC_CREAT</B>
+
+와
+<B>IPC_EXCL</B>
+
+의 지정만이 새 공유 메모리 세그먼트 생성을 보장(성공시)한다.
+이것은 세그먼트에 대한 배타적 접근을 나타내는 것은 아니다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID.  SVr4 문서는 EEXIST 에러 조건을 추가적으로 기술했다.
+SVr4 와 SVID 문서들은 EIDRM 조건을 기술하지 않았다.
+<A NAME="lbAK">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+ftok">ftok</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ipc">ipc</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmctl">shmctl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmat">shmat</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmdt">shmdt</A></B>(2)
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>번역</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt; 2000년 5월 16일
+<BR>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>) 2005년 2월 13일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">SYSTEM CALLS</A><DD>
+<DT><A HREF="#lbAF">반환값</A><DD>
+<DT><A HREF="#lbAG">에러</A><DD>
+<DT><A HREF="#lbAH">주의</A><DD>
+<DT><A HREF="#lbAI">버그</A><DD>
+<DT><A HREF="#lbAJ">호환</A><DD>
+<DT><A HREF="#lbAK">관련 항목</A><DD>
+<DT><A HREF="#lbAL">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 06:54:53 GMT, February 13, 2005
+</BODY>
+</HTML>

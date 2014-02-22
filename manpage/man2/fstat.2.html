@@ -1,0 +1,363 @@
+<HTML><HEAD><TITLE>Manpage of STAT</TITLE>
+</HEAD><BODY>
+<H1>STAT</H1>
+Section: System calls (2)<BR>Updated: May 13, 1998<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+stat, fstat, lstat - 파일 상태를 얻는다
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/stat.h">sys/stat.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>int stat(const char *</B><I>file_name</I><B>, struct stat *</B><I>buf</I><B>);</B>
+
+<BR>
+
+<B>int fstat(int </B><I>filedes</I><B>, struct stat *</B><I>buf</I><B>);</B>
+
+<BR>
+
+<B>int lstat(const char *</B><I>file_name</I><B>, struct stat *</B><I>buf</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<P>
+
+이 함수는 지정된 파일에 대한 정보를 반환한다. 이 정보를 얻기 위해 필요한 접근 권한은 없지만, 파일을 읽는 경로에 있는 모든 디렉토리에 대한 탐색 권한이 필요하다.
+<P>
+
+<B>stat</B>
+
+는
+<I>file_name</I>
+
+으로 지정된 파일에 대해 설명하고
+<I>buf</I>
+
+에 채운다.
+<B>lstat</B>
+
+는
+<B>stat</B>
+
+와 동일시된다.링크는 그 자체로 설명된다, 링크에 포함되어 있는 파일을 설명하지 않는다.
+
+<B>fstat</B>
+
+는 stat와 동일시된다.
+<I>file_name</I>.
+
+대신에
+<I>filedes</I>
+
+에 의해 지정된 열린 파일만 (
+<I><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></I>(2)
+
+에 의해 반환되듯이) 설명된다.  
+
+<P>
+
+그것들은 모두 아래 영역을 포함하는
+<I>stat</I>
+
+구조을 반환한다:
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+struct stat
+{
+    dev_t         st_dev;      /* device */
+    ino_t         st_ino;      /* inode */
+    mode_t        st_mode;     /* protection */
+    nlink_t       st_nlink;    /* number of hard links */
+    uid_t         st_uid;      /* user ID of owner */
+    gid_t         st_gid;      /* group ID of owner */
+    dev_t         st_rdev;     /* device type (if inode device) */
+    off_t         st_size;     /* total size, in bytes */
+    unsigned long st_blksize;  /* blocksize for filesystem I/O */
+    unsigned long st_blocks;   /* number of blocks allocated */
+    time_t        st_atime;    /* time of last access */
+    time_t        st_mtime;    /* time of last modification */
+    time_t        st_ctime;    /* time of last change */
+};
+</PRE>
+
+</DL>
+
+<P>
+
+The value
+<I>st_blocks</I>
+
+값은 512-bytes 블록에 있는 파일의 크기를 준다.
+<I>st_blksize</I>
+
+값은 효율적인 파일 시스템 I/O를 위해 &quot;선택된&quot; 블록 크기를 준다.
+(더 작은 공간에 파일을 쓰는 것은 쓰고-수정하고-다시 쓰는데 비효율적이다.)4
+<P>
+
+모든 리눅스 파일시스템이 모든 시간 영역에서 실행하는 것은 아니다.
+전통적으로,
+<I>st_atime</I>
+
+는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+mknod">mknod</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+utime">utime</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+read">read</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+write">write</A></B>(2),와 <B><A HREF="http://localhost/cgi-bin/man/man2html?2+truncate">truncate</A></B>(2).
+
+로 바뀌었다.
+전통적으로,
+<I>st_mtime</I>
+
+는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+mknod">mknod</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+utime">utime</A></B>(2),와 <B><A HREF="http://localhost/cgi-bin/man/man2html?2+write">write</A></B>(2).
+
+로 바뀌었다.
+<I>st_mtime</I>
+
+는 소유자, 그룹, 하드링크 카운트, 혹은 모드의 변화에 따라 바뀌지
+<I>않았다.</I>
+
+
+전통적으로,
+<I>st_ctime</I>
+
+는 inode 정보를 쓰거나 설정함으로써 바뀌었다.(i.e., owner, group,link count, mode,등등).
+<P>
+
+아래 POSIX 매크로는 파일 타입을 확인하는 것이다:
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT>S_ISLNK(m)<DD>
+is it a symbolic link?
+<DT>S_ISREG(m)<DD>
+regular file?
+<DT>S_ISDIR(m)<DD>
+directory?
+<DT>S_ISCHR(m)<DD>
+character device?
+<DT>S_ISBLK(m)<DD>
+block device?
+<DT>S_ISFIFO(m)<DD>
+fifo?
+<DT>S_ISSOCK(m)<DD>
+socket?
+</DL>
+</DL>
+
+<P>
+
+아래 flag는
+<I>st_mode</I>
+
+영역을 위해 정의된 것이다:
+
+<TABLE>
+<TR VALIGN=top><TD>S_IFMT</TD><TD>0170000</TD><TD>bitmask for the file type bitfields<BR></TD></TR>
+<TR VALIGN=top><TD>S_IFSOCK</TD><TD>0140000</TD><TD>socket<BR></TD></TR>
+<TR VALIGN=top><TD>S_IFLNK</TD><TD>0120000</TD><TD>symbolic link<BR></TD></TR>
+<TR VALIGN=top><TD>S_IFREG</TD><TD>0100000</TD><TD>regular file<BR></TD></TR>
+<TR VALIGN=top><TD>S_IFBLK</TD><TD>0060000</TD><TD>block device<BR></TD></TR>
+<TR VALIGN=top><TD>S_IFDIR</TD><TD>0040000</TD><TD>directory<BR></TD></TR>
+<TR VALIGN=top><TD>S_IFCHR</TD><TD>0020000</TD><TD>character device<BR></TD></TR>
+<TR VALIGN=top><TD>S_IFIFO</TD><TD>0010000</TD><TD>fifo<BR></TD></TR>
+<TR VALIGN=top><TD>S_ISUID</TD><TD>0004000</TD><TD>set UID bit<BR></TD></TR>
+<TR VALIGN=top><TD>S_ISGID</TD><TD>0002000</TD><TD>set GID bit (see below)<BR></TD></TR>
+<TR VALIGN=top><TD>S_ISVTX</TD><TD>0001000</TD><TD>sticky bit (see below)<BR></TD></TR>
+<TR VALIGN=top><TD>S_IRWXU</TD><TD>00700</TD><TD>mask for file owner permissions<BR></TD></TR>
+<TR VALIGN=top><TD>S_IRUSR</TD><TD>00400</TD><TD>owner has read permission<BR></TD></TR>
+<TR VALIGN=top><TD>S_IWUSR</TD><TD>00200</TD><TD>owner has write permission<BR></TD></TR>
+<TR VALIGN=top><TD>S_IXUSR</TD><TD>00100</TD><TD>owner has execute permission<BR></TD></TR>
+<TR VALIGN=top><TD>S_IRWXG</TD><TD>00070</TD><TD>mask for group permissions<BR></TD></TR>
+<TR VALIGN=top><TD>S_IRGRP</TD><TD>00040</TD><TD>group has read permission<BR></TD></TR>
+<TR VALIGN=top><TD>S_IWGRP</TD><TD>00020</TD><TD>group has write permission<BR></TD></TR>
+<TR VALIGN=top><TD>S_IXGRP</TD><TD>00010</TD><TD>group has execute permission<BR></TD></TR>
+<TR VALIGN=top><TD>S_IRWXO</TD><TD>00007</TD><TD>mask for permissions for others (not in group)<BR></TD></TR>
+<TR VALIGN=top><TD>S_IROTH</TD><TD>00004</TD><TD>others have read permission<BR></TD></TR>
+<TR VALIGN=top><TD>S_IWOTH</TD><TD>00002</TD><TD>others have write permisson<BR></TD></TR>
+<TR VALIGN=top><TD>S_IXOTH</TD><TD>00001</TD><TD>others have execute permission<BR></TD></TR>
+</TABLE>
+
+
+GID 비트 (S_ISGID)설정은 몇가지 특별한 이용법이 있다:
+디렉토리의 경우 BSD semantic이 쓰이고 있음이 나타난다:
+생성된 파일은 생성 프로세스와 생성된 디렉토리의 유효한 gid로부터가 아니라 디렉토리로부터 
+그들의 그룹 ID를 상속받는다. 그리고 S_ISGID 비트군을 가진다.
+실행 비트(S_IXGRP)군을 갖지 않은 파일의 경우, mandatory file/record locking을 나타낸다.
+
+디렉토리 상의 `sticky' bit (S_ISVTX)는 디렉토리안의 파일이 파일의 소유자, 디렉토리의 소유자, 그리고 루트에 의해 이름을 바뀌거나 지워질 수 있다는 것을 뜻한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0이 반환되고, 실패시, -1이 반환된다. 그리고
+<I>errno</I>
+
+는 적절한 값으로 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+<I>filedes</I>
+
+는 잘못됐다.
+<DT><B>ENOENT</B>
+
+<DD>
+A component of the path
+<I>file_name</I>
+
+경로의 구성요소가 존재하지 않거나 경로가 빈 문자열이다.
+<DT><B>ENOTDIR</B>
+
+<DD>
+경로의 구성요소가 디렉토리가 아니다.
+<DT><B>ELOOP</B>
+
+<DD>
+심볼릭링크가 너무 많다.
+<DT><B>EFAULT</B>
+
+<DD>
+잘못된 주소이다.
+<DT><B>EACCES</B>
+
+<DD>
+권한이 거부됐다.
+<DT><B>ENOMEM</B>
+
+<DD>
+메모리 부족.
+<DT><B>ENAMETOOLONG</B>
+
+<DD>
+파일명이 너무 길다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+<B>stat</B>
+
+와
+<B>fstat</B>
+
+호출은 SVr4, SVID, POSIX, X/OPEN, BSD 4.3에 따른다. 
+<B>lstat</B>
+
+호출은 4.3BSD and SVr4에 따른다.
+SVr4는 추가적으로 documents additional
+<B>fstat</B>
+
+에러 상태인 EINTR, ENOLINK, EOVERFLOW를 문서화했다.  SVr4
+는 추가적으로
+<B>stat</B>
+
+와
+<B>lstat</B>
+
+의 에러인 EACCES, EINTR, EMULTIHOP, ENOLINK, EOVERFLOW를 문서화했다.
+<I>st_blocks</I>
+
+와
+<I>st_blksize</I>
+
+필드의 사용은 이식될 수 없다. (그것들은 POSIX에의해 지정된것이 아니고 BSD에서 소개되었다.
+해석은 시스템마다 다르고, 싱글 시스템에서 NFS가 마운트되면 복잡해진다.)
+<P>
+
+POSIX은 S_IFMT, S_IFSOCK, S_IFLNK, S_IFREG, S_IFBLK, S_IFDIR, S_IFCHR, S_IFIFO, S_ISVTX 비트에 대해 설명하지 않지만,
+대신 S_ISDIR()등의 매크로 사용은 요구한다.
+유닉스 V7 (이나 후의 시스템)은 POSIX에서 규정한 유사어인 S_IRUSR, S_IWUSR, S_IXUSR
+의 S_IREAD, S_IWRITE, S_IEXEC를 갖는다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>타 시스템</H2>
+
+다양한 시스템에서 사용되는 값들:
+
+<TABLE>
+<TR VALIGN=top><TD>hex</TD><TD>이름</TD><TD>ls</TD><TD>octal</TD><TD>설명<BR></TD></TR>
+<TR VALIGN=top><TD>f000</TD><TD>S_IFMT</TD><TD></TD><TD>170000</TD><TD>파일타입을 위한 mask<BR></TD></TR>
+<TR VALIGN=top><TD>0000</TD><TD></TD><TD></TD><TD>000000</TD><TD>SCO out-of-service inode, BSD unknown type<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD></TD><TD></TD><TD></TD><TD>SVID-v2 and XPG2 have both 0 and 0100000 for ordinary file<BR></TD></TR>
+<TR VALIGN=top><TD>1000</TD><TD>S_IFIFO</TD><TD>p|</TD><TD>010000</TD><TD>fifo (named pipe)<BR></TD></TR>
+<TR VALIGN=top><TD>2000</TD><TD>S_IFCHR</TD><TD>c</TD><TD>020000</TD><TD>character special (V7)<BR></TD></TR>
+<TR VALIGN=top><TD>3000</TD><TD>S_IFMPC</TD><TD></TD><TD>030000</TD><TD>multiplexed character special (V7)<BR></TD></TR>
+<TR VALIGN=top><TD>4000</TD><TD>S_IFDIR</TD><TD>d/</TD><TD>040000</TD><TD>directory (V7)<BR></TD></TR>
+<TR VALIGN=top><TD>5000</TD><TD>S_IFNAM</TD><TD></TD><TD>050000</TD><TD>XENIX named special file<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD></TD><TD></TD><TD></TD><TD>with two subtypes, distinguished by st_rdev values 1, 2:<BR></TD></TR>
+<TR VALIGN=top><TD>0001</TD><TD>S_INSEM</TD><TD>s</TD><TD>000001</TD><TD>XENIX semaphore subtype of IFNAM<BR></TD></TR>
+<TR VALIGN=top><TD>0002</TD><TD>S_INSHD</TD><TD>m</TD><TD>000002</TD><TD>XENIX shared data subtype of IFNAM<BR></TD></TR>
+<TR VALIGN=top><TD>6000</TD><TD>S_IFBLK</TD><TD>b</TD><TD>060000</TD><TD>block special (V7)<BR></TD></TR>
+<TR VALIGN=top><TD>7000</TD><TD>S_IFMPB</TD><TD></TD><TD>070000</TD><TD>multiplexed block special (V7)<BR></TD></TR>
+<TR VALIGN=top><TD>8000</TD><TD>S_IFREG</TD><TD>-</TD><TD>100000</TD><TD>regular (V7)<BR></TD></TR>
+<TR VALIGN=top><TD>9000</TD><TD>S_IFCMP</TD><TD></TD><TD>110000</TD><TD>VxFS compressed<BR></TD></TR>
+<TR VALIGN=top><TD>9000</TD><TD>S_IFNWK</TD><TD>n</TD><TD>110000</TD><TD>network special (HP-UX)<BR></TD></TR>
+<TR VALIGN=top><TD>a000</TD><TD>S_IFLNK</TD><TD>l@</TD><TD>120000</TD><TD>symbolic link (BSD)<BR></TD></TR>
+<TR VALIGN=top><TD>b000</TD><TD>S_IFSHAD</TD><TD></TD><TD>130000</TD><TD>Solaris shadow inode for ACL (not seen by userspace)<BR></TD></TR>
+<TR VALIGN=top><TD>c000</TD><TD>S_IFSOCK</TD><TD>s=</TD><TD>140000</TD><TD>socket (BSD; also &quot;S_IFSOC&quot; on VxFS)<BR></TD></TR>
+<TR VALIGN=top><TD>d000</TD><TD>S_IFDOOR</TD><TD>D</TD><TD>150000</TD><TD>Solaris door<BR></TD></TR>
+<TR VALIGN=top><TD>e000</TD><TD>S_IFWHT</TD><TD>w%</TD><TD>160000</TD><TD>BSD whiteout (not used for inode)<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>0200</TD><TD>S_ISVTX</TD><TD></TD><TD>001000</TD><TD>`sticky bit': save swapped text even after use (V7)<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD></TD><TD></TD><TD></TD><TD>reserved (SVID-v2)<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD></TD><TD></TD><TD></TD><TD>On non-directories: don't cache this file (SunOS)<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD></TD><TD></TD><TD></TD><TD>On directories: restricted deletion flag (SVID-v4.2)<BR></TD></TR>
+<TR VALIGN=top><TD>0400</TD><TD>S_ISGID</TD><TD></TD><TD>002000</TD><TD>set group ID on execution (V7)<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD></TD><TD></TD><TD></TD><TD>for directories: use BSD semantics for propagation of gid<BR></TD></TR>
+<TR VALIGN=top><TD>0400</TD><TD>S_ENFMT</TD><TD></TD><TD>002000</TD><TD>SysV file locking enforcement (shared w/ S_ISGID)<BR></TD></TR>
+<TR VALIGN=top><TD>0800</TD><TD>S_ISUID</TD><TD></TD><TD>004000</TD><TD>set user ID on execution (V7)<BR></TD></TR>
+<TR VALIGN=top><TD>0800</TD><TD>S_CDF</TD><TD></TD><TD>004000</TD><TD>directory is a context dependent file (HP-UX)<BR></TD></TR>
+</TABLE>
+
+
+sticky 명령은 AT&amp;T UNIX V32에서 선보였다.
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chmod">chmod</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chown">chown</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+readlink">readlink</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+utime">utime</A></B>(2)
+
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">타 시스템</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

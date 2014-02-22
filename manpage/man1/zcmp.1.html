@@ -1,0 +1,102 @@
+<HTML><HEAD><TITLE>Manpage of ZDIFF</TITLE>
+</HEAD><BODY>
+<H1>ZDIFF</H1>
+Section: User Commands  (1)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+zcmp, zdiff - 압축된 파일 비교
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>zcmp</B>
+
+[ cmp_options ] file1
+[ file2 ]
+<BR>
+
+<B>zdiff</B>
+
+[ diff_options ] file1
+[ file2 ]
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>Zcmp</I>
+
+와
+<I>zdiff</I>
+
+는 압축된 파일에 
+<I>cmp</I>
+
+또는 
+<I>diff</I>
+
+프로그램을 호출하기 위해 사용된다.
+모든 지시된 옵션은 
+<I>cmp</I>
+
+또는
+<I>diff</I>
+
+에 직접 전달된다.
+만일 단지 한 파일만 지정되면,
+<I>file1</I>
+
+과 
+<I>file1</I>.gz
+
+의 압축을 풀어서 비교한다.
+만일 2개의 파일들이 지정되면, 필요할 경우 압축되지 않고, 
+<I>cmp</I>
+
+또는
+<I>diff</I>
+
+에 직접 전달된다.
+<I>cmp</I>
+
+또는
+<I>diff</I>
+
+의 종료 상태는 보존된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+cmp">cmp</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+diff">diff</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+zmore">zmore</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+zgrep">zgrep</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+znew">znew</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+zforce">zforce</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+gzip">gzip</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+gzexe">gzexe</A>(1)
+<A NAME="lbAF">&nbsp;</A>
+<H2>버그</H2>
+
+<I>cmp</I>
+
+또는
+<I>diff</I>
+
+프로그램으로부터의 메시지는 지정된 그것들 대신 임시 파일명을 참조한다. 
+<A NAME="lbAG">&nbsp;</A>
+<H2>역자</H2>
+
+배성훈 &lt;<A HREF="mailto:plodder@kldp.org">plodder@kldp.org</A>&gt;, 2000년 4월 22일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+<DT><A HREF="#lbAF">버그</A><DD>
+<DT><A HREF="#lbAG">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

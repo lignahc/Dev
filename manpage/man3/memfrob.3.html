@@ -1,0 +1,68 @@
+<HTML><HEAD><TITLE>Manpage of MEMFROB</TITLE>
+</HEAD><BODY>
+<H1>MEMFROB</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 4월 12일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+memfrob - 메모리 영역을 암호화 한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;</B>
+
+<B>void *memfrob(void *</B><I>s</I><B>, size_t </B><I>n</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>memfrob()</B> 함수는 메모리 영역 <I>s</I>의 처음 <I>n</I>를 
+숫자 42로 각 문자를 exclusive-ORing하여 암호화 한다.
+결과는 암호화된 영역에서 <B>memfrob()</B>를 사용하여 원래대로 할수 있다.
+<P>
+
+이 함수는 XOR 상수를 고정시켰기 때문에 적당한 암호화 루틴이 아니며 문자들을
+숨기는데만 알맞다는 점을 주의해라.
+<A NAME="lbAE">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+<B>memfrob()</B> 함수는 암호화된 영역에 대한 포인터를 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>CONFORMING TO</H2>
+
+<B>memfrob()</B> 함수는 Linux C 라이브러리와 GNU C 라이브러리에서 유일하다.
+GNU C Library.
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+strfry">strfry</A></B>(3)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 2월 20일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAF">CONFORMING TO</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

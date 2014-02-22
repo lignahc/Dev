@@ -1,0 +1,107 @@
+<HTML><HEAD><TITLE>Manpage of RANDOM</TITLE>
+</HEAD><BODY>
+<H1>RANDOM</H1>
+Section: 리눅스 프로그래머 메뉴얼 (4)<BR>Updated: 1997년 8월 1일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+random, urandom - 커널 random number 소스장치
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>/dev/random</B>와 <B>/dev/urandom</B> 는 커널의 난수생성기에 인터페이스를
+제공한다. <B>/dev/random</B>는 메이저 장치번호1이고 마이너 장치번호 8이다.
+<B>/dev/urandom</B>은 메이저 장치번호 1이고 마이너 장치 번호 9이다.
+<P>
+
+난수생성기는 장치 드라이버와 엔트로피풀안의 다른 소스들로부터 노이즈를 모은다.
+생성기는 또한 엔트로피 풀안 노이즈의 비트수를 계산한다. 이것으로 부터 엔트로피
+풀 난수는 생성된다.
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설정</H2>
+
+여러분 시스템에 <B>/dev/random</B>와 <B>/dev/urandom</B>가 없다면,
+아래의 명령으로 생성된다.
+<P>
+<PRE>
+        mknod -m 644 /dev/random c 1 8
+        mknod -m 644 /dev/urandom c 1 9
+        chown root:root /dev/random /dev/urandom
+</PRE>
+
+<P>
+리눅스시스템이 오퍼레이터 작용없이 시작될때, 엔트로피 풀은 정확히 알수 없는 상태
+일런지 모른다. 이것은 계산치보다 엔트로피풀안의 노이즈의 실제양을 줄인다. 이런 영
+향때문에 셧다운과 시작시 엔트로피 풀 정보를 가져오는 걸 돕는다. 이렇게 하기위해,
+리눅스 시스템이 시작할때 동작하는 적당한 스크립트에 다음행을 추가한다.
+<P>
+<PRE>
+        echo &quot;Initializing kernel random number generator...&quot;
+        # Initialize kernel random number generator with random seed
+        # from last shut-down (or start-up) to this start-up.  Load and
+        # then save 512 bytes, which is the size of the entropy pool.
+        if [ -f /var/random-seed ]; then
+                cat /var/random-seed &gt;/dev/urandom
+        fi
+        dd if=/dev/urandom of=/var/random-seed count=1
+</PRE>
+
+<P>
+또한 리눅스가 셧다운 할때 동작하는 적당한 스크립트에 아래행을 추가한다.
+<P>
+<PRE>
+        # Carry a random seed from shut-down to start-up for the random
+        # number generator.  Save 512 bytes, which is the size of the
+        # random number generator's entropy pool.
+        echo &quot;Saving random seed...&quot;
+        dd if=/dev/urandom of=/var/random-seed count=1
+</PRE>
+
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>파일</H2>
+
+/dev/random
+<BR>
+
+/dev/urandom
+<A NAME="lbAF">&nbsp;</A>
+<H2>저자</H2>
+
+커널 난수 생성기는 THeodore Ts'o &lt;<A HREF="mailto:tytso@athena.mit.edu">tytso@athena.mit.edu</A>&gt;가 썼다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+mknod">mknod</A>(1)
+<BR>
+
+RFC 1750, &quot;Randomness Recommendations for Security&quot;
+<A NAME="lbAH">&nbsp;</A>
+<H2>번역</H2>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>) 2005년 2월 14일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">설정</A><DD>
+<DT><A HREF="#lbAE">파일</A><DD>
+<DT><A HREF="#lbAF">저자</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 05:53:51 GMT, February 14, 2005
+</BODY>
+</HTML>

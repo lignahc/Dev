@@ -1,0 +1,74 @@
+<HTML><HEAD><TITLE>Manpage of ftprestart</TITLE>
+</HEAD><BODY>
+<H1>ftprestart</H1>
+Section: Maintenance Commands (8)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ftprestart - ftp server를 shutdown한후 재시작을 하게 함
+<A NAME="lbAC">&nbsp;</A>
+<H2>문법</H2>
+
+<B>ftprestart</B>
+
+[
+<B>-V</B>
+
+]
+<P>
+
+<B>ftprestart</B>
+
+명령은 ftp server들을 shutdown 이후에 restart를 자동을 하는 방법을
+제공한다.
+<B>ftprestart</B>
+
+는 FTP server를 재지삭을 하려고 준비를 할때 사용이 되어진다.
+이것은 ftpshut의 반대이며 ftpshut에 의해 생성된 shutdown message를 삭제한다.
+이것은 anonymous ftp 영역과 모든 가상  ftp server 영역의 shutdown message
+file들을 삭제하게 된다.
+<P>
+
+<B>-V</B>
+
+option은 프로그램 수행후에 copyright와 version 정보를 출력하게 한다.
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>출력 예제</H2>
+
+<P>
+
+<BR>&nbsp;&nbsp;ftprestart:&nbsp;/servers/some.domain/ftp/etc/shutmsg&nbsp;removed.
+<BR>&nbsp;&nbsp;ftprestart:&nbsp;/servers/other.domain/ftp/etc/shutmsg&nbsp;removed.
+<BR>&nbsp;&nbsp;ftprestart:&nbsp;/etc/shutmsg&nbsp;removed.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+shutdown">shutdown</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?8+ftpshut">ftpshut</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A>(5)
+<A NAME="lbAF">&nbsp;</A>
+<H2>역자</H2>
+
+김정균 &lt;<A HREF="mailto:admin@oops.org">admin@oops.org</A>&gt; 2000년 7월 23일
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">문법</A><DD>
+<DT><A HREF="#lbAD">출력 예제</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+<DT><A HREF="#lbAF">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

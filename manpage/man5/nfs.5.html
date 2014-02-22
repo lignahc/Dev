@@ -1,0 +1,270 @@
+<HTML><HEAD><TITLE>Manpage of NFS</TITLE>
+</HEAD><BODY>
+<H1>NFS</H1>
+Section: 리눅스 프로그래머 가이드 (5)<BR>Updated: 1993년 11월 20일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+nfs - nfs fstab 형식과 옵션
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>/etc/fstab</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>fstab</I>
+
+화일에는 어떤 화일 시스템을 어디에 그리고 어떤 옵션을 가지고 마운트할 것인지에
+대한 정보가 들어있다. NFS 마운트의 경우 서버명 그리고 export하는 서버의 
+디렉토리, 로컬 마운트 포인트 그리고 NFS 관련 옵션이 필요하다.
+
+NFS 마운트를 위한<I>/etc/fstab</I> 화일의 예를 보겠다.
+<P>
+<PRE>
+
+server:/usr/local/pub    /pub    nfs     timeo=14,intr
+</PRE>
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+<DL COMPACT>
+<DT><I>rsize=n</I>
+
+<DD>
+NFS 서버로부터 읽어들이는 바이트 수를 지정한다. 기본값은 커널에 따라
+다른데 현재로서는 1024 바이트이다.
+<DT><I>wsize=n</I>
+
+<DD>
+NFS 서버에 쓰기를 할 때 사용하는 바이트 수를 정한다. 기본값은 커널에 따라
+다른데 현재로서는 1024 바이트이다.
+<DT><I>timeo=n</I>
+
+<DD>
+RPC 타임아웃이 생기고 나서 첫번째 재전송 요구를 보낼 때 사용되는 시간으로서
+1/10 초 단위이다. 기본값은 7 * 1/10 초이다. 첫번째 타임아웃이 생기고 나서는
+타임아웃 시간이 최대치인 60 초에 이르거나 너무 많은 재전송 요구가 벌어질
+때까지 타임아웃 시간이 2 배로 변화한다. 만약 화일 시스템이 하드 (hard, 옵션을
+참고하기 바란다) 마운트되어
+있다면 각각의 타임 아웃 시간은 2 배로 증가하고 재전송 시도가 일어날 때도
+2 배로 증가한다. 최대 타임아웃 시간은 60 초이다. 네트웍 속도가 느리거나 서버
+자체가 느리다든지 여러 개의 라우터와 게이트웨이를 거칠 때는 마운트 당시 타임
+아웃 시간을 늘려주는 것이 좋다.
+<DT><I>retrans=n</I>
+
+<DD>
+주 타임아웃을 발생시키는 부 타임아웃과 재전송 횟수를 정한다. 기본값은 3 번의
+타임아웃이다. 주 타임 아웃이 일어나면 화일 작업이 중지되거나 콘솔 상에
+&quot;서버가 반응하지 않음 &quot;server not responding&quot;&quot;이라는 메시지가 출력된다.
+<DT><I>acregmin=n</I>
+
+<DD>
+서버에게 최신 정보를 요청하기에 앞서 일반 화일의 속성이 캐쉬되어야 할 시간의 
+최소값을 정한다. 기본값은 3 초이다.
+<DT><I>acregmax=n</I>
+
+<DD>
+서버에게 최신 정보를 요청하기에 앞서 일반 화일의 속성이 캐쉬되어야 할 시간의 
+최대값을 정한다. 기본값은 60 초이다.
+<DT><I>acdirmin=n</I>
+
+<DD>
+서버에게 최신 정보를 요청하기에 앞서 디렉토리의 속성이 캐쉬되어야 할 시간의
+최소값을 정한다. 기본값은 30 초이다.
+<DT><I>acdirmax=n</I>
+
+<DD>
+서버에게 최신 정보를 요청하기에 앞서 디렉토리의 속성이 캐쉬되어야 할 시간의
+최대값을 정한다. 기본값은 60 초이다.
+<DT><I>actimeo=n</I>
+
+<DD>
+이 값을 다음 
+<I>acregmin,</I>
+
+<I>acregmax,</I>
+
+<I>acdirmin,</I>
+
+와
+<I>acdirmax</I>
+
+에 똑같이 적용한다.
+기본값은 없다.
+<DT><I>retry=n</I>
+
+<DD>
+백그라운드에서 진행 중인 NFS 마운트 작업이 포기하기 전까지 실행할 횟수를
+정한다. 기본값은 10000 번이다.
+<DT><I>namlen=n</I>
+
+<DD>
+NFS 서버가 RPC 마운트 프로토콜의 버전 2 를 지원하지 않을 때 원격 화일
+시스템에서 지원되는 화일명의 길이를 명시한다. POSIX pathconf 함수를 지원하기
+위해서 사용된다. 기본값은 255 개의 문자이다.
+<DT><I>port=n</I>
+
+<DD>
+NFS 서버와 연결할 수 있는 포트 번호를 정한다.
+만약 0 이라면( 기본값 ) 원격 호스트의 포트매퍼(portmapper) 에게 질의하여 
+알아내도록 한다. 만약 포트매퍼에 NFS 데몬이 등록되어 있지 않은 경우에는
+2049 라는 표준 NFS 포트 번호가 사용된다.
+<DT><I>mountport=n</I>
+
+<DD>
+<B>mountd</B>
+
+포트 번호 지정하기.
+<DT><I>mounthost=name</I>
+
+<DD>
+<B>mountd</B>
+
+를 실행 중인 호스트 명을 정한다.
+<DT><I>mountprog=n</I>
+
+<DD>
+원격 호스트의 마운트 데몬과 접속하기 위해 사용할 수 있는 별도의 RPC 프로그램
+번호를 정한다. 만약 여러 개의 NFS 서버를 운영하고 있을 때 사용한다.
+기본값은 표준 RPC 마운트 데몬 프로그램 번호인 100005 이다.
+<DT><I>mountvers=n</I>
+
+<DD>
+원격 호스트의 마운트 데몬와 접속하기 위해 사용하는 별도의 RPC 버전 번호를 
+명시한다. NFS 서버를 여러 개 운영하고 있을 때 사용한다.
+기본값은 버전 1 이다.
+<DT><I>nfsprog=n</I>
+
+<DD>
+원격 호스트의 NFS 데몬과 접속하기 위해 사용하는 별도의 RPC 프로그램 번호를
+정한다. NFS 서버를 여러 개 운영하고 있을 때 사용한다. 표준 RPC NFS 데몬
+프로그램 번호인 100003 이 기본값이다.
+<DT><I>nfsvers=n</I>
+
+<DD>
+원격 호스트의 NFS 데몬과 접속하기 위해 사용하는 별도의 RPC 버전 번호를
+정한다. NFS 서버를 여러 개 운영하고 있을 때 사용한다. 기본값은 버전 2 이다.
+<DT><I>bg</I>
+
+<DD>
+만약 첫번째 NFS 마운트 시도가 타임아웃 걸리면 백그라운드에서 실행을 계속한다.
+기본값은 백그라운드로 실행하지 않고 그냥 포기한다.
+<DT><I>fg</I>
+
+<DD>
+첫번째 NFS 마운트 시도에서 타임아웃이 걸리면 그 즉시 포기해버린다.
+기본값이다.
+<DT><I>soft</I>
+
+<DD>
+NFS 화일 작업에서 주 타임아웃이 걸리면 프로그램에게 I/O 에러를 보고한다.
+기본값은 무한히 NFS 화일 작업을 재시도 하는 것이다.
+<DT><I>hard</I>
+
+<DD>
+NFS 화일 작업에서 주 타임아웃이 걸리면 콘솔 상에 &quot;server not responding&quot;, 
+&quot;서버가 반응하지 않음&quot;이라고 출력하고 무한히 재시도한다.
+이것이 기본값이다.
+<DT><I>intr</I>
+
+<DD>
+주 타임아웃이 생기고 하드 마운트된 상태라면 화일 작업을 중지하도록 시그널을
+보내도록 허용하고 EINTR 시그널을 보내다. 기본값은 화일 작업을 인터럽트하지
+않는 것이다.
+<DT><I>posix</I>
+
+<DD>
+POSIX 규칙을 사용하여 NFS 화일 시스템을 마운트한다. 화일명의 최대 길이에
+대하여 POSIX pathconf 함수를 제대로 지원하기 위해서 사용된다. 원격 호스트는
+RPC 마운트 프로토콜 버전 2 를 지원해야 한다. 많은 NFS  서버들이 아직
+버전 1 만을 지원하고 있다.
+<DT><I>nocto</I>
+
+<DD>
+화일이 생성될 때 새로운 속성을 가져오지 않도록 한다.
+<DT><I>noac</I>
+
+<DD>
+모든 속성 캐쉬를 해제한다. 서버 효율을 떨어뜨리기는 하지만 두 개의 다른
+NFS 클라이언트로 하여금 서버 상의 공통 화일 시스템에 쓰기 작업을 할 때
+좋은 효율을 얻을 수 있게 해준다.
+<DT><I>tcp</I>
+
+<DD>
+NFS 화일 시스템을 기본값인 UDP 가 아니라 TCP 프로토콜을 사용하여 마운트하도록
+한다.  많은 NFS 서버들이 오로지 UDP 만을 지원한다.
+<DT><I>udp</I>
+
+<DD>
+NFS 화일 시스템을 UDP 프로토콜로 마운트한다. 기본값.
+
+수치값을 동반하지 않는 단독 옵션들은 no 를 앞에 붙이는 형태로서도 사용할 수
+있다. 예를 들어 nointr 이라는 옵션은 화일 작업을 가로챌 수 없도록 한다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 화일</H2>
+
+<I>/etc/fstab</I>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>참고</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+fstab">fstab</A></B>(5), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+umount">umount</A></B>(8), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+exports">exports</A></B>(5)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>저자</H2>
+
+&quot;Rick Sladkey&quot; &lt;<A HREF="mailto:jrs@world.std.com">jrs@world.std.com</A>&gt;
+<A NAME="lbAI">&nbsp;</A>
+<H2>BUGS</H2>
+
+bg, fg, retry, posix, nocto 옵션을 받아들이기는 하지만 무시된다.
+
+tcp, namelen 옵션이 구현되어 있기는 하지만 현재 커널에서는 지원하지 않고
+있다.
+
+NFS 화일 시스템이 언마운트될 때는 umount 명령으로 서버에게 통보해야 한다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+<DT><A HREF="#lbAF">관련 화일</A><DD>
+<DT><A HREF="#lbAG">참고</A><DD>
+<DT><A HREF="#lbAH">저자</A><DD>
+<DT><A HREF="#lbAI">BUGS</A><DD>
+<DT><A HREF="#lbAJ">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,125 @@
+<HTML><HEAD><TITLE>Manpage of FREAD</TITLE>
+</HEAD><BODY>
+<H1>FREAD</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1996년 5월 17일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+fread, fwrite - 이진(바이너리) 스트림 입력/출력
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/stdio.h">stdio.h</A>&gt;</B>
+
+<P>
+<B>size_t fread( void *</B><I>ptr</I><B>, size_t </B><I>size</I><B>, size_t </B><I>nmemb</I><B>,</B>
+
+<B>FILE *</B><I>stream</I><B>);</B>
+
+<P>
+<B>size_t fwrite( const void *</B><I>ptr</I><B>, size_t </B><I>size</I><B>, size_t </B><I>nmemb</I><B>,</B>
+
+<B>FILE *</B><I>stream</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+함수
+<B>fread</B>
+
+는 
+<I>stream</I>이
+
+가리키는 스트림에서 각
+<I>size</I>
+
+바이트 만큼 긴 데이터의 
+<I>nmemb</I>
+
+요소를 읽어, 
+<I>ptr</I>이
+
+가리키는 위치에 읽은 데이터들을 저장한다.
+<P>
+
+함수
+<B>fwrite</B>
+
+는 
+<I>ptr</I>이
+
+가리키는 위치에 있는 데이터들을 얻어서 각
+<I>size</I>
+
+바이트 만큼 긴 데이터의
+<I>nmemb</I>
+
+요소를 
+<I>stream</I>이
+
+가리키는 위치의 스트림에 쓴다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>fread</B>
+
+그리고
+<B>fwrite</B>
+
+는 성공적으로 읽고 쓴 항목(item)의 수를 반환한다.(즉, 문자들수가 아니다.)
+만일 에러가 발생하거나 EOF에 도착한다면, 반환 값은 항목 수(또는 0)이다.
+<P>
+
+<B>fread</B>
+
+는 EOF와 에러를 구분하지 않는다. 그리고 호출자는 무엇이 일어났는지를 결정
+하기 위해
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+feof">feof</A></B>(3)
+
+와
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+ferror">ferror</A></B>(3)
+
+를 사용해야 한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+feof">feof</A></B>(3), <A HREF="http://localhost/cgi-bin/man/man2html?3+ferror">ferror</A><B>(3), </B><A HREF="http://localhost/cgi-bin/man/man2html?2+read">read</A><B>(2), </B><A HREF="http://localhost/cgi-bin/man/man2html?2+write">write</A><B>(2)</B>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>표준</H2>
+
+함수
+<B>fread</B>
+
+와
+<B>fwrite</B>
+
+는 ANSI C3.159-1989 (``ANSI C'') 호환이다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 5월 1일 
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+<DT><A HREF="#lbAG">표준</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

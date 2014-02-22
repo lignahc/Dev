@@ -1,0 +1,101 @@
+<HTML><HEAD><TITLE>Manpage of SIGRETURN</TITLE>
+</HEAD><BODY>
+<H1>SIGRETURN</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: 21 August 1995<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+sigreturn - 신호 제어기와 클린업 스텍 프레임으로부터 반환
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>int sigreturn(unsigned long </B><I>__unused</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+리눅스 커널이 신호 제어기를 위한 스텍 프레임을 생성할 때.
+<B>sigreturn</B>
+
+로의 호출은 신호 제어기가 
+<B>sigreturn</B>
+
+을 리턴상에 호출하기위해
+스텍 프레임에 삽입된다.
+<B>sigreturn</B>
+
+에 삽입된 호출은 신호로 인해 중단되었던 곳에서부터 프로세스를 다시 시작하기위해 스텍을 지운다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>sigreturn</B>
+
+은 반환값을 가지지 않는다..
+<A NAME="lbAF">&nbsp;</A>
+<H2>경고</H2>
+
+The
+<B>sigreturn</B>
+
+호출은 신호 제어기를 사용하기위해 커널에 의해 사용된다.
+이것은 
+<B>절대</B>
+
+직접 호출할 수 없다. 게다가, 
+<I>__unused</I>
+
+독립 변수의 특별한 사용은 구조에 따라 바뀐다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+<B>sigreturn</B>
+
+는 리눅스에 특화 되었고, 이식을 목적으로 하는 프로그램에는 쓰지 말아야 한다.
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>파일.B sigreturn</H2>
+
+upon return. 
+/usr/src/linux/arch/i386/kernel/signal.c
+<BR>
+
+/usr/src/linux/arch/alpha/kernel/entry.S
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+kill">kill</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+signal">signal</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+signal">signal</A></B>(7)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX, 2000년 7월 26일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">경고</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">파일.B sigreturn</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

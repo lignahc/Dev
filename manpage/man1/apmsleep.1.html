@@ -1,0 +1,155 @@
+<HTML><HEAD><TITLE>Manpage of RTCSLEEP</TITLE>
+</HEAD><BODY>
+<H1>RTCSLEEP</H1>
+Section: User Commands  (1)<BR>Updated: sleep in APM suspend/standby mode<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+apmsleep - 정지나 대기 상태로 들어갔다가 나중에 wakeup한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>apmsleep</B>
+
+[-sSnwhVd] [--suspend] [--standby] [--noapm]
+[--wait] [--help]  [--version] [--debug]
+[+]hh:mm
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+어떤 컴퓨터들, 특히 랩탑은 Real-time-clock (RTC) 칩을 이용해서 저전력의
+suspend to DRAM 상태에서 wakeup 할 수 있다.
+<B>Apmsleep</B>
+
+은 RTC의 알람 시간을 설정해서 정지나 대기 상태에 들어가도록 하는데 이용
+할 수 있다. RTC로부터의 인터럽트는 컴퓨터가 wakeup 하도록 한다. 이 프로그램은
+커널의 시간의 급격한 변화를 기다림으로써 이 이벤트를 탐지하고 성공적으로
+종료한다. 만약 1분 안에 시간의 급격한 변화가 일어나지 않거나 무엇인가가
+잘못된다면, 종료값은 0이 아니게 된다.
+<P>
+
+깨어나는 시간은 두가지 형식으로 지정될 수 있다.
+<P>
+
+<B>+hh:mm</B>
+
+은 현재의 시간에 대한 상대적인 차이를 지정한다. 컴퓨터는 정확히 hh시간과
+mm분과 몇초 동안 정지했다가 깨어날 것이다.
+<P>
+
+<B>hh:mm</B>
+
+은 절대적인 
+<B>지역 </B>
+
+시간을 24시 형식으로 지정한다. RTC에 저장된 시간은 중요하지 않다.
+보통 TZ 환경 변수를 가지고 시간대(time zone)를 변경할 수 있다.
+일광 절약 시간은 이 버전에서는 지원되지 않으나, 차기 버전에서는
+지원될 것이다.
+<DL COMPACT>
+<DT><B>-V, --version</B>
+
+<DD>
+<B>apmsleep</B>
+
+프로그램의 버전을 출력하고 즉시 종료한다.
+<DT><B>-s, --suspend</B>
+
+<DD>
+가능하다면 기계를 정지 상태에 들어가도록 한다.(기본값) 나의 랩탑에서는,
+정지 상태는 메모리를 제외한 모든것을 끈다.
+<DT><B>-S, --standby</B>
+
+<DD>
+가능하다면 기계를 대기 상태에 들어가도록 한다. 나의 랩탑에서는,
+대기 상태는 화면, 하드디스크, 그리고 CPU를 끈다.
+<DT><B>-w, --wait</B>
+
+<DD>
+시간의 급격한 변화를 무제한으로 기다린다.
+<DT><B>-n, --noapm</B>
+
+<DD>
+컴퓨터를 정지하기 위해 /usr/bin/apm을 호출하지 않고, 단지 알람 시간만
+설정하고 시간의 급격한 변화를 기다린다.
+<DT><B>-d, --debug</B>
+
+<DD>
+어떻게 되어가고 있는지에 대한 정보를 출력한다.
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>요구되는 시스템 설정</H2>
+
+<DL COMPACT>
+<DT><B>커널</B>
+
+<DD>
+특별한 문자 장치인 /dev/rtc 가 반드시 존재해야 하고 커널이 APM과 RTC
+를 지원하도록 컴파일되어야 한다.(CONFIG_RTC와 relevant CONFIG_APM* 옵션). 
+<DT><B>바이오스</B>
+
+<DD>
+컴퓨터가 바이오스에서 'suspend to RAM' 기능을 활성화 시켰어야한다.
+
+꺼질 것이기 때문이다. 알람 타이머를 활성화시킬 필요는 없고, 그것은
+apmsleep에 의해 활성화된다. 어떤 보드에서는 정지 상태에서 돌아오기 위해
+어떤 인터럽트를 사용할 것인지 설정할수도 있다. 이러한 보드를 가지고 있을
+경우에, 키보드(IRQ 1)와 RTC(IRQ 8)이 이러한 인터럽트가 되도록 설정하고
+싶을수도 있다.
+<DT><B>권한</B>
+
+<DD>
+이 프로그램은 루트로서 실행되거나 SUID가 설정되어 있어야 한다.
+(참조 <A HREF="http://localhost/cgi-bin/man/man2html?1+chmod">chmod</A>(1)).
+</DL>
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>버그</H2>
+
+Apmsleep은 어떤 이벤트가 정지 상태를 종료시켰는지 탐지할 수 없다.
+가능성이 있는 이벤트들은 키보드, 마우스의 움직임, 모뎀의 링, RTC에서의
+알람, 어떤 다른 인터럽트일 수 있다.
+<P>
+이 프로그램은 Winbook XL 랩탑 (펜티엄) 에서만 테스트되었다.
+당신의 하드웨어에서는 동작하지 않을수도 있다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>저자</H2>
+
+Peter Englmaier (<A HREF="mailto:ppe@pa.uky.edu">ppe@pa.uky.edu</A>) 에 의해 작성되었으며 GNU General Public
+License하에 자유롭게 배포될 수 있다. 코드는 Paul Gortmacher의 RTC
+테스트/예제 프로그램에 기반을 두고 있다. 이 프로그램에 대해 절대적인
+보장은 없다. 현재의 관리자는 is Peter Englmaier이다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+xapm">xapm</A></B>(1), <A HREF="http://localhost/cgi-bin/man/man2html?8+apmd">apmd</A><B>(8),</B>rtc.txt<B>(Linux Kernel Documentation)</B>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+서성용 &lt;<A HREF="mailto:freepooh@nownuri.net">freepooh@nownuri.net</A>&gt;, 2000년 5월 2일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">요구되는 시스템 설정</A><DD>
+<DT><A HREF="#lbAF">버그</A><DD>
+<DT><A HREF="#lbAG">저자</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

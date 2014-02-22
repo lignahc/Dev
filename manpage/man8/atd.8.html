@@ -1,0 +1,140 @@
+<HTML><HEAD><TITLE>Manpage of ATD</TITLE>
+</HEAD><BODY>
+<H1>ATD</H1>
+Section: 리눅스 프로그래머 매뉴얼 (8)<BR>Updated: 1997년 3월<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+atd - 나중에 수행하려고 등록한 작업을 실행한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>atd</B>
+
+[<B>-l</B>
+
+<I>load_avg</I>]
+
+[<B>-b</B>
+
+<I>batch_interval</I>]
+
+[<B>-d</B>]
+
+[<B>-s</B>]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>atd</B>는 <B><A HREF="http://localhost/cgi-bin/man/man2html?1+at">at</A>(1)</B>으로
+
+큐에 넣은 작업들을 실행한다.
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-l</B>
+
+<DD>
+일괄 작업이 실행되지 않아야 하는 제한 부하 상황을 명시한다. 컴파일 시에
+초기값으로 0.8이 사용된다.
+<I>n</I>개의
+
+CPU를 가진 SMP 시스템에서는
+<I>n-1</I>보다
+
+큰 값을 설정할 수도 있을 것이다.
+<DT><B>-b</B>
+
+<DD>
+두 일괄 작업의 최소 시작 시간 간격을 초 단위로 명시한다. (기본값은 60)
+<DT><B>-d</B>
+
+<DD>
+디버그; 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+syslog">syslog</A>(3)</B>를
+
+사용하는 대신에 표준 에러로 에러 메시지를 출력한다.
+<DT><B>-s</B>
+
+<DD>
+한 번에 at/batch 큐를 처리한다. 이는 이전 버전의
+<B>at</B>과의
+
+호환성을 위해 사용된다. 
+<B>atd -s</B>는
+
+오래된 
+<B>atrun</B>
+
+명령과 같다. 호환성을 위해 
+<B>atd -s</B>를
+
+실행하는 
+<B>/usr/sbin/atrun</B>
+
+스크립트가 설치된다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>파일</H2>
+
+<I>/var/spool/atjobs</I>
+
+작업을 저장하는 디렉토리; 소유자 at, 모드 700이여야 한다.
+<P>
+
+<I>/var/spool/atspool</I>
+
+결과를 저장하는 디렉토리; 소유자 at, 모드 700이여야 한다.
+<P>
+
+<I>/etc/at.allow</I>,
+
+<I>/etc/at.deny</I>
+
+<B>at </B>
+
+시스템을 사용할 수 있는 사용자를 결정한다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+at">at</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+atrun">atrun</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+cron">cron</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+crontab">crontab</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?3+syslog">syslog</A>(3), <A HREF="http://localhost/cgi-bin/man/man2html?5+at_deny">at_deny</A>(5), <A HREF="http://localhost/cgi-bin/man/man2html?5+at_allow">at_allow</A>(5)
+<A NAME="lbAH">&nbsp;</A>
+<H2>버그</H2>
+
+<B>atd</B>의
+
+기능은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+cron">cron</A>(1)</B>에
+
+합쳐져야 한다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+임종균 &lt;<A HREF="mailto:hermes44@secsm.org">hermes44@secsm.org</A>&gt;, 2000년 4월 27일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">파일</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">버그</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

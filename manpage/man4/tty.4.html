@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>Manpage of TTY</TITLE>
+</HEAD><BODY>
+<H1>TTY</H1>
+Section: Linux Programmer's Manual (4)<BR>Updated: January 21, 1992<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+tty - 제어 터미널
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+파일 <B>/dev/tty</B>는 문자 파일로서 메이저 넘버 5와 마이너 넘버 0을 지니며, 보통 모드 0666와 
+owner.group root.tty를 지닌다. 이 파일은 프로세스의 제어 터미널과 유사하다. 
+
+<P>
+
+<B>tty</B>가 참조하는 디바이스에 의해 지원된 <B>ioctl()</B> 요청외에도, 
+다음의 <B>ioctl()</B> 요청 역시 지원된다. 
+
+<DL COMPACT>
+<DT><B>TIOCNOTTY</B><DD>
+제어 터미널에서 현재 프로세스를 떼어내고, 이를 새로운 프로세스 그룹에 
+부착할 필요 없이, 현재 프로세스 그룹에서 삭제한다. (그룹 ID를 0으로 설정한다.)
+<B>ioctl()</B> 호출은 <B>/dev/tty</B>에 연결된 파일 기술자에서만 동작한다. 이는
+터미널에서 사용자에 의해 데몬 프로세스들이 시작되었을 때, 데몬 프로세스에 의해 사용된다. 
+프로세스는 <B>/dev/tty</B>를 열고자 한다. 만일 여는 것이 성공적이라면, <B>TIOCNOTTY</B>를 
+사용함으로서 터미널에서 자신을 제거시킨다. 반면에 여는 것이 실패하면, 터미널에서 첨부될
+필요가 없으므로 자신을 제거할 필요가 없다. 
+
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>파일</H2>
+
+/dev/tty
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mknod">mknod</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+chown">chown</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+getty">getty</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+termios">termios</A></B>(2), 
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+console">console</A></B>(4), <B><A HREF="http://localhost/cgi-bin/man/man2html?4+ttys">ttys</A></B>(4)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">파일</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

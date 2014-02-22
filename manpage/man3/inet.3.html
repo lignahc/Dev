@@ -1,0 +1,122 @@
+<HTML><HEAD><TITLE>Manpage of INET</TITLE>
+</HEAD><BODY>
+<H1>INET</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1995년 9월 3일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+inet_aton, inet_addr, inet_network, inet_ntoa, inet_makeaddr, inet_lnaof, 
+inet_netof - 인터넷 주소 조작 루틴들
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</B>
+<B>#include &lt;<A HREF="file:/usr/include/netinet/in.h">netinet/in.h</A>&gt;</B>
+<B>#include &lt;<A HREF="file:/usr/include/arpa/inet.h">arpa/inet.h</A>&gt;</B>
+
+<B>int inet_aton(const char *</B><I>cp</I><B>, struct in_addr *</B><I>inp</I><B>);</B>
+
+<B>unsigned long int inet_addr(const char *</B><I>cp</I><B>);</B>
+
+<B>unsigned long int inet_network(const char *</B><I>cp</I><B>);</B>
+
+<B>char *inet_ntoa(struct in_addr </B><I>in</I><B>);</B>
+
+<B>struct in_addr inet_makeaddr(int </B><I>net</I><B>, int </B><I>host</I><B>);</B>
+
+<B>unsigned long int inet_lnaof(struct in_addr </B><I>in</I><B>);</B>
+
+<B>unsigned long int inet_netof(struct in_addr </B><I>in</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>inet_aton()</B> 함수는 표준 수-점 표기인 인터넷 호스트 주소 <I>cp</I>를 이진 
+데이터로 바꾼다. 그리고 <I>inp</I> 이 가리키는 구조체에 저장한다. 만일 주소가
+유효하다면 0 이 아닌 값이 반환되며 무효하다면 0 이 반환된다.
+<P>
+
+<B>inet_addr()</B> 함수는 수-점 표기인 인터넷 호스트 주소 <I>cp</I>를 네트웍 바이트 순서인
+이진 데이터로 바꾼다. 만일 입력이 유효하지 않다면, INADDR_NONE (보통 -1)이 반환된다.
+이 함수는 위에서 언급한 <B>inet_aton</B>에 대한 구식 인터페이스이다.; 이 함수는 쓸모없다.
+왜냐하면 -1은 유효한 주소(255.255.255.255)이고, <B>inet_aton</B>는 에러가 리턴되었음을 가리키는
+확실한 방법을 제공하기 때문이다.
+<P>
+
+<B>inet_network()</B> 함수는 수-점 표기인 주소 <I>cp</I>에서 호스트 바이트 순서인 네트웍 수를
+알아낸다. 입력이 유효하지 않다면, -1이 리턴된다. 
+<P>
+
+<B>inet_ntoa()</B> 함수는 네트웍 바이트 순서로 주어진 인터넷 호스트 주소 <I>in</I>을 표준
+점-수 표기의 문자열로 바꾼다.
+문자열은 정적으로 할당된 버퍼로 반환되며 이 함수의 연속적인 호출은 이 공간을 덮어 쓴다.
+<P>
+
+<B>inet_makeaddr()</B> 함수는 둘다 로컬 호스트 바이트 순서인 네트웍 수 <I>net</I>와
+네트웍 <I>net</I>내 로컬 주소 <I>host</I>를 결합하여 네트웍 바이트 순서인 인터넷 호스트 주소를
+만든다.
+<P>
+
+<B>inet_lnaof()</B> 함수는 인터넷 주소 <I>in</I>의 로컬 호스트 주소 부분을 반환한다.
+로컬 호스트 주소는 지역 호스트 바이트 순서로 반환된다.
+<P>
+
+<B>inet_netof()</B> 함수는 인터넷 주소 <I>in</I> 의 네트웍 수 부분은 반환한다.  
+네트웍 수는 지역 호스트 바이트 순서로 반환된다.
+<P>
+
+<B>inet_makeaddr()</B>, <B>inet_lnoaf()</B> 그리고 <B>inet_netof()</B> 에서 사용되는
+구조체 <I>in_addr</I>는 <I>netinet/in.h</I>에 정의되어 있다:
+<P>
+<DL COMPACT><DT><DD>
+<PRE>
+
+struct in_addr {
+        unsigned long int s_addr;
+}
+
+</PRE>
+
+</DL>
+
+<P>
+
+i80x86에서 호스트 바이트 순서는 Least Significant Byte가 처음이고, 반면에 인터넷에서 사용되는 
+것처럼 네트웍 바이트 순서는 Most Significant Byte가 처음이다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>호환</H2>
+
+BSD 4.3
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+gethostbyname">gethostbyname</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+getnetent">getnetent</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+hosts">hosts</A></B>(5), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+networks">networks</A></B>(5)
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 3월 12일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">호환</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+<DT><A HREF="#lbAG">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,377 @@
+<HTML><HEAD><TITLE>Manpage of DIR_COLORS</TITLE>
+</HEAD><BODY>
+<H1>DIR_COLORS</H1>
+Section: File Formats (5)<BR>Updated: 1998년 11월<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+dir_colors - <A HREF="http://localhost/cgi-bin/man/man2html?1+dircolors">dircolors</A>(1)을 위한 설정파일.
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+The
+<B>dir_colors</B>
+
+파일은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ls">ls</A></B>(1)
+
+를 위한 컬러정보를 지원하는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+dircolors">dircolors</A></B>(1)
+
+프로그램을 위한 설정정보를 포함한다.
+<I>.dir_colors</I>
+
+와 같이 각자의 홈디렉토리에 카피본을 가지고 있고,
+보통은
+<I>/etc</I>
+
+에서 찾을 수 있다.
+
+<DL COMPACT>
+<DT><B>TERM </B><I>terminal-type</I>
+
+<DD>
+terminal-specific 섹션을 시작하고 그것을 적용하는 터미널을 지정한다.
+멀티플
+<B>TERM</B>
+
+서술문은 여러 터미널 타입을 문의하는 섹션을 생성하는데 사용될 수 있다.
+<DT><B>EIGHTBIT yes|no</B>
+
+<DD>
+8비트 ISO 8859 문자가 기본값에 의해 가능해야만 지정한다. 호환성 판단는 또한
+yes는 1, no는 0으로써 지정된다. 기본값은 no이다.
+<DT><B>OPTIONS </B><I>options</I>
+
+<DD>
+기본 
+<B>ls</B>
+
+커맨드라인에 커맨드 라인 옵션을 추가한다. 옵션은 모든 유효한 
+<B>ls</B>
+
+커맨드 라인 옵션일 수 있고, 음부호를 포함해야한다. 
+<B>dircolors</B>
+
+는 이러한 옵션들의 유효성을 입중하진 못한다는 것을 주지한다.
+<DT><B>NORMAL </B><I>color-sequence</I>
+
+<DD>
+보통의 텍스트를 위해 사용되는 색을 지정한다.
+<DT><B>FILE </B><I>color-sequence</I>
+
+<DD>
+보통파일을 위해 사용되는 색을 지정한다.
+<DT><B>DIR </B><I>color-sequence</I>
+
+<DD>
+디렉토리를 위해 사용되는 색을 지정한다.
+<DT><B>LINK </B><I>color-sequence</I>
+
+<DD>
+심볼릭링크를 위해 사용되는 색을 지정한다.
+<DT><B>ORPHAN </B><I>color-sequence</I>
+
+<DD>
+깨진 링크를 위해 사용되는 색을 지정한다. 지정되지 않았다면 
+<B>ls</B>
+
+는 
+<B>LINK</B>
+
+색을 대신 사용한다.
+<DT><B>MISSING </B><I>color-sequence</I>
+
+<DD>
+없어진 파일을 위해 사용되는 색을 지정한다. 지정되지 않았다면
+<B>ls</B>
+
+는
+<B>FILE</B>
+
+색을 대신 사용한다.
+<DT><B>FIFO </B><I>color-sequence</I>
+
+<DD>
+FIFO를 위해 사용되는 색을 지정한다.
+<DT><B>SOCK </B><I>color-sequence</I>
+
+<DD>
+소켓을 위해 사용되는 색을 지정한다.
+<DT><B>BLK </B><I>color-sequence</I>
+
+<DD>
+블록 장치 파일(special file)을 위해 사용되는 색을 지정한다.
+<DT><B>CHR </B><I>color-sequence</I>
+
+<DD>
+문자 장치 파일(special file)을 위해 사용되는 색을 지정한다.
+<DT><B>EXEC </B><I>color-sequence</I>
+
+<DD>
+실행속성을 가진것을 위해 사용되는 색을 지정한다.
+<DT><B>LEFTCODE </B><I>color-sequence</I>
+
+<DD>
+비-ISO&nbsp;6429터미널(아래를 본다.)을 위한
+<I>left code</I>
+
+을 지정한다.
+<DT><B>RIGHTCODE </B><I>color-sequence</I>
+
+<DD>
+비-ISO&nbsp;6429터미널(아래를 본다.)을 위한
+<I>right code</I>
+
+을 지정한다.
+<DT><B>ENDCODE </B><I>color-sequence</I>
+
+<DD>
+비-ISO&nbsp;6429터미널(아래를 본다.)을 위한
+<I>end code</I>
+
+을 지정한다.
+<DT><B>*</B><I>extension</I> <I>color-sequence</I><DD>
+<I>extension</I>으로 끝나는 모든 파일을 위해 사용되는 색을 지정한다.
+<DT><B> .</B><I>extension</I> <I>color-sequence</I><DD>
+<B>*</B>.<I>extension</I>와 같다. .<I>extension</I>으로 끝나는 모든 파일을 
+위해 사용되는 색을 지정한다.
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>ISO 6429 (ANSI) COLOR SEQUENCES</H2>
+
+오늘날 대부분의 색-가용 ASCII터미널들은 ISO 6429 (ANSI) color sequences
+을 사용한다. 그리고 색가용성이 없는 많은 터미널들은 ISO 6429 color 코드를 
+인식하거나 출력이나 에뮬로부터 그것을 제거한다.
+<B>ls</B>
+
+는 전자채색이 가능한 기본값으로 ISO 6429 코드를 사용한다.
+
+ISO 6429 color sequences는 세미콜론으로 나뉘어지는 sequences로 구성된다. 
+대부분 공통적인 코드는 다음과 같다:
+<P>
+<DL COMPACT><DT><DD>
+
+
+<BR>&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;밝은&nbsp;색을&nbsp;위해
+<BR>&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;언더라인&nbsp;텍스트를&nbsp;위해
+<BR>&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;번쩍거리는&nbsp;텍스트를&nbsp;위해
+30     검은 전경을 위해
+31     빨간 전경을 위해
+32     녹색 전경을 위해
+33     노란(혹은 갈색) 전경을 위해
+34     파란  전경을 위해
+35     자주색  전경을 위해
+36     청록색 전경을 위해
+37     하얀색(혹은 회색) 전경을 위해
+40     검은 배경을 위해
+41     빨간 배경을 위해
+42     녹색 전경을 위해
+43     노란(혹은 갈색) 배경을 위해
+44     파란 배경을 위해
+45     자주색 배경을 위해
+46     청록색 배경을 위해
+47     하얀색(혹은 회색)배경을 위해
+
+</DL>
+
+<P>
+모든 명령이 모든 시스템 혹은 화면에서 작동되지는 않는다.
+<P>
+
+<B>ls</B>
+
+는 다음의 기본값을 사용한다:
+<P>
+<DL COMPACT><DT><DD>
+
+
+<B>FILE</B>     0       보통파일
+<B>DIR</B>      32      디렉토리
+<B>LINK</B>     36      심볼릭 링크
+<B>ORPHAN</B>   undefined       깨진 심볼릭링크
+<B>MISSING</B>  undefined       사라진 파일
+<B>FIFO</B>     31      FIFO
+<B>SOCK</B>     33      소켓
+<B>BLK</B>      44;37   블록장치
+<B>CHR</B>      44;37   문자장치
+<B>EXEC</B>     35      실행파일
+
+</DL>
+
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>OTHER TERMINAL TYPES (ADVANCED CONFIGURATION)</H2>
+
+당신이 코드의 다른 설정을 사용하는 색-가용 터미널을 가졌다면 당신은 
+적당한 설정을 할 수 있다. 그렇게 하기위해 당신은 
+<B>LEFTCODE</B>,
+
+<B>RIGHTCODE</B>,
+
+and
+<B>ENDCODE</B>
+
+정의를 사용해야만 한다.
+<P>
+
+파일명을 출력할때, 
+<B>ls</B>
+
+는 다음과 같은 출력결과를 보인다:
+<B>LEFTCODE</B>
+
+<I>typecode</I>
+
+<B>RIGHTCODE</B>
+
+<I>filename</I>
+
+<B>ENDCODE</B>,
+
+여기서
+<I>typecode</I>
+
+는 파일의 타입이나 이름에 의존하는 색결과이다. 
+<B>ENDCODE</B>
+
+가 정의 되지 않았다면, 결과
+<B>LEFTCODE NORMAL RIGHTCODE</B>
+
+가 대신 사용될 것이다. left- and rightcodes의 목적은 단지 필요한 타이핑을 줄이는 것이다.
+당신의 터미널을 전유하지 못한다면, 당신은 각각의 키워드를 지정함으로 제거할 수 있다.
+<P>
+
+<B>NOTE:</B>
+
+<B>ENDCODE</B>
+
+가 셋업파일의 글로벌 섹션을 정의한다면, 파일의 terminal-specific섹션을 정의 할 수 없다.
+이것은 모든  
+any
+<B>표준</B>
+
+정의가 영향력이 없음을 의미한다. 
+그러나 서로다른 
+<B>ENDCODE</B>
+
+는 같은 효과를 갖도록 지정될 수 있다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>ESCAPE SEQUENCES</H2>
+
+C-style \-escaped 표기법,  
+<B>stty</B>-style
+
+^-표기법,  색결과 혹은 파일명 확장안의 제어 혹은 공백 문자들을 지정하기 위해 사용될 수 있다.
+C-style 표기법은 다음과 같은 문자를 포함한다:
+<P>
+<DL COMPACT><DT><DD>
+
+
+<B>\b</B>      Backspace (ASCII 8)
+<B>\e</B>      Escape (ASCII 27)
+<B>\f</B>      Form feed (ASCII 12)
+<B>\n</B>      Newline (ASCII 10)
+<B>\r</B>      Carriage Return (ASCII 13)
+<B>\t</B>      Tab (ASCII 9)
+<B>\v</B>      Vertical Tab (ASCII 11)
+<B>\?</B>      Delete (ASCII 127)
+<B>\</B><I>nnn</I> Any character (octal notation)
+<B>\x</B><I>nnn</I>        Any character (hexadecimal notation)
+<B>\_</B>      Space
+<B>\\</B>     Backslash (\)
+<B>\^</B>      Caret (^)
+<B>\#</B>      Hash mark (#)
+
+</DL>
+
+<P>
+이스케이프는 space, backslash, caret 혹은 해쉬마크 같은 문자열의 모든 제어문자
+를 입력하기 위해 필요하다.
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+ISO 6429 터미널에 의해 사용되는 기본
+<B>LEFTCODE</B>
+
+와
+<B>RIGHTCODE</B>
+
+정의는 다음과 같다.
+<P>
+<DL COMPACT><DT><DD>
+
+
+<B>RIGHTCODE</B> m
+
+</DL>
+
+<P>
+기본
+<B>ENDCODE</B>
+
+는 정의 할 수 없다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+dircolors">dircolors</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ls">ls</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+stty">stty</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+xterm">xterm</A></B>(1)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>파일</H2>
+
+<DL COMPACT>
+<DT><I>/etc/dir_colors</I>
+
+<DD>
+<B>dircolors.</B>
+
+를 위한 System-wide 설정파일.
+<DT><I>~/.dir_colors</I>
+
+<DD>
+<B>dircolors</B>.
+
+를 위한 개별 사용자 설정파일
+</DL>
+<A NAME="lbAJ">&nbsp;</A>
+<H2>주의</H2>
+
+이 페이지는 fileutils-4.0패키지에서 찾을 수 있는
+<B>dir_colors</B>
+
+파일 포맷을 묘사한다. 다른 버전과는 약간 다를 수 있음. 추가및
+수정은 <A HREF="mailto:aeb@cwi.nl">aeb@cwi.nl</A>로 메일을 주기 바라며, 버그에 대한 리포트는
+<A HREF="mailto:fileutils-bugs@gnu.ai.mit.edu">fileutils-bugs@gnu.ai.mit.edu</A>로 메일을 주기 바란다.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">ISO 6429 (ANSI) COLOR SEQUENCES</A><DD>
+<DT><A HREF="#lbAE">OTHER TERMINAL TYPES (ADVANCED CONFIGURATION)</A><DD>
+<DT><A HREF="#lbAF">ESCAPE SEQUENCES</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">파일</A><DD>
+<DT><A HREF="#lbAJ">주의</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,73 @@
+<HTML><HEAD><TITLE>Manpage of SHELLS</TITLE>
+</HEAD><BODY>
+<H1>SHELLS</H1>
+Section: 리눅스 프로그래머 매뉴얼 (5)<BR>Updated: November 21, 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+shells - 유효한 login 쉘의 패스명
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>/etc/shells</B>
+
+는 유효한 login 쉘의 절대 경로명을 가진 텍스트 파일이다.
+이 파일은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+chsh">chsh</A></B>(1)
+
+에 의해 참조되고, 다른 프로그램에 의한 참조도 가능하다.
+
+
+사용자가 정상적인 사용자인지를 판단하기 위해, 이 파일을 참조하는 프로그램이 있다는 사실을 유의하라. 예: ftp 데몬은 전통적으로 이 파일에 포함되어 있지 않은 쉘을 통한 사용자들의 접근은 허락하지 않는다.
+<A NAME="lbAD">&nbsp;</A>
+<H2>예제</H2>
+
+<B>/etc/shells</B>
+
+는 다음과 같은 패스명을 가진다:
+<P>
+<DL COMPACT><DT><DD>
+<B>/bin/sh</B>
+
+<BR>
+
+<B>/bin/csh</B>
+
+</DL>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>파일</H2>
+
+<I>/etc/shells</I>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+chsh">chsh</A></B>(1)
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>역자 </H2>
+
+배성훈 &lt;<A HREF="mailto:plodder@kldp.org">plodder@kldp.org</A>&gt;, 2000년 5월 13일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">예제</A><DD>
+<DT><A HREF="#lbAE">파일</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+<DT><A HREF="#lbAG">역자 </A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

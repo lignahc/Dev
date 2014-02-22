@@ -1,0 +1,186 @@
+<HTML><HEAD><TITLE>Manpage of FILESYSTEMS</TITLE>
+</HEAD><BODY>
+<H1>FILESYSTEMS</H1>
+Section: Linux Programmer's Manual (5)<BR>Updated: 25 March 1996<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+filesystems - Linux filesystem types: minix, ext, ext2, xia, msdos,
+umsdos, vfat, proc, nfs, iso9660, hpfs, sysv, smb, ncpfs
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<I>/proc/filesystems</I>
+
+파일에서 당신의 커널에서 지원하는 파일 시스템을 찾을 수 있다.
+(현제 지원되지 않는 것을 원한다면, 대응하는 모듈을 넣거나, 커널을 다시 컴파일 하라)
+
+아래는 여러 가지 파일 시스템에 대한 설명이다.
+
+<DL COMPACT>
+<DT>
+<DD>
+<B>minix</B>
+
+은 Minix 운영체제에서 쓰이는 Linux에서 사용할 수 있는 파일 시스템이다.
+이것은 몇가지 결점이 있다: 64MB 파티션 크기 제한, 짧은 파일 이름 등..sp
+하지만 플로피나 RAM 디스크에는 유용하다.
+
+<DT><B>ext</B>
+
+<DD>
+는 
+<B>minix</B>
+
+파일 시스템의 정교한 확장이다. 이것은 두번째 버전의 확장 파일 시스템
+(<B>ext2</B>)
+
+에 완전히 대체되었고 결국 커널에서 지워졌다.
+
+<DT><B>ext2</B>
+
+<DD>
+는 고정 디스크를 리무버블 미디어와 마찬가지로 리눅스 상에서 사용되는 고 성는 디스크 파일 시스템이다.
+<P>
+두번째 확장 파일 시스템은 확장 파일 시스템의 확장형태로 디자인 되었다.
+(<B>ext</B>).
+
+<B>ext2</B>
+
+는 리눅스상에서 지원되는 파일 시스템의 최고의 성능을(속도와 CPU활용상에서) 제공한다.
+
+<DT><B>xiafs</B>
+
+<DD>
+는 Minix 파일시스템 코드를 확장함으로써 안정성을 중심으로 디자인 되었고, 또 충족시키고 있다
+
+<B>xia</B>
+
+파일 시스템은 더 이상 활발히 계발 되거나 유지되지 않고 있다.
+이것이 사용되는 것은 드물다.
+
+<DT><B>msdos</B>
+
+<DD>
+는 DOS, Window와 몇몇 OS/2 컴퓨터에서 사용되는 파일 시스템이다.
+<B>msdos</B>
+
+파일 시스템은 홉션에 따른 8 글자의 파일명과 3 글자의 확장명만이 가능하다.
+<BR>&nbsp;
+
+<DT><B>umsdos</B>
+
+<DD>
+는 리눅스에서 사용되는 확장 도스 파일 시스템이다. 이것은 긴 파일 이름과 UID/GID, POSIX, 특수 파일(devices, named popes, etc)을 도스 파일 시스템상에서 도스의 기능을 희생하지 않고 사용 할 수 있다.
+
+<DT><B>vfat</B>
+
+<DD>
+는 MS Window95와 Window NT에서 사용되는 도스 파일 시스템이다.
+VFAT는 MS 도스 파일 시스템에 긴 파일 이름 기능을 추가하였다.
+
+<DT><B>proc</B>
+
+<DD>
+는 읽기나 인터페이싱 보단 커널 데이터 구조를 위한 인터페이스로 사용되는 pseudo 파일 시스템이다. 
+<I>/dev/kmem</I>.
+
+특이하게 이 파일은 디스크 공간을 차지하지 않는다. <A HREF="http://localhost/cgi-bin/man/man2html?5+proc">proc</A>(5)를 참조하라.
+
+<DT><B>iso9660</B>
+
+<DD>
+는 ISO 9660 표준을 따르는 CD-ROM 파일 시스템 형태이다.
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>High Sierra</B>
+
+<DD>
+리눅스는 ISO 9660 표준의 전신인 High Sierra를 지원한다
+<B>iso9660</B>
+
+파일 시스템에서 자동으로 인식된다.
+<DT><B>Rock Ridge</B>
+
+<DD>
+Linux는 Rock Ridge 교환 프로토콜로 분류되는 System Use Sharing Protocol 역시 지원한다. 그것들은 더 나아가서 유닉스 호스트에게 
+<B>iso9660</B>
+
+파일 시스템상에서 파일을 알리고, 긴 파일이름이나 UID/GID, POSIX 인가, 그리고 디바이스와 같은 정보를 알린다. 이것은 자동으로
+<B>iso9660</B>
+
+파일 시스템상에서 인식된다.
+</DL>
+</DL>
+
+
+<DT><B>hpfs</B>
+
+<DD>
+는 OS/2에서 쓰이는 고성능 파일 시스템이다. 이것은 리눅스상에서는 가능한 문서의 부족 때문에 읽기만 가능하다.
+
+<DT><B>sysv</B>
+
+<DD>
+는 리눅스를 위한 SystemV/Coherent 실행 시스템이다. 
+이것은 모든 Xenix FS, SystemV/386 FS, Coherent FS을 실행한다.
+
+<DT><B>nfs</B>
+
+<DD>
+는 원거리 컴퓨터에 있는 디스크에 접근할 때 쓰이는 네트웍 파일 시스템이다.
+<DT>
+<DD>
+<B>smb</B>
+
+는 Windows Workgroups, Windows NT, Lan Manager에서 쓰이는 SMB 프로토콜을 지원하는 네트웍 파일 시스템이다.
+<P>
+<B>smb</B>
+
+파일 시스템을 사용하기 위해선 ksmbfs 패키지에서 구할 수 있는 특별한 마운트 프로그램이 필요하다  패키지는 아래에서 구할 수 있다.
+<I><A HREF="ftp://sunsite.unc.edu/pub/Linux/system/Filesystems/smbfs">ftp://sunsite.unc.edu/pub/Linux/system/Filesystems/smbfs</A></I>.
+
+
+<DT><B>ncpfs</B>
+
+<DD>
+는 Novell NetWare에서 사용하는 NCP 프로토콜을 지원하는 네트웍 파일 시스템이다.
+<P>
+<B>ncpfs</B>,
+
+를 사용하기 위해선 아래에서 구할 수 있는 특별한 프로그램이 필요하다.
+<I><A HREF="ftp://linux01.gwdg.de/pub/ncpfs">ftp://linux01.gwdg.de/pub/ncpfs</A></I>.
+
+
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+proc">proc</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck">fsck</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mkfs">mkfs</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8).
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

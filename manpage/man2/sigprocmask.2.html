@@ -1,0 +1,482 @@
+<HTML><HEAD><TITLE>Manpage of SIGACTION</TITLE>
+</HEAD><BODY>
+<H1>SIGACTION</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: 8 May 1999<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+sigaction, sigprocmask, sigpending, sigsuspend - POSIX 시그널 처리 함수 
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/signal.h">signal.h</A>&gt;</B>
+
+<P>
+<B>int sigaction(int </B><I>signum</I><B>, const struct sigaction *</B><I>act</I><B>,</B>
+
+<B>struct sigaction *</B><I>oldact</I><B>);</B>
+
+<P>
+<B>int sigprocmask(int </B><I>how</I><B>, const sigset_t *</B><I>set</I><B>, </B>
+
+<B>sigset_t *</B><I>oldset</I><B>);</B>
+
+<P>
+<B>int sigpending(sigset_t *</B><I>set</I><B>);</B>
+
+<P>
+<B>int sigsuspend(const sigset_t *</B><I>mask</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+The
+<B>sigaction</B>
+
+시스템 호출은 특정 시그널의 수신 상에서 프로세스에 의해 취해진 액션을 변경하는데 사용된다. 
+<P>
+
+<I>signum</I>
+
+는 시그널을 명시하고, 
+<B>SIGKILL</B>
+
+그리고
+<B>SIGSTOP을</B>제외하고는<B>타당한</B>시그널이<B>될</B>수<B>있다.</B>
+
+<P>
+
+만일 
+<I>act 이 -null이 아니라면</I>
+
+시그널.I signum에 대한 새로운 액션은 .IR act에서 설치된다.
+만일 
+<I>oldact</I>
+
+이 -null이 아니라면, 이전의 액션은 .IR oldact에 저장된다.
+<P>
+
+<B>sigaction</B>
+
+구조는 다음과 같이 정의된다.
+<P>
+<DL COMPACT><DT><DD>
+<PRE>
+struct sigaction {
+    void (*sa_handler)(int);
+    void (*sa_sigaction)(int, siginfo_t *, void *);
+    sigset_t sa_mask;
+    int sa_flags;
+    void (*sa_restorer)(void);
+}
+</PRE>
+
+</DL>
+
+<P>
+
+<I>sa_restorer</I>
+
+요소는 안 쓰이는 것이어서, 사용되어서는 안된다. 
+POSIX는  .I sa_restorer요소를 명시할 수 없다. 
+<P>
+
+<I>sa_handler</I>
+
+는 .I signum와 관련된 액션을 명시하고, 디폴트 액션에 대해 
+이 시그널을 무시하기 위한
+<B>SIG_DFL 또는</B>
+
+<B>SIG_IGN 이거나, 시그널 처리 함수에 대한 지시자가 될 수 있다.</B>
+
+<P>
+
+<I>sa_mask</I>
+
+gives a mask of signals which should be blocked during execution of
+the signal handler.  In addition, the signal which triggered the handler
+will be blocked, unless the
+는 시그널 처리기의 실행 동안 블록화되어야 하는 시그널의 마스크를 제공한다. 
+게다가, .B SA_NODEFER
+또는
+<B>SA_NOMASK이 사용되지 않으면, 핸들러를 시동시키는 시그널은 블록화된다. </B>
+
+<P>
+
+<I>sa_flags</I>
+
+는 시그널 처리 프로세스의 행위를 수정하는 일련의 플래그들을 명시한다. 이는 bitwise 혹은 
+zero 혹은 다음 중 그 이상의 것들에 의해 형성된다. 
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>SA_NOCLDSTOP</B>
+
+<DD>
+만일 
+<I>signum</I>
+
+<B>SIGCHLD</B>, 
+
+이 자식 프로세스가 중지되었을때, 이 통고를 수신하지 못하면, 
+<BR>&nbsp;(예를&nbsp;들어,&nbsp;자식&nbsp;프로세스들이&nbsp;
+<B>SIGSTOP</B>, <B>SIGTSTP</B>, <B>SIGTTIN</B>
+
+또는
+<B>SIGTTOU을</B>수신<B>할때)</B>
+
+<DT><B>SA_ONESHOT</B> 또는 <B>SA_RESETHAND</B>
+
+<DD>
+일단 시그널 처리기가 호출되면, 디폴트 상태에 대한 시그널 액션을 재저장한다.  
+(이는 .BR signal (2) 호출에 대한 기본 행위이다.)
+<DT><B>SA_RESTART</B>
+
+<DD>
+일부 시스템 호출들이 시그널을 통해 재시작할 수 있도록 함으로서 
+BSD 시그널 의미와 호환되는 행위를 제공한다.
+<DT><B>SA_NOMASK</B> or <B>SA_NODEFER</B>
+
+<DD>
+시그널이 자체 시그널 처리기로부터 수신받지 않도록 한다. 
+<DT><B>SA_SIGINFO</B>
+
+<DD>
+The signal handler takes 3 arguments, not one.  In this case,
+should be set instead of
+시그널 처리기는 하나가 아닌, 3개의 인수를 취한다. 이 경우, 
+<I>sa_handler</I>대신에<I>.I</I>sa_sigaction이<I>설정되어야</I>한다.<I></I>
+
+(sa_sigaction 필드는 리눅스 2.1.86에서 추가되었다.)
+</DL>
+</DL>
+
+<P>
+
+<I>sa_sigaction에 대한 .I siginfo_t 변수는 다음의 요소들을 지닌 구조체(struct)이다.</I>
+
+<P>
+<DL COMPACT><DT><DD>
+<PRE>
+
+    int      si_errno;  /* errno 값 */
+    int      si_code;   /* 시그널 코드 */
+    pid_t    si_pid;    /* 프로세스 ID 보내기 */
+    uid_t    si_uid;    /* 프로세스를 전송하는 실제 사용자 ID */
+    int      si_status; /* Exit 값 또는 시그널 */
+    clock_t  si_utime;  /* 소모된 사용자 시간 */
+    clock_t  si_stime;  /* 소모된 시스템 시간 */
+    sigval_t si_value;  /* 시그널 값 */
+    int      si_int;    /* POSIX.1b 시그널 */
+    void *   si_ptr;    /* POSIX.1b 시그널 */
+    void *   si_addr;   /* 실패를 초래한 메모리 위치 */
+    int      si_band;   /* 밴드 이벤트 */
+    int      si_fd;     /* 파일 기술자 */
+}
+</PRE>
+
+</DL>
+
+
+<I>si_signo</I>, <I>si_errno</I> 그리고 <I>si_code은</I>모든<I>시그널에</I>대해<I>정의되었다.</I>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+kill">kill</A></B>(2),
+
+POSIX.1b 시그널과 SIGCHLD은
+<I>si_pid</I> 과 <I>si_uid을</I>채운다.
+
+<B></B>
+
+SIGCHLD은 또한 
+<I>si_status</I>, <I>si_utime</I> 그리고 <I>si_stime을</I>채운다.
+
+<I>si_int</I> 그리고 <I>si_ptr은</I>POSIX.1b<I>시그널의</I>송신자에<I>의해</I>명시된다.
+
+좀더 자세한 사항을 보려면, 
+
+SIGILL, SIGFPE, SIGSEGV 그리고 SIGBUS은 
+<I>si_addr를 오류의 주소로 채운다. </I>
+
+SIGPOLL 은 
+<I>si_band</I>와<I>si_fd를</I>채운다.
+
+
+<I>si_code</I>
+
+는 왜 시그널이 보내졌는지에 대해 지시한다. 이는 bitmask,가 아닌 값이다. 
+모든 시그널에 대해 가능한 값은 이 테이블에 나열되어 있다.   
+<TABLE>
+<TR VALIGN=top><TD><B><I>si_code</I></B></TD><TD></TD><TD></TD><TD><B></B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=2>Value:Signal origin</TD></TR>
+<TR VALIGN=top><TD>SI_USER:kill, sigsend or raise</TD><TD></TD></TR>
+<TR VALIGN=top><TD>SI_KERNEL:The kernel</TD><TD></TD></TR>
+<TR VALIGN=top><TD>SI_QUEUE:sigqueue</TD><TD></TD></TR>
+<TR VALIGN=top><TD>SI_TIMER:timer expired</TD><TD></TD></TR>
+<TR VALIGN=top><TD>SI_MESGQ:mesq state changed</TD><TD></TD></TR>
+<TR VALIGN=top><TD>SI_ASYNCIO:AIO completed</TD><TD></TD></TR>
+<TR VALIGN=top><TD>SI_SIGIO:queued SIGIO</TD><TD></TD></TR>
+</TABLE>
+
+
+<TABLE>
+<TR VALIGN=top><TD><B>SIGILL</B></TD><TD></TD><TD></TD><TD><B></B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=2>ILL_ILLOPC:illegal opcode</TD></TR>
+<TR VALIGN=top><TD>ILL_ILLOPN:illegal operand</TD><TD></TD></TR>
+<TR VALIGN=top><TD>ILL_ILLADR:illegal addressing mode</TD><TD></TD></TR>
+<TR VALIGN=top><TD>ILL_ILLTRP:illegal trap</TD><TD></TD></TR>
+<TR VALIGN=top><TD>ILL_PRVOPC:privileged opcode</TD><TD></TD></TR>
+<TR VALIGN=top><TD>ILL_PRVREG:privileged register</TD><TD></TD></TR>
+<TR VALIGN=top><TD>ILL_COPROC:coprocessor error</TD><TD></TD></TR>
+<TR VALIGN=top><TD>ILL_BADSTK:internal stack error</TD><TD></TD></TR>
+</TABLE>
+
+
+<TABLE>
+<TR VALIGN=top><TD><B>SIGFPE</B></TD><TD></TD><TD></TD><TD><B></B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=2>FPE_INTDIV:integer divide by zero</TD></TR>
+<TR VALIGN=top><TD>FPE_INTOVF:integer overflow</TD><TD></TD></TR>
+<TR VALIGN=top><TD>FPE_FLTDIV:floating point divide by zero</TD><TD></TD></TR>
+<TR VALIGN=top><TD>FPE_FLTOVF:floating point overflow</TD><TD></TD></TR>
+<TR VALIGN=top><TD>FPE_FLTUND:floating point underflow</TD><TD></TD></TR>
+<TR VALIGN=top><TD>FPE_FLTRES:floating point inexact result</TD><TD></TD></TR>
+<TR VALIGN=top><TD>FPE_FLTINV:floating point invalid operation</TD><TD></TD></TR>
+<TR VALIGN=top><TD>FPE_FLTSUB:subscript out of range</TD><TD></TD></TR>
+</TABLE>
+
+
+<TABLE>
+<TR VALIGN=top><TD><B>SIGSEGV</B></TD><TD></TD><TD></TD><TD><B></B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=2>SEGV_MAPERR:address not mapped to object</TD></TR>
+<TR VALIGN=top><TD>SEGV_ACCERR:invalid permissions for mapped object</TD><TD></TD></TR>
+</TABLE>
+
+
+<TABLE>
+<TR VALIGN=top><TD><B>SIGBUS</B></TD><TD></TD><TD></TD><TD><B></B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=2>BUS_ADRALN:invalid address alignment</TD></TR>
+<TR VALIGN=top><TD>BUS_ADRERR:non-existant physical address</TD><TD></TD></TR>
+<TR VALIGN=top><TD>BUS_OBJERR:object specific hardware error</TD><TD></TD></TR>
+</TABLE>
+
+
+<TABLE>
+<TR VALIGN=top><TD><B>SIGTRAP</B></TD><TD></TD><TD></TD><TD><B></B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=2>TRAP_BRKPT:process breakpoint</TD></TR>
+<TR VALIGN=top><TD>TRAP_TRACE:process trace trap</TD><TD></TD></TR>
+</TABLE>
+
+
+<TABLE>
+<TR VALIGN=top><TD><B>SIGCHLD</B></TD><TD></TD><TD></TD><TD><B></B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=2>CLD_EXITED:child has exited</TD></TR>
+<TR VALIGN=top><TD>CLD_KILLED:child was killed</TD><TD></TD></TR>
+<TR VALIGN=top><TD>CLD_DUMPED:child terminated abnormally</TD><TD></TD></TR>
+<TR VALIGN=top><TD>CLD_TRAPPED:traced child has trapped</TD><TD></TD></TR>
+<TR VALIGN=top><TD>CLD_STOPPED:child has stopped</TD><TD></TD></TR>
+<TR VALIGN=top><TD>CLD_CONTINUED:stopped child has continued</TD><TD></TD></TR>
+</TABLE>
+
+
+<TABLE>
+<TR VALIGN=top><TD><B>SIGPOLL</B></TD><TD></TD><TD></TD><TD><B></B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=2>POLL_IN:data input available</TD></TR>
+<TR VALIGN=top><TD>POLL_OUT:output buffers available</TD><TD></TD></TR>
+<TR VALIGN=top><TD>POLL_MSG:input message available</TD><TD></TD></TR>
+<TR VALIGN=top><TD>POLL_ERR:i/o error</TD><TD></TD></TR>
+<TR VALIGN=top><TD>POLL_PRI:high priority input available</TD><TD></TD></TR>
+<TR VALIGN=top><TD>POLL_HUP:device disconnected</TD><TD></TD></TR>
+</TABLE>
+
+
+<P>
+
+<B>sigprocmask</B>
+
+호출은 현재 블록화된 시그널들을 변경시키는데 사용된다. 호출의 행위는 
+어떻게 하는가에 따른 값에 의존적이다. 
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>SIG_BLOCK</B>
+
+<DD>
+일련의 블록화된 시그널들은 현재 설정과  .I set 인수의 합이다. 
+<DT><B>SIG_UNBLOCK</B>
+
+<DD>
+The signals in
+<I>set 내의 시그널들은 현재 일련의 블록화된 시그널들에서 삭제된다. 블록화되지 않은 시그널에 대해 </I>
+
+블록화하지 않는것이 타당하다. 
+<DT><B>SIG_SETMASK</B>
+
+<DD>
+블록화된 시그널들의 설정은 인수 .IR set 으로 설정된다.
+</DL>
+</DL>
+
+<P>
+
+If
+<I>oldset</I>
+
+는 -null이 아니고, 시그널 마스크의 이전 값은 .IR oldset 내에 저장된다.
+<P>
+
+The
+<B>sigpending</B>
+
+호출은 전달 시그널들에 대한 검사를 허용한다. 전달 시그널들의 시그널 마스크는 
+<I>set</I>내에<I>저장된다.</I>
+
+<P>
+
+<B>sigsuspend</B>
+
+호출은 일시적으로 시그널 마스크를  .I mask에 의해 주어진 프로세스들로 대체하고, 
+시그널이 수신될때까지 프로세스를 중지시킨다. 
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>sigaction</B>,
+
+<B>sigprocmask</B>,
+
+<B>sigpending</B>
+
+그리고
+<B>sigsuspend</B>
+
+은 성공하면 0을 실패하면 -1을 리턴한다. 
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EINVAL</B>
+
+<DD>
+부적절한 시그널이 지정되었다. 감지되지 않는 .BR SIGKILL &quot; 또는 &quot; SIGSTOP에 대한 액션을 
+변경하고자 한다면, .B EINVAL이 또한 생성될 것이다. 
+<DT><B>EFAULT</B>
+
+<DD>
+<I>act</I>, <I>oldact</I>, <I>set</I>
+
+또는  
+<I>oldset</I>
+
+는 프로세스 주소 영역 중 타당하지 않은 부분인 메모리를 가리킨다. 
+<DT><B>EINTR</B>
+
+<DD>
+시스템 호출이 인터럽트되었다. 
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+sigprocmask 호출로 .BR SIGKILL &quot; 또는 &quot; SIGSTOP을 블록화하는 것은 불가능하다. 
+이러한 시도는 무시된다. 
+
+<P>
+
+POSIX에 의하면, 프로세스의 행위는 <I>kill()</I> 또는 <I>raise()</I> 함수들에 의해 생성되지 않는
+GFPE, SIGILL, 또는 SIGSEGV를 무시한 후에는 막연해진다.
+제로에 의한 정수(Integer) 나누기는 막연한 결과를 갖는다. 일부 아키텍쳐에서, 이는 SIGFPE 시그널을 
+생성할 것이다. 
+(또한 음수 정수(integer)를 -1로 나누면 SIGFPE를 생성할 수도 있다 )
+이 시그널을 무시하면 무한 루프를 초래할 수 있다.
+<P>
+
+The POSIX 스펙은 오직 .BR SA_NOCLDSTOP만을 정의한다 .
+다른
+<I>sa_flags의 사용은 이식이 불가능하다. </I>
+
+<P>
+
+<B>SA_RESETHAND</B>
+
+플래그는 동일한 이름의 SVr4 플래그와 호환가능하다.
+<P>
+
+<B>SA_NODEFER</B>
+
+플래그는 커널 1.3.9과 새로운 버전하에서 동일한 이름의 SVr4 플래그와 호환가능하다. 
+<P>
+
+
+SVr4 호환성을 위한 
+<B>SA_RESETHAND</B> 와 <B>SA_NODEFER</B>이름들은<B>오직</B>라이브러리<B>버전</B>3.0.9
+
+그리고 그 이후의 버전에서만 존재한다. 
+<P>
+
+<B>SA_SIGINFO</B>
+
+플래그는 POSIX.1b에 의해서만 명시된다. 이에 대한 지원은 리눅스 2.2에 추가되었다. 
+<P>
+
+<B>sigaction</B>
+
+현재 시그널 처리기에 쿼리를 하기 위해 널 두번째 인수로 호출될 수 있다. 이를 널 두번째 그리고
+세번째 인수들로 이를 호출함으로서 현재 머신에 대한 주어진 시그널이 타당한가를 체크하는데 
+사용될 수 있다. 
+<P>
+
+시그널 체계 조작에 대한 자세한 정보를 얻으려면, .BR sigsetops (3)을 참조하라. 
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+POSIX, SVr4.  SVr4 는 EINTR 조건에 대한 문서를 제공하지 않는다. 
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+kill">kill</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+kill">kill</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+killpg">killpg</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+pause">pause</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+raise">raise</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+siginterrupt">siginterrupt</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+signal">signal</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+signal">signal</A></B>(7),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+sigsetops">sigsetops</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sigvec">sigvec</A></B>(2)<B></B>
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 29일
+
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

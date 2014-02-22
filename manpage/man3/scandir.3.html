@@ -1,0 +1,126 @@
+<HTML><HEAD><TITLE>Manpage of SCANDIR</TITLE>
+</HEAD><BODY>
+<H1>SCANDIR</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1996년 4월 11일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+scandir, alphasort - 디렉토리에서 해당 항목을 조사한다
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/dirent.h">dirent.h</A>&gt;</B>
+
+<B>int scandir(const char *</B><I>dir</I><B>, struct dirent ***</B><I>namelist</I><B>,</B>
+<DL COMPACT><DT><DD><B>int (*</B><I>select</I><B>)(const struct dirent *),</B>
+<B>int (*</B><I>compar</I><B>)(const struct dirent **, const struct dirent **));</B>
+</DL>
+
+<B>int alphasort(const struct dirent **</B><I>a</I><B>, const struct dirent **</B><I>b</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>scandir()</B> 함수는 각 디렉토리 항목에 대해 <B>select()</B>를 호출하면서 <I>dir</I> 디렉토리를 조사한다. <B>select()</B>에서 0이 아닌 값을 반환한 항목들은 <B>malloc()</B>을 통해 할당된 문자열에 저장되고, 비교 함수 <B>compar()</B>를 사용한
+<B>qsort()</B>에 의해 정렬되고, <B>malloc()</B>를 통해 할당된 <I>namelist</I>
+배열에 모아진다.
+<B>select</B>가 NULL이면 모든 항목이 선택된다.
+<P>
+
+<B>alphasort()</B> 함수는 디렉토리 항목들을 알파벳 순서로 정렬하기 위해
+<B>scandir()</B> 함수의 비교 함수로 사용될 수 있다. 그 함수의 인자는 비교할 두
+개의 디렉토리 항목 <I>a</I>와 <I>b</I>이다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>scandir()</B> 함수는 선택된 디렉토리 항목의 개수를 또는 에러가 발생하면 -1을
+반환한다.
+<P>
+
+<B>alphasort()</B> 함수는 첫번째 인자가 두번째 인자보다 작거나, 같거나, 크거나에
+따라 각각 0 보다 작거나, 같거나, 큰 정수를 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>ENOMEM</B>
+
+<DD>
+수행을 하기 위한 메모리 부족하다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+BSD 4.3
+<A NAME="lbAH">&nbsp;</A>
+<H2>예제</H2>
+
+<PRE>
+/* 현재 디렉토리의 파일을 역순으로 출력한다 */
+#include &lt;<A HREF="file:/usr/include/dirent.h">dirent.h</A>&gt;
+main(){
+    struct dirent **namelist;
+    int n;
+
+    n = scandir(&quot;.&quot;, &amp;namelist, 0, alphasort);
+    if (n &lt; 0)
+        perror(&quot;scandir&quot;);
+    else {
+        while(n--) {
+            printf(&quot;%s\n&quot;, namelist[n]-&gt;d_name);
+            free(namelist[n]);
+        }
+        free(namelist);
+    }
+}
+</PRE>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+opendir">opendir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+readdir">readdir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+closedir">closedir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+rewinddir">rewinddir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+telldir">telldir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+seekdir">seekdir</A></B>(3).
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>번역</H2>
+
+임종균 &lt;<A HREF="mailto:hermes44@secsm.org">hermes44@secsm.org</A>&gt; 2001년 6월 28일
+<BR>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>) 2005년 2월 14일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">예제</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 05:42:51 GMT, February 14, 2005
+</BODY>
+</HTML>

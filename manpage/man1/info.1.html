@@ -1,0 +1,324 @@
+<HTML><HEAD><TITLE>Manpage of info</TITLE>
+</HEAD><BODY>
+<H1>info</H1>
+Section: User Commands  (1)<BR>Updated: 1990년 11월 7일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+info - GNU의 하이퍼텍스트 시스템
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>info</B>
+
+[
+<B>--옵션이름 옵션값</B>
+
+]
+<B>차림표-항목</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>저작권</H2>
+
+Copyright (C) 1989, 1993 Free Software Foundation, Inc.
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>설명</H2>
+
+<P>
+
+GNU 프로젝에는 
+<I>Info</I>
+
+라는 하이퍼 텍스트 시스템이 있다. 
+이것은 매뉴얼을 인쇄하거나 
+<I>info</I>
+
+명령으로 온라인으로 볼 수 있는 소스를 제공한다.
+또한 <B>emacs (1)</B>로도 info 파일을 볼 수 있으며, 
+콘솔상에서 자체적인 풀그림(info)으로도 볼 수 있다. 
+이 매뉴얼 페이지는 info에 대한 간략한 설명을 하고 있다. 
+보다 자세한 정보를 원하면 info 명령을 사용해서 info 자체에 대한 
+설명을 참조한다.
+<P>
+<A NAME="lbAF">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>--directory 경로이름</B>
+
+<DD>
+<B>info</B>에서 info 파일을 찾을 경로에서 <I>경로이름</I>을 추가한다.
+이 옵션은 명령행에서 여러번 사용될 수 있다. 궁극적으로 
+<B>INFOPATH</B>
+
+라는 환경 변수를 사용해 info 파일을 찾을 경로를 지정할 수도 있다. 
+<B>--directory</B>
+
+옵션을 사용하지 않으면, 
+<B>INFOPATH</B>
+
+환경 변수값을 사용한다.
+<B>INFOPATH </B>
+
+환경 변수로 사용될 각 경로의 구분은 $PATH에서 사용하는 것과 마찬가지로
+콜론(:)으로 한다.
+<B>INFOPATH</B>
+
+환경변수도 지정하지 않고,
+<B>--directory-path</B>
+
+옵션도 사용하지 않으면, <B>info</B>는 경로로 초기값을 사용한다.
+초기값은 /usr/info 아니면, /usr/local/info 이다.
+<DT><B>-f 파일이름</B>
+
+<DD>
+<B>info</B>로 볼 파일을 지정한다. 이 옵션을 사용하지 않으면, 
+<I>$INFOPATH/dir</I>
+파일을 열어 보게 된다.
+이 옵션을 사용하면, <B>info</B>는 <I>파일이름</I>의 <B>Top</B> 노드를 
+보여준다.
+<DT><B>-n 노드이름</B>
+
+<DD>
+지정한 <I>노드이름</I>의 노드를 보여준다. 
+이 옵션은 
+<B>--file</B>
+
+옵션을 사용할 때 아주 유용하게 쓰인다.
+이 옵션은 명령행에서 여러번 사용될 수 있다.
+<DT><B>-o 파일</B>
+
+<DD>
+화면으로 보여주지 않고 <I>파일</I>로 만들어준다.
+<DT><B>--help</B>
+
+<DD>
+<B>info</B>에서 사용될 수 있는 옵션들과 사용법을 간단하게 보여주고 마친다.
+<DT><B>--version</B>
+
+<DD>
+<B>info</B>의 버전 정보를 보여주고 마친다.
+<DT><B>차림표-항목</B>
+
+<DD>
+<B>info</B>로 참조할 항목을 지정한다. 
+이것은 명령행의 마지막 부분에 오며, 여러개가 사용될 수 있으며, 
+여러개가 사용될 때는 앞에서부터 차례로 각 노드의 하위 노드로 지정한다.
+예를 들어,
+<P>
+<B>info emacs buffers</B>
+
+<P>
+위와 같은 명령이 주워지면, 먼저 초기값 차림표(dir 파일)에서 
+emacs 노드를 찾아 이동하여, 다음 emacs 노드의 차림표에서 
+buffers 노드를 찾아 보여준다.
+<P>
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>명령</H2>
+
+<B>info</B>가 실행되면 다음과 같은 명령을 사용할 수 있다;
+<DL COMPACT>
+<DT><B>h</B>
+
+<DD>
+Info 자습서를 호출한다.
+<DT><B>?</B>
+
+<DD>
+info 명령어 요약을 보여준다.
+<DT><B>h</B>
+
+<DD>
+Select the
+<B>info</B>
+
+node from the main directory; this is much more complete than just
+using 
+<B>?.</B>
+
+<DT><B>Ctrl-g</B>
+
+<DD>
+작업 진행 중지, 명령 취소.
+<DT><B>Ctrl-l</B>
+
+<DD>
+화면 갱신
+</DL>
+<P>
+
+다른 노드로 이동하기:
+<DL COMPACT>
+<DT><B>n</B>
+
+<DD>
+&quot;next&quot; 노드로.
+<DT><B>p</B>
+
+<DD>
+&quot;previous&quot; 노드로.
+<DT><B>u</B>
+
+<DD>
+&quot;up&quot; 노드로.
+<DT><B>m</B>
+
+<DD>
+특정 노드로. 이때는 이동 원하는 노드 이름을 지정해 주어야한다. 
+이때, 노드 이름을 정확하게 쓸 필요는 없다. 보기 원하는 노드의 이름을 
+몇자 입력하고, Tab 글쇠를 누르면 나머지 부분을 채워준다. 
+이때, 입력된 글자를 포함하는 노드 이름이 여러개 있을 때에는 
+채워주지 않는다. 이때는 Tab 문자를 한번 더 누른다. 
+이러면 사용할 수 있는 노드 이름 목록을 보여준다. 한편 
+<B>?</B>
+
+글쇠도 가능하다. 
+If you type a few characters and then hit return
+<B>info</B>
+
+will try to do a completion, and if it is ambigous use the first possibility.
+<DT><B>f</B>
+
+<DD>
+상호 참조 사용. 이 글쇠를 누르면 상호 참조할 이름을 물어본다. 
+이때 m 글쇠 사용법과 같이 사용하면 된다. 
+<DT><B>l</B>
+
+<DD>
+마지막 노드로 이동한다.
+</DL>
+<P>
+
+노드 안에서의 이동하기:
+<DL COMPACT>
+<DT><B>Space</B>
+
+<DD>
+한 화면 아래로(다음으로, 앞으로) 이동.
+<DT><B>DEL</B>
+
+<DD>
+한 화면 위로(이전으로, 뒤로) 이동.
+<DT><B>b</B>
+
+<DD>
+노드의 처음으로
+</DL>
+<P>
+
+고급 명령:
+<DL COMPACT>
+<DT><B>q</B>
+
+<DD>
+<B>info</B> 마침.
+<DT><B>1</B>
+
+<DD>
+노드 안에 있는 차림표의 첫번째 항목으로 이동
+<DT><B>2 -- 5</B>
+
+<DD>
+두번째... 다섯번째 항목으로 이동.
+<DT><B>g</B>
+
+<DD>
+특정 노드로 이동한다. 여기서는 파일이름까지도 지정할 수 있다. 
+사용법은 
+<B>(파일이름)노드이름</B>
+
+이런 식으로 지정한다.
+<DT><B>s</B>
+
+<DD>
+현재 노드에서 지정한 문자열을 찾아 발견되면, 
+그곳으로 커서를 이동한다.
+<DT><B>M-x print-node</B>
+
+<DD>
+현재 노드를 파이프를 통해 인쇄한다. 
+이때 인쇄 명령으로 
+<B>INFO_PRINT_COMMAND</B>
+
+환경 변수 값이 사용된다.
+이 환경 변수값이 지정되어 있지 않으면, 단순히 
+<B>lpr</B>
+
+명령을 사용한다.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>환경변수</H2>
+
+<DL COMPACT>
+<DT><B>INFOPATH</B>
+
+<DD>
+info 파일을 찾을 경로. 여러개일 경우에는 콜론(:)으로 구분하다. 
+<B>--directory</B>
+
+옵션으로 이 경로를 지정할 수도 있다.
+<DT><B>INFO_PRINT_COMMAND</B>
+
+<DD>
+인쇄를 위한 사용될 명령을 지정한다.
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+emacs">emacs</A></B>(1)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>만든이</H2>
+
+<DL COMPACT><DT><DD>
+Brian Fox, Free Software Foundation
+<BR>
+
+<A HREF="mailto:bfox@ai.mit.edu">bfox@ai.mit.edu</A>
+</DL>
+<A NAME="lbAK">&nbsp;</A>
+<H2>매뉴얼 만든이</H2>
+
+<DL COMPACT><DT><DD>
+Robert Lupton; updated by Robert J. Chassell.
+<BR>
+
+<A HREF="mailto:rhl@astro.princeton.edu">rhl@astro.princeton.edu</A>; <A HREF="mailto:bob@gnu.ai.mit.edu">bob@gnu.ai.mit.edu</A>
+</DL>
+<A NAME="lbAL">&nbsp;</A>
+<H2>매뉴얼 고쳐서 옮긴이</H2>
+
+<DL COMPACT><DT><DD>
+김상기
+<BR>
+
+<A HREF="mailto:teodeul@chollian.dacom.co.kr">teodeul@chollian.dacom.co.kr</A>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">저작권</A><DD>
+<DT><A HREF="#lbAE">설명</A><DD>
+<DT><A HREF="#lbAF">옵션</A><DD>
+<DT><A HREF="#lbAG">명령</A><DD>
+<DT><A HREF="#lbAH">환경변수</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">만든이</A><DD>
+<DT><A HREF="#lbAK">매뉴얼 만든이</A><DD>
+<DT><A HREF="#lbAL">매뉴얼 고쳐서 옮긴이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

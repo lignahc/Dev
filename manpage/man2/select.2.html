@@ -1,0 +1,273 @@
+<HTML><HEAD><TITLE>Manpage of SELECT</TITLE>
+</HEAD><BODY>
+<H1>SELECT</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1996년 2월 11일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+select, FD_CLR, FD_ISSET, FD_SET, FD_ZERO - 동기적 I/O 다중화
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/time.h">sys/time.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>int select(int </B><I>n</I><B>, fd_set *</B><I>readfds</I><B>,
+fd_set *</B><I>writefds</I><B>, fd_set *</B><I>exceptfds</I><B>,
+struct timeval *</B><I>timeout</I><B>);
+<P>
+FD_CLR(int </B><I>fd</I><B>, fd_set *</B><I>set</I><B>);</B>
+
+<BR>
+
+<B>FD_ISSET(int </B><I>fd</I><B>, fd_set *</B><I>set</I><B>);</B>
+
+<BR>
+
+<B>FD_SET(int </B><I>fd</I><B>, fd_set *</B><I>set</I><B>);</B>
+
+<BR>
+
+<B>FD_ZERO(fd_set *</B><I>set</I><B>);</B>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>select</B>
+
+는 상태가 변경되는 파일 기술자들의 숫자를 기다린다. 
+<P>
+
+세개의 독립적인 파일 기술자 집합들을 검사한다. 
+<I>readfds</I>
+
+에 리스트된 것들은 문자들을 읽어들일수 있는가가 검사되며(더 정확히는, 읽기가
+봉쇄되지 않았는지를 검사하기 위해서이다 - 특별히, 파일 기술자 또한 
+end-of-file 일수도 있다.), 
+<I>writefds</I>
+
+에 있는 것들은 쓰기가 봉쇄되지 않았는가가 검사되며 
+<I>exceptfds</I>
+
+에 있는 것들은 예외가 있는지가 검사된다.
+종료시, 이 집합들은 파일 기술자들이 실제로 변경된 상태가 무엇인지 가리키도록 
+수정된다.
+<P>
+
+네개의 매크로가 이 집합들을 제어하기 위해 사용된다.
+<B>FD_ZERO</B>
+
+는 집합을 소거한다.
+<B>FD_SET</B>
+
+와
+<B>FD_CLR</B>
+
+는 집합에서 주어진 기술자를 더하거나 뺀다.
+<B>FD_ISSET</B>
+
+는 기술자가 집합의 일부분인지 아닌지를 검사한다.: 이것은 
+<B>select</B>
+
+가 반환된후 유용하다.
+<P>
+
+<I>n</I>
+
+은 세개의 집합중 가장 높은 파일기술자에다가 1을 더한다.
+<P>
+
+<I>timeout</I>
+
+은 
+<B>select</B>
+
+가 반환하기 전에 경과해야 하는 시간의 상위 제한 값이다.
+0으로 지정되면
+<B>select</B>
+
+는 즉시 반환된다.
+만일
+<I>timeout</I>
+
+이 NULL이면(timeout이 없을경우),
+<B>select</B>
+
+는 무한히 봉쇄될수 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 
+<B>select </B>
+
+는 파일 기술자 집합에 포함된 기술자들의 숫자를 반환하며, 어떠한 일이
+일어나기 전에 타임아웃이 발생하면 0을 반환한다.
+에러시, -1이 반환되며, 
+<I>errno</I>
+
+는 적당한 값으로 설정된다.;
+집합들과 
+<I>timeout</I>
+
+은 정의가 안되며, 그래서 에러후 이것들의 내용에 의지할수 없다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+유효하지 않은 파일 기술자가 집합중 하나에 들어 있다.
+<DT><B>EINTR </B>
+
+<DD>
+비-블럭된 신호가 잡혔다.
+<DT><B>EINVAL </B>
+
+<DD>
+<I>n</I>
+
+이 음수이다.
+<DT><B>ENOMEM</B>
+
+<DD>
+<B>select</B>
+
+가 내부 테이블들을 위한 메모리를 할당할수 없다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+몇몇 코드들은 정확성을 가지고 잠복시키기 위해 꽤 호환되는 방법으로써 
+세개의 집합을 비우고, 
+<I>n</I>
+
+은 0, 그리고 
+<I>timeout</I>
+
+은 null이 아니게 설정하여 
+<B>select</B>
+
+를 호출한다.
+<P>
+
+리눅스에서, 
+<I>timeout</I>
+
+은 잠복되지 않은 시간의 양을 반영하기 위해 수정된다; 대부분의 다른 수행들은
+이렇게 되지 않는다. 이것은 
+<I>timeout</I>
+
+을 읽은 리눅스 코드들이 다른 OS로 포팅되거나 코드들이 초기화를 다시 하지 
+않고 반복문에서 다중 
+<B>select</B>s
+
+를 위해 timeval 구조체를 다시 사용하여 리눅스로 포팅할때 문제들을 야기한다.
+<B>select</B>
+
+에서 반환된후 정의되지 않은
+<I>timeout</I>
+
+을 고려해야 한다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>예제</H2>
+
+<PRE>
+#include &lt;<A HREF="file:/usr/include/stdio.h">stdio.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/sys/time.h">sys/time.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;
+
+int
+main(void)
+{
+    fd_set rfds;
+    struct timeval tv;
+    int retval;
+
+    /* 입력된때를 알아보기 위해 stdin (fd 0)을 검사한다. */
+    FD_ZERO(&amp;rfds);
+    FD_SET(0, &amp;rfds);
+    /* 5초를 기다린다. */
+    tv.tv_sec = 5;
+    tv.tv_usec = 0;
+
+    retval = select(1, &amp;rfds, NULL, NULL, &amp;tv);
+    /* 지금 tv 값에 의존하지 마라. */
+
+    if (retval)
+        printf(&quot;Data is available now.\n&quot;);
+        /* FD_ISSET(0, &amp;rfds) 는 true이다. */
+    else
+        printf(&quot;No data within five seconds.\n&quot;);
+
+    exit(0);
+}
+</PRE>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>호환</H2>
+
+4.4BSD (
+<B>select</B>
+
+함수는 4.2BSD에서 처음 나타났다.). 일반적으로 BSD 소켓 층(System V 변종들을 
+포함하여)의 복사판들을 지원하는 non-BSD계열과 호환된다.
+그러나, System V 변종들은  전형적으로 종료전에 timeout 변수를 설정하지만, BSD 
+변종들은 그렇게 하지 않는다는것을 주의해라.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+accept">accept</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+connect">connect</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+poll">poll</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+read">read</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+recv">recv</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+send">send</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+write">write</A></B>(2)
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈  &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 7월 1일 
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">예제</A><DD>
+<DT><A HREF="#lbAI">호환</A><DD>
+<DT><A HREF="#lbAJ">관련 항목</A><DD>
+<DT><A HREF="#lbAK">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

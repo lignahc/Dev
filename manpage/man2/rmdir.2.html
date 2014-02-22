@@ -1,0 +1,152 @@
+<HTML><HEAD><TITLE>Manpage of RMDIR</TITLE>
+</HEAD><BODY>
+<H1>RMDIR</H1>
+Section: 리눅스 프로그래머 메뉴얼 (2)<BR>Updated: 1993년 7월 24일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+rmdir - 디렉토리 삭제.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>int rmdir(const char *</B><I>pathname</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>rmdir</B>
+
+는 디렉토리(꼭 비어 있어야만한다.)를 삭제한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0을 반환하고, 실패시, -1을 반환하고, errno를 적절히 설정한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EPERM</B>
+
+<DD>
+pathname을 포함한 파일 시스템이 디렉토리 삭제를 지원하지 않는다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>pathname</I> 접근 할수 있는 주소공간이 아니다.
+
+<DT><B>EACCES</B>
+
+<DD>
+pathname을 포함한 디렉토리의 쓰기 접근이 프로세스 유효 uid때문에 허락되지 않거나,
+pathname의 디렉토리중 하나가 실행 권한이 없다.
+<DT><B>EPERM</B>
+
+<DD>
+pathname을 포함하는 디렉토리가 ( S_ISVTX ) 스티키 비트를 가지고 있고, 프로세스의
+유효 uid가 삭제할 수 있는 파일의 uid가 아니거나 그런 파일을 포함하는 디렉토리이다.
+<DT><B>ENAMETOOLONG</B>
+
+<DD>
+<I>pathname</I> 이 너무 길다.
+
+<DT><B>ENOENT</B>
+
+<DD>
+pathname의 디렉토리가 없거나 링크가 깨졌다.
+<DT><B>ENOTDIR</B>
+
+<DD>
+<I>pathname</I>,
+
+이나
+<I>pathname</I>
+
+의 디렉토리가 사실 디렉토리가 아니다.
+<DT><B>ENOTEMPTY</B>
+
+<DD>
+<I>pathname</I>
+
+이 
+<B>.</B> and <B>..</B> .
+
+을 포함하지 않는다.
+<DT><B>EBUSY</B>
+
+<DD>
+<I>pathname</I>
+
+이 현재 작업중인 디렉토리이거나 몇몇 프로세스의 root디렉토리이다.
+<DT><B>ENOMEM</B>
+
+<DD>
+커널메모리가 부족하다.
+<DT><B>EROFS</B>
+
+<DD>
+<I>pathname</I>
+
+이 read-only filesystem상의 파일이다.
+<DT><B>ELOOP</B>
+
+<DD>
+<I>pathname</I>
+
+의 링크가 너무 많다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID, POSIX, BSD 4.3
+<A NAME="lbAH">&nbsp;</A>
+<H2>버그</H2>
+
+NFS프로토콜의 부적적한 표현은 현재 쓰고 있는 디렉토리의 기대하지 않은
+소실을 야기 할 수 있다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+rename">rename</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+mkdir">mkdir</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chdir">chdir</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+unlink">unlink</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+rmdir">rmdir</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+rm">rm</A></B>(1)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 29
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">버그</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

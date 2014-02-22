@@ -1,0 +1,336 @@
+<HTML><HEAD><TITLE>Manpage of SOCKET</TITLE>
+</HEAD><BODY>
+<H1>SOCKET</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: 24 Apr 1999<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+socket - 통신을 위해 말단(endpoint)를 생성한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</B>
+
+<P>
+<B>int socket(int </B><I>domain</I><B>, int </B><I>type</I><B>, int </B><I>protocol</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>Socket</B>
+
+은 통신을 위한 종점(endpoint)를 생성하고 디스크립터를 반환한다.
+<P>
+
+<I>도메인 </I>
+
+매개변수는 통신 도메인을 지정한다; 이것은 통신에 사용되어 질 프로토콜 패밀리를 선택한다.
+이러한 프로토콜 패밀리들은 
+<B>&lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</B>
+
+에서 정의된다. 현재 쓰여지는 포맷은 다음을 포함한다:
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD><B>Name:Purpose:Man page</B><BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_UNIX,PF_LOCAL</B>
+
+<BR></TD><TD>
+Local communication
+<BR></TD><TD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+unix">unix</A></B>(7)
+
+<BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_INET</B>
+
+<BR></TD><TD>IPv4 Internet protocols:T{<BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>T}<BR></TD><TD><BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_INET6</B>
+
+<BR></TD><TD>IPv6 Internet protocols:<BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_IPX</B>
+
+<BR></TD><TD>IPX - Novell protocols:<BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_NETLINK</B>
+
+<BR></TD><TD>
+Kernel user interface device
+<BR></TD><TD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+netlink">netlink</A></B>(7)
+
+<BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_X25</B>
+
+<BR></TD><TD>ITU-T X.25 / ISO-8208 protocol:T{<BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>T}<BR></TD><TD><BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_AX25</B>
+
+<BR></TD><TD>
+Amateur radio AX.25 protocol
+<BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_ATMPVC</B>
+
+<BR></TD><TD>Access to raw ATM PVCs:<BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_APPLETALK</B>
+
+<BR></TD><TD>Appletalk:T{<BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>T}<BR></TD><TD><BR></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>
+<B>PF_PACKET</B>
+
+<BR></TD><TD>
+Low level packet interface
+<BR></TD><TD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+packet">packet</A></B>(7)
+
+<BR></TD></TR>
+</TABLE>
+
+<P>
+
+소켓은 지시된 통신 semantics를 지정하는 
+<I>type</I>
+
+을 갖는다.
+현재 정의된 타입은 다음과 같다:
+<DL COMPACT>
+<DT><B>SOCK_DGRAM</B>
+
+<DD>
+데이타그램 지원
+<DT><B>SOCK_RAW</B>
+
+<DD>
+raw network protocol 접근 지원.
+<DT><B>SOCK_RDM</B>
+
+<DD>
+보증을 요구하지 않는 데이타그램 레이어지원.
+<DT><B>SOCK_PACKET</B>
+
+<DD>
+새로운 프로그램에서 잘 쓰이지 않는다;
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+packet">packet</A></B>(7)
+
+을 본다.
+</DL>
+<P>
+
+몇몇 소켓타입은 모든 프로토콜군에 의해 구현되어지지 않을 것이다; 예를들면, 
+<B>SOCK_SEQPACKET</B>
+
+는 
+<B>AF_INET</B>
+
+때문에 구현되지 않는다.
+<P>
+
+<I>프로토콜</I>
+
+은 소켓을 사용하기 위해 특정 프로토콜을 지정한다. 싱글 프로토콜은 주어진 프로토콜군안에 특정 소켓타입을 지원하도록
+존재한다. 그러나, 특정 프로토콜이 방법으로 지정되어야만하는 곳엔 많은 프로토콜이 존재가능하다. 
+<P>
+
+<B>SOCK_STREAM</B>
+
+타입의 소켓은 full-duplex byte streams이다. 그것들은 레코드 경계를 보호하진 않는다.
+스트림 소켓은 모든 데이타가 그것으로 송수신 되기전에 
+<I>접속</I>
+
+상태이어야한다. 다른 소켓과의 접속은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+connect">connect</A></B>(2)
+
+호출로 생성한다. 한번 접속에 데이타는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+read">read</A></B>(2)
+
+와
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+write">write</A></B>(2)
+
+호출 혹은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+send">send</A></B>(2)
+
+와
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+recv">recv</A></B>(2)
+
+호출 의 몇몇 변수를 사용해 전송한다.  세션이 완벽할때 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+close">close</A></B>(2)
+
+는 실행된다. Out-of-band 에이타는 또한 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+send">send</A></B>(2)
+
+의 설명대로 전송되고 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+recv">recv</A></B>(2)
+
+의 설명대로 수신된다.
+<P>
+
+<B>SOCK_DGRAM</B>
+
+와 
+<B>SOCK_RAW</B>
+
+소켓은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+send">send</A></B>(2)
+
+호출에 지정된 correspondents로 데이타그램의 송신을 허락한다.
+데이타그램은 대개 다음 데이타그램을 반환하는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+recvfrom">recvfrom</A></B>(2)
+
+로 수신된다.
+<P>
+
+<B>SOCK_PACKET</B>
+
+은 장치 드라이버로부터 직접 raw패킷을 받는 쓰이지 않는 소켓타입이다.
+대신
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+packet">packet</A></B>(7)
+
+을 사용한다.
+<P>
+
+소켓의 작용은 소켓레벨 옵션에 의해 제어된다. 이러한 옵션들은 
+<B>&lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</B>
+
+에 정의 되어있다.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+Setsockopt">Setsockopt</A></B>(2)
+
+와
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+getsockopt">getsockopt</A></B>(2)
+
+는 옵션을 설정하고 얻는데 사용된다. 
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+에러시, -1이 반환된다; 그 밖의 반환값은 디스크립터 참조소켓이다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EPROTONOSUPPORT</B>
+
+<DD>
+프로토콜 타입이나 지정된 프로토콜은 이 도메인에서 지원되지 않는다.
+<DT><B>ENFILE</B>
+
+<DD>
+새로운 소켓구조를 지정하기에 커널메모리가 부족하다.
+<DT><B>EMFILE</B>
+
+<DD>
+프로세스 파일 테이블이 overflow.
+<DT><B>EACCES</B>
+
+<DD>
+지정된 타입의 생성된 소켓이나 프로토콜 권한이 거부되었다.
+<DT><B>ENOBUFS</B> or <B>ENOMEM</B>
+
+<DD>
+메모리가 부족하다. 소켓은 프리메모리가 생길때 까지 생성될 수 없다.
+<DT><B>EINVAL</B>
+
+<DD>
+알려지지 않은 프로토콜이나 프로토콜군으로 유효하지 않다.
+</DL>
+<P>
+
+다른 에러는 프로토콜 모듈에의해 생성된다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+4.4BSD (the
+<B>socket</B>
+
+함수 호출은 4.2BSD에서 선보였다). 대개 비-bsd시스템에서는 bsd소켓레이어의 클론을 지원한다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>버그</H2>
+
+<B>SOCK_UUCP</B>
+
+는 아직 구현되지 않았다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+accept">accept</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+bind">bind</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+connect">connect</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getprotoent">getprotoent</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+getsockname">getsockname</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+getsockopt">getsockopt</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+ioctl">ioctl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+listen">listen</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+read">read</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+recv">recv</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+send">send</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shutdown">shutdown</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socketpair">socketpair</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+write">write</A></B>(2)
+
+<P>
+
+lqAn Introductory 4.3 BSD Interprocess Communication Tutorialrq
+is reprinted in
+<I>UNIX Programmer's Supplementary Documents Volume 1.</I>
+
+<P>
+
+lqBSD Interprocess Communication Tutorialrq
+is reprinted in
+<I>UNIX Programmer's Supplementary Documents Volume 1.</I>
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX, 2000년 7월 29일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">버그</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

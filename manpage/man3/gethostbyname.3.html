@@ -1,0 +1,292 @@
+<HTML><HEAD><TITLE>Manpage of GETHOSTBYNAME</TITLE>
+</HEAD><BODY>
+<H1>GETHOSTBYNAME</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 2000년 8월 12일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+gethostbyname, gethostbyaddr, sethostent, endhostent, herror, hstrerror - 
+네트웍 호스트 엔트리를 가져온다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/netdb.h">netdb.h</A>&gt;</B>
+<B>extern int h_errno;</B>
+
+<B>struct hostent *gethostbyname(const char *</B><I>name</I><B>);</B>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;        /* for AF_INET */</B>
+<B>struct hostent *gethostbyaddr(const char *</B><I>addr</I><B>,</B>
+<B>  int </B><I>len</I><B>, int </B><I>type</I><B>);</B>
+
+<B>void sethostent(int </B><I>stayopen</I><B>);</B>
+
+<B>void endhostent(void);</B>
+
+<B>void herror(const char *</B><I>s</I><B>);</B>
+
+<B>const char * hstrerror(int </B><I>err</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>gethostbyname()</B> 함수는 주어진 호스트 <I>name</I> 에 상응하는 
+<I>hostent</I> 타입의 구조체를 반환한다. 여기서 
+<I>name</I>은 호스트 이름이거나 표준 점 표기법의 IPv4 주소이거나, 
+콜론(그리고 점 표기법도 가능)표기법의 IPv6이다. (IPv6에 대한 기술을 위해 RFC1884를 참조해라.)
+만일 
+<I>name</I>
+
+이 IPv4나 IPv6 주소라면, 어떤 룩업도 행해지지 않고 
+<B>gethostbyname</B>()는
+
+단순히 
+<I>name</I>
+
+을 
+<I>h_name</I>
+
+필드에 복사하고 해당 
+<I>struct in_addr</I>
+
+를 반환하는 
+<I>hostent</I>
+
+구조체의 
+<I>h_addr_list[0]</I>
+
+필드에 복사한다.
+만일 <I>name</I>가 점으로 끝나지 않고 환경 변수 
+<B>HOSTALIASES</B>가 설정되어 있다면, <B>HOSTALIASES</B>가 가리키는 얼라이싱 파일이 <I>name</I>을 위해 우선 탐색된다. 
+(파일 형식을 위해 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+hostname">hostname</A></B>(7)을
+
+참조해라.)
+현재 도메인과 상위 도메인은 <I>name</I>이 점으로 끝나지 않는다면 탐색된다.
+<P>
+
+<B>gethostbyaddr()</B> 함수는 길이 <I>len</I> 그리고 주소 타입 
+<I>type</I>인 호스트 주소 <I>addr</I>에 해당하는 <I>hostent</I> 구조체를 리턴한다.
+유일하게 유효한 주소 타입은 현재 
+<B>AF_INET</B>이다.
+
+<P>
+
+만일 <I>stayopen</I>가 참(1)이라면, 
+<B>sethostent()</B> 함수는 연결된 TCP 소켓이 네임 서버 질의를 위해 사용되어야 한다는것을 가리킨다. 그리고 연결은 연속적은 질의를 동안 계속 열려 있어야 한다.
+그렇지 않으면, 네임 서버 질의를 UDP 데이터그램을 사용할 것이다.
+<P>
+
+<B>endhostent()</B> 함수는 네임 서버 질의를 위한 TCP 연결의 사용을 끝낸다.
+<P>
+
+(구식) <B>herror()</B> 함수는 stderr에 현재 값의 <I>h_errno</I> 에 상응하는 
+에러 메세지를 출력한다.
+<P>
+
+(구식) <B>hstrerror()</B> 함수는 에러(전형적으로 <I>h_errno</I>)
+넘버를 가지며 상응하는 메세지를 반환한다.
+<P>
+
+도메인 네임 질의는 
+<B>gethostbyname()</B> 에 의해 수행되며 
+<B>gethostbyaddr()</B>는 
+<I>/etc/host.conf</I>에 있는 <I>order</I>라인의 내용에 의존하여
+<I>/etc/hosts</I>에서 라인을 뽑아내 네임 서버 <B><A HREF="http://localhost/cgi-bin/man/man2html?8+named">named</A></B>(8)의 일부나 
+모두의 조합과 네트웍 정보 서비스 (NIS 또는 YP)를 사용한다.
+(
+<B>resolv+</B>(8)를
+
+참조해라.)
+기본 행동은 <I>/etc/hosts</I> 다음에 <B><A HREF="http://localhost/cgi-bin/man/man2html?8+named">named</A></B>(8)에 질의하는 것이다.
+<P>
+
+<I>hostent</I> 구조체는 다음과 같이 <I>&lt;<A HREF="file:/usr/include/netdb.h">netdb.h</A>&gt;</I>에 정의되어 있다:
+<P>
+<DL COMPACT><DT><DD>
+<PRE>
+
+struct hostent {
+        char    *h_name;        /* 호스트의 공식 이름 */
+        char    **h_aliases;    /* 별칭 리스트 */
+        int     h_addrtype;     /* 호스트 주소 타입 */
+        int     h_length;       /* 주소의 길이 */
+        char    **h_addr_list;  /* 주소 리스트 */
+}
+#define h_addr  h_addr_list[0]  /* 구 버전과의 호환을 위해 */
+
+</PRE>
+
+</DL>
+
+<P>
+
+<I>hostent</I> 구조체의 멤버는:
+<DL COMPACT>
+<DT><I>h_name</I>
+
+<DD>
+호스트의 공식적인 이름 
+<DT><I>h_aliases</I>
+
+<DD>
+호스트를 위해 널로 끝나는 선택적인 이름의 배열 
+<DT><I>h_addrtype</I>
+
+<DD>
+주소 타입; 현재는 항상 
+<B>AF_INET</B>
+
+이다.
+<DT><I>h_length</I>
+
+<DD>
+바이트로 주소의 길이.
+<DT><I>h_addr_list</I>
+
+<DD>
+네트웍 바이트 순서로 호스트를 위한 널로 종료된 네트웍 주소 배열 
+<DT><I>h_addr</I>
+
+<DD>
+예전과의 호환을 위해 <I>h_addr_list</I>의 처음 주소 
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>gethostbyname()</B> 그리고 <B>gethostbyaddr()</B> 함수는 
+<I>hostent</I> 구조체를 반환하거나 만일 에러가 발생한다면 NULL 포인터를
+반환한다.
+에러시, <I>h_errno</I> 변수는 에러 넘버를 가진다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+변수 <I>h_errno</I>는 다음 값들을 가진다:
+<DL COMPACT>
+<DT><B>HOST_NOT_FOUND</B>
+
+<DD>
+지정된 호스트가 알려지지 않았다.
+<DT><B>NO_ADDRESS</B> 나 <B>NO_DATA</B>
+
+<DD>
+요구한 이름이 유효하지만 IP 주소를 가지지 않는다.
+<DT><B>NO_RECOVERY</B>
+
+<DD>
+복구 될수 없는 네임 서버 에러가 발생했다.
+<DT><B>TRY_AGAIN</B>
+
+<DD>
+임시적 에러로 네임서버 인증시 발생했다. 다시 시도해라.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>파일</H2>
+
+<DL COMPACT>
+<DT><I>/etc/host.conf</I>
+
+<DD>
+해석 설정 파일.
+<DT><I>/etc/hosts</I>
+
+<DD>
+호스트 데이터 베이스 파일 
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+BSD 4.3.
+<A NAME="lbAI">&nbsp;</A>
+<H2>주의</H2>
+
+SUS-v2 표준은 버그이며,
+<I>len</I>
+
+인자를 
+<I>size_t</I>
+
+타입으로 선언하였다.(이것은 잘못된 것이다. 왜냐하면 그것은 
+<I>int</I>
+
+이지 
+<I>size_t</I>
+
+가 아니기 때문이다. Austin 초안은 
+<I>socklen_t</I>으로
+
+했으며 이것은 가능하다.)
+<P>
+
+Glibc2는 또한  
+<B>gethostbyname()</B>처럼
+
+작동하는 
+<P>
+<PRE>
+<B>struct hostent *gethostbyname2(const char *</B><I>name</I><B>, int </B><I>af</I><B>);</B>
+</PRE>
+
+<P>
+를 가지고 있다. 그러나 그것은 주소가 속해 있는 주소 가족을 지정하도록 한다.
+<P>
+
+Austin 초안은 
+<B>gethostbyaddr()</B>
+
+과 
+<B>gethostbyname()</B>
+
+를 상속하는 함수를 만들었으며 다음과 같이 소개하였다.
+<P>
+<PRE>
+<B>struct hostent *getipnodebyaddr (const void *restrict </B><I>addr</I><B>,</B>
+<B>  socklen_t </B><I>len</I><B>, int </B><I>type</I><B>, int *restrict </B><I>error_num</I><B>);</B>
+
+<B>struct hostent *getipnodebyname (const char *</B><I>name</I><B>,</B>
+<B>  int </B><I>type</I><B>, int </B><I>flags</I><B>, int *</B><I>error_num</I><B>);</B>
+</PRE><A NAME="lbAJ">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+resolver">resolver</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+hosts">hosts</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+hostname">hostname</A></B>(7),
+
+<B>resolv+</B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+named">named</A></B>(8)
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 4월 30일 
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">파일</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">주의</A><DD>
+<DT><A HREF="#lbAJ">관련 항목</A><DD>
+<DT><A HREF="#lbAK">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

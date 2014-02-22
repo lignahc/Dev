@@ -1,0 +1,479 @@
+<HTML><HEAD><TITLE>Manpage of INITRD</TITLE>
+</HEAD><BODY>
+<H1>INITRD</H1>
+Section: 리눅스 프로그래머 매뉴얼 (4)<BR>Updated: 1997년 11월 6일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+initrd - 부트 로더에 의해 시작되는 RAM 디스크  
+boot loader initialized RAM disk
+
+
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The special file
+특수 파일
+
+Device 
+<B>/dev/initrd</B>
+
+은 RAM 디스크로 커널이 시작하기 전에 부트 로더에 의해 초기화(로딩)된다. 
+그리고 나서 커널은 블록 장치를 사용할 수 있다. 
+<B>/dev/initrd</B>'s <B></B>
+
+2단계 시스템 부트업에 대한 내용
+<P>
+
+In the first boot-up phase, the kernel starts up 
+and mounts an initial root file-system from the contents of 
+<B>/dev/initrd </B>
+
+(e.g. RAM disk initialized by the boot loader). 
+
+첫번째 부트업 단계에서, 커널은 .B /dev/initrd의 내용에서 최초 루트 파일
+시스템을 시동하고 마운트한다. 두번째 단계에서, 추가 드라이버 또는 기타
+모듈들이 최초 루트 장치 내용에서 로딩된다. 추가 모듈들을 로딩한다음,
+새로운 루트 파일 시스템이 다른 장치로부터 마운트된다. 
+
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>부트 업 연산 </H2>
+
+
+<B>initrd으로</B>부팅할<B>때,</B>시스템<B>부팅은</B>다음과<B>같은</B>순서를<B>따른다.</B>
+
+<DL COMPACT><DT><DD>
+<P>
+
+1. 부트 로더는 커널 프로그램을 로딩하고, 
+<B>/dev/initrd의</B>내용을<B>메모리로</B>로딩한다.
+
+<P>
+
+2. 커널시동시, 커널은 장치 
+<B>/dev/initrd의 내용의 압축을 해제하고, 장치 .B /dev/ram0으로 복사한 후,</B>
+
+<B>/dev/initrd에</B>의해<B>사용된</B>메모리를<B>자유롭게</B>한다.<B></B>
+
+<P>
+
+3. 커널은  장치 .B /dev/ram0을 최초 루트 파일 시스템으로 읽기 및 쓰기
+마운트를 한다. 
+<P>
+
+4. 만일 지정된 일반 루트 파일 시스템이 또한 최초 루트 파일 시스템이라면, 
+(예 
+<B>/dev/ram0</B>
+
+)커널은 일반 부트 순서를 위한 마지막 단계를 생략한다.  
+<P>
+
+5. 만일 실행 파일 .BR /linuxrc가 최초 루트 파일 시스템 내에 있다면,
+/linuxrc는 uid 0으로 실행된다. 
+파일 
+<B>/linuxrc는 실행 권한을 갖고 있어야 한다. </B>
+
+파일 
+<B>/linuxrc</B>
+
+는 쉘 스크립트를 포함하는 타당한 실행파일이 될 수 있다. 
+<P>
+
+6. 만일
+<B>/linuxrc</B>
+
+이 실행되지 않거나, 
+<B>/linuxrc가 종료될 때, 일반 루트 파일 시스템은 마운트 된다. </B>
+
+(만일 
+<B>/linuxrc</B>
+
+가 최초 루트 파일 시스템상에 마운트된 파일 시스템에서 빠져나온다면, 
+커널의 행동은 
+<B>UNSPECIFIED가</B>된다.<B></B>
+
+See the 
+<B>NOTES</B>
+
+section for the current kernel behavior
+커널의 행동을 보려면, .BR NOTES 섹션을 참조하라.)
+<P>
+
+7. 만일 일반 루트 파일이 디렉토리 
+<B>/initrd</B>, 장치를<B>갖고</B>있다면,<B></B>
+
+<B>/dev/ram0은 </B>
+
+<B>/에서</B>to<B>/initrd으로</B>이동한다.
+
+그렇지 않고, 만일 디렉토리
+<B>/initrd</B>가 존재하지 않으면, 장치 /dev/ram0는 언마운트된다. 
+
+(.BR / &quot; 에서 &quot; /initrd &quot;로 이동했을때, &quot; /dev/ram0은 언마운트되지 않고, 
+프로세스들은,  
+<B>/dev/ram0에서</B>실행되는<B>채로</B>남겨진다.<B></B>
+
+만일 디렉토리 
+<B>/initrd가</B>일반<B>루트</B>파일<B>시스템상에</B>존재하지<B>않고,</B>어떤<B>프로세스가</B>
+
+<B>/dev/ram0에서</B>실행되는<B>채로</B>남겨지면,<B>/linuxrc에서</B>빠져나갈<B>때,</B>커널의<B>행동은</B>
+
+<B>UNSPECIFIED(규명불가)가</B>된다.<B></B>
+
+See the 
+<B>NOTES</B>
+
+현재 커널의 행동을 보려면 NOTES 섹션을 참조한다.)
+<P>
+
+8. 일반 부트 순서(.BR /sbin/init의 실행)는 일반 루트 파일 시스템상에서
+수행된다. 
+
+
+
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS(옵션)</H2>
+
+<B>initrd가</B>사용될<B>때,</B>다음의<B>부트</B>로더<B>옵션은</B>커널의<B>부트업</B>연산에
+
+영향을 미친다. 
+<DL COMPACT>
+<DT><B>initrd=</B><I>파일 이름</I>
+
+<DD>
+그 파일을 
+<B>/dev/initrd의</B>내용으로<B>로드하도록</B>지정한다.
+
+
+LOADLIN에<B>대해서는</B>
+
+이는 명령행 옵션이다. 
+LILO에<B>대해서는</B>여러분은<B>.BR</B>설정<B>파일</B>/etc/lilo.config에서<B>이</B>명령을
+
+사용해야 한다. 이옵션으로 지정된 파일이름은 일반적으로 gzip을 이용하여  
+파일 시스템 이미지로 압축되어야 한다. 
+<DT><B>noinitrd</B>
+
+<DD>
+
+이 부트 타임 옵션은 부트업 연산의 두가지 단계를 동작하지 못하게 한다. 
+커널은 일반 부트 순서를 .B /dev/initrd가 초기화되지 못했던 것처럼
+수행한다. 
+이 옵션으로, .B /dev/initrd의 모든 내용은 부트로더에 의해 메모리로
+로딩되고, 내용들은 보존된다. 
+이 옵션은 
+<B>/dev/initrd의 내용이 데이터가 되도록 허용하고, 어떤 파일 시스템</B>
+
+이미지에 제한받을 필요가 없도록 허용한다. 
+However, device  
+하지만 .B /dev/initrd 장치는 읽기만이 가능하고, 시스템이 시동된후, 오직
+한번만 읽기가 가능하다. 
+
+<DT><B>root=</B><I>device-name</I>
+
+<DD>
+은 장치가 일반 루트 파일 시스템처럼 사용되도록 지정한다. 
+
+LOADLIN에<B>대해,</B>
+
+this is a command line option.
+이는 명령행 옵션이다. 
+
+LILO에<B>대해,</B>
+
+이는 부트 옵션이거나, .BR LILO 설정 파일인 /etc/lilo.config에서 옵션
+행으로 玲逾??獵? 이 옵션에 의해 지정된 장치는 마운트 가능한 장치로서
+적절한 루트 파일 시스템을 갖고 있어야 한다. 
+
+
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>일반 루트 파일 시스템 변경하기</H2>
+
+기본적으로 커널의 설정- 예를 들어 커널 파일 내에 .B rdev로 설정되거나,
+커널 파일내에 컴파일됨, 혹은 부트로더 옵션 설정은 일반 루트 파일 시스템에
+대해 사용된다. NFS가 마운트된 일반 루트 파일 시스템에 대해, NFS 설정을 주기 
+위해, 
+<B>nfs_root_name</B> 와 <B>nfs_root_addrs</B>부트<B>옵션을</B>사용해야<B>한다.</B>
+
+NFS가 마운트된 루트에 대한 자세한 정보를 보려면 커널 문서 파일인 
+<B>nfsroot.txt을</B>참조하라.<B></B>
+
+루트 파일 시스템 설정에 대한 정보를 보려면, 
+<B>LILO</B> 와 <B>LOADLIN</B> 문서를 참조하라. 
+
+PP
+<B>/linuxrc</B>실행가능<B>파일이</B>
+
+일반 루트 장치를 변경시키는 것 역시 가능하다. 
+
+<B>/linuxrc이</B>일반<B>루트</B>장치를<B>변경하려면,</B>.BR<B>/proc이</B>마운트되어야<B>한다.</B>
+
+&quot;  마운트를 한후, .BR /proc &quot;과 &quot; /linuxrc 일반 루트 장치를 다음과 같은
+proc 파일들을 작성함으로서 변경한다.  .BR /proc/sys/kernel/real-root-dev
+&quot;, &quot; .BR /proc/sys/kernel/nfs-root-name &quot;, 그리고 &quot;  .BR
+/proc/sys/kernel/nfs-root-addrs &quot;.&quot; 물리적인 루트 장치로서는, 루트 장치는
+<B>/linuxrc로</B>하여금<B>새로운</B>루트<B>파일</B>시스템<B>장치</B>번호를<B>.BR</B>
+
+/proc/sys/kernel/real-root-dev으로 변경된다.  NFS 루트 파일 시스템에 대해,
+루트 장치는 BR /linuxrc이 NFS 설정을 .BR /proc/sys/kernel/nfs-root-name &quot;
+그리고 &quot; .BR /proc/sys/kernel/nfs-root-addrs와 같은 파일들로 작성하고,
+그런후, 0xff(예: 의사 NFS 장치 번호 : pseudo-NFS-device number)를 파일 .BR
+/proc/sys/kernel/real-root-dev 로 작성함으로서 변경된다.  the normal root
+device to 예를들면, 다음의 쉘 명령행은 일반 루트 장치를 다음과 같이
+변경한다.  .BR /dev/hdb1 :
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.nf
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;0x365&nbsp;&gt;/proc/sys/kernel/real-root-dev
+
+
+For a NSF example, the following shell command lines would change the 
+normal root device to the NSF directory 
+on a local networked NSF server with IP number 193.8.232.7 for a system with 
+IP number 193.8.232.7 and named 'idefix':
+NFS 예제에 대하여, 다음의 쉘 명령은 idefix라는 이름을 지니고, IP 주소 193.8.232.7를 
+지닌 시스템을 위한 로컬 네트워크 NFS 서버(IP 주소 193.8.232.7) 상에서 일반 루트 장치를 
+NFS 디렉토리, BR /var/nfsroot로 변경할 것이다.  
+<PRE>
+        echo /var/nfsroot &gt;/proc/sys/kernel/nfs-root-name
+        echo 193.8.232.2:193.8.232.7::255.255.255.0:idefix \
+          &gt;/proc/sys/kernel/nfs-root-addrs
+        echo 255 &gt;/proc/sys/kernel/real-root-dev
+</PRE>
+
+
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>사용법</H2>
+
+The main motivation for implementing 
+<B>initrd을</B>구현하기<B>위한</B>주된<B>유도방법은</B>시스템<B>설치시</B>모듈<B>커널</B>설정을<B>허용하는</B>것이다.<B></B>
+
+<P>
+
+가능한 시스템 설치 시나리오는 다음과 같다.
+<DL COMPACT><DT><DD>
+<P>
+
+1. 로더 프로그램은 플로피 또는 다른 매체로부터 최소의 커널로 부팅하고, 
+(예 .BR /dev/ram &quot;, &quot; /dev/initrd &quot;, 그리고 ext2 파일 시스템에 대한 지원) 최초 파일 시스템의 gzip으로 압축된 버전인 .BR /dev/initrd을 로딩한다.   )
+<P>
+
+2. 실행가능한 .BR /linuxrc는 일반 루트 파일 시스템(장치 유형, 장치 드라이버, 파일 시스템)을 마운트하는데 필요한 것과, 배포 매체(시디롬, 네트워크, 테이프 등)를 결정한다. 이는 사용자에게 물어보거나, 자동 감지 또는 설치 마법사를 사용함으로서 가능하다. 
+<P>
+
+3. 실행가능한 .BR /linuxrc는 필요한 모듈들을 최초 루트 파일 시스템에서 로드한다.  
+<P>
+
+4. 실행가능한 .BR /linuxrc은 루트 파일 시스템을 만든다.(이 단계에서 일반 루트 파일 시스템이 아직 완전한 시스템이 될 필요는 없다.) 
+<P>
+
+5. 실행가능한 .BR /linuxrc는  /proc/sys/kernel/real-root-dev을 설정하고, 일반 루트 파일 시스템과 다른 파일 시스템들이 마운트 했던 .BR /proc을 언마운트 한다음, 종료한다. 
+<P>
+
+6. 커널은 일반 파일 시스템을 마운트한다. 
+<P>
+
+7. 이제 파일 시스템의 액세스가 가능하고, 손상되지 않은채로, 부트로더가 설치될 수 있다. 
+<P>
+
+8. The boot loader is configured to load into
+a file system with the set of modules that was used to bring up the system. 
+부트 로더는 시스템을 활성화하는 데 사용되는 일련의 모듈들과 함께 .BR /dev/initrd 파일 시스템으로 로딩되도록 설정된다.
+(예, Device
+<B>/dev/ram0</B>
+
+는 수정되고 언마운트되며, 마지막으로 그 이미지는 .BR /dev/ram0 에서 파일로 작성된다.)
+<P>
+
+9. 시스템은 현재 부팅할 수 있고, 추가인스톨 작업은 실행될 수 있다.
+</DL>
+
+<P>
+
+위에 있는
+<B>/dev/initrd</B>
+
+의 키롤(key role)은 요청한 큰 일반커널이나, 리컴파일된 초기화 커널 선택없이 
+표준시스템 작동때 설정 데이타를 재사용 할 수 있다.
+<P>
+
+두번째 시나리오는 리눅스가 단일 관리 네트웍에서 다른 하드웨어설정을 가진 
+시스템에서의 인스톨에 관한 사항이다. 이런 경우, 커널의 작은 설정 사용을 
+원할 런지 모르고, 가능한 작은 설정 정보의 시스템특정(system-speccific) 부분을 
+지킨다. 이런경우, 모든 필요한 모듈이 가진 공유 파일이 생성된다.
+
+그리고, 단지
+<B>/linuxrc</B>
+
+파일이나 일반 파일은 
+<B>/linuxrc</B>
+
+가 다른것에의해 실행된다.
+
+<P>
+
+세번째 시나리오는 더욱 편리한 복구 디스크이다.
+루트 파일시스템 파티션의 위치와 같은 정보는 부팅시 필요하지 않기 때문에,
+<B>/dev/initrd </B>
+
+로 부터 로드된 시스템은 미친듯 하는 체크에 영향을 받는 다이얼로그나 자동찾기
+를 사용할 수 있다.
+<P>
+
+마직막으로, 리눅스 배포본은 
+수월한 설치를 위해
+<B>initrd</B>
+
+를 사용할런지 모른다.
+배포본은 
+The distribution can use 
+플로피가 필요없이 cd-rom에서 
+<B>/dev/initrd</B>
+
+를 직접 로드 할 수있는
+<B>LOADLIN</B>
+
+를 사용할 수 있다.
+배포본은 또한 
+부팅 디스켓보단 cd-rom으로부터 
+<B>/dev/initrd</B>
+
+등의 부트스트랩보다 더 큰 램디스크인
+<B>LILO</B>
+
+를 사용한다.
+
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>설정</H2>
+
+<B>/dev/initrd </B>
+
+는 메이저 번호1과 마이너번호 250이 할당된 read-only 블록 장치이다.
+전형적으로
+<B>/dev/initrd</B>
+
+는 
+모드 0400을 가진(루트만이 읽기 권한이 있는)
+<B>root.disk </B>
+
+에 의해 소유된다.
+리눅스 시스템에 
+<B>/dev/initrd</B>
+
+이 없다면, 아래의 명령으로 생성할 수있다:
+<PRE>
+<B>
+        mknod -m 400 /dev/initrd b 1 250
+        chown root:disk /dev/initrd
+</B>
+</PRE>
+
+또한, &quot;램디스크&quot;와 &quot;초기화 램디스크&quot;를 지원한다.
+(e.g. 
+<B>CONFIG_BLK_DEV_RAM=y</B>와 <B>CONFIG_BLK_DEV_INITRD=y</B>
+
+) 지원은 
+<B>/dev/initrd</B>
+
+을 사용하기 위해 리눅스 커널에 직접 컴파일 되어야만 한다.
+<B>/dev/initrd</B>
+
+를 사용할때, 램디스크 드라이버는 모듈로 로드 할 수 없다.
+
+
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>파일</H2>
+
+<I>/dev/initrd</I>
+
+<BR>
+
+<I>/dev/ram0</I>
+
+<BR>
+
+<I>/linuxrc</I>
+
+<BR>
+
+<I>/initrd</I>
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+chown">chown</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mknod">mknod</A></B>(1),
+
+<B>/dev/<A HREF="http://localhost/cgi-bin/man/man2html?4+ram">ram</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+freeramdisk">freeramdisk</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+rdev">rdev</A></B>(8),
+
+리눅스 문서 파일
+<I>initrd.txt</I>
+
+커널 소스패키지안의, 리로 문서, LOADLIN문서, SYSLINUX문서.
+
+
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>주의</H2>
+
+1. 현재 커널과 함께, .BR /dev/ram0 이 /에서  /initrd로 옮겨졌을때, 마운트된 상태로 남아있는 어느 파일 시스템에나 액세스가 가능하다. 그러나, .BR /proc/mounts 엔트리 부분들은 업데이트 되지 않았다. 
+<P>
+
+2. 현재 커널과 함께, 디렉토리 .BR /initrd이 존재하지 않고, .BR /dev/ram0이 어느 프로세스에 의해 사용되거나, 그 위에 어떤 파일 시스템이 마운트되어 있으면, /dev/ram0은 마운트되지 않을 것이다.  
+<B>/dev/ram0이</B>마운트되지<B>않으면,</B>.BR<B>/dev/ram0은</B>메모리에<B>남겨질</B>것이다.<B></B>
+
+<P>
+
+3. .BR /dev/initrd의 사용자들은 위의 주의사항에 주어진 행동에 의존해서는안된다.  
+이는 앞으로의 리눅스 커널의 미래버전들에 있어 변경이 될 수 있는 것이다. 
+
+
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+장치 .BR initrd에 대한 커널 코드는 Werner Almesberger &lt;<A HREF="mailto:almesber@lrc.epfl.ch">almesber@lrc.epfl.ch</A>&gt;와 
+Hans Lermen &lt;<A HREF="mailto:lermen@elserv.ffm.fgan.de">lermen@elserv.ffm.fgan.de</A>&gt;에 의해 작성되었다.
+<B>initrd에</B>대한<B>코드는</B>개발<B>버전</B>1.3.73의<B>리눅스</B>커널에<B>추가되었다.</B>
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAD">부트 업 연산 </A><DD>
+<DT><A HREF="#lbAE">OPTIONS(옵션)</A><DD>
+<DT><A HREF="#lbAF">일반 루트 파일 시스템 변경하기</A><DD>
+<DT><A HREF="#lbAG">사용법</A><DD>
+<DT><A HREF="#lbAH">설정</A><DD>
+<DT><A HREF="#lbAI">파일</A><DD>
+<DT><A HREF="#lbAJ">관련 항목</A><DD>
+<DT><A HREF="#lbAK">주의</A><DD>
+<DT><A HREF="#lbAL">AUTHOR</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,381 @@
+<HTML><HEAD><TITLE>Manpage of MORE</TITLE>
+</HEAD><BODY>
+<H1>MORE</H1>
+Section: User Commands  (1)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+<BR>BSD mandoc<BR>
+Linux 0.98
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<B>more</B>
+
+ - 문자속성을 살린 파일 보기 풀그림
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>more</B>
+
+[-<B>dlfpcsu</B>
+
+]
+
+[-<B>num</B>
+
+]
+
+[+/ 표현식]
+
+[+ 줄번호]
+
+[<I>file ...</I>
+
+]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>More</B>
+
+명령은 파일 보기 풀그림이다. 이 풀그림은 유닉스에서 처음부터 
+사용한 풀그림이다. 하지만, 이 풀그림의 기능을 보다 보강한 
+<A HREF="http://localhost/cgi-bin/man/man2html?1+less">less</A>(1)
+
+
+명령을 사용하기를 바란다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+다음은 이 풀그림에서 사용할 수 있는 옵션이며, 
+이 옵션은 
+<B>MORE</B>
+
+환경변수로도 지정할 수 있다. 이미 이 환경 변수로 옵션들이 지정되어 
+있는데, 명령행으로 옵션을 사용하면, 그 환경 변수는 무시된다.
+<DL COMPACT>
+<P>
+
+<DT><B>-num</B>
+
+
+<DD>
+<I>num</I> 줄을 한 화면으로 지정한다.
+<DT><B>-d</B>
+
+
+<DD>
+<B>more</B>
+
+명령은 글쇠를 입력받아야할 때, 
+&quot;[Press space to continue, 'q' to quit.]&quot; 내용을 보여주고, 
+글쇠가 잘못 입력되었을 때,
+&quot;[Press 'h' for instructions.]&quot; 내용을 보여준다.
+<DT><B>-l</B>
+
+
+<DD>
+<B>more</B>
+
+usually treats
+<B>^L</B>
+
+(form feed) as a special character, and will pause after any line that
+contains a form feed.  The
+-<B>l</B>
+
+option will prevent this behavior.
+<DT><B>-f</B>
+
+
+<DD>
+Causes
+<B>more</B>
+
+to count logical, rather than screen lines (i.e., long lines are not
+folded).
+<DT><B>-p</B>
+
+
+<DD>
+스크롤하지 않고, 화면을 모두 지우고, 텍스트를 보여준다.
+<DT><B>-c</B>
+
+
+<DD>
+Do not scroll.  Instead, paint each screen from the top, clearing the
+remainder of each line as it is displayed.
+<DT><B>-s</B>
+
+
+<DD>
+여러 줄의 빈 줄을 한 줄로 보여준다.
+<DT><B>-u</B>
+
+
+<DD>
+밑줄 속성을 가진 문자를 그냥 보여준다.
+<DT><B>+/ </B><I>표현식</I>
+
+
+
+
+
+
+<DD>
+정규 <I>표현식</I>이 발견되는 부분부터 보여준다.
+<DT><B>+num</B>
+
+
+<DD>
+<B>num </B>
+
+줄부터 보여준다.
+</DL>
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>명령들</H2>
+
+<B>more</B>
+
+실행 중에 사용되는 각종 명령은 
+<A HREF="http://localhost/cgi-bin/man/man2html?1+vi">vi</A>(1)
+
+
+명령에 바탕을 두고 있다.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+vi">vi</A></B>(1)에서와 같이 몇 명령은 먼저 숫자가 지정될 수 있다. 
+아래에 k로 표시되는 것이 숫자다.
+아래에서 ^X로 표기되는 것은 Ctrl 글쇠를 누르고 X 글쇠를 누르는 
+것을 의미한다.
+<P>
+
+<DL COMPACT>
+<P>
+
+<DT><B>h 또는 ?</B>
+
+
+
+
+
+
+<DD>
+도움말: 지금 설명되는 각종 명령의 요약을 볼 수 있다.
+다른 모든 명령을 다 잊어도 좋지만, 이 명령만큼은 잊지 말기를.
+<DT><B>SPACE</B>
+
+
+<DD>
+k 줄 만큼 앞으로(순방향, 아래로) 이동. 
+초기값은 한 화면이다.
+<DT><B>z</B>
+
+
+<DD>
+k 줄 만큼 앞으로 이동.
+초기값은 현재 화면 크기이다. k 값이 지정되면 바로 그 값이 현재 
+화면 크기가 된다.
+<DT><B>RETURN</B>
+
+
+<DD>
+k 줄 만큼 앞으로 이동. 초기값은 한 줄. 
+k 값이 지정되면 그 값이 초기값으로 바뀐다.
+<DT><B>d 또는 ^D</B>
+
+
+
+
+
+
+<DD>
+k 줄 만큼 앞으로 이동.
+초기값은 현재 스크롤 크기. 내정치는 11 줄이다. 
+k 값이 지정되면 그 값이 초기값으로 바뀐다.
+<DT><B>
+</B>
+
+<B>q</B>
+
+<B>또는</B>
+
+<B>Q</B>
+
+<B>or</B>
+
+<B>인터럽트</B>
+
+<DD>
+
+마침.
+<DT><B>s</B>
+
+
+<DD>
+<DD>k 줄 만큼 앞으로 이동. 초기값은 한 줄.
+<DT><B>f</B>
+
+
+<DD>
+한 화면씩 앞으로 이동. 초기값은 한 화면.
+<DT><B>b 또는 ^B</B>
+
+
+
+
+
+
+<DD>
+한 화면씩 뒤로(역방향, 위로) 이동. 초기값은 한 화면.
+<DT><B></B>
+
+
+<DD>
+이전에 찾았던 문자열이 있는 곳으로 이동.
+<DT><B>=</B>
+
+
+<DD>
+현재 줄번호를 보여준다.
+<DT><B>/ </B><I>표현식</I>
+
+
+
+
+
+
+<DD>
+k 번째 발견되는 정규표현식 내용을 찾는다. 초기값은 첫번째.
+<DT><B>n</B>
+
+
+<DD>
+k 번째 다음 발견 되는 문자열이 있는 곳으로 이동. 초기값은 첫번째.
+<DT><B>!&lt;명령&gt; 또는 :!&lt;명령&gt;</B>
+
+
+
+
+
+
+<DD>
+쉘 &lt;명령&gt;을 실행한다.
+<DT><B>v</B>
+
+
+<DD>
+현재 줄에서 /usr/bin/vi 명령을 실행한다.
+<DT><B>^L</B>
+
+
+<DD>
+화면 갱신.
+<DT><B>:n</B>
+
+
+<DD>
+k 번째 다음 파일을 연다. 초기값은 첫번째.
+<DT><B>:p</B>
+
+
+<DD>
+k 번째 이전 파일을 연다. 초기값은 첫번째.
+<DT><B>:f</B>
+
+
+<DD>
+현재 보고 있는 파일의 이름과 현재 줄번호를 보여준다.
+<DT><B>.</B>
+
+
+<DD>
+이전에 실행했던 명령을 반복한다.
+</DL>
+<P>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>환경변수</H2>
+
+<B>More</B>
+
+명령은 다음 환경 변수가 지정되어 있으면 그 값을 이용한다:
+<DL COMPACT>
+<P>
+
+<DT><B>MORE</B>
+
+
+<DD>
+<B>more</B>에서 사용되는 옵션을 지정한다.
+<DT><B>SHELL</B>
+
+
+<DD>
+현재 사용하고 있는 쉘(이 값은 일반적으로 로그인 때에 자동으로 지정된다.)
+<DT><B>TERM</B>
+
+
+<DD>
+<B>more</B>에서 화면 처리를 위한 터미날 형태를 지정한다. 
+</DL>
+<P>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+vi">vi</A>(1)
+
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+less">less</A>(1)
+
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>만든이들</H2>
+
+버클리 대학의 Eric Shienbrood가 처음 만들었고, 
+<BR>
+
+같은 대학의 Geoff Peck이 밑줄속성 문자와 공백문자 처리 부분을 첨가했고,
+<BR>
+
+같은 대학의 John Foderaro가 -c 옵션과 MORE 환경변수를 사용할 수 있게 했다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>발자취</H2>
+
+<B>more</B>
+
+명령은 
+BSD 3.0 
+시스템에서 처음 나타났다.
+이 매뉴얼 페이지 문서는 
+<B>more</B>
+
+버전 5.19 (Berkeley 6/29/88)를 바탕으로 작성되었다. 
+현재 리눅스 협회에서 사용하고 있는 풀그림이다. 
+또한 이 매뉴얼 페이지는 다양한 종류가 있는데, 각각 소스의 변경에 따라 
+확장, 축소되기도 한다. 
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">명령들</A><DD>
+<DT><A HREF="#lbAG">환경변수</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">만든이들</A><DD>
+<DT><A HREF="#lbAJ">발자취</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

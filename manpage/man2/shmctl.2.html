@@ -1,0 +1,255 @@
+<HTML><HEAD><TITLE>Manpage of SHMCTL</TITLE>
+</HEAD><BODY>
+<H1>SHMCTL</H1>
+Section: 리눅스 프로그래머 메뉴얼 (2)<BR>Updated: November 28, 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+shmctl - 공유 메모리를 제어한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/ipc.h">sys/ipc.h</A>&gt;</B>
+
+<P>
+<B>#include &lt;<A HREF="file:/usr/include/sys/shm.h">sys/shm.h</A>&gt;</B>
+
+<P>
+<B>int shmctl(int </B><I>shmid</I><B>, int </B><I>cmd</I><B>, struct shmid_ds *</B><I>buf</I><B>);</B>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>shmctl()</B>
+는 사용자가 공유 메모리 세그먼트에 관한 정보를 얻거나 공유 메모리 세그먼트의 
+소유자, 그룹, 허가권들을 설정하거나 세그먼트를 파괴하는걸 허용한다.
+<I>shmid</I>로 식별되는 세그먼트에 관한 정보는 <I>shmid_ds</I> 구조체로 리턴된다:
+<P>
+
+
+<PRE>
+struct shmid_ds {
+        struct  ipc_perm shm_perm;      /* 퍼미션 */
+        int     shm_segsz;              /* 세그먼트의 크기(bytes) */
+        time_t  shm_atime;              /* 마지막 접근 시간 */
+        time_t  shm_dtime;              /* 마지막 제거 시간 */
+        time_t  shm_ctime;              /* 마지막 변경 시간 */
+        unsigned short  shm_cpid;       /* 생성자의 pid */
+        unsigned short  shm_lpid;       /* 마지막으로 작동한 프로세스의 pid */
+        short   shm_nattch;             /* 현재 접근한 프로세스의 수 */
+        /* 다음은 개별적이다 */
+        unsigned short   shm_npages;  /* 세그먼트의 크기(pages) */
+        unsigned long   *shm_pages;   
+        struct shm_desc *attaches;    /* 접근을 위한 기술자들 */
+};
+</PRE>
+
+
+<P>
+
+<I>shm_perm</I> 멤버의 필드들은 설정될수 있다:
+<P>
+
+
+<PRE>
+struct ipc_perm
+{
+  key_t  key;
+  <B>ushort uid</B>;   /* <B>owner</B>의 euid 와 egid */
+  <B>ushort gid</B>;
+  ushort cuid;  /* 생성자의 euid 와 egid */
+  ushort cgid;
+  <B>ushort mode</B>;  /* 접근 모드의 하위 9 bits */
+  ushort seq;   /* 연속 수(sequence number) */
+};
+</PRE>
+
+<P>
+
+다음 <I>cmds</I>가 이용될수 있다:
+<BR>
+
+<DL COMPACT>
+<DT><B>IPC_STAT</B>
+
+<DD>
+공유 메모리 세그먼트에 관한 정보를 버퍼 <I>buf</I>에 복사하기 위해 사용된다. 
+사용자는 공유 메모리 세그먼트에 <B>read</B>접근을 해야 한다. 
+<DT><B>IPC_SET</B>
+
+<DD>
+<I>shm_perms</I>필드의  
+<I>uid</I>, 
+<I>gid</I>,
+or <I>mode</I> 
+멤버들에 대한 사용자 변경을 적용하기 위해 사용된다.
+<I>mode</I>의 하위 9비트들만이 사용된다. 
+<I>shm_ctime</I>
+
+멤버 또한 갱신된다.
+사용자는 소유자, 생성자, 또는 슈퍼 유저이어야 한다.
+<DT><B>IPC_RMID</B>
+
+<DD>
+파괴될 세그먼트를 표시하기 위해 사용된다. 실제로는 마지막 분리후에 파괴된다.
+(즉, 관련된 
+<I>shmid_ds</I>
+
+구조체의 
+<I>shm_nattch</I>
+
+멤버가  0일때)
+사용자는 소유자, 생성자 또는 슈퍼 유저이어야 한다.
+</DL>
+<P>
+
+사용자는 세그먼트가 결국 파괴 되었다는것을 보장해야 한다:
+그렇지 않으면 폴트가 난 페이지들은 메모리나 스왑에 남아 있을 것이다. 
+<P>
+
+게다가, <B>super-user</B>는 다음 <I>cmds</I>와 관련된 공유 메모리 세그먼트의 
+스왑핑을 금지하거나 허용할수 있다: (Linux only)
+<BR>
+
+<DL COMPACT>
+<DT><B>SHM_LOCK</B>
+
+<DD>
+공유 메모리 세그먼트의 스와핑을 막는다.
+사용자가 있어야 하는 페이지들을 잠금후에 요구한다면 위반이다.
+<DT><B>SHM_UNLOCK</B>
+
+<DD>
+공유 메모리 세그먼트에 대한 스와핑을 허용한다.
+</DL>
+<P>
+
+<B>IPC_INFO</B>,
+
+<B>SHM_STAT</B>
+
+그리고 
+<B>SHM_INFO</B>
+
+는 할당된 자원들에 관한 정보를 제공하는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ipcs">ipcs</A></B>(8)
+
+의 의해 사용된다.
+미래에, 이것들은 proc 파일 시스템 인터페이스를 위해서 필요할때 수정되거나 이동될수 있다.
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>SYSTEM CALLS</H2>
+
+<DL COMPACT>
+<DT><B>fork()</B>
+
+<DD>
+<B>fork()</B>
+
+후에 자식 프로세스는 연결된 공유 메모리 세그먼트들을 상속한다.
+<DT><B>exec()</B>
+
+<DD>
+<B>exec()</B>
+
+후에 연결된 모든 공유 메모리 세그먼트들은 분리된다.(파괴되는것이 아니다.)
+<DT><B>exit()</B>
+
+<DD>
+<B>exit()</B>
+
+시에 연결된 모든 공유 메모리 세그먼트들은 분리된다.(파괴되는것이 아니다.)
+</DL>
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시 0이 리턴되며, 에러시 -1이 리턴된다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>에러</H2>
+
+에러시, 
+<B>errno</B>
+
+는 다음중 하나로 설정된다.
+<DL COMPACT>
+<DT><B>EACCES</B>
+
+<DD>
+<B>IPC_STAT</B>가 요청되고 <I>shm_perm.modes</I>가 
+<I>msqid</I>
+
+에 대한 읽기 접근이 허용되지 않을 경우 리턴된다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>cmd</I>
+
+인자가 
+<B>IPC_SET</B>
+
+나 
+<B>IPC_STAT</B>
+
+값을 가지고 있지만 
+<I>buf</I>
+
+에 지정된 주소는 접근할수 없다.
+<DT><B>EINVAL</B>
+
+<DD>
+<I>shmid</I>가 유효 식별자가 아니거나 <I>cmd</I>가 유효한 명령어가 아니라면 리턴된다.
+<DT><B>EIDRM</B>
+
+<DD>
+<I>shmid</I>가 제거된 식별자를 가리키고 있다면 리턴된다.
+<DT><B>EPERM</B>
+
+<DD>
+<B>IPC_SET</B>나 <B>IPC_RMID</B>가 시도됐고 사용자가 생성자나 소유자 또는 슈퍼유저가 아니고, 사용자가 그룹이나 그외에 대한 허가권을 가지고 있지 않다면 리턴된다.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID.  SVr4는 추가적으로 EINVAL, ENOENT, ENOSPC, ENOMEM, EEXIST 에러 
+조건들을 문서화했다.  SVr4나 SVID 모두 EIDRM 에러 조건은 문서화 하지 않았다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmget">shmget</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmop">shmop</A></B>(2)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 5월 18일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">SYSTEM CALLS</A><DD>
+<DT><A HREF="#lbAF">반환값</A><DD>
+<DT><A HREF="#lbAG">에러</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

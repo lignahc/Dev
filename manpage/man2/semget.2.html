@@ -1,0 +1,346 @@
+<HTML><HEAD><TITLE>Manpage of SEMGET</TITLE>
+</HEAD><BODY>
+<H1>SEMGET</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: November 1, 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+semget - 세마포어 집합 식별자를 얻어낸다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B># include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+<B># include &lt;<A HREF="file:/usr/include/sys/ipc.h">sys/ipc.h</A>&gt;</B>
+<B># include &lt;<A HREF="file:/usr/include/sys/sem.h">sys/sem.h</A>&gt;</B>
+</PRE>
+
+<P>
+<B>int semget ( key_t </B><I>key</I><B>,</B>
+
+<B>int </B><I>nsems</I><B>,</B>
+
+<B>int </B><I>semflg</I><B> )</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이 함수는
+<I>key</I>
+
+의 값에 대응하는 세마포어 집합 식별자를 반환한다.
+<I>key</I>
+
+의 값이
+<B>IPC_PRIVATE</B>
+
+일 경우, 또는
+<I>key</I>
+
+의 값이
+<B>IPC_PRIVATE</B>
+
+는 아니지만
+<I>key</I>
+
+에 대응하는 세마포어 집합이 없을 경우,
+또는
+<I>semflg</I>
+
+이
+<B>IPC_CREAT</B>
+
+을 포함할 경우, 즉,
+<I>semflg</I>
+
+과
+<B>IPC_CREAT</B>
+
+의 AND연산이 0이 아닐 경우에
+함수는 
+<I>nsems</I>
+
+개의 
+세마포어를 갖는 새로운 집합을
+만든다.
+<I>semflg</I>
+
+에
+<B>IPC_CREAT</B>
+
+와
+<B>IPC_EXCL</B>
+
+가 동시에 켜져 있는 것은,
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A>(2)</B>
+
+함수 의
+mode 인수에
+<B>IPC_CREAT</B>
+
+와
+<B>IPC_EXCL</B>
+
+가 동시에 설정되어 있을 때와 동일한 역할을 한다.
+즉, 
+<I>semflag</I>
+
+에
+<B>IPC_CREAT</B>
+
+와
+<B>IPC_EXCL</B>
+
+가 동시에 설정되어 있고,
+<I>key</I>
+
+에 해당하는 세마포어가 이미 존재할 때 함수는 실패한다.
+<P>
+
+세마포어 생성시, 인수
+<I>semflg</I>
+
+의 낮은 9비트는 세마포어 집합에 대한 접근 권한을 정의한다.
+접근 권한의 형식은 
+<B>open</B>
+
+(2)
+<B>creat</B>
+
+(2) 시스템 호출의 접근권한 설정시와 동일하다. 
+
+단, 실행 허가는 시스템에 의해 주어지지 않으며, 세마포어 집합에 대한
+쓰기권한은 실질적으론 변경권한을 의미한다.
+<P>
+
+게다가 생성시 시스템 호출은 시스템 세마포어 집합의 데이타 구조
+<B>semid_ds</B>
+
+를 다음과 같이 초기화한다:
+<DL COMPACT>
+<DT><DD>
+<B>sem_perm.cuid</B>
+
+와
+<B>sem_perm.uid</B>
+
+는 호출한 프로세스의 유효 사용자-ID로 설정된다.
+<DT><DD>
+<B>sem_perm.cgid</B>
+
+와
+<B>sem_perm.gid</B>
+
+는 호출한 프로세스의 유효 그룹-ID로 설정된다.
+<DT><DD>
+<B>sem_perm.mode</B>
+
+의 가장 낮은 9비트는
+<I>semflg</I>
+
+의 가장 낮은 9비트로 설정된다.
+<DT><DD>
+<B>sem_nsems</B>
+
+는
+<I>nsems</I>
+
+의 값으로 설정된다.
+<DT><DD>
+<B>sem_otime</B>
+
+는 0으로 설정된다.
+<DT><DD>
+<B>sem_ctime</B>
+
+는 현재시각으로 설정된다.
+</DL>
+<P>
+
+인수
+<I>nsems</I>
+
+는 시스템호출이 집합을 생성하지 않을 경우에는
+<B>0</B>
+
+일 수 있다.
+그 외에
+<I>nsems</I>
+
+는
+<B>0</B>
+
+보다 크고 semid당 세마포어의 최대값 이하인 수이어야만 한다.
+(<B>SEMMSL</B>).
+
+<P>
+
+
+세마포어 집합이 이미 존재한다면, 접근 권한을 확인하고,
+삭제될 것으로 표시되어있는지를 확인한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 반환값은 양의 정수값을 갖는 세마포어 집합 식별자일 것이고,
+아니라면 에러를 나타내는
+<B>errno</B>
+
+와 함께
+<B>-1</B>
+
+이 반환된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+실패값 반환을 위해,
+<B>errno</B>
+
+는 다음 값중 하나로 설정될 것이다:
+<DL COMPACT>
+<DT><B>EACCES</B>
+
+<DD>
+<I>key</I>
+
+에 대응하는 세마포어 집합이 존재하지만,
+호출한 프로세스는 집합에 대한 접근권한이 없다.
+<DT><B>EEXIST</B>
+
+<DD>
+<I>semflg</I>
+
+에
+<B>IPC_CREAT</B>
+
+와
+<B>IPC_EXCL</B>
+
+이 설정되어 있는데,
+<I>key</I>
+
+에 대응하는 세마포어 집합이 이미 존재한다.
+<DT><B>ENOENT</B>
+
+<DD>
+<I>key</I>
+
+에 대응하는 세마포어 집합이 존재하지 않고,
+<I>semflg</I>
+
+에는
+<B>IPC_CREAT</B>
+
+가 설정되어 있지도 않다.
+<DT><B>ENOMEM</B>
+
+<DD>
+세마포어 집합이 생성되어야 하지만 시스템에 메모리가 부족하다.
+<DT><B>ENOSPC</B>
+
+<DD>
+세마포어 집합이 생성되어야 하지만 시스템의
+세마포어 집합 갯수 최대값,
+(<B>SEMMNI</B>)
+
+개별 세마포어 갯수의 최대값
+(<B>SEMMNS</B>)
+
+제한 때문에 만들지 못했다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+<B>IPC_PRIVATE</B>
+
+은 플래그가 아니고,
+<B>key_t</B>
+
+타입이다.
+<I>key</I>
+
+가 이 값을 갖을 때에 시스템 호출은
+<I>semflg</I>
+
+의 아래 9비트 이외의 다른 것은 모두 무시하고
+새로운 세마포어 집합을 생성한다.
+<P>
+
+다음은
+<B>semget</B>
+
+호출에 영향을 주는 세마포어 설정 자원을 제한한다:
+<DL COMPACT>
+<DT><B>SEMMNI</B>
+
+<DD>
+시스템 세마포어 설정의 최대값 범위: 정책의지.
+<DT><B>SEMMSL</B>
+
+<DD>
+semid당 세마포어의 최대값: 구현 의지 (현재 500).
+<DT><B>SEMMNS</B>
+
+<DD>
+시스템 세마포어의 최대값 범위; 정책 의지.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>버그</H2>
+
+<B>IPC_PRIVATE</B>
+
+의 사용은 다른 할당된 세마포어 설정에 접근 프로세스들을 억제한다.
+<P>
+
+데이타 구조는 설정에 시스템 호출에 의해 초기화되지 않는 각 세마포어과 일치한다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID.  SVr4 documents additional error conditions EINVAL, EFBIG,
+E2BIG, EAGAIN, ERANGE, EFAULT.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+ftok">ftok</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ipc">ipc</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+semctl">semctl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+semop">semop</A></B>(2)
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>번역</H2>
+
+ASPLINUX &lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt; 2000년 7월 29일
+<BR>
+
+배성훈 &lt;<A HREF="mailto:plodder@kldp.org">plodder@kldp.org</A>&gt; 2000년 11월 18일
+<BR>
+
+한글 Mnapage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>) 2005년 2월 14일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">버그</A><DD>
+<DT><A HREF="#lbAI">호환</A><DD>
+<DT><A HREF="#lbAJ">관련 항목</A><DD>
+<DT><A HREF="#lbAK">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 05:13:49 GMT, February 14, 2005
+</BODY>
+</HTML>

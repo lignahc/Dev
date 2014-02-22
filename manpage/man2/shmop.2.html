@@ -1,0 +1,366 @@
+<HTML><HEAD><TITLE>Manpage of SHMOP</TITLE>
+</HEAD><BODY>
+<H1>SHMOP</H1>
+Section: 리눅스 프로그래머 메뉴얼 (2)<BR>Updated: November 28, 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+shmop - 공유 메모리 작동들
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B># include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+<B># include &lt;<A HREF="file:/usr/include/sys/shm.h">sys/shm.h</A>&gt;</B>
+</PRE>
+
+<P>
+<B>void *shmat ( int </B><I>shmid</I><B>,</B>
+
+<B>const void *</B><I>shmaddr</I><B>,</B>
+
+<B>int </B><I>shmflg</I><B> )</B>
+
+<P>
+<B>int shmdt ( const void *</B><I>shmaddr</I><B>)</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>shmat</B>
+
+함수는 
+<B>shmid</B>
+
+로 식별되는 공유 메모리 세그먼트를 호출 프로세스의 데이터 세그먼트에
+연결한다.
+연결될 주소는 다음 조건중 하나의 
+<I>shmaddr</I>
+
+로 지정된다.
+<DL COMPACT>
+<DT><DD>
+If
+<I>shmaddr</I>
+
+가 
+<B>0</B>
+
+이면, 시스템은 1 - 1.5G사이의 영역에서 상위에서부터 하위로 대응되지 않은 
+영역을 찾는다.
+<DT><DD>
+<I>shmaddr</I>
+
+가 
+<B>0</B>
+
+이 아니고 
+<B>SHM_RND</B>
+
+가 
+<I>shmflg</I>
+
+에 지정되어 있으면, 
+<I>shmaddr</I>
+
+가 
+<B>SHMLBA</B>
+
+의 배수의 주소로 연결이 발생한다.
+그렇지 않으면
+<I>shmaddr</I>
+
+는 연결할수 있는 정렬된 페이지 주소이어야 한다.
+</DL>
+<P>
+
+만일
+<B>SHM_RDONLY</B>
+
+가 
+<I>shmflg</I>
+
+에 지정되면, 
+이 세그먼트는 읽기전용으로 연결되며 프로세스는 세그먼트에 읽기 접근 허가권을 
+가져야만 한다. 
+그렇지 않으면 세그먼트는 읽기-쓰기로 연결되며 프로세스는 세그먼트에 읽기-쓰기 접근 허가권들을 가져야만 한다.
+쓰기전용 공유메모리 세그먼트에 대한 표시는 없다.
+<P>
+
+호출 프로세스의 
+<B>brk</B>
+
+값은 연결시 바뀌어지지 않는다.
+세그먼트는 프로세스가 종료할때 자동적으로 분리된다.
+같은 세그먼트는 그 프로세스 주소 공간에서 읽기 전용으로,  읽기-쓰기로, 한번 
+이상 연결될수 있다.
+<P>
+
+성공시
+<B>shmat</B>
+
+시스템 콜은 공유 메모리 세그먼트에서 다음과 같은 
+<B>shmid_ds</B>
+
+구조체 멤버들을 갱신한다.
+<DL COMPACT>
+<DT><DD>
+<B>shm_atime</B>
+
+는 현재 시간으로 설정된다.
+<DT><DD>
+<B>shm_lpid</B>
+
+는 호출 프로세스의 프로세스-ID로 설정된다.
+<DT><DD>
+<B>shm_nattch</B>
+
+는 1 증가한다.
+</DL>
+<P>
+
+공유 메모리 세그먼트가 삭제로서 표시될 경우도 역시 분리 된다.
+<P>
+
+함수 
+<B>shmdt</B>
+
+는 호출 프로세스의 데이타 세그먼트에서 
+<I>shmaddr</I>
+
+로 지정된 주소에 위치한 공유 메모리 세그먼트를 분리한다.
+공유 메모리 세그먼트의 분리는 
+<B>shmat</B>
+
+시그템 콜로 연결된 값과 같은  
+<I>shmaddr</I>
+
+를 가지고 있는 현재 연결된 세그먼트들중 하나(프로세스의 주소 공간)이어야 한다.
+<P>
+
+성공시, 
+<B>shmdt</B>
+
+시스템 콜은 공유 메모리 세그먼트에서 다음과 같은 
+<B>shmid_ds</B>
+
+구조체 멤버들을 갱신한다.
+<DL COMPACT>
+<DT><DD>
+<B>shm_dtime</B>
+
+는 현재 시간으로 설정된다.
+<DT><DD>
+<B>shm_lpid</B>
+
+는 호출 프로세스의 프로세스-ID로 설정된다.
+<DT><DD>
+<B>shm_nattch</B>
+
+는 1 감소한다.
+만일 0이고 세그먼트가 삭제 표시되어 있드면 세그먼트는 삭제된다.
+</DL>
+<P>
+
+호출 프로세스의 유저 공간에 점유된 영역은 대응이 풀리지 않는다.
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>SYSTEM CALLS</H2>
+
+<DL COMPACT>
+<DT><B>fork()</B>
+
+<DD>
+<B>fork()</B>
+
+후에 자식 프로세스는 연결된 공유 메모리 세그먼트들을 상속한다.
+<DT><B>exec()</B>
+
+<DD>
+<B>exec()</B>
+
+후에 모든 연결된 공유 메모리 세그먼트들은 분리된다.(파괴되는것이 아니다.)
+<DT><B>exit()</B>
+
+<DD>
+<B>exit()</B>
+
+시 모든 연결된 공유 메모리 세그먼트는 분리된다.(파괴되는 것이 아니다.)
+</DL>
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>반환값</H2>
+
+실패시 두 함수는 모두 
+에러를 가리키는 
+<B>errno</B>
+
+와  
+<B>-1</B>
+
+를 리턴하며 
+그렇지 않으면 
+<B>shmat</B>
+
+는 연결된 공유 메모리 세그먼트의 주소를 리턴한다.
+그리고 
+<B>shmdt</B>
+
+는 
+<B>0</B>
+
+를 리턴한다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>에러</H2>
+
+<B>shmat</B>
+
+가 실패할때,  리턴되는 
+<B>errno</B>
+
+는 다음값중 하나로 설정된다.
+<DL COMPACT>
+<DT><B>EACCES</B>
+
+<DD>
+호출 프로세스는 요구된 연결 타입에 대한 접근 허가권들이 없다.
+<DT><B>EINVAL</B>
+
+<DD>
+유효하지 않은 
+<I>shmid</I>
+
+값, 정렬되지 않은(즉, 페이지 정렬이 아니고 <B>SHM_RND</B>가 지정되지 않았다.) 
+또는 유효하지 않은 
+<I>shmaddr</I>
+
+값, 또는 
+<B>brk</B>
+
+에 연결 실패
+<DT><B>ENOMEM</B>
+
+<DD>
+기술자나 페이지 테이블들을 위해 메모리를 할당할수 없다.
+</DL>
+<P>
+
+<P>
+<I>shmaddr</I>
+
+에 연결된 공유 메모리 세그먼트가 없다면 
+함수
+<B>shmdt</B>
+
+는 실패할수 있다.
+이경우 리턴되는 
+<B>errno</B>
+
+는 
+<B>EINVAL</B>
+
+으로 설정될 것이다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>주의</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2)
+
+시스템 콜 실행시 자식 프로세스는 연결된 모든 공유 메모리 세그먼트둘을 
+상속한다.
+<P>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+execve">execve</A></B>(2)
+
+로 실행되는 프로세스에 연결된 공유 메모리 세그먼트들은 결과 프로세스에 연결되지
+않을 것이다.
+<P>
+
+다음은 
+<B>shmat</B>
+
+시스템 콜에 영향을 미치는 시스템 인자이다:
+<DL COMPACT>
+<DT><B>SHMLBA</B>
+
+<DD>
+Segment low boundary address multiple.
+페이지들은 정렬되어야 한다.
+현재 수행시 
+<B>SHMBLA</B>
+
+값은 
+<B>PAGE_SIZE</B>
+
+이다.
+</DL>
+<P>
+
+수행시 프로세스당 공유 메모리 세그먼트 최대수에 어떠한 내부 제한도 없다.
+(<B>SHMSEG</B>)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID.  SVr4는 EMFILE 에러 조건을 문서화했다.
+SVID-v4에서 <I>shmaddr</I> 인자는 
+<B>char *</B>
+
+에서 
+<B>const void *</B>
+
+로 바뀌었으며 
+<I>shmat</I>()의 리턴 타입은 
+<B>char *</B>
+
+에서 
+<B>void *</B>
+
+으로 바뀌었다.
+(Linux libc4 와 libc5는 
+<B>char *</B>
+
+타입을 가지고 있다.; glibc2는 
+<B>void *</B>
+
+을 가지고 있다.)
+<A NAME="lbAJ">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ipc">ipc</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmctl">shmctl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmget">shmget</A></B>(2)
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 5월 16일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">SYSTEM CALLS</A><DD>
+<DT><A HREF="#lbAF">반환값</A><DD>
+<DT><A HREF="#lbAG">에러</A><DD>
+<DT><A HREF="#lbAH">주의</A><DD>
+<DT><A HREF="#lbAI">호환</A><DD>
+<DT><A HREF="#lbAJ">관련 항목</A><DD>
+<DT><A HREF="#lbAK">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

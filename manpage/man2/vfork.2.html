@@ -1,0 +1,255 @@
+<HTML><HEAD><TITLE>Manpage of VFORK</TITLE>
+</HEAD><BODY>
+<H1>VFORK</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1999년 11월 1일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+vfork - 자식 프로세스를 만들고 부모 프로세스를 봉쇄한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>pid_t vfork(void);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>표준 설명</H2>
+
+(XPG4 / SUSv2 / POSIX 초안에서.)
+<I>vfork</I>()함수는
+
+<I>vfork</I>()에
+
+의해 생성된 프로세스가 
+<I>vfork</I>()의
+
+반환 값을 저장하기 위해 사용된 pid_t 타입의 변수외 다른 데이터를 수정하거나,
+<I>vfork</I>()를
+
+호출하기 전에 함수에서 리턴되거나,
+<I>_exit</I>()를
+
+성공적으로 호출하기 전에 다른 함수를 호출하거나, 
+<I>exec</I>
+
+함수 계열중 하나를 호출할경우 행동을 정의할수 없다는 것을 제외하고는
+<I>fork</I>()와
+
+같은 효과를 가진다.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EAGAIN</B>
+
+<DD>
+프로세스들이 너무 많다. - 다시 시도.
+<DT><B>ENOMEM</B>
+
+<DD>
+새 프로세스를 위한 스왑 공간이 충분하지 않다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>리눅스 설명</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2)처럼,
+
+<B>vfork</B>는
+
+호출 프로세스의 자식 프로세스를 만든다. 
+세부 사항과 반환 값 그리고 에러는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2)를
+
+참조해라.
+<P>
+
+<B>vfork()</B>
+
+는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+clone">clone</A></B>(2)의
+
+특별한 경우이다.
+이 함수는 부모 프로세스의 페이지 테이블을 복사하지 않고 새 프로세스를 만든다.
+이 함수는 자식이 
+<I>execve()</I>후에
+
+즉시 만들어져야 하는 성능에 민감한 응용 프로그램에서는 유용하다.
+<P>
+
+<B>vfork()</B>
+
+는 자식이 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+execve">execve</A></B>(2)나
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+_exit">_exit</A></B>(2)를
+
+호출할때까지 부모가 일시 중지되기 때문에 fork와는 다르다.
+자식 프로세스는 
+<I>execve() </I>
+
+가 자식에 의해 실행될때까지 스택을 포함하여 부모와 모든 메모리를 공유한다.
+자식 프로세스는 현재 함수나 
+<I>exit()</I>호출에서
+
+반환해서는 않되지만 
+<I>_exit()</I>호출에서는
+
+된다.
+<P>
+
+시그널 핸들러는 상속되지만 공유되지는 않는다. 부모 프로세스에 대한 신호는
+자식이 부모를 놓아준 후에 도착한다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>역사적 설명</H2>
+
+리눅스에서,
+<I>fork</I>()는
+
+copy-on-write 페이지를 사용하여 수행된다. 그래서 단지 
+<I>fork</I>()에
+
+의해 생긴 불이익은 부모 페이지 테이블 복사 및 자식을 위한 단일 태스크 구조체를 
+만들기 위해 요구되는 시간과 메모리이다.
+그러나, 오래전에 
+<I>fork()</I>는
+
+<I>exec</I>()를
+
+실행한 후 즉시 불 필요하게, 호출 프로세스의 데이터 공간의 완전한 복사를 하도록
+요구 했다.
+그후 효율성을 위해, BSD 는
+부모 프로세스의 주소 공간을 완전히 복사하지는 않지만 
+<I>execve</I>()가
+
+호출되거나 종료 될때까지 부모의 메모리와 쓰레드 제어를 빌리는
+<B>vfork </B>
+
+시스템 콜을 소개했다.
+부모 프로세스는 자식 프로세스가 해당 자원을 사용할때까지 일시 중지 된다.
+vfork의 사용은 신중해야 한다. -- 예를 들어, 변수들이 레지스터에 잡혀 있는지를
+알고 있는 경우에 부모 프로세스에 있는 데이터를 수정해서는 안된다.
+<P>
+<A NAME="lbAH">&nbsp;</A>
+<H2>버그</H2>
+
+이 함수는 리눅스가 과거에 이러한 불안의 원인을 되살아나게 하는 것보다 더 운이 없다.
+BSD 맨 페이지 상태:
+&quot;이 스스템 콜은 적당한 시스템 메카니즘이 수행될때 사라질 것이다.
+사용자들은 
+<I>vfork</I>
+
+의 메모리 공유 의미론에 의존해서는 안된다. 왜냐하면 그런 경우
+이 함수는 
+<I>fork</I>의 동의어이기 때문이다.
+&quot;
+<P>
+정상적으로 말해서, 위에 보여준 표준 설명은 
+다음
+<I>exec</I>가
+
+실패하고 그리고 다음에 일어날일이 정의되지 않기 때문에
+<I>vfork</I>()의
+
+사용을 허용하지 않는다.
+BSD 맨 페이지 상태:
+&quot; 가능한 데드 락(deadlock) 상태를 피하기 위해, 
+<I>vfork </I>
+
+상태에 있는 자식 프로세세스들은 SIGTTOU 나 SIGTTIN 신호를 보내서는 안된다;
+그보다 출력 또는 
+<I>ioctl</I>s
+
+는 허용되며 입력 시도는 파일 끝을 가리키게 된다.
+<P>
+현재(Linux 2.3.25), 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+strace">strace</A></B>(1)는
+
+<I>vfork()</I>을
+
+따라갈수 없으며 커널 패치를 해야 한다.
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>역사</H2>
+
+<I>vfork</I>()시스템
+
+콜은 3.0 BSD에서 나타났다. 
+BSD 4.4에서 이 함수는 
+<I>fork</I>()와
+
+동의어이지만, NetBSD는 이 함수를 다시 소개했다.
+cf. <A HREF="http://www.netbsd.org/Documentation/kernel/vfork.html">http://www.netbsd.org/Documentation/kernel/vfork.html</A> .
+리눅스에서, 이 함수는 2.2.0-pre6 나 그때까지 
+<I>fork</I>()와
+
+같다.
+2.2.0-pre9(i386에서는 다른 아키텍쳐보다 다소 늦다) 이후에, 이 함수는 독립적인 
+시스템 콜이다. 지원은 glibc 2.0.112 에서 추가되었다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>호환</H2>
+
+<B>vfork</B>
+
+함수는 다른 OS에서 같은 이름을 가지고 있는 함수들과 약간 비슷하다.
+표준에서 
+<B>vfork</B>
+
+를 수행할때의 요구들은 
+<B>fork</B>를
+
+수행할때의 것보다도 적다.
+그래서 두 함수가 동의어일때의 수행은 잘 된다.
+특히, 프로그래머는 
+<I>execve()</I>
+
+나
+<I>_exit()</I>
+
+가 호출될때까지 블럭된 채로 남아 있는 부모 프로세스에 의존할수 없으며
+어떤 특정 행동 w.r.t 공유 메모리에 의존할수도 없다.
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+clone">clone</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+execve">execve</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+wait">wait</A></B>(2)
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 9월 16일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">표준 설명</A><DD>
+<DT><A HREF="#lbAE">에러</A><DD>
+<DT><A HREF="#lbAF">리눅스 설명</A><DD>
+<DT><A HREF="#lbAG">역사적 설명</A><DD>
+<DT><A HREF="#lbAH">버그</A><DD>
+<DT><A HREF="#lbAI">역사</A><DD>
+<DT><A HREF="#lbAJ">호환</A><DD>
+<DT><A HREF="#lbAK">관련 항목</A><DD>
+<DT><A HREF="#lbAL">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

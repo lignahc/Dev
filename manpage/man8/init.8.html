@@ -1,0 +1,324 @@
+<HTML><HEAD><TITLE>Manpage of INIT</TITLE>
+</HEAD><BODY>
+<H1>INIT</H1>
+Section: Linux System Administrator's Manual (8)<BR>Updated: May 06, 1996<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+init, telinit - 초기화 프로세스 제어 
+
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>/sbin/init</B>
+
+[<B> -t sec </B>]
+
+[<B> 0123456SsQq </B>]
+
+<BR>
+
+<B>/sbin/telinit</B>
+
+[<B> -t sec </B>]
+
+[<B> 0123456sSQqabc </B>]
+
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H3>Init</H3>
+
+<B>Init</B>
+
+프로세스는 모든 프로세스의 아버지다. 
+이것은 <B>/etc/inittab</B> 파일(<I><A HREF="http://localhost/cgi-bin/man/man2html?5+inittab">inittab</A></I>(5) 참조)을 찾아,
+지정한 스크립트를 실행한다.
+이 파일에는 사용자가 접속할 수 있도록 getty 처리를 하는데, 
+이때 init가 사용된다. 또한 이 파일은 특정 시스템에서 필요한, 
+자동으로 실행되어야 하는 프로세스들을 제어한다.
+<P>
+
+<I>runlevel</I>이란 
+존재하는 프로세스의 선택된 그룹만을 허락하는 시스템의
+소프트웨어 환경이다. 
+각각의 <I>runlevel</I>에서, <B>init</B>에 의해 생성되는 
+프로세스들은 <B>/etc/inittab</B> 파일에서 정의된다. 
+<B>Init</B>는 <I>runlevel</I>이 0부터 6, <B>S</B> 또는 <B>s</B>인 
+여덟 종류 중 하나에 존재 할 수 있다. <I>runlevel</I> 값은 
+시스템 관리자가 <B>/sbin/telinit</B>를 실행해서 바뀐다.
+telinit는 runlevel을 바꾸어라는 신호를 init에게 알린다. 
+<P>
+
+커널 부팅이 끝나면, 마지막으로 init가 실행되는데, 
+이때 <B>/etc/inittab</B> 파일을 찾아 그 안에 정의된 
+<B>initdefault</B> (<I><A HREF="http://localhost/cgi-bin/man/man2html?5+inittab">inittab</A></I>(5) 참조) 부분을 읽는다. 
+그리고 그곳에 정의된 runlevel을 현재 level로 하여 나머지 작업을 
+계속한다. 이때, <B>/etc/inittab</B> 파일이 없거나, 
+<B>initdefault</B> 정의가 없으면, 콘솔에서 직접 runlevel을 
+입력해야 한다.
+<P>
+
+<I>runlevel</I>이 <B>S</B>나 <B>s</B>이면, 단일 사용자 모드가 
+진행되면, 이때는 <B>/etc/initttab</B> 파일이 필요없다. 
+단일 사용자 모드에서는 <B>/dev/console</B>에 의해 
+<B>/bin/sh</B>가 호출된다.
+<P>
+
+단일 사용자 모드가 되면, init는 <B>/etc/ioctl.save</B>에서 
+지정한 콘솔의 <I><A HREF="http://localhost/cgi-bin/man/man2html?2+ioctl">ioctl</A></I>(2)을 읽는다. 이때, 이 파일이 없으면, 
+init는 라인을 <B>9600 baud</B>, <B>CLOCAL</B>로 초기화 한다. 
+단일 사용자 모드를 떠나면, 
+init는 현재 콘솔의 <I>ioctl</I> 설정을 <B>/etc/ioctl.save</B> 파일에 
+저장하고, 다음 단일 사용자 모드에서 다시 사용한다. 
+<P>
+
+다중 사용자 모드로 들어가게 되면, init는 
+먼저 사용자가 로그인 할 수 있는 마운트된 파일 시스템의 사용을 
+위해 <B>boot</B>, <B>bootwait</B> 부분을 처리하고, 
+다음, 나머지 부분들을 처리한다. (inittab에서 정의되고 있음)
+<P>
+
+한 새로운 프로세스를 시작할 때는 먼저 <I>/etc/initscript</I>
+파일이 있는지 확인을 하고, 있다면, 그 스크립트에 따라 
+프로세스를 시작한다. 
+<P>
+
+각 하위 프로세스들이 끝날 때, init는 <B>/var/run/utmp</B>, 
+<B>/var/log/wtmp</B> 파일있다면, 그 파일에
+그 프로세스들의 마침 정보들(언제 끝났고,
+왜 끝났고... 이런 정보)을 기록한다. 
+<P>
+
+지정한 그 프로세스를 모두 실행 한 뒤, 
+<B>init</B>는 그 프로세스를 마칠 의존적인 
+프로세스 중 하나나,<I>powerfail</I> 시그날이나,  시스템의 <I>runleve</I>을 
+바꾸는 <B>/sbin/telinit</B>에서 보내는 시그날을 기다린다.
+이 셋 중 하나가 발생했을 때, <B>init</B>는 <B>/etc/inittab</B> 파일을 
+다시 읽는다. 이 파일에는 언제든지 새로운 항목이 추가 될 수 있다. 
+하지만 그 효과는 위에서 언급한 그 세가지 경우가 되어 <B>init</B>가 그 파일을 
+읽을 때 나타난다. 이런 상황이 아닌데도 <B>/etc/inittab</B> 파일을
+읽어야 할 경우에는 <B>Q</B> 나 <B>q</B> 명령을 사용한다.
+<P>
+
+만약 단일 사용자 모드가 아닌데, powerfail 시그날이 발생하면, 
+<B>init</B>는 <B>/etc/inittab</B> 파일에서 특별하게 지정된 
+<BR>&nbsp;powerfail&nbsp;부분을&nbsp;실행한다.
+<P>
+
+<I>runlevel</I>이 바뀌었을 때, 그 새로운 <I>runlevel</I>에 대해서 
+특별히 대처하지 않게 지정된 모든 프로세스에게 <B>init</B>는 
+경고 시스날인 <FONT SIZE="-1"><B>SIGTERM</B></FONT>을 보낸다. 
+그리고 나서 5초동안 기다리고는 종료 시그날인 <FONT SIZE="-1"><B>SIGKILL</B></FONT>
+을 그 프로세스들에게 보낸다.
+이때, <B>init</B>는 그 프로세스들을 위해 원래 만들어진. 
+같은 프로세스 그룹 안에 남아 있다고 가정한다는 것을 주의하라.
+만약 어떤 프로세스가 자신의 프로세스 그룹을 바꾸었다면, 
+이 프로세스는 위에서 언급한 시그날들을 받지 못한다. 
+이런 프로세스들은 사용자가 직접 종료해야한다. 
+
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>telinit</H3>
+
+<B>/sbin/telinit</B>는 <B>/sbin/init</B>에 링크되어 있는 명령이다. 
+이것은 한 문자의 명령행 인자와 적당한 작업을 수행할 
+signals <B>init</B>를 가진다. 
+여기서 사용할 수 있는 한 문자 명령행 인자는 다음과 같다.
+<B>/sbin/telinit</B>:
+<DL COMPACT>
+<DT><B>0</B>,<B>1</B>,<B>2</B>,<B>3</B>,<B>4</B>,<B>5</B>,<B>6</B><DD>
+<B>/sbin/init</B>에게 runlevel이 바뀌었음을 알린다.
+<DT><B>a</B>,<B>b</B>,<B>c</B><DD>
+<B>/etc/inittab</B> 파일에서 지정한 <B>a</B>,<B>b</B>,<B>c</B> 
+runlevel 부분을 처리하라고 init에게 알린다.
+<DT><B>Q</B> or <B>q</B><DD>
+<B>/sbin/init</B>가 <B>/etc/inittab</B> 파일을 다시 읽도록 지시한다.
+<DT><B>S</B> or <B>s</B><DD>
+<B>/sbin/init</B>에게 단일 사용자 모드로 전환하라고 알린다.
+</DL>
+<P>
+
+또한 init가 TERM 시그날을 보내고 나서 몇 초를 기다린 후, 
+KILL 시그날을 프로세스들에게 보낼지를 지정할 수 있다. 
+초기값은 5초다. 이 것은 <B>-t sec</B> 옵션으로 지정한다.
+<P>
+
+<B>/sbin/telinit</B>
+명령은 단지 시스템 관지자에 의해서만 호출 될 수 있다.
+
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>RUNLEVELS</H2>
+
+init와 관계되는 runlevel은 0, 1, 6이다. 0은 시스템 종료에, 
+6은 시스템 재시동(reboot)에, 1은 단일 사용자 모드에 사용된다.
+runlevel <B>S</B>는 바로 처리 되지 않고, 
+runlevel <B>1</B>로 바뀌었을 때 처리 되는 부분에서 처리된다.
+자세한 이야기는 <B><A HREF="http://localhost/cgi-bin/man/man2html?1+shutdown">shutdown</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+inittab">inittab</A></B>(5) 매뉴얼 
+페이지를 참조한다.
+<P>
+
+runlevel 7-9도 사용할 수 있지만, 
+이 문서에서는 다루지 않는다. 이것은 &quot;전통적인&quot; Unix 환경에서는 
+사용되지 않는 값들이기 때문이다. 
+일반적으로 runlevel <I>S</I>나 <I>s</I> 값이 runlevel 7-9와 
+같은 역활을 한다. 이것은 단지 하나의 별칭으로 사용된다. 
+이 풀그림 제작자가 sysvinit를 만들때 사용한 시스템에서 
+이 값들을 사용하기 때문에 남겨두었을 뿐이다.
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>FILES</H2>
+
+<PRE>
+/etc/inittab
+/etc/initscript
+/dev/console
+/etc/ioctl.save
+/var/run/utmp
+/var/log/wtmp
+/dev/initctl
+</PRE>
+
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>ENVIRONMENT</H2>
+
+init에서는 다음과 같은 환경 변수를 사용한다.
+<DL COMPACT>
+<DT><B>PATH</B><DD>
+초기값: <I>/bin:/usr/bin:</I>
+<DT><B>INIT_VERSION</B><DD>
+init의 버전 정보. 이것은 init 스크립트 작성에서 요용하게 쓰인다.
+<DT><B>RUNLEVEL</B><DD>
+시스템의 현재 runlevel.
+<DT><B>PREVLEVEL</B><DD>
+이전 runlevel.(runlevel 전환 때에 요용하게 쓰인다.)
+
+</DL>
+<A NAME="lbAJ">&nbsp;</A>
+<H2>BOOTFLAGS</H2>
+
+부트 관리자(예, LILO)에서 다음 인자들을 사용할 수도 있고, 
+생략할 수도 있다.
+<DL COMPACT>
+<DT><B>S, single</B>
+
+<DD>
+단일 사용자 모드로 부팅한다. 
+이 모드에서는 <I>/etc/inittab</I> 파일을 검사하고, 
+단일 사용자 모드의 쉘이 시작되기 전에,
+rc 스크립트가 일반적으로 실행된다. 
+</DL>
+<P>
+
+<DL COMPACT>
+<DT><B>1-5</B>
+
+<DD>
+지정한 runlevel로 부팅한다.
+</DL>
+<P>
+
+<DL COMPACT>
+<DT><B>-b, emergency</B>
+
+<DD>
+다른 어떠한 시작 스크립트 없이 바로 단일 사용자 모드로 부팅한다.
+</DL>
+<P>
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>CONFORMING TO</H2>
+
+<B>Init</B>는 System V init와 호환이 된다. 
+이것은 <I>/etc/init.d</I>, <I>/etc/rc{runlevel}.d</I> 경로안에 있는 
+스크립트들을 실행한다. 
+자신의 시스템에 적용하려면, 먼저  
+/etc/init.d 경로 안에 있는 스크립트들이 어떻게 
+작동할 것인지에 대해서 이야기하고 있는 <I>README</I> 파일을 읽어
+보라.
+
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>WARNINGS</H2>
+
+<B>init</B>는 어떤 프로세스가 실행될 당시에 소속되어 있는 
+프로세스 그룹안에 계속 있다고 가정한다. 
+그렇기 때문에, 만약 그 프로세스가 그 그룹에 더 이상 소속되지 
+않는다면, runlevel이 바뀌었어 그 프로세스를 마쳐야 할때, 
+제대로 마칠수 없게 된다. 
+
+
+<A NAME="lbAM">&nbsp;</A>
+<H2>DIAGNOSTICS</H2>
+
+만약 2분 동안 10번 이상 init가 계속 해서 호출 된다면, 
+init는 이런 상태를 오류로 가정한다. 그리고는 시스템 콘솔에 
+오류 메시지를 보여준다. 그리고, 5분간 프로세스 생성을 중지하고,
+발생되는 시그날을 받는다. 이것은 시스템 리소스의 낭비를 
+막기 위한 조치이다.  
+
+
+<A NAME="lbAN">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Miquel van Smoorenburg (<A HREF="mailto:miquels@cistron.nl">miquels@cistron.nl</A>), initial manual
+page by Michael Haardt (<A HREF="mailto:u31b3hs@pool.informatik.rwth-aachen.de">u31b3hs@pool.informatik.rwth-aachen.de</A>).
+
+
+<A NAME="lbAO">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+getty">getty</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+login">login</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+sh">sh</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+who">who</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+shutdown">shutdown</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?2+kill">kill</A>(2), <A HREF="http://localhost/cgi-bin/man/man2html?5+inittab">inittab</A>(5),
+<A HREF="http://localhost/cgi-bin/man/man2html?5+initscript">initscript</A>(5), <A HREF="http://localhost/cgi-bin/man/man2html?5+utmp">utmp</A>(5)
+
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DL>
+<DT><A HREF="#lbAE">Init</A><DD>
+<DT><A HREF="#lbAF">telinit</A><DD>
+</DL>
+<DT><A HREF="#lbAG">RUNLEVELS</A><DD>
+<DT><A HREF="#lbAH">FILES</A><DD>
+<DT><A HREF="#lbAI">ENVIRONMENT</A><DD>
+<DT><A HREF="#lbAJ">BOOTFLAGS</A><DD>
+<DT><A HREF="#lbAK">CONFORMING TO</A><DD>
+<DT><A HREF="#lbAL">WARNINGS</A><DD>
+<DT><A HREF="#lbAM">DIAGNOSTICS</A><DD>
+<DT><A HREF="#lbAN">AUTHOR</A><DD>
+<DT><A HREF="#lbAO">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

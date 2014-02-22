@@ -1,0 +1,305 @@
+<HTML><HEAD><TITLE>Manpage of whatis</TITLE>
+</HEAD><BODY>
+<H1>whatis</H1>
+Section: Manual pager utils (1)<BR>Updated: 07 September 2001<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+whatis - 메뉴얼 페이지 설명을 보여준다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>whatis</B>
+
+[<B>-dhV</B>]
+
+[<B>-r</B>|<B>-w</B>]
+[<B>-m</B>
+
+<I>system</I>[,...]]
+
+[<B>-M</B>
+
+<I>path</I>]
+
+<I>name</I>
+
+...
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+각각의 메뉴얼 페이지는 그것에 대해 짧은 설명을 가지고 있다.
+<B>whatis</B>
+
+는 메뉴얼 페이지의 이름을 검색하여 특정
+<I>name</I>
+
+을 포함하고 있는 메뉴얼 페이지의 설명을 보여준다.
+<P>
+<I>name</I>
+
+은 와일드카드(wildcard)
+(<B>-w</B>)
+
+를 포함하거나 
+정규식(regular expression)
+(<B>-r</B>)
+
+일 수 있다.
+이 옵션들을 사용하면서,
+쉘이 특수 문자들을 해석하는 것을 막기 위해
+<I>name</I>
+
+을 인용하거나 
+에스케이프(escape)시켜야 할 수도 있다.
+<P>
+검색하는 동안
+<B>index</B>
+
+데이터베이스들이 사용된다.
+해당
+<B>index</B>
+
+데이터베이스에서 예전 형식의 텍스트
+<B>whatis</B>
+
+데이터베이스를 만들기 위해서는
+다음 명령을 사용하라.
+<P>
+<B>whatis -M</B>
+
+<I>manpath</I>
+
+<B>-w  '*' | sort &gt;</B>
+
+<I>manpath/whatis</I>
+
+<P>
+여기에서 
+<I>manpath</I>
+
+는
+<I>/usr/man</I>
+
+과 같이 메뉴얼 페이지의 계층 구조를 의미한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-d, --debug</B>
+
+<DD>
+디버깅 정보를 출력한다.
+<DT><B>-r, --regex</B>
+
+<DD>
+각각의
+<I>name</I>
+
+을 정규식으로 해석한다.
+이때
+<I>name</I>
+
+정규식이 페이지 이름의 일부분과 맞는 메뉴얼 페이지에 대해 검색이 이루어진다.
+이 옵션을 사용하면 데이터베이스 검색의 특성 때문에
+<B>whatis</B>
+
+동작이 조금 느려지게 될 것이다.
+<DT><B>-w, --wildcard</B>
+
+<DD>
+각각의
+<I>name</I>
+
+이 쉘 형식 와일드카드를 포함하는 패턴으로 해석된다.
+검색이 이루어지기 위해서는 확장된
+<I>name</I>
+
+이 전체 페이지 이름과 맞아야만 한다.
+이 옵션을 사용하면 데이터베이스 검색의 특성 때문에
+<B>whatis</B>
+
+동작이 조금 느려지게 될 것이다.
+
+
+
+
+
+
+
+</DL>
+<P>
+
+<B>-m</B>
+
+<I>system</I>[,...]<B>,</B>
+
+<B>--systems=</B><I>system</I>[,...]
+<DL COMPACT><DT><DD>
+이 시스템에서 다른 운영체제의 메뉴얼 페이지 이름들에 접근할 수 있다면,
+이 옵션을 사용해서 검색할 수 있다.
+만약 NewOS의 메뉴얼 페이지 이름을 검색하고 싶다면,
+<B>-m</B>
+
+<B>NewOS</B>
+
+옵션을 사용하면 된다.
+<P>
+<I>system</I>
+
+은 여러 운영체제의 이름을 쉼표(comma)로 구분하여 조합할 수 있다.
+검색하는데 원래 운영체제의 메뉴얼 페이지 이름을 포함하고 싶다면,
+<I>system</I>
+
+에
+<B>man</B>
+
+을 추가하면 된다.
+이 옵션은
+$<B>SYSTEM</B>
+
+환경 변수에 우선한다.
+</DL>
+
+<DL COMPACT>
+<DT><B>-M&nbsp;</B><I>path</I><B>,&nbsp;--manpath=</B><I>path</I>
+
+<DD>
+기본 경로 외에 검색할 메뉴얼 페이지 경로를 콜론(:)으로 구분해서 설정한다.
+기본적으로
+<B>apropos</B>
+
+는
+$<B>MANPATH</B>
+
+환경 변수를 사용한다.
+만약 이 환경 변수가 설정되지 않았다면,
+$<B>PATH</B>
+
+환경 변수를 기반으로 적절한 경로를 찾아낼 것이다.
+이 옵션은
+$<B>MANPATH</B>
+
+환경 변수의 값에 우선한다.
+<DT><B>-h, --help</B>
+
+<DD>
+도움말을 출력하고 종료한다.
+<DT><B>-V, --version</B>
+
+<DD>
+버전과 저자 정보를 출력한다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>종료 코드</H2>
+
+<DL COMPACT>
+<DT><B>0</B>
+
+<DD>
+정상적인 종료.
+<DT><B>1</B>
+
+<DD>
+사용법, 문법 혹은 설정 파일 오류.
+<DT><B>2</B>
+
+<DD>
+조작상 오류.
+<DT><B>16</B>
+
+<DD>
+주어진 값과 맞는 메뉴얼 페이지를 찾을 수 없을 때.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>환경</H2>
+
+<DL COMPACT>
+<DT><B>SYSTEM</B>
+
+<DD>
+$<B>SYSTEM</B>
+
+이 설정되어 있으면, 이것은 
+<B>-m</B>
+
+옵션으로 다른 운영체제를 지정해주는 것과 같은 효과를 나타낸다.
+<DT><B>MANPATH</B>
+
+<DD>
+$<B>MANPATH</B>
+
+가 설정되어 있으면, 이 값은 콜론(:)으로 구분된 메뉴얼 페이지 구조의
+경로로 해석된다.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>파일</H2>
+
+<DL COMPACT>
+<DT><I>/usr/share/man/index.(bt|db|dir|pag)</I>
+
+<DD>
+기본적인
+<I>index</I>
+
+데이터베이스 캐쉬.
+<DT><I>/var/cache/man/index.(bt|db|dir|pag)</I>
+
+<DD>
+부가적인
+<I>index</I>
+
+데이터베이스 캐쉬.
+<DT><I>/usr/share/man/.../whatis</I>
+
+<DD>
+기본적인
+<B>whatis</B>
+
+텍스트 테이터베이스.
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+apropos">apropos</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+man">man</A></B>(1).
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>저자</H2>
+
+<PRE>
+Wilf. (<A HREF="mailto:G.Wilford@ee.surrey.ac.uk">G.Wilford@ee.surrey.ac.uk</A>).
+Fabrizio Polacco (<A HREF="mailto:fpolacco@debian.org">fpolacco@debian.org</A>).
+</PRE>
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>번역</H2>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>), 2004년 3월 8일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">종료 코드</A><DD>
+<DT><A HREF="#lbAG">환경</A><DD>
+<DT><A HREF="#lbAH">파일</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">저자</A><DD>
+<DT><A HREF="#lbAK">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:56 GMT, March 25, 2004
+</BODY>
+</HTML>

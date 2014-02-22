@@ -1,0 +1,230 @@
+<HTML><HEAD><TITLE>Manpage of RUNSCRIPT</TITLE>
+</HEAD><BODY>
+<H1>RUNSCRIPT</H1>
+Section: User Commands  (1)<BR>Updated: 1994년 10월 28일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+runscript - minicom을 위한 스크립트 인터프리터
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>runscript</B>
+
+스크립트
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>runscript</B>
+
+풀그림은 간단한 스크립트 인터프리터이다. 
+이것은 minicom 통신 풀그림 안에서 호출되어, 
+unix 시스템이나, 기타 BBS에 접속과정을 자동으로 처리해준다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>호출</H2>
+
+이 풀그림의 인자로 단지 하나의 스크립트 파일 이름만을 
+사용할 수 있다. 또한 이것의 입/출력은 단지 연결된 호스트를 
+대상으로만 하고 있다. runscript에서 처리하는 모든 메시지는 
+현재 화면의 것을 입력받아, stderr로 보낸다. 
+그래서, 이 인터프리터는 <B>minicom</B>에서 작동되도록 고안 
+작성되었다.
+<P>
+
+참고: 이 스크립트 파일은 초기값으로 /usr/lib/minicom 경로 
+안에 있어야한다. (즉, 기본적으로 시스템 관리자만이 
+이 스크립트 파일을 관리할 수 있다. - 초기값)
+<A NAME="lbAF">&nbsp;</A>
+<H2>키워드</H2>
+
+<DL COMPACT>
+<DT>runscript는 다음의 명령들을 인식한다:<DD>
+<BR>
+
+<DL COMPACT><DT><DD>
+<PRE>
+
+expect   send     goto     gosub    return   !
+exit     print    set      inc      dec      if
+timeout  verbose  sleep    break    call
+
+</PRE>
+
+</DL>
+
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>키워드 개요</H2>
+
+<DL COMPACT>
+<DT><B>send &lt;문자열&gt;</B>
+
+<DD>
+&lt;문자열&gt;은 모뎀으로 보낼 문자열이다. 
+\
+r' 문자는 자동으로 끝에 붙는다.
+&lt;문자열&gt;로 사용될 수 있는 것은: 
+<BR>&nbsp;&nbsp;-&nbsp;단순한&nbsp;단어,&nbsp;예&nbsp;'send&nbsp;hello'
+<BR>&nbsp;&nbsp;-&nbsp;따움표로&nbsp;둘러싼&nbsp;단어들,&nbsp;예&nbsp;'send&nbsp;&quot;hello&nbsp;world&quot;'
+<DT>&lt;문자열&gt; 안에는 다음과 같은 제어문자들을 사용할 수있다.<DD>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\n&nbsp;-&nbsp;새줄
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\r&nbsp;-&nbsp;리턴문자
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\a&nbsp;-&nbsp;벨소리
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\b&nbsp;-&nbsp;백스페이스
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\c&nbsp;-&nbsp;초기값인&nbsp;'\r'&nbsp;자동&nbsp;보내기를&nbsp;하지&nbsp;않음.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\f&nbsp;-&nbsp;용지바꿈문자
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\o&nbsp;-&nbsp;<B>o</B>문자&nbsp;보냄&nbsp;(<B>o</B>는&nbsp;8진수를&nbsp;뜻한다.)
+<P>
+<BR>
+
+또한 $(환경변수_값)을 사용할 수 있다. 
+예: $(TERM). minicom에서는 두개의 특별한 환경변수값을 제공하는데,
+사용자 ID로 $(LOGIN), 비밀번호로 $(PASS)가 그것이다.
+이 값은 전화번호부에서 지정한다.
+<DT><B>print &lt;문자열&gt;</B>
+
+<DD>
+&lt;문자열&gt;을 현재 화면에 출력한다.
+끝에는 자동으로 '\r\n' 문자가 붙는다. 
+나머지는 'send'와 사용법이 같다.
+<DT><B>label:</B>
+
+<DD>
+goto나 gosub에의해 이동되는 분기점을 지정.
+<DT><B>goto &lt;label&gt;</B>
+
+<DD>
+스크립트 안에서 다른 위치로 이동한다.
+<DT><B>gosub &lt;label&gt;</B>
+
+<DD>
+서브 goto로 'return'에 도달했을 때, 현재의 영역 안에서
+이동한다.
+<DT><B>return</B>
+
+<DD>
+gosub 영역을 벗어난다.
+<DT><B>! &lt;명령&gt;</B>
+
+<DD>
+쉘명령을 실행한다. 그 명령의 리턴값은 $? 변수에 저장된다.
+그래서, 'if' 문으로 선택적인 문을 만들 수 있다.
+<DT><B>exit [값]</B>
+
+<DD>
+부여한 <I>값</I> 돌려주며, &quot;runscript&quot;를 마친다. 초기값 1
+<DT><B>set &lt;변수명&gt; &lt;변수값&gt;</B>
+
+<DD>
+&lt;변수명&gt;은 a부터 z까지의 단일 문자이며, 
+이 변수에 &lt;변수값&gt;을 지정한다. 변수 선언 없이 사용되면, 
+즉시 만들고, &lt;변수값&gt;은 숫자나 다른 변수여야한다.
+<DT><B>inc &lt;변수명&gt;</B>
+
+<DD>
+&lt;변수명&gt;의 변수값을 하나씩 증가시킨다.
+<DT><B>dec &lt;변수명&gt;</B>
+
+<DD>
+&lt;변수명&gt;의 변수값을 하나씩 감소시킨다.
+<DT><B>if &lt;변수&gt; &lt;연산자&gt; &lt;변수&gt; &lt;문&gt;</B>
+
+<DD>
+사용할 수 있는 연산자는 &lt;, &gt;, !=, -.
+예, 'if a &gt; 3 goto exitlabel'.
+<DT><B>timeout &lt;값&gt;</B>
+
+<DD>
+제한시간을 설정한다.
+초기값으로 'runscript' 전체 실행시간은 2분이다.
+즉, 특별히 시간을 정해 놓지 않으면, 2분 후에는 자동으로 종료된다.
+이 값을 이명령으로 바꿀 수 있다. 
+이 명령은 'expect' 문에서는 다르게 동작한다.
+아래 참조.
+<DT><B>verbose &lt;on|off&gt;</B>
+
+<DD>
+초기값은 'on'. 'runscript' 작동 상태를 화면에서 볼 수 있게 한다.
+<DT><B>sleep &lt;값&gt;</B>
+
+<DD>
+&lt;값&gt; 초 동안 실행을 잠시 멈춘다.
+<DT><B>expect</B>
+
+<DD>
+<PRE>
+  expect {
+    패턴 [문]
+    패턴 [문]
+    [timeout &lt;값&gt; [문] ]
+    ....
+  }
+</PRE>
+
+가장 중요한 명령어이다. 
+패턴을 기다려서, 해당 패턴이 나타나면, 해당 &lt;문&gt;을 실행한다. 
+패턴은 'send'에서 설명한 문자열이며, 일반적으로 첫번째, 
+패턴에 대한 문은 생략해서, 만일 첫번째 패턴이 나타나면, 
+바로 expect 문을 벗어나 다음 작업을 계속 하도록 한다. 
+만일 이때, 첫번째 패턴이 나타나지 않고, 두번째 패턴이 나타난다면, 
+두번째 패턴에서 지정한 문을 실행한다. 
+초기값으로 expect의 최대시간은 60초이다. 이것을 바꾸려면
+timeout을 사용한다.
+<DT><B>break</B>
+
+<DD>
+'expect' 문을 중지한다. 이 명령은 'timeout' 명령에 대한 
+문으로 일반적으로 사용된다. 'timeout'에 대한 아무른 작업을 
+지시하지 않으면, 제한 시간을 초과했을 경우, 그 스크립트 
+자체를 마쳐버리기 때문이다.
+<DT><B>call &lt;스크립트이름&gt;</B>
+
+<DD>
+다른 &lt;스크립트이름&gt;의 파일을 불러와 실행한다. 
+이때 아무런 오류가 나지 않으면 나머지 스크립트를 실행한다.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>참고</H2>
+
+
+그다지 프로그래밍에 대한 지식이 없어도 쉽게 만들 수 있을 것이라
+생각한다. BASIC 정도를 한번쯤 사용해 본 사람이라면
+쉽게 작성할 수 있을 것이다. 
+<B>minicom</B> 패키지 안에는 <B>scriptdemo</B>, <B>unixlogin</B>
+등 몇개의 스크립트 파일이 예제로 있는데, 
+이것을 참고한다면, 보다 유용한 스크립트 파일을 만들 수 있을 것이다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>벌레</H2>
+
+runscript는 minicom용으로 고안, 작성되었기 때문에, 
+다른 곳에서는 제대로 동작하지 않을 수 있다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>만든이</H2>
+
+Miquel van Smoorenburg, &lt;<A HREF="mailto:miquels@drinkel.ow.org">miquels@drinkel.ow.org</A>&gt;
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">호출</A><DD>
+<DT><A HREF="#lbAF">키워드</A><DD>
+<DT><A HREF="#lbAG">키워드 개요</A><DD>
+<DT><A HREF="#lbAH">참고</A><DD>
+<DT><A HREF="#lbAI">벌레</A><DD>
+<DT><A HREF="#lbAJ">만든이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:56 GMT, March 25, 2004
+</BODY>
+</HTML>

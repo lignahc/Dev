@@ -1,0 +1,1423 @@
+<HTML><HEAD><TITLE>Manpage of ftpaccess</TITLE>
+</HEAD><BODY>
+<H1>ftpaccess</H1>
+Section: File Formats (5)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ftpaccess - ftpd 설정 file
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+ftpaccess file은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ftpd">ftpd</A>(1)</B>
+
+의 운영을 설정하는데 사용한다.
+<A NAME="lbAD">&nbsp;</A>
+<H2>접근 방법 설정</H2>
+
+<DL COMPACT>
+<DT><B>autogroup &lt;groupname&gt; &lt;class&gt; [&lt;class&gt; ...]</B>
+
+<DD>
+<P>
+Anonymous user가 특정 &lt;class&gt;의 member일때, ftp server는 &lt;groupname&gt;에
+setegid()를 실행할 것이다. 이것은 특정 group의 anonymous user들에게
+file과 directory를 group-and-owner-read-only의 권한으로 접근을 허락
+하는 것을 말한다. &lt;groupname&gt;은 /etc/group에 존재하는 group이어야 한다.
+<DT><B>class &lt;class&gt; &lt;typelist&gt; &lt;addrglob&gt; [&lt;addrglob&gt; ...]</B>
+
+<DD>
+<P>
+&lt;addrglob&gt; 형식의 source address들로 user의 &lt;class&gt;를 정의한다.
+&lt;class&gt;는 중복되어 설정을 할수 있으며 &quot;class&quot;를 중복되게 나열하여
+class의 추가 member를 정의할수 있다. 이 중복된 &quot;class&quot;들이 현재
+session에 적용이 된다면 access file에 나열되어 있는 것들중 가장
+먼저 나오는 것이 사용되어 진다. class의 설정을 잘못하면 접속 거부를 
+당하게 된다. &lt;typelist&gt;는 &quot;anonymous&quot;, &quot;guest&quot;, &quot;real&quot;의 keyword가 
+존재하며 이 3개의 keyword는 comma(컴마)로서 구분을 한다. &quot;real&quot;은 
+real account로 ftp를 사용하는 user를 말하며, &quot;anonymous&quot;는 anonymous 
+FTP를 위한 user(anonymous, ftp)를 말한다. &quot;guest&quot;는 손님 사용자로 
+처리되는 user를 말한다. ( &quot;guestgroup&quot;을 참조 하면 더 많은 정보를 
+얻을수 있다.)
+<P>
+&lt;addrglob&gt;는 도메인네임 또는 ip address로 설정을 하며, 슬래쉬('/')
+로 시작을 하는 file 이름일수도 있다. 이 파일은 address:netmask 또는 
+address/cidr의 형식과 같은 추가 주소를 포함한다.
+<P>
+&lt;addrglob&gt; 앞에 &quot;!&quot;를 위치시키면, 예를 들어
+<PRE>
+    class rmtuser real !*.example.com
+</PRE>
+
+rmtuser class처럼 example.com 도메인 외에서 접근할수 있는 실제 유저를 지정
+할수 있다.
+<P>
+<DT><B>deny &lt;addrglob&gt; &lt;message_file&gt;</B>
+
+<DD>
+<P>
+&lt;addrglob&gt;와 비교하여 매치도는 host의 접근을 거절하며 &lt;message_file&gt;
+에서 지정할 file의 내용을 출력한다. &lt;addrglob&gt;는 nameserver에 등록되어
+있지 않은 site들의 접속을 거부하기 위한 nameser의 역할을 하며
+&lt;addrglob&gt;와 같이 슬래쉬('/')로 시작하는 file의 이름을 지정할수도
+있으며 이 파일에는 address:netmask 또는 address/cidr의 형식과 같은
+추가 주소를 포함한다.
+<P>
+<DT><B>guestgroup &lt;groupname&gt; [&lt;groupname&gt; ...]</B>
+
+<DD>
+<DT><B>guestuser &lt;username&gt; [&lt;username&gt; ...]</B>
+
+<DD>
+<DT><B>realgroup &lt;groupname&gt; [&lt;groupname&gt; ...]</B>
+
+<DD>
+<DT><B>realuser &lt;username&gt; [&lt;username&gt; ...]</B>
+
+<DD>
+<P>
+REAL user가 &lt;groupname&gt;의 한 member라면, guestgroup을 위한 session은
+anonymous FTP와 같이 정확하게 설정되어야 한다. 다시 말해, chroot()가 
+실행되어 져야 하며, USER와 PASS 명령이 제공되어져야 한다.
+&lt;groupname&gt;은 /etc/group에 존재하는 group이어야 한다.
+</DL>
+<P>
+
+user의 home directory는 anonymous FTP가 그러한 것 처럼 정확하게 설정 
+되어야 한다. passwd entry의 home directory field는 두개의 directory
+들로 나뉘어져 있다. 첫번째 field는
+<I><A HREF="http://localhost/cgi-bin/man/man2html?2+chroot">chroot</A>(2)가</I>
+
+부르는 인자가 될 root directory이다. 두번째 반은 root directory로
+연관된 user의 home directory이다. 두 디렉토리의 구분은 &quot;/./&quot;로서
+한다.
+<P>
+예를 들어 /etc/passwd에서, real entry:
+<PRE>
+    guest1:&lt;passwd&gt;:100:92:Guest Account:/ftp/./incoming:/etc/ftponly
+</PRE>
+
+guest1이 log in을 성공적으로 수행했을때 ftp server는 
+<B>chroot(/ftp) </B>
+
+를 한다음 
+<B>chdir(/incoming)</B>
+
+을 할 것이다. guest user는 anonymous FTP user가 그러하듯이오직 
+<B>/ftp </B>
+
+하위의 directory 구조에 접근이 가능하다. 
+(guest1에게는 /로서 보이며 작동한다.)
+<P>
+
+group name은 이름이나 숫자 ID로 지정되어야 한다. 숫자로 된 group
+ID를 사용하기 위해서는, 숫자 이전에 '%'를 위치시켜야 한다. 모든
+goup을 나타내는 asterisk(*)-를 사용하는 것 처럼 영역을 지정할수도
+있다.
+<P>
+guestuser는 user name(또는 숫자 ID)을 사용하지 않는 것을 제외하고는
+guestgroup처럼 작동한다.
+<P>
+realuser와 realgroup은 동일한 문법을 가지지만, guestuser와
+guestgroup의 영향과는 반대이다. relauser와 realgroup은 원격 접속
+user가 guest로 결정 되어지는 것이 아닐때 real user 접속을 허락한다.
+<P>
+예를 들어:
+<PRE>
+  guestuser *
+  realgroup admin
+</PRE>
+
+와 같이 설정을 했을때 유일하게 real user 접근을 허락받은 admin 
+group에 있는 user들을 제외 하고는 모든 non-anonymous user들은 
+guest로 취급이 되어지기 때문이다.
+<P>
+<DL COMPACT>
+<DT><B>nice &lt;nice-delta&gt; [&lt;class&gt;]</B>
+
+<DD>
+원격 user가 &lt;class&gt;에 정의된 멤버라면 지정된 &lt;nice-dalta&gt; 의해
+ftp server process의 process nice value를 조절 한다. 만약 &lt;class&gt;가 
+지정되지 않으면, ftp server process nice value 는 기본으로 지정된 
+&lt;nice-delta&gt; 를 사용한다. 이 기본 nice value 조정은 ftpaccess file에 
+존재하는 class-specific 'nice' 지시자에 대해 어떤 class에도 속하지 
+않는 user들을 위해 server process의 nice value를 조정하기 위하여 
+사용되어 진다.
+<P>
+<DT><B>defumask &lt;umask&gt; [&lt;class&gt;]</B>
+
+<DD>
+<P>
+원격 user가 class에 정의된 멤버라면, daemon에 의해 만들어진 file들의
+umask를 지정한다. &lt;class&gt;가 지정되지 않으면, 어떤 것도 지정되지 않은 
+class들을 위해 umask는 기본값으로 사용이 된다.
+<P>
+<DT><B>tcpwindow &lt;size&gt; [&lt;class&gt;]</B>
+
+<DD>
+<P>
+data connection에 대한 TCP window size를 지정한다. 이것은 network 
+traffic을 조정하기 위해 사용할수 있다. 예를 들어 느린 PPP dialin
+link들은 효율을 높이기 위해 더 작은 TCP window들이 필요하게 된다.
+이것에 대해 잘 모르겠다면 그냥 나두도록 한다.
+<P>
+<DT><B>keepalive &lt;yes|no&gt;</B>
+
+<DD>
+<P>
+data socket을 위하여 TCP SO_KEEPALIVE를 지정하여 네트워크를 끊는 것을
+조절할수 있다. Yes: 는 사용을 하는 것이며 No는 system의 기본값을 사용
+하겠다는 것을 의미 한다(보통 off이다).  당신은 아마도 이것을 셋팅하는
+것을 원할것이다.
+<P>
+<DT><B>timeout accept &lt;seconds&gt;</B>
+
+<DD>
+<DT><B>timeout connect &lt;seconds&gt;</B>
+
+<DD>
+<DT><B>timeout data &lt;seconds&gt;</B>
+
+<DD>
+<DT><B>timeout idle &lt;seconds&gt;</B>
+
+<DD>
+<DT><B>timeout maxidle &lt;seconds&gt;</B>
+
+<DD>
+<DT><B>timeout RFC931 &lt;seconds&gt;</B>
+
+<DD>
+<P>
+다양하게 timeout을 지정할수 있다.
+<P>
+Accept (기본 120초) : 데몬이 얼마나 incoming(PASV) data 접속을
+기다릴지를 설정한다.
+<P>
+Connect (기본 120초) : 데몬이 얼마나 outgong(PORT) data 접속을
+이루기 위해 위해 시도 하는 것을 기다릴지를 설정하며, 실제 접속
+시도에 영향을 미친다. 데몬은 여러번 시도를 하게 되며, 완전히 접속이
+되기 전까지 각각의 시도 사이에 텀을 가지게 된다.
+<P>
+Data (기본 1200초): 데몬이 어떤 실제 data접속을 이루기 위해 기다리는
+시간을 지정한다. 원격 접속자들이 클라이언트를 통해 아주 작은 데이타
+큐와 느린 결합을 가질수 있도록 길게 잡아 줘야 한다.
+<P>
+Idle (기본 900초): 데몬이 새로운 명령을 수행할때 까지 얼마나
+기다릴지를 설정한다. 기본으로 ftp 데몬을 실행할때 -a 옵션을 사용하여
+지정할수 지정할수 있으며 이때에는 설정파일에서의 값은 무시되어 진다.
+<P>
+MaxIdle (기본 1200초): SITE IDLE 명령은 원격 유저가 idle 시간 초과를
+통하여 높은 값을 형성하도록한다. 이것은 클라이언트가 요청하는 것들을
+제한하는 최대값을 지정한다. ftpd 시작시에 -A 옵션으로 지정할수
+있으며 이때에는 설정파일에서의 값은 무시되어 진다.
+<P>
+RFC931 (기본 10초): 데몬이 전체 RFC931(AUTH/ident) 소통을 허락할 최대
+사간을 지정한다. 0으로 설정을 하면 데몬이 이 프로토콜을 사용하는 것을
+완전히 막는다. RFC931을 통해 얻는 정보들은 시스템 로그에 기록이 되고,
+실제로 어떠한 인증에도 사용이 되지는 않는다.
+<P>
+<P>
+<DT><B>file-limit [&lt;raw&gt;] &lt;in|out|total&gt; &lt;count&gt; [&lt;class&gt;]</B>
+
+<DD>
+<P>
+지정된 class에서 user가 전송할수 있는 data file들의 수를 제한한다. 
+limit는 in, out 또는 둘다 file안에 위치한다. class가 지장되지
+않았다면, limit는 limit가 지정되지 않은 class들을 위한 기본값으로
+사용된다. 부가적으로 
+<B>raw </B>
+
+parameter는 단지 date file들 보다는 total traffic을 제한하는데 적용을
+한다.
+<P>
+<DT><B>data-limit [&lt;raw&gt;] &lt;in|out|total&gt; &lt;count&gt; [&lt;class&gt;]</B>
+
+<DD>
+<P>
+class에 지정된 user가 전송하는 data를 byte 단위로 제한한다. limit는 
+in, out 또는 둘다를 byte를 기준으로 한다. class를 지정하지 않으면,
+limit 는 limit를 지정하지 않은 class들을 위한 기본값으로 사용된다.
+limit를 지정을 하면 지정한 이상을 초과하여 전송을 할수 없다. 하지만
+진행중인 전송에는 적용이 되지 않는다. 부가적으로
+<B>raw </B>
+
+parameter는 단지 date file들 보다는 total traffic을 제한하는데 적용을
+한다.
+<P>
+<DT><B>limit-time {*|anonymous|guest} &lt;minutes&gt;</B>
+
+<DD>
+<P>
+session이 가질수 있는 총 시간을 제한한다. 기본적으로 제한이 걸려있지
+않다. real user들은 제한을 받지 않는다.
+<P>
+<DT><B>guestserver [&lt;hostname&gt;]</B>
+
+<DD>
+<P>
+anonymous 또는 guest 접속을 위해 사용되어 지는 host들을 조정한다.
+&lt;hostmane&gt; 없이 사용을 한다면, 모든 guest 나 anonymous 접속은 접근을
+거부당한다. 하나 이상의  &lt;hostname&gt;을 지정해야 한다. guest와
+anonymolus 접속은 machain들의 이름에 기반해서 허락되어 진다. 접근이
+거절되면, user는 먼저 &lt;hostname&gt; list에 등록이 되어져야만 사용이
+가능하다.
+<P>
+<DT><B>limit &lt;class&gt; &lt;n&gt; &lt;times&gt; &lt;message_file&gt;</B>
+
+<DD>
+<P>
+&lt;class&gt;에서 접근을 하는 &lt;n&gt; user들을 &lt;times&gt; 시간에 제한하며,
+user가 접근을 거절 당할때 &lt;message_file&gt;을 출력한다. Limit check는
+login시에만 수행된다. 다중 &quot;limit&quot; 명령이 현재의 session에 적용이
+된다면 먼저 설정된 것이 사용되어 진다. limit 정의가 빠지거나 limit가
+-1로 설정이 되면 unlimit로 작동을 한다. &lt;times&gt;는 UUCP L.sys
+file에서의 time과 같은 형식이다.
+<P>
+<DT><B>noretrieve [absolute|relative] [class=&lt;classname&gt;] ... [-] &lt;filename&gt; &lt;filename&gt; ...</B>
+
+<DD>
+<P>
+설정된 file들의 상대적 기능을 제한한다. file들이 절대 경로 설정을
+사용 ('/' character로 시작하는 것 처럼) 한다면, 이 file들은 얻을수
+없는 것으로 표기가 되어진다. 다시말해 filename과 매치되는 모든
+file들은 전송이 거절된다. 예를들어
+<PRE>
+        noretrieve /etc/passwd core
+</PRE>
+
+설정은 /etc/passwd file을 얻어갈수 없게 한다. 이에 반해 이것이
+/etc에 있지 않는 다면 'passwd' file을 전송 받아 갈수가 있다.
+다른 면에서 'core'라는 이름을 가진 file은 어디서도 전송을 받을수가
+없다.
+</DL>
+<P>
+
+슬래쉬('/')로 끝나는 절대 경로는 그 directory안의 모든 file들을
+전송 할수 없게 표기되어 지는 것을 의미한다. &lt;filename&gt;은 file golb
+처럼 지정을 해야 한다. 예를 들어
+<PRE>
+    noretrieve /etc /home/*/.htaccess
+</PRE>
+
+/etc 에 있는 어떠한 file들이나 하위 디렉토리들을 제한하도록 정의 하는
+것이다. 또한, /home 디렉토리 하위의 어느곳에서나 '.htaccess'의 파일
+이름을 가진 파일을 제한한다.
+<P>
+
+부가적인 첫번째의 매개변수는 현재의 chroot'd 환경에 절대적 또는
+상대적으로 해석되어지는 이름들인지 아닌지를 선택한다. 기본은
+slash로 시작하는 절대경로로 해석을 한다.
+<P>
+
+noretrieve 제한은 특정 class들의 member들을 기반으로 한다.
+어떤 class가 지정되어져 있고 현재 user가 어떤 주어진 class들의
+member들이라면 지정된 file들은 상대적인 것이 아니다.
+<P>
+<DL COMPACT>
+<DT><B>allow-retrieve [absolute|relative] [class=&lt;classname&gt;]... [-] &lt;filename&gt; ...</B>
+
+<DD>
+<P>
+noretrieve에 의해 거부 되어진 file들의 복구를 허락한다.
+<P>
+<DT><B>loginfails &lt;number&gt;</B>
+
+<DD>
+<P>
+&lt;number&gt; login 실패후에, &quot;repeated login failusers&quot; message를
+출력한 후, FTP 연결을 종료한다. 기본값은 5이다.
+<P>
+<DT><B>private &lt;yes|no&gt;</B>
+
+<DD>
+<P>
+user login 후, SITE GROUP과 SITE GPASS 명령은 강화된 접속 group과
+연결된 password를 지정 하기 위해 사용되어 진다. group name과
+password가 지정되면, user는 setgid()를 통해서 group 접근 file
+/etc/ftpgroups 에 정의된 group의 member가 된다.
+</DL>
+<P>
+
+group access file의 형식은 아래와 같다.
+<PRE>
+    access_group_name:encrypted_password:real_group_name
+</PRE>
+
+access_group_name은 문자 숫자식(alphanumeric)과 구둣점(punctuation)
+으로 이루어진 임의의 문자열이며, encrypted_password는 
+<B>/etc/passwd</B>
+
+와 같이 정확하게 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?3+crypt">crypt</A>(3)</I>
+
+를 통해서 암호화 되어진 password이다.
+<B>real_group_name </B>
+
+은 
+<B>/etc/group</B>
+
+에 속해있는 유효한 group 이름이다.
+<P>
+
+주의:anonymous FTP user들에 대한 작업을 하기 위하여 이 option들을
+통해 ftp server는 
+<B>/etc/group </B>
+
+을 계속 참고를 하며, group access file은 memory에 load가 되어져 
+있어야 한다. 이것은 (1) ftp server는 additional file descriptor
+open을 가져야 하며, (2) necessary password들과 접근 권한들은 FTP
+session의 지속을 위해 SITE GROUP을 통해 정적으로 user들에게 주어
+진다는 것을 뜻한다.만약 access group들 과/또는 password를 변경하기
+위해서는 작동하고 있는 모든 FTP server들을 죽여야 한다.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>Informational Capabilities</H2>
+
+<DL COMPACT>
+<DT><B>greeting full|brief|terse</B>
+
+<DD>
+<DT><B>greeting text &lt;message&gt;</B>
+
+<DD>
+<P>
+remote user가 login 하기 전에 얼마나 많은 정보를 보여줄지를
+설정할수 있다. 'greeting full'이 기본이며, hostname과 daemon
+version을 보여준다. 'greeting brief'는 hostname을 보여준다.
+
+비록 full이 기본이지만 brief도 많이 사용되어 진다.
+<P>
+원한다면 'text' 형태로도 지정을 할수가 있다. &lt;message&gt;는 어떠한
+문자열도 사용할수있다. whitespace(공백문자 와 tab)은 하나의
+single space로 변환된다.
+<P>
+<DT><B>banner &lt;path&gt;</B>
+
+<DD>
+<P>
+banner는 user가 username/password를 입력하기 전에 출력이 된다는 
+것을 제외하고는 message 명령과 유사하게 작동을 한다. &lt;path&gt;는  
+anonymous FTP directory 의 base(/home/ftp)가 아니라 real system 
+root를 기준으로 한다.
+</DL>
+<P>
+
+<B>WARNING: </B>
+
+이 명령을 사용하는 것은 FTP server의 사용을 표시하는 것으로
+부터 좋지 않은 의도의 FTP client들을 완전하게 막을수 있다.
+모든 client들이 multi-line 응답들을 조정할수 있는 것은 아니다.
+(어떻게 banner들이 출력 되어지는지 )
+<P>
+<DL COMPACT>
+<DT><B>hostname &lt;some.host.name&gt;</B>
+
+<DD>
+<P>
+ftp server의 기본 host name을 정의한다. 이 string은 magic cookie
+%L을 사용할 때마다 greeting message에 출력이 되어 진다. virtual
+server들의 host name은 이 값을 덮어쓰게 된다. 지정을 하지 않으면,
+local machine의 기본 host name이 사용되어 진다.
+<P>
+<DT><B>email &lt;name&gt;</B>
+
+<DD>
+<P>
+ftp main 관리자의 email address를 정의한다. 이 string은 magic
+cookie %E를 사용할때 마다 출력이 되어 진다.
+<P>
+<DT><B>message &lt;path&gt; {&lt;when&gt; {&lt;class&gt; ...}}</B>
+
+<DD>
+<P>
+&lt;path&gt;와 함께 file을 지정하며 user가 login을 할때나 working
+directory를 변경할때 ftpd가 user에게 이 file의 내용을 출력하게끔
+한다. &lt;when&gt; parameter는 &quot;LOGIN&quot; 또는 &quot;CWD=&lt;dir&gt;&quot;을 이용한다.
+&lt;when&gt;이 &quot;CWD=&lt;dir&gt;&quot;이면 &lt;dir&gt;에는 공지를 보여줄 새로운 기본 
+directory를 지정을 한다.
+</DL>
+<P>
+
+&lt;class&gt;는 부가적으로 사용이 되어 지며, 오직 특정 class의 member
+들에게 출력이 되어질 message를 지정을 한다. 하나이상의 class가
+지정되어 질수 있다.
+<P>
+
+readmi file에서 지정된 text string로서 cookie를 대체하기 위해
+&quot;magic cookie&quot;를 사용할수가 있다.
+<PRE>
+    %T      시스템 시간 (형식 Thu Nov 15 17:12:42 1990)
+    %F      현재 파티션의 여유 공간 (kbytes)
+            [모든 system에서 적용되지는 않음]
+    %C      현재 작업중인 directory
+    %E      ftpaccess 에서 정의한 admin의 Email address
+    %R      원격 host name
+    %L      local host name
+    %u      RFC931 인증을 통해 결정된 username
+    %U      login time때 주어진 username
+    %M      해당 class의 최대 접속자수
+    %N      해당 class에서의 현재 접속자 수
+    %B      disk block들에 할당되어진 절대적 limit
+    %b      disk block들에 할당되어진  limit
+    %Q      현재 block 수
+    %I      inode (+1)에 할당된 최대 값
+    %i      할당된 inode limit
+    %q      inode에 할당된 현재 값
+    %H      excessive disk use 에 대한 시간 제한
+    %h      texcessive files에 대한 시간 제한
+
+ ratios:
+
+    %xu     업로드 bytes
+    %xd     다운로드 bytes
+    %xR     업로드/다운로드 비율 (1:n)
+    %xc     Credit bytes
+    %xT     시간 제한 (분)
+    %xE     Elapsed time since login (minutes)
+    %xL     남은 시간
+    %xU     업로드 한계
+    %xD     다운로드 한계
+
+</PRE>
+
+<P>
+
+이 message는 user들을 귀찮게 하는 것을 피하기 위하여 오직 한번만 
+출력이 된다. 메세지들이 익명 FTP user에 의해서 수행되었을때 
+&lt;path&gt;는 익명 FTP directory tree의 root로 변경이 됨을 기억해야 
+한다.
+<P>
+<DL COMPACT>
+<DT><B>readme &lt;path&gt; {&lt;when&gt; {&lt;class&gt;}}</B>
+
+<DD>
+<P>
+ftp가 login시나 file들이 존재하고 그 file들의 date가 변경된 working
+directory로 이동을 할때 user들에게 공지할 file들을 &lt;path&gt;로서 정의
+한다. &lt;when&gt; parameter는 &quot;LOGIN&quot; 또는 &quot;CWD=&lt;dir&gt;&quot; 중에 하나를 
+선택한다. &lt;when&gt;이 &quot;CWD=&lt;dir&gt;&quot; 이면, &lt;dir&gt;은 공지가 실행될 새로운 
+기본 directory를 지정한다. message는 user들을 귀찮게 하는 것을 
+피하게 하기 위하여 오직 한번만 출력이 될것이다. README message
+들이 익명 FTP user에 의해 수행이 될때, &lt;path&gt;는 익명 FTP directory 
+tree의 root로 변경이 됨을 기억해야 한다.
+</DL>
+<P>
+
+&lt;class&gt; option 지정은 message들이 오직 특정 class의 member
+들에게만 출력이 되어지도록 할수 있다. 하나 이상의 class가 지정될수 
+있다.
+<P>
+<A NAME="lbAF">&nbsp;</A>
+<H2>로그 활용</H2>
+
+<P>
+<DL COMPACT>
+<DT><B>log commands &lt;typelist&gt;</B>
+
+<DD>
+<P>
+user들에 의해 개별적인 명령의 logging을 가능케 한다. &lt;typelist&gt;는 
+&quot;anonymous&quot;, &quot;guest&quot;, &quot;real&quot; 이라는 keyword들의 list를 쉼표(comma)
+로서 분리하여 지정할수 있다. &quot;real&quot; keyword가 포함되어 있다면,
+logging은 real account로 접근하기 위해 FTP를 사용하는 user들을 위해
+작동을 할 것이다. 그리고 &quot;anonymous&quot; keyword가 포함되어 진다면,
+logging은 anonymous FTP를 사용하는 user들을 위해 작동할 것이다.
+&quot;guest&quot; keyword는 guest 접근 계정들과 매치가 된다. (더 많은 정보를
+얻기 위해서는 &quot;guestgroup&quot;을 참조하라)
+<P>
+<DT><B>log transfers &lt;typelist&gt; &lt;directions&gt;</B>
+
+<DD>
+<P>
+real user나 anonymous user들 모두를 위한 file 전송의 logging을
+가능케 하며, inbound와 outbound를 분리하여 logging을 할수가 있다.
+&lt;typelisst&gt;는 &quot;anonymous&quot;, &quot;guest&quot;, &quot;real&quot;과 같은 keyword의 list들을
+쉼표(comma)로서 구분을 한다. &quot;real&quot; keyword가 포함되어 있다면,
+logging은 real account로 접근하기 위해 FTP를 사용하는 user들을
+위해 작동을 할 것이다. 그리고 &quot;anonymous&quot; keyword가 포함되어 진다면,
+logging은 anonymous FTP를 사용하는 user들을 위해 작동할 것이다.
+&quot;guest&quot; keyword는 guest 접근 계정들과 매치가 된다. (더 많은 정보를
+얻기 위해서는 &quot;guestgroup&quot;을 참조하라) &lt;directions&gt;은 &quot;inbound&quot;와
+&quot;outbound&quot; 두개의 keyword를 쉼표로서 구분을 하여 지정을 하며, 이
+option으로서 server로 보내고 받는 file들을 위한 전송 log를 기록한다.
+<P>
+<DT><B>log security &lt;typelist&gt;</B>
+
+<DD>
+<P>
+real, guest, anonymous user들을 위한 보안 rule들(noretrieve, .notar,
+등)을 어기는 것들의 log를 기록하도록 한다. &lt;typelist&gt;는 &quot;anonymous&quot;,
+&quot;guest&quot;, &quot;real&quot; 이라는 keyword들의 list를 쉼표(comma)로서 분리하여
+지정할수 있다. &quot;real&quot; keyword가 포함되어 있다면, logging은 real
+account로 접근하기 위해 FTP를 사용하는 user들을 위해 작동을 할 것이다.
+그리고 &quot;anonymous&quot; keyword가 포함되어 진다면, logging은 anonymous
+FTP를 사용하는 user들을 위해 작동할 것이다. &quot;guest&quot; keyword는 guest
+접근 계정들과 매치가 된다. (더 많은 정보를 얻기 위해서는 &quot;guestgroup&quot;
+을 참조하라)
+<P>
+<DT><B>log syslog+xferlog</B>
+
+<DD>
+<P>
+incoming, outgoing 전송들에 대한 logging message들을 syslog로
+향하게 한다. 이 옷변이 없으면 메세지들은 xferlog에 기록이 된다.
+<P>
+syslog+xferlog는 system log와 xferlog 양쪽에 메세지를 기록한다.
+<P>
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>Upload/Download 비율</H2>
+
+이 명령들을 사용하기 위해서는 WU-FTPD 컴파일 시에 --enable-ratios 옵션을
+줘야 한다.
+<P>
+<DL COMPACT>
+<DT><B>ul-dl-rate &lt;rate&gt; [&lt;class&gt; ...]</B>
+
+<DD>
+<P>
+업로드/다운로드 비율을 지정한다. (1:rate)
+ftp user가 1 byte를 업로드 할때 &lt;rate&gt; byte를 얻게 된다.
+기본값으로는 비율이 없다.
+<P>
+<DT><B>dl-free &lt;filename&gt; [&lt;class&gt; ...]</B>
+
+<DD>
+<P>
+&lt;filename&gt; file은 다운로드가 ratio에 적용받지 않는다.
+<P>
+<DT><B>dl-free-dir &lt;dirname&gt; [&lt;class&gt; ...]</B>
+
+<DD>
+<P>
+&lt;dirname&gt; 디렉토리에 있는 모든 파일들은 ratio에 적용을 받지 않는다.
+dl-free and dl-free-dir는 chroot() 환경이 아닌 시스템 root를 사용하여 제한을
+하게 된다는 것을 주의해야 한다.
+<P>
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>여러가지 활용</H2>
+
+<P>
+<DL COMPACT>
+<DT><B>alias &lt;string&gt; &lt;dir&gt;</B>
+
+<DD>
+directory에 대한 alias와 &lt;string&gt;을 정의한다. 논리적 directory의
+개념을 추가하여 사용할수 있다.
+</DL>
+<P>
+
+예를 들어:
+<PRE>
+  alias   rfc:    /pub/doc/rfc
+</PRE>
+
+은 user들이 명령어 &quot;cd frc:&quot;에 의해 어떤 directory로 부터
+/pub/doc/rfc로 access하는 것을 가능케 한다.
+<P>
+<DL COMPACT>
+<DT><B>cdpath &lt;dir&gt;</B>
+
+<DD>
+<P>
+cdpath안에 entry를 정의한다. 이것은 directory 변경시에 사용되어
+지는 search path를 정의한다.
+</DL>
+<P>
+
+예를 들어:
+<PRE>
+  cdpath /pub/packages
+  cdpath /.aliases
+</PRE>
+
+은 user들이 /pub/packages 또는 /.aliases directory들 하위에 있는
+어떤 directory로 직접 cd를 하는 것을 허락한다. search path는
+ftpaccess file에 기록된 line들의 순서에 의해 정의되어진다.
+<P>
+
+user들이 명령을 실행하면:
+<PRE>
+  cd foo
+</PRE>
+
+directory들은 아래의 순서를 통해 찾아 질것이다.
+<PRE>
+  ./foo
+  an alias called &quot;foo&quot;
+  /pub/packages/foo
+  /.aliases/foo
+</PRE>
+
+<P>
+
+cd path는 오직 cd 명령어로서만 가능하다. 만약 많은 수의 alias들을
+가지고 있다면 아마 user들에게 사용가능하게 만들고 싶은 모든 곳으로
+링크를 하는 것으로 alias들을 설치하기를 원할것이다.
+<P>
+<DL COMPACT>
+<DT><B>compress &lt;yes|no&gt; &lt;classglob&gt; [&lt;classglob&gt; ...]</B>
+
+<DD>
+<DT><B>tar &lt;yes|no&gt; &lt;classglob&gt; [&lt;classglob&gt; ...]</B>
+
+<DD>
+<P>
+&lt;classglob&gt;와 매치하는 class를 위해 compress와 tar 사용을 가능하게 
+한다. 실제 전환은 외부 file FTPLIB/ftpconversions에 의해 정의가 되어
+진다.
+<P>
+<DT><B>shutdown &lt;path&gt;</B>
+
+<DD>
+<P>
+&lt;path&gt;에 file이 지정이 되면, 서버는 정기적으로 이 file의 내용을 
+확인을 하여 셧다운을 하도록 한다. 셧다운 계획이 존재하면 user는
+서버로 부터 이에 대한 통보를 받게 된다. 셧다운 전의 지정된 시간
+이후에는 새로운 접속이 거절되며, 셧다운 이전의 지정된 시간에는
+현재 접속자들의 연결이 해제된다.
+&lt;path&gt;에 지정된 파일의 구조는 아래와 같다 :
+<PRE>
+ &lt;연도&gt; &lt;월&gt; &lt;일&gt; &lt;시&gt; &lt;분&gt; &lt;거절_offset&gt; &lt;해제_offset&gt;
+ &lt;text&gt;
+
+ &lt;연도&gt; 1970년도 이후로 지정을 한다.
+ &lt;월&gt;   1-12월을 0-11로 지정을 한다.
+ &lt;일&gt;   0-23
+ &lt;분&gt;   0-59
+</PRE>
+
+&lt;거절_offset&gt; 와 &lt;해제_offset&gt; 은  셧다운을 하기 전에 새로운 접속을
+거절하는 것과 현재 존재하는 접속을 해제하는 offset을 HHMM 형식으로
+지정을 한다. 0120은 1시간 20분을 의미한다.
+</DL>
+<P>
+
+&lt;text&gt;는 &quot;message&quot;의 rule들을 따르며, 아래에 나열되어 있는 추가적인
+magic cookie를 사용할수도 있다.
+<PRE>
+     %s      시스템이 셧다운 되는 시간
+     %r      새로운 접속이 거부되는 시간
+     %d      현재 사용자들이 강제 logout되는 시간
+</PRE>
+
+모든 시간들은 ddd MMM DD hh:mm:ss YYYY 의 형태로 사용이 된다.
+설정 file에는 오직 하나의 &quot;shutdown&quot; 명령만 가능하다.
+<P>
+
+설정 file에서의 shutdown 명령은 외부 프로그램인 <A HREF="http://localhost/cgi-bin/man/man2html?8+ftpshut">ftpshut</A>(8)을 자동으로
+사용을 하게 된다.
+<P>
+<DL COMPACT>
+<DT><B>daemonaddress &lt;address&gt;</B>
+
+<DD>
+<P>
+이 값이 지정이 되어 있지 않으면, 서버는 모든 IP address에서의 접속에
+귀를 귀울이게 된다. 반면에 지정이 되어 있으면 오직 지정된 IP address
+에만 귀를 귀울이게 된다.
+</DL>
+<P>
+
+이 절의 사용은 안하는 것이 좋다. 이것은 하나의 site만을 지원할때
+추가가 되어진다. 이것은 virtual hosting 설정을 무시하며, 구문은 아마도
+daemon의 다음 버젼에서는 변화할것 같다.
+<P>
+<DL COMPACT>
+<DT><B>virtual &lt;address&gt; &lt;root|banner|logfile&gt; &lt;path&gt;</B>
+
+<DD>
+<P>
+virtual ftp server를 가능하게 한다. &lt;address&gt;는 virtual server의 ip
+address를 지정한다. 두번째 인자중 
+<B>root</B>
+
+는 virtual server를 위한 ftproot의 경로를 지정을 하며,
+<B>banner</B>
+
+는 virtual server에 접속을 할때 user에게 출력을 할 내용의 경로를 지정을
+하며
+<B>logfile </B>
+
+은 virtual server를 위한 전송을 기록하기 위한 file의 경로를 지정을 한다.
+만약
+<B>logfile </B>
+
+를 지정하지 않으면 기본적인 ftp logfile이 사용이 되어진다. virtual
+server들에 적용이 되어 지는 message file들의 문법과 permission들은
+다른 message file에서 사용하는 것과 같다.
+</DL>
+<P>
+
+주의: OS에서 이 요소가 지원이 안될수도 있다. 이것은 BSD/OS, Solaris
+2.X 와 Linux 에서 테스트가 되어졌다.
+<P>
+
+&lt;address&gt;는 IP number보다는 hostname으로 지정이 되어져야 한다. 만약
+FTP session이 시작 되어질때 DNS check가 불가능하다면 hostname이 match가
+되어 지지 않으므로 이때는 사용을 하지 말아야 한다.
+<P>
+
+나(번역자 ^^)의 경험으로는 hostname보다는 ip address로 지정을 하는 것이
+좋다. 특히 ip address 하나로 name-based virtual server를 운영하기를
+원한다면 wu-ftpd 에서는 지원을 하지 않는 다는 점을 주의하도록 하자.
+<P>
+<DL COMPACT>
+<DT><B>virtual &lt;address&gt; &lt;hostname|email&gt; &lt;string&gt;</B>
+
+<DD>
+<P>
+환영 message와 status 명령에 hostname을 보여주도록 설정을 한다. 또한
+message file과 HELP 명령에서 주어진 &lt;string&gt; 에 email address를 사용
+하도록 한다.
+<P>
+<DT><B>virtual &lt;address&gt; allow &lt;username&gt; [&lt;username&gt; ...]</B>
+
+<DD>
+<DT><B>virtual &lt;address&gt; deny &lt;username&gt; [&lt;username&gt; ...]</B>
+
+<DD>
+<P>
+일반적으로, real과 guest 유저들은 이들이 guest들이고 virtual root로
+chroot가 지정이 되기 전까지는 virtual server로 접근이 허락되지 않는다.
+virtual allow line들의 list에 있는 user 들은 접근을 허락된다.
+username에 '*'를 지정하면 모든 user들이 접속을 허락한다는 의미로
+사용이 되어진다. virtual deny 절들은 virtual allow 절들 이후에 진행이
+되며, 모든 user들이 허락되어 졌을때 deny access를 지정을 하기 위하여
+사용되어 진다.
+<P>
+<DT><B>virtual &lt;address&gt; private</B>
+
+<DD>
+<P>
+일반적으로, 익명 사용자들은 virtual server에 log가 허락되어 진다. 이 
+option은 그들의 접근을 거절하는데 사용을 한다.
+<P>
+<DT><B>virtual &lt;address&gt; passwd &lt;file&gt;</B>
+
+<DD>
+<P>
+가상 도메인마다 다른 패스워드 파일을 사용할수 있다. 이 옵션을 사용하기
+위해서는 컴파일시에 --enable-passwd(또는 다른 PASSWD)를 주고 컴파일을
+해야 한다.
+<P>
+<DT><B>virtual &lt;address&gt; shadow &lt;file&gt;</B>
+
+<DD>
+<P>
+가상 도메인마다 다른 쉐도우 파일을 사용할수 있다. 이 옵션을 사용하기
+위해서는 컴파일시에 --enable-passwd(또는 다른 PASSWD)를 주고 컴파일을
+해야 한다.
+<P>
+<P>
+<DT><B>defaultserver deny &lt;username&gt; [&lt;username&gt; ...]</B>
+
+<DD>
+<DT><B>defaultserver allow &lt;username&gt; [&lt;username&gt; ...]</B>
+
+<DD>
+<P>
+일반적으로, 모든 user들은 default FTP server (virtual FTP server가 
+아닌)로의 접근이 허락되어 진다. defaultserver 는 특정 user들의 접속을 
+거부를 하는데 사용을 한다; '*'를 지정을 하면 모든 user들의 접근을 거절
+한다. 특정한 user들은 defaultserver allow를 사용함으로서 접근이 가능
+하게 된다.
+<P>
+<DT><B>defaultserver private</B>
+
+<DD>
+<P>
+일반적으로, 익명 user들은 virtual FTP가 아닌 기본 FTP server로 접근이
+허락되어 진다. 이 문장은 익명 접근을 거부하는데 사용을 한다.
+<P>
+virtual과 defaultserver의 allow, deny, private절은 어떤 user들이
+어떠한 FTP server들에 접근이 허락되어 지는 것을 조절할수 있다는 의미를
+제공한다.
+<P>
+<DT><B>passive address &lt;externalip&gt; &lt;cidr&gt;</B>
+
+<DD>
+<P>
+PASV 명령으로 온 응답으로 리포트된 주소의 조절을 허락한다.
+어떤 control connection이 
+<B>&lt;cidr&gt;</B>
+
+이 요구하는 passive data connection (PASV)와 매치를 할때
+<B>&lt;externalip&gt;</B>
+
+주소가 리포트 되어진다. 주의: 이것은 daemon이 실제로 귀를 귀울이는 
+주소를 변화 시키는 것은 아니다. 오직 client로 리포트 되는 주소일 뿐이다.
+이 요소는 IP-renumbering firewall들 뒤에서 daemon들이 정확하게 동작하게
+하는 것을 허락을 한다.
+</DL>
+<P>
+
+예를 들어:
+<PRE>
+        passive address 10.0.1.15   10.0.0.0/8
+        passive address 192.168.1.5 0.0.0.0/0
+</PRE>
+
+모든 곳으로 부터의 접속이 192.168.1.5에 귀를 귀울이고 있는 동안
+A class의 network 10으로 부터의 client의 접속은 passive connection
+이 ip address 10.0.1.15에 귀를 귀울이고 있다는 것을 의미한다.
+<P>
+
+Multiple passive address들은 complex의 조정으로 정의가 되거나,
+multi-gateway 또는 network들의 조정으로 정의가 되어 진다.
+<DL COMPACT>
+<DT><B>passive ports &lt;cidr&gt; &lt;min&gt; &lt;max&gt;</B>
+
+<DD>
+passive data connection을 통해 사용되어 지는 TCP port number들의
+control을 허락한다. control connection이 
+<B>&lt;min&gt;</B>
+
+에서
+<B>&lt;max&gt;</B>
+
+까지의 영역에 있는
+<B>&lt;cidr&gt;</B>
+
+포트와 매치된다면, daemon이 귀를 귀울이는 것을 통해 마구 잡이로
+선택이 될 것이다. 이 요소는 remote client들이 안전장치가 되어 있는 
+network에 접근을 할때 사용을 하는 port들을 제한 하는 firewall들을 
+허락한다.
+</DL>
+<P>
+
+<B>&lt;cidr&gt;</B>
+
+은 machine address와는 반대되는 slash뒤에 4자리로 표기되고  또는 각
+자리의 bit의 합으로 표시되는 network address를 통해 표시된다.
+예를 들어, 10대의 A class로 예약된 대역을 사용한다면, netmask 255.0.0.0
+대신 CIDR &quot;/8&quot;을 사용할수 있으며 network를 10.0.0.0/8 로 표현을 할수가
+있다.
+<P>
+<DL COMPACT>
+<DT><B>pasv-allow &lt;class&gt; [&lt;addrglob&gt; ...]</B>
+
+<DD>
+<DT><B>port-allow &lt;class&gt; [&lt;addrglob&gt; ...]</B>
+
+<DD>
+<P>
+일반적으로 데몬은 지정지 않은 주소에서는 PORT 명령을 허락하지 않는다.
+그리고 이것은 다른 주소로 부터 PASV 접속을 허락하지 않는다는 것을
+의미한다.
+<P>
+port-allow 절은 PORT 명령이 주어진 유저 class로 지정된 주소의 리스트들을
+규정한다. 이 주소들은 비록 클라이언트쪽의 IP address가 매치가 되지 않는다
+해도 허락이 된다.
+<P>
+pasv-allow 절은 데이터 접속을 만드는 유저 클래스로 지정된 주소 리스트를
+규정한다. 이 주소들은 비록 클라이언트쪽의 IP address가 매치가 되지 않는다
+해도 허락이 된다.
+<P>
+<DT><B>lslong &lt;command&gt; [&lt;options&gt; ...]</B>
+
+<DD>
+<DT><B>lsshort &lt;command&gt; [&lt;options&gt; ...]</B>
+
+<DD>
+<DT><B>lsplain &lt;command&gt; [&lt;options&gt; ...]</B>
+
+<DD>
+<P>
+lslogn, lsshort, lsplain 절은 commnad와 options들을 열거하여
+directory listing을 사용하는 것을 허락한다. option들은 공백을 포함할수 
+없으며, 기본적인 것들은 이 절들을 통해 일반적으로 조정이 된다는 것을 
+주의해야 한다; 절대적으로 필요할 경우에만 lslong, lsshort 또는 osplain
+을 사용한다.
+<P>
+<DT><B>mailserver &lt;hostname&gt;</B>
+
+<DD>
+<P>
+FTP 데몬이 어떠한 upload가 발생했을 경우 메일을 보낼 메일 서버를지정한다.
+한줄에 하나씩 써서 여러개의 메일 서버를 지정할수 있다; 데몬은 하나의 메세지가
+받아질떄 까지 각 업로드 통지의 배달을 시도하게 된다. 메일 서버를 지정하지
+않으면 로컬 호스트로 보내게 된다. 이 옵션은 익명 업로드의 공지를 의미한다.
+(incmail을 참조하라)
+<P>
+<DT><B>incmail &lt;emailaddress&gt;</B>
+
+<DD>
+<DT><B>virtual &lt;address&gt; incmail &lt;emailaddress&gt;</B>
+
+<DD>
+<DT><B>defaultserver incmail &lt;emailaddress&gt;</B>
+
+<DD>
+<P>
+익명 업로드시 통지를 할 메일 어드레스를 기록한다. 여러개를 지정하여 각각
+통지를 받을수가 있다. 지정하지 않으면, 통지를 보내지 않는다.
+<P>
+가상 호스트에 대해 지정을 하면, 오직 이 주소만이 익명 업로드에 대한 통지를
+받게 된다. 반대로 지정하지 않으면 전체 주소로 통지가 보내진다.
+<P>
+Defaultserver 주소는 오직 FTP session이 하나의 가상 호스트로만 사용되지 않을
+경우에만 적용된다. 이 경우에는 기본 익명 영역에 대해서만 통지를 받게 되며
+통지를 지정하지 않은 가상 호스트들에게는 통지를 볼수가 없다.
+<P>
+<DT><B>mailfrom &lt;emailaddress&gt;</B>
+
+<DD>
+<DT><B>virtual &lt;address&gt; mailfrom &lt;emailaddress&gt;</B>
+
+<DD>
+<DT><B>defaultserver mailfrom &lt;emailaddress&gt;</B>
+
+<DD>
+<P>
+익명 업로드 통지를 위한 보내는 사람의 메일 주소를 지정한다. 하나의 주소는
+지정이 되어 있어야 한다. mailfrom이 적용되어 있지 않다면, 메일은
+기본 메일박스 이름인 'wu-ftpd'로 메일을 보재게 된다. 통지에 답장을 시도
+하는 것을 피하기 위해서는 또는 반송이 되는 것을 막기 위해서, mailfrom
+주소를 반드시 지정하는 것이 좋다.
+<P>
+<P>
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>권한 활용</H2>
+
+<P>
+<DL COMPACT>
+<DT><B>chmod &lt;yes|no&gt; &lt;typelist&gt;</B>
+
+<DD>
+<DT><B>delete &lt;yes|no&gt; &lt;typelist&gt;</B>
+
+<DD>
+<DT><B>overwrite &lt;yes|no&gt; &lt;typelist&gt;</B>
+
+<DD>
+<DT><B>rename &lt;yes|no&gt; &lt;typelist&gt;</B>
+
+<DD>
+<DT><B>umask &lt;yes|no&gt; &lt;typelist&gt;</B>
+
+<DD>
+<P>
+특정 function들을 수행할수 있는 권한들을 허락하고 불허한다.
+기본적으로, 모든 user들에게 허락이 되어진다.
+</DL>
+<P>
+
+&lt;typelist&gt;는 keyword &quot;anonymous&quot;, &quot;guest&quot;, &quot;real&quot;, &quot;class=&quot;
+들을 컴마(&quot;,&quot;)로서 구분하여 나열한다. &quot;class=&quot;를 나타낼때는, classname
+이 꼭 따라와야 한다. 어떤 &quot;class=&quot; 를 나타낼때, &lt;typelist&gt; 제한은 오직 
+class의 user들에게만 적용이 된다.
+<P>
+<DL COMPACT>
+<DT><B>passwd-check &lt;none|trivial|rfc822&gt; (&lt;enforce|warn&gt;)</B>
+
+<DD>
+<P>
+anonymous ftp를 통해 server에 접근을 할때 level과 password check
+의 형태를 정의한다.
+<PRE>
+  none      password check를 하지 않는다.
+  trivial   password에 '@'이 반드시 포홤되어 있는지를 check한다.
+  rfc822    password가 rfc822에 의거한 주소로 되어 있는지를 확인한다.
+  warn      user에게 경고는 하되, login은 허락한다.
+  enforce   user에게 경고를 하며 login은 허락하지 않는다.
+</PRE>
+
+<P>
+<DT><B>deny-email &lt;case-insensitive-email-address&gt;</B>
+
+<DD>
+<P>
+e-mail 주소를 효력이 없는 요소로서 검토를 하게 한다. 만약 
+passwd-check가 enforce로 셋팅되어 있으면, 익명 user들은 이 주소를
+password로 사용하여 login할수가 없다. 이것을 이용하여 IE?0User@
+or mozilla@ 와 같은 어리석을 WWW brosers가 사용을 하는 거짓된
+주소들을 사용하는 user들을 막을수가 있다. (이것을 사용함으로서,
+ftp를 위해 WWW browser를 사용하는 user들을 막는 것에 대해 고심할
+필요가 없다. 단 그들이 사용을 하는 browser를 정확하게 setting을
+해야 한다.) 오직 한 line당 하나의 주소만 설정이 되지만, 원하는 
+만큼의 deny-email address를 가질수가 있다.
+<P>
+<DT><B>path-filter &lt;typelist&gt; &lt;mesg&gt; &lt;allowed_charset&gt; {&lt;disallowed regexp&gt; ...}</B>
+
+<DD>
+<P>
+&lt;typelist&gt;의 user들을 통해, path-filter는 정규 표현식을
+filename으로 할지 안할지를 정의한다. 다중으로 정규 표현식들을
+허락하지는 않는다. 만약 filename이 정규 표현식의 척도와 매치하지
+않는 다면, &lt;mesg&gt; 가 user 들에게 출력이 되어 질 것이다.
+예를 들어:
+<PRE>
+  path-filter anonymous /etc/pathmsg ^[-A-Za-z0-9._]*$ ^\. ^-
+</PRE>
+
+는 익명 사용자들을 통한 모든 upload filename 들은 반드시 A-Z, a-z,
+0-9, &quot;._- &quot;으로 으로 이루어 져야 하며 시작시에 &quot;.&quot;와 &quot;-&quot; 는 사용할
+수가 없다는 것을 정의한다. 만약 filename이 위의 내용과 부합하지
+않는다면 /etc/pathmsg 이 user들 에게 출력이 될것이다.
+<P>
+<DT><B>upload [absolute|relative] [class=&lt;classname&gt;]... [-] &lt;root-dir&gt; &lt;dirglob&gt; &lt;yes|no&gt; &lt;owner&gt; &lt;group&gt; &lt;mode&gt; [dirs|nodirs] [&lt;d_mode&gt;]</B>
+
+<DD>
+<P>
+&lt;dirlob&gt;로서 upload를 허락하거나 허락하지 않을 directory를 
+지정한다.
+</DL>
+<P>
+
+upload를 허락한다면, 모든 file들은 &lt;owner&gt;와 &lt;goupr&gt;으로
+소유권을 가질것이며, permissions들은 &lt;mode&gt;에 따른다.
+<P>
+
+directory들은 가장 매치가 잘되는 원칙에 따른다.
+<P>
+
+예를 들어:
+<PRE>
+  upload  /var/ftp  *               no  
+  upload  /var/ftp  /incoming       yes  ftp  daemon  0666
+  upload  /var/ftp  /incoming/gifs  yes  jlc  guest   0600  nodirs
+</PRE>
+
+이것은 /incoming 과 /incoming/gifs 에만 upload를 허락한다. /incoming
+에 upload 된 file들은 ftp/daemon 의 소유권을 가지며, 퍼미션은 0666을
+가지게 된다. /incoming/gifs에 upload 되어진 file은 jlc/guest의
+소유권을 가지며, 0600의 퍼미션을 가지게 된다. 여기서 &lt;root-dir&gt;은
+passowrd file에서 &quot;ftp&quot; user에게 지정된 directory와 반드시 매치가
+되어야 한다는 것을 명심해야 한다.
+<P>
+
+부가적으로 &quot;dirs&quot; 와 &quot;nodirs&quot; keyword는 mkdir 명령을 사용하여 어떠한 
+새로운 subdirectory를 만드는 것을 허락 하거나 허락하지 않는 것을 
+지정한다.
+<P>
+
+upload 명령을 사용할때, directory 생성은 default로 허락이 되어
+진다는 것을 주의해야 한다. default 값을 off로 바꾸기 위해서는
+이 config file에서 upload 명령을 사용하고 있는 line중 가장 윗줄에 
+user, group, mode를 지정해야 하며, &quot;nodirs&quot;가 반드시 뒤에
+따라와야 한다.
+<P>
+
+directory 생성을 허가할때 부가적으로 &lt;d_mode&gt;라는 지시자를
+사용할수 있으며 이것은 directory를 생성할 시의 direcotory
+permission을 지정한다. &lt;d_mode&gt;를 생략하면, permission은 
+&lt;mode&gt;를 따라가며, &lt;mode&gt; 마져 생략되어 있으면 0777이 된다.
+<P>
+
+upload keyword는 오직 &lt;root-dir&gt;의 (chroot()가 적용이 되는)home
+directory를 가지고 있는 user(즉 anonymous)에게만 적용이 된다.
+&lt;root-dir&gt;은 어떠한 home directory와 매치 시키기 위하여 &quot;*&quot; 로서
+지정을 할수도 있다.
+<P>
+
+&lt;owner&gt; 와/또는 &lt;group&gt;은 어떤 upload file이나 directory 들이
+그들이 만들어진 directory의 자신의 소유권으로서 생성을 시키고자
+할 경우에는 &quot;*&quot; 로서 각각 지정을 할수도 있다.
+<P>
+
+부가적으로 첫번째 parameter는 현재 chroot 환경에 따라서
+절대적으로나 상대적으로 해석하여 선택을 한다. 기본값으로는
+&lt;root-dir&gt;을 절대값으로 해석을 한다.
+<P>
+
+
+한다면, 이 upload절은 오직 현재 user가 어떤 class의 member일때
+만 영향을 받는다.
+<P>
+서버에 업로드 파일을 허락하도록 설정을 하기 위해서는 upload.cofiguration.HOWTO
+를 꼭 읽어 보기 바란다.
+<P>
+<DL COMPACT>
+<DT><B>throughput &lt;root-dir&gt; &lt;subdir-glob&gt; &lt;file-glob-list&gt; &lt;bytes-per-second&gt; &lt;bytes-per-second-multiply&gt; &lt;remote-glob-list&gt;</B>
+
+<DD>
+<P>
+remote hostname 또는 remote IP address가 comma로 분리된
+&lt;remote-glob-list&gt;와 매치가 될때, &lt;root-dir&gt; 아래의
+&lt;subdir-glob&gt;와 매치가 되는 subdir에서 comma로 구분된
+&lt;file-glod-list&gt;를 통하여 다운로드에서 &lt;byte-per-second&gt;의 
+전송 처리량이 제한되는 file들을 지정할수 있다. 
+<P>
+Entry들은 가장 부합되는 원칙에 매치가 되어진다.
+<P>
+예를 들어:
+<BR>&nbsp;throughput&nbsp;/e/ftp&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oo&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;*
+<BR>&nbsp;throughput&nbsp;/e/ftp&nbsp;/sw*&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1024&nbsp;0.5&nbsp;*
+<BR>&nbsp;throughput&nbsp;/e/ftp&nbsp;/sw*&nbsp;README&nbsp;oo&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;*
+<BR>&nbsp;throughput&nbsp;/e/ftp&nbsp;/sw*&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oo&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;*.foo.com
+<P>
+이것은 defalut로 최대 전송량을 지정한다. 하지만 README라는 이름
+지어지지 않은 e/ftp/sw/ 아래의 어떤 file들에 대해서 초당 1024byte로
+download를 제한한다. domain foo.com의 도메인을 가진 네트웍에서 오는
+remote host들은 예외로 항상 최대 전송량을 얻을수 있다.
+<P>
+매 시간 remote client들은 /e/ftp/sw 아래의 file을 제한 받으며,
+entry line과 매치가 되는 byte per second는 내부적으로 계수(여기서는
+0.5)만큼씩 증가 되어진다. 그리고 remote client가 두번쨰 파일을 제한
+할때, 이것은 512byte/s로 제공이 되며 세번째 시도시에는 254byte/s,
+4번째 시도시에는 128byte/s 등으로 제한이 되어진다.
+<P>
+byte per second field의 &quot;oo&quot;는 전송량 제한을 하지 않는 것을 의미한다.
+1.0 씩의 계수 증가나 &quot;-&quot; 는 매번 성공적인 전송후에 전송량의 변화가
+없음을 의미한다.
+<P>
+여기서 &lt;root-dir&gt;은 password database에 있는 &quot;ftp&quot; user에게 지정
+되어진 home directory와 반드시 매치가 되어야 한다는 것을 주의해야
+한다. throughput(전송량) keyword는 오직 &lt;root-dir&gt;의 (chroot()가
+적용이 되는) home directory를 가지고 있는 user(즉 anonymous)에게만
+적용이 된다.
+<P>
+<P>
+<DT><B>anonymous-root &lt;root-dir&gt; [&lt;class&gt;]</B>
+
+<DD>
+<P>
+&lt;root-dir&gt; 은 anonymous user들의 chroot() path를 지정한다.  
+anonymous-root 가 매치가 되지를 않으면, 전통적으로 내려오는
+구문의 방법으로 'ftp' user의 home directory를 사용을 한다.
+&lt;class&gt;가 지정이 되지 않으면, 어떤 anonymous-root 지정이
+되지 않은 anonymous user들의 root directory가 된다.
+라인에 여러개의 class를 지정할수도 있다. user들을 위한 
+anonymous-root가 선택이 되면, &lt;root-dir&gt;/etc/passwd
+file에 잇는 'ftp' user들의 home directory가 사용되어 지며,
+최초의 directory와 system 전반적인 /etc/passwd의 'ftp' user들의
+home directory는 사용이 되지 않는다.
+<P>
+예를 들면:
+<BR>&nbsp;&nbsp;anonymous-root&nbsp;/home/ftp
+<BR>&nbsp;&nbsp;anonymous-root&nbsp;/home/localftp&nbsp;localnet
+는 모든 anonymous user들의 chroot()를 /home/ftp로 지정을 하며,
+
+최조의 CWD는 이 home directory가 된다. 그러나 class localnet의
+anonymous user들의 chroot()는 /home/localftp가 되며, 그들의 최초
+CWD는 /home/localftp/etc/passwd 에 있는 'ftp' user들의 home
+directory로 부터 영향을 받게 된다.
+<P>
+<P>
+<DT><B>guest-root &lt;root-dir&gt; [&lt;uid-range&gt;]</B>
+
+<DD>
+<P>
+&lt;root-dir&gt;은 guest user들의 chroot() path를 지정한다.
+guest-root가 매치가 되지 않으면 전통적으로 내려오는
+구문의 방법으로 user들의 home directory가 사용되어 진다.
+&lt;uid-range&gt;가 지정이 된 않으면, 어느 다른 guest-root가 지정이
+되지 않은 guest user들을 위한 root directory가 된다.
+한 라인에 여러개의 uid range들을 지정할수도 있다.
+user들을 위한 guest-root가 선택이 되면, &lt;root-dir&gt;/etc/passwd
+file에 있는 user들의 home directory가 사용이 되어지며, 최초의
+directory와 system 전반적으로 사용이 되어지는 /etc/passwd의 
+home directory는 사용이 되지 않는다.
+<P>
+&lt;uid-range&gt;는 UID값의 숫자로 지정을 한다.
+range들은 dash에 의해 구분되어 지는 상,하 경계가 주어짐에 따라
+지정되어 진다. 하계(lower bound)를 생략하는 것은 &quot;all up to&quot;를
+뜻하며, 상계(upper bound)를 생략하는 것은 &quot;all starting from&quot;을
+의미한다.
+<P>
+예를 들어:
+<PRE>
+  guest-root /home/users
+  guest-root /home/staff %100-999 sally
+  guest-root /home/users/frank/ftp frank
+</PRE>
+
+는 모든 user들의 chroot()를 /home/users로 하고,
+/home/users/etc/passwd 에서 지정된 그들의 home directory에서
+시작하게 한다. range 100 부터 999까지에 포함되는 user들과 user
+sally는 /home/staff로 chroot()가 되어 지며, /home/staff/etc/passwd의
+그들의 entry에로 부터 CWD가 영향을 받는다. single user frank는 
+/home/users/owner/ftp가 chroot()로 되며, CWD는 
+/home/users/owner/ftp/etc/passwd의 그의 entry로부터 영향을 받는다.
+<P>
+anonymous-root 와 guest-root를 위한 명령들은 매우 중요하다는 것을
+주의해야 한다. user가 여러개의 구문에 중복되어 매치가 된다면, 오직
+<BR>&nbsp;처음&nbsp;것만&nbsp;적용이&nbsp;된다.&nbsp;&lt;class&gt;&nbsp;나&nbsp;&lt;uid-range&gt;가&nbsp;없는&nbsp;구문은
+제외되며, 어떤 구문도 매치가되지 않을 경우에만 적용이 된다.
+<P>
+<DT><B>deny-uid &lt;uid-range&gt; [...]</B>
+
+<DD>
+<DT><B>deny-gid &lt;gid-range&gt; [...]</B>
+
+<DD>
+<DT><B>allow-uid &lt;uid-range&gt; [...]</B>
+
+<DD>
+<DT><B>allow-gid &lt;gid-range&gt; [...]</B>
+
+<DD>
+<P>
+이 절들은 UID와 GID 값으로 ftp server 로의 접근 거부를 지정한다.
+allow-uid 와 allow-gid 절은 거부와는 달리 uid/gid 를 통해 접근
+허락한다. 이 체크들은 모든 다른 설정들 이전에 이루어진다.
+deny는 allow 이전에 체크가 된다. defalut로는 모두 접근을 허락을
+한다. 모든 경우에서, 이것은 /etc/ftpusers file을 통한 필요성을
+제거 할수 있다. 예를 들어:
+<PRE>
+  deny-gid %-99 %65535
+  deny-uid %-99 %65535
+  allow-gid ftp
+  allow-uid ftp
+</PRE>
+
+anonymous 'ftp' user/group을 제외한 Linux Box의 모든 특권을 
+가졌거나 특정한 user들과 group들의 ftp 접근을 거부한다.
+많은 경우, 이것을 이용하여 /etc/ftpusers file의 역할을 대신할수
+있만 이것은 /etc/ftpaccess file의 변경을 바라지 않을때 사용하기
+위하여 존재를 한다.
+<P>
+ftpaccess file을 통해 single UID와 GID를 사용할때 이름이나 숫자
+둘다 사용을 할수가 있다. 숫자를 사용하기 위해서는, 숫자 이전에
+
+
+<P>
+<DT><B>restricted-uid &lt;uid-range&gt; [...]</B>
+
+<DD>
+<DT><B>restricted-gid &lt;gid-range&gt; [...]</B>
+
+<DD>
+<DT><B>unrestricted-uid &lt;uid-range&gt; [...]</B>
+
+<DD>
+<DT><B>unrestricted-gid &lt;gid-range&gt; [...]</B>
+
+<DD>
+<P>
+이 절들은 real 또는 guest user들이 자신들의 home directory 이외의
+FTP site 영역에 접근 하는 것을 조절한다. 이것은 guestgroup과
+guestuser의 사용을 대신하는 것을 뜻하지는 않는다. 대신, guest들의
+작용을 보완하는데 사용할수는 있다. unrestricted-uid와
+unrestircted-gid 절은 restricted와는 달리 그들의 home directory들
+이외의 directory에 user들의 접근을 허락한다.
+<P>
+이 절의 사용의 예는 그들의 사용경향을 보여준다. user 'dick'의 
+home directory가 /home/dick 이고, 'jane'이 /home/jane 이라고 가정을
+하면 :
+<PRE>
+  guest-root /home dick jane
+  restricted-uid dick jane
+</PRE>
+
+dick과 jane의 chroot'd가 /home일 동안, 그들의 home directory
+들을 제한 받기 때문에 각각 다른 file들을 access 할수가 없다.
+Whereever possible, in situations such as this example, try 
+not to rely solely upon the ftp restrictions.  
+다른 모든 ftp aceess 법칙에서, ftpaccess 설정의 작동을 보완하기
+위해 directory와 file의 퍼미션을 사용하도록 노력도 해야 한다.
+<P>
+<P>
+<DT><B>site-exec-max-lines &lt;number&gt; [&lt;class&gt; ...]</B>
+
+<DD>
+<P>
+SITE EXEC 의 특징은 전통적으로 원격 client로 보내지는 line들의
+출력의 수를 제한한다. 이 구문은 제한을 셋팅할수 있게끔 한다.
+생략하면 20 line들로 제한이 된다. limit 0은 제한을 하지 않는다는 
+것을 의미한다; limit를 없애려고 한다면 조심해야 한다. 이 구문이 
+원격의 user class와 매치가 된면 limit가 바로 적용이 된다.
+반면에 '*' class나 class가 주어지지 않은 구문 역시 사용되어
+질수 있다. 예를 들어;
+<PRE>
+    site-exec-max-lines 200 remote
+    site-exec-max-lines 0 local
+    site-exec-max-lines 25
+</PRE>
+
+Limits는 'remote' class의 user들에게 SITE EXEC (와 그결과 SITE 
+INDEX) 로 부터 200 line을 출력하며, 'local' class의 user들에게는
+제한을 하지 않는다. 그리고 모든 다른 user들에게는 25 line의 제한을
+적용한다.
+<P>
+<DT><B>dns refuse_mismatch &lt;filename&gt; [override]</B>
+
+<DD>
+<P>
+원격 사이트의 forward와 reverse lookup이 맞지 않을때, FTP 세션을
+거부하며, 메세지 파일과 같은 파일을 접근 유저에게 출력을 한다.
+옵션으로 [override]를 지정을 할 경우에는 메세지를 출력한 후에 접근을
+허락한다.
+<P>
+<DT><B>dns refuse_no_reverse &lt;filename&gt; [override]</B>
+
+<DD>
+<P>
+원격 사이트가 DNS 항목에 들어 있지 않을 경우 FTP세션을 거부하며,
+메세지 파일 과 같은 파일을 접근 유저에게 출력한다. 옵션으로
+[override]를 지정을 할 경우에는 메세지를 출력한 후에 접근을 허락한다.
+<P>
+<DT><B>dns resolveroptions [options]</B>
+
+<DD>
+<P>
+resolveroptions 옵션은 name server 옵션들을 피하는 것을 허락한다. 이 라인은
+<I><A HREF="http://localhost/cgi-bin/man/man2html?3+resolver">resolver</A>(3)</I>
+
+의 문서처럼 플래그의 종류를 취한다. 부가적으로 + 나 - 에 의해 설정을
+해 나갈수 있다. 예를 들어
+<PRE>
+    dns resolveroptions +aaonly -dnsrch
+</PRE>
+
+는 aaonly 옵션을 활성화 하고(오직 믿을수 있는 응답들만), dnsrch 옵션 (도
+메인 경로를 찾는것)은 비활성화 하게 된다.
+<P>
+</DL>
+<A NAME="lbAJ">&nbsp;</A>
+<H2>파일</H2>
+
+<P>
+FTPLIB/ftpaccess
+<P>
+<A NAME="lbAK">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A>(8),</B>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+umask">umask</A>(2)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ftplog">ftplog</A>(5)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpconversions">ftpconversions</A>(5)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpshut">ftpshut</A>(8)</B>
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>역자</H2>
+
+김정균 &lt;<A HREF="mailto:admin@oops.org">admin@oops.org</A>&gt; 2000년 8월 5일
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">접근 방법 설정</A><DD>
+<DT><A HREF="#lbAE">Informational Capabilities</A><DD>
+<DT><A HREF="#lbAF">로그 활용</A><DD>
+<DT><A HREF="#lbAG">Upload/Download 비율</A><DD>
+<DT><A HREF="#lbAH">여러가지 활용</A><DD>
+<DT><A HREF="#lbAI">권한 활용</A><DD>
+<DT><A HREF="#lbAJ">파일</A><DD>
+<DT><A HREF="#lbAK">관련 항목</A><DD>
+<DT><A HREF="#lbAL">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

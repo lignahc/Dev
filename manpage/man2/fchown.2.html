@@ -1,0 +1,242 @@
+<HTML><HEAD><TITLE>Manpage of CHOWN</TITLE>
+</HEAD><BODY>
+<H1>CHOWN</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1997년 5월 18일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+chown, fchown, lchown - 파일에 대한 소유권을 바꾼다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>int chown(const char *</B><I>path</I><B>, uid_t </B><I>owner</I><B>, gid_t </B><I>group</I><B>);</B>
+
+<BR>
+
+<B>int fchown(int </B><I>fd</I><B>, uid_t </B><I>owner</I><B>, gid_t </B><I>group</I><B>);</B>
+
+<BR>
+
+<B>int lchown(const char *</B><I>path</I><B>, uid_t </B><I>owner</I><B>, gid_t </B><I>group</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>path</I>나
+
+<I>fd</I>로<I></I>
+
+지정된 파일의 소유자를 바꾼다.
+슈퍼 사용자(root)만이 파일의 소유자를 바꿀수 있다. 파일의 소유자는 파일의 
+그룹을 그 소유자가 멤버인 어떤 그룹으로 바꿀수 있다.
+슈퍼 사용자는 임의로 그룹을 변경할 수 있다.
+
+<I>owner</I>나
+
+<I>group</I>가<I></I>
+
+-1로 지정되었다면, 그 ID는 바뀌지 않는다.
+
+실행 파일의 소유자나 그룹이 슈퍼 사용자(root)가 아닌 사용자에 의해 
+변경되면, S_ISUID 그리고 S_ISGID 모드 비트는 지워진다(clear). POSIX는 
+루트(root)가 
+<I>chown</I>을<I></I>
+
+할 때 이 작업이 실행 가능한 지 여부를 기술하지 않는다;
+리눅스에서는 이 작업이 커널 버전에 의존한다.
+그룹에 의해 실행되는 파일이 아닐 경우에는 S_ISGID 비트는 권고 잠금
+(mandatory locking)을 가리키며 (S_IXGRP bit는 지워진다),
+<I>chown</I>에
+
+의해 지워지지 않는다.
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0을 반환한다. 에러시, -1이 반환하며,
+<I>errno</I>는<I></I>
+
+적당한 값으로 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+파일 시스템에 의존하여, 다른 에러 코드가 반환될 수 있다.
+<B>chown</B>의<B></B>
+
+일반적인 에러 목록은 다음과 같다:
+
+<DL COMPACT>
+<DT><B>EPERM</B>
+
+<DD>
+유효 UID는 파일의 소유자와 일치하지 않으며 0이 아니다;
+또는 소유자나 그룹이 정확히 지정되지 않았다.
+<DT><B>EROFS</B>
+
+<DD>
+지정된 파일이 읽기-전용 파일 시스템에 있다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>path</I>가<I></I>
+
+접근할수 없는 주소 공간을 가리키고 있다.
+<DT><B>ENAMETOOLONG</B>
+
+<DD>
+<I>path</I>가<I></I>
+
+너무 길다.
+<DT><B>ENOENT</B>
+
+<DD>
+파일이 존재하지 않는다.
+<DT><B>ENOMEM</B>
+
+<DD>
+이용할 수 있는 커널 메모리가 충분하지 않다.
+<DT><B>ENOTDIR</B>
+
+<DD>
+경로명의 앞부분(prefix)이 디렉토리가 아니다.
+<DT><B>EACCES</B>
+
+<DD>
+찾기 허가권이 경로명의 앞부분에서 거부되었다.
+<DT><B>ELOOP</B>
+
+<DD>
+너무 많은 심볼릭 링크를 
+<I>path</I>에서<I></I>
+
+만났다.
+</DL>
+<P>
+
+<B>fchown</B>의<B></B>
+
+일반적 에러는 아래와 같다:
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+기술자가 유효하지 않다.
+<DT><B>ENOENT</B>
+
+<DD>
+위를 참조해라.
+<DT><B>EPERM</B>
+
+<DD>
+위를 참조해라.
+<DT><B>EROFS</B>
+
+<DD>
+위를 참조해라.
+<DT><B>EIO</B>
+
+<DD>
+하위 레벨 I/O 에러가 inode 수정 시 발생했다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+2.1.81이전의 리눅스 버전에서
+<B>chown</B>는<B></B>
+
+심볼릭 링크를 허용하지 않는다.
+리눅스 커널 2.1.81 이후에,
+<B>chown</B>
+
+심볼릭 링크를 허용하며, 새로운 시스템 콜
+<B>lchown</B>는<B></B>
+
+심볼릭 링크를 허용하지 않는다.
+리눅스 커널 2.1.86 이후에, 이 새로운 시스템 콜(예전의
+<B>chown</B>과<B></B>
+
+같은 의미을 가지고 있는)은 같은 시스템 콜 수를 가지고 있으며, 
+<B>chown</B>에서는<B></B>
+
+새로운 시스템 콜 수를 가지게 되었다.
+<P>
+
+<B>fchown</B>의<B></B>
+
+원형은
+<B>_BSD_SOURCE</B>가<B></B>
+
+정의되어 있을 경우에만 이용할 수 있다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+<B>chown</B>
+
+시스템 콜은 SVr4, SVID, POSIX, X/OPEN 에서 확실하다. 4.4BSD 버전은 슈퍼 
+사용자만이 사용할 수 있다.(즉, 일반적인 사용자는 파일을 바꿀 수 없다.)
+SVr4 문서는 EINVAL, EINTR, ENOLINK 그리고 EMULTIHOP 반환을 문서화
+했지만, ENOMEM은 아니다.  POSIX.1에서는 ENOMEM 또는 ELOOP 에러 조건을 
+문서화 하지 않았다.
+<P>
+
+<B>fchown</B>
+
+시스템 콜은 4.4BSD 그리고 SVr4 에서 확실하다.
+SVr4은 EINVAL, EIO, EINTR, 그리고 ENOLINK 에러 조건을 
+추가적으로 문서화 했다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>제한</H2>
+
+<B>chown</B>()의 의미(semantic)은 UID 대응이 가능한 NFS 파일 시스템에서는 
+적용되지 않을 수도 있다.
+추가적으로, 파일 내용을 접근하는 모든 시스템 콜의 의미은 적용되지 
+않을 수 있다. 왜냐하면 <B>chown</B>()가 이미 열려진 파일에 접근 취소를
+일으킬 수 있기 때문이다.
+클라이언트 쪽 캐싱(caching)은 소유권이 사용자의 접근을 허용하도록 바뀔 수 
+있는 시간과 파일이 다른 클라이언트 쪽 사용자에 의해 접근될 수 있는 
+시간 사이에 연기될지도 모른다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chmod">chmod</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+flock">flock</A></B>(2)
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈<TT>&nbsp;</TT>&lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 5월 26일<BR>
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">제한</A><DD>
+<DT><A HREF="#lbAJ">관련 항목</A><DD>
+<DT><A HREF="#lbAK">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

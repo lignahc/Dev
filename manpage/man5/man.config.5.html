@@ -1,0 +1,85 @@
+<HTML><HEAD><TITLE>Manpage of MAN.CONFIG</TITLE>
+</HEAD><BODY>
+<H1>MAN.CONFIG</H1>
+Section: File Formats (5)<BR>Updated: 30 Mar 1994<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+man.config - man을 위한 구성 자료 
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<P>
+
+이 파일은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+man">man</A></B>(1)
+
+에 의해 읽어지고, (a) man을 위한 검색 경로 조건 방법에 관한 정보,
+(b) nroff, eqn, tbl 등과 같은 man에 의해 사용되는 여러가지 프로그램을 위한 
+절대 경로명, (c) 파일에 주어진 확장자를 위한 압축풀기의 리스트 를 포함하고 
+있다. 이 파일을 대신하는 버젼은 다음 처럼 지정할 수 있다.
+<P>
+
+<DL COMPACT><DT><DD>
+man -C private_man.config ...
+</DL>
+
+<P>
+
+명령 이름은 옵션들과 같이 제공 할 수 있다.
+nroff를 위한 유용한 옵션은 <A HREF="http://localhost/cgi-bin/man/man2html?1+grotty">grotty</A>(1)에서 찾을 수 있다.
+예를 들어, 기본 설정 
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+NROFF /usr/bin/groff -mandoc -Tlatin1
+</PRE>
+
+</DL>
+
+<P>
+
+대신
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+NROFF /usr/bin/groff -mandoc -Tlatin1 -P-u -P-b
+</PRE>
+
+</DL>
+
+<P>
+
+를 밑줄과 굵은 글씨(볼드체)를 제거하기 위해 쓸지도 모른다.
+<A NAME="lbAD">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+col">col</A>(1), (g)<A HREF="http://localhost/cgi-bin/man/man2html?1+eqn">eqn</A>(1), (g)<A HREF="http://localhost/cgi-bin/man/man2html?1+pic">pic</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+groff">groff</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+grotty">grotty</A>(1), (g)<A HREF="http://localhost/cgi-bin/man/man2html?1+refer">refer</A>(1), (g)<A HREF="http://localhost/cgi-bin/man/man2html?1+tbl">tbl</A>(1),
+<A HREF="http://localhost/cgi-bin/man/man2html?1+less">less</A>(1), man (1) 와 <A HREF="http://localhost/cgi-bin/man/man2html?1+compress">compress</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+gzip">gzip</A>(1).
+<A NAME="lbAE">&nbsp;</A>
+<H2>역자</H2>
+
+배성훈 &lt;<A HREF="mailto:plodder@kldp.org">plodder@kldp.org</A>&gt;, 2000년 5월 5일
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">관련 항목</A><DD>
+<DT><A HREF="#lbAE">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

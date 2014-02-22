@@ -1,0 +1,105 @@
+<HTML><HEAD><TITLE>Manpage of ID</TITLE>
+</HEAD><BODY>
+<H1>ID</H1>
+Section: Misc. Reference Manual Pages (1L)<BR>Updated: GNU 쉘 유틸리티<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+id - 실제, 유효 UID와 GID를 출력한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>id</B>
+
+[-gnruG] [--group] [--name] [--real] [--user] [--groups]
+[--help] [--version] [username]
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이 맨페이지는 GNU 버전의
+<B>id</B>
+
+를 다룬다.
+<B>id</B>
+
+는 주어진 사용자, 또는 사용자가 주어지지 않는 경우 프로세스의 주인에 대한
+정보를 출력한다. 기본적으로 실제 사용자 ID, 실제 그룹 ID, 만약 실제 사용자
+ID와 다르다면 유효 사용자 ID를, 마찬가지로 실제 그룹 ID와 다르다면 유효 그룹
+ID를 출력하고 추가 그룹 ID를 출력한다. 각 항목은 식별 문자 그리고 괄호 안에
+해당하는 사용자 또는 그룹명으로 표현된다.
+<P>
+
+<B>id</B>
+
+에 옵션을 주면 위에서 열거한 정보의 일부만 보여준다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+<DL COMPACT>
+<DT><I>-g, --group</I>
+
+<DD>
+오로지 그룹 ID만 출력한다.
+<DT><I>-G, --groups</I>
+
+<DD>
+추가 그룹만 출력한다.
+<DT><I>--help</I>
+
+<DD>
+표준출력으로 사용법을 출력하고 정상적으로 종료한다.
+<DT><I>-n, --name</I>
+
+<DD>
+ID 번호 대신 사용자명, 그룹명을 출력한다.
+<I>-u</I>,
+
+<I>-g</I>,
+
+또는
+<I>-G</I>
+
+를 필요로 한다.
+<DT><I>-r, --real</I>
+
+<DD>
+유효 사용자, 유효 그룹 ID가 아니라 실제 ID 를 출력한다.
+<I>-u</I>,
+
+<I>-g</I>,
+
+또는
+<I>-G</I>
+
+를 필요로 한다.
+<DT><I>-u, --user</I>
+
+<DD>
+오로지 사용자 ID 만 출력한다.
+<DT><I>--version</I>
+
+<DD>
+표준출력으로 버전정보를 출력하고 정상적으로 종료한다.
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

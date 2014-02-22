@@ -1,0 +1,96 @@
+<HTML><HEAD><TITLE>Manpage of PATHCHK</TITLE>
+</HEAD><BODY>
+<H1>PATHCHK</H1>
+Section: Misc. Reference Manual Pages (1L)<BR>Updated: GNU 쉘 유틸리티<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+pathchk - 화일명이 유효하며 이동성(portability)이 있는지 점검한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>pathchk</B>
+
+[-p] [--portability] [--help] [--version] 화일명...
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이 맨페이지는 GNU 버전의
+<B>pathchk</B>
+
+를 다룬다.
+각 
+<I>화일명</I>
+
+에 대하여,
+<B>pathchk</B>
+
+는 다음과 같은 조건이 만족하지 않으면 메세지를 출력한다:
+<BR>
+
+- 
+<I>화일명</I>
+
+에 속한 모든 디렉토리에 검색(실행) 허가권을 갖고 있다.
+<BR>
+
+- 
+<I>화일명</I>
+
+의 길이가 화일 시스템이 지원하는 최대 화일 길이를 넘지 않는다.
+<BR>
+
+-
+존재하는 디렉토리명에 대한
+<I>화일명</I>
+
+의 각 요소 길이가 화일명 부분에 대한 화일 시스템의 최대 길이를 넘지 않는다.
+<P>
+
+종료 상태는 다음과 같다:
+<PRE>
+0 모든 화일명이 검사내용에 만족할 때
+1 그 외.
+</PRE>
+
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+<DL COMPACT>
+<DT><I>--help</I>
+
+<DD>
+표준출력으로 사용법을 출력하고 정상적으로 종료한다.
+<DT><I>-p, --portability</I>
+
+<DD>
+현재 화일 시스템에서 길이 점검을 하는 것이 아니라 다른 시스템으로의 이동을
+고려하여 POSIX.1 최소 규격에 맞는지 점검한다. 또한 화일명 안에 
+이동성 문자 세트에 포함되지 않는 글자가 있는지 살펴본다.
+<DT><I>--version</I>
+
+<DD>
+표준출력으로 버전정보를 출력하고 정상적으로 종료한다
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:56 GMT, March 25, 2004
+</BODY>
+</HTML>

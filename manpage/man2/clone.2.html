@@ -1,0 +1,293 @@
+<HTML><HEAD><TITLE>Manpage of CLONE</TITLE>
+</HEAD><BODY>
+<H1>CLONE</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: 25 april 1998<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+__clone - 프로세스 생성 
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sched.h">sched.h</A>&gt;</B>
+
+<P>
+<B>int __clone(int (*</B><I>fn</I><B>) (void *</B><I>arg</I><B>), void *</B><I>child_stack</I><B>, int </B><I>flags</I><B>, void *</B><I>arg</I><B>)</B>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>__clone</B>
+
+는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2)
+
+처럼 새로운 프로세스를 생성한다.  
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2)
+
+와는 달리,
+<B>__clone</B>
+
+은 자식 프로세스가 메모리 공유, 파일 기술자들의 테이블, 시그널 핸들러의 테이블과 같이 
+그 부모 프로세스와 함께 실행 문맥의 부분들을 공유하도록 허용한다. 
+<B>__clone의 주된 사용은 쓰레드를 구현하는 것이다. 공유 메모리에서 동시에 실행하는 </B>
+
+프로그램에서 멀티 쓰레드의 제어. 자식 프로세스가 생성되면, 이는 함수 어플리케이션을 
+실행시킨다. 
+
+<I>fn</I>(<I>arg</I>).
+
+<I>fn</I>
+
+인수는 실행 초기에 자식 프로세스에 의해 호출되는 함수에 대한 포인터이다. 
+<I>arg</I>
+
+는 
+<I>fn</I>
+
+에 다시 전달되는 인수이다. 
+<I>fn</I>(<I>arg</I>)
+
+함수 어플리케이션이 리턴하면, 자식 프로세스는 종료된다. 
+<I>fn</I>
+
+에 의해 리턴되는 integer는 자식프로세스가 빠져나가는 exit코드이다. 자식 프로세스는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+exit">exit</A></B>(1)
+
+을 호출하거나, fatal 시그널을 받은 후에 명백하게 종료될 수 있다. 
+
+<I>child_stack</I>
+
+인수는 자식 프로세스에 의해 사용되는 스택의 위치를 명시한다. 자식 및 부모 프로세스가 
+메모리를 공유할 수 있기때문에, 일반적으로 자식 프로세스가 부모프로세스와 동일한 스택
+에서 실행되는 것은 불가능하다. 부모 프로세스는 따라서 자식 프로세스를 위한 메모리를 
+설정해야 하며,  
+<B>__clone</B>
+
+에 대한 포인터를 전달해야 한다. 
+
+리눅스를 실행하는 모든 프로세서(HP PA 프로세서 제외)들 상에서 스택은 아래쪽으로 
+쌓이므로, 
+<I>child_stack</I>
+
+은 자식 스택을 위한 설정에 보통 메모리 공간의 상위 주소를 가리킨다. 
+적은 바이트의 
+<I>flags</I>
+
+는 자식이 죽을 때 부모에게 전송되는 시그널의 번호를 포함한다. 
+<I>flags</I>
+
+는 또한 부모와 자식 프로세스 사이에 무엇이 공유되는가를 명시하기 위해서 다음의 상수들 중 
+하나 혹은 몇가지를 bitwise할 수 있다.  
+<DL COMPACT>
+<DT><B>CLONE_VM</B>
+
+<DD>
+만일 
+<B>CLONE_VM </B>
+
+이 설정되면, 부모와 자식 프로세스들은 동일한 메모리 공간에서 실행된다. 
+특히, 부모 프로세스 혹은 자식 프로세스들에 의해 수행되는 메모리 작성은 다른 프로세스
+에서도 볼 수 있다. 더우기 자식 또는 부모 프로세스에 의해 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+mmap">mmap</A></B>(2)
+
+혹은
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+munmap">munmap</A></B>(2)으로<B>수행되는</B>메모리<B>매핑</B>또는<B>언매핑</B>역시<B>다른</B>프로세스에<B>영향을</B>미친다.<B></B>
+
+만일 
+<B>CLONE_VM</B>
+
+이 설정되지 않으면, 자식 프로세스는 .BR __clone의 시간에서, 부모의 메모리 공간의 분리된 
+복제내에서 실행된다. 
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2)
+
+의 경우에서 볼 수 있듯이, 프로세스들 중 하나에 의해 수행되는 메모리 작성 혹은 
+파일 매핑/언매핑은 다른 것에 대해 영향을 미치지 않는다. 
+
+<DT><B>CLONE_FS</B>
+
+<DD>
+만일
+<B>CLONE_FS</B>
+
+가 설정되면, 부모와 자식 프로세스들은 동일한 파일 시스템 정보를 공유한다. 
+이는 파일 시스템의 루트, 현재 작업 디렉토리, 그리고 umask를 포함한다. 
+부모 혹은 자식 프로세스에 의해 수행되는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chroot">chroot</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chdir">chdir</A></B>(2),
+
+또는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+umask">umask</A></B>(2)
+
+에 대한 호출 역시 다른 프로세스에 영향을 미친다. 
+만일 
+<B>CLONE_FS</B>
+
+이 설정되지 않으면 자식 프로세스는 
+<B>__clone</B>
+
+의 시간에서, 부모의 메모리 공간의 분리된 
+복제내에서 실행된다. 
+
+한 프로세스에 의해 나중에 수행될 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chroot">chroot</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chdir">chdir</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+umask">umask</A></B>(2)
+
+에 대한 호출은 다른 프로세스에 영향을 미치지 않는다. 
+<DT><B>CLONE_FILES</B>
+
+<DD>
+만일 
+<B>CLONE_FILES</B>
+
+이 설정되면, 부모와 자식 프로세스는 동일한 파일 기술자 테이블을 공유한다. 파일 기술자들은 항상 부모 그리고 자식 프로세스 내의 
+동일한 파일들을 참조한다. 부모 혹은 자식 프로세스에 의해 만들어진 모든 파일 기술자는 다른 프로세스에서도 역시 타당하다. 이와 
+유사하게, 만일 프로세스들중 하나가 파일 기술자를 닫거나, 관련된 플래그들을 변경시키면, 기타 프로세스가 역시 영향을 받는다..
+<B>CLONE_FILES</B>
+
+이 설정되지 않으면, 자식 프로세스는 
+<B>__clone의</B>시간에<B>부모</B>프로세스에서<B>열린</B>파일<B>기술자들의</B>복사본을<B>상속받는다.</B>
+
+부모 혹은 자식 프로세스들 중 하나에 의해 나중에 수행될 파일 기술자들에 대한 연산은 다른 것에 영향을 주지 않는다. 
+<DT><B>CLONE_SIGHAND</B>
+
+<DD>
+
+<B>CLONE_SIGHAND</B>
+
+이 설정되면, 부모 및 자식 프로세스들은 시그널 처리기의 동일한 테이블을 공유한다. 만일 보모 혹은 
+자식 프로세스가 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sigaction">sigaction</A></B>(2)
+
+를 호출하여 시그널과 관련된 행위를 변경시키고자 한다면, 다른 
+프로세스내의 그 행위 역시 변경된다. 그러나, 부모와 자식 프로세스들은 여전히 독특한 시그널 마스크과 일련의
+펜딩 시그널들을 갖는다. 따라서 그들중 하나는 다른 시그널에 영향을 주지 않고, 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sigprocmask">sigprocmask</A></B>(2)
+
+을 사용하여 일부 시그널을 블로킹하거나, 하지 않는다. 
+
+<B>CLONE_SIGHAND</B>
+
+이 설정되지 않으면, 자식 프로세스는 
+<B>__clone</B>
+
+의 시간에 부모 프로세스에서 열린 시그널 처리기들의 복사본을 상속받는다. 
+부모 혹은 자식 프로세스들 중 하나에 의해 나중에 수행될 파일 기술자들에 대한 연산은 다른 프로세스
+에 영향을 주지 않는다. 
+하나의 프로세스에 의해 수행되는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sigaction">sigaction</A></B>(2)
+
+에 대한 호출은 다른 프로세스에 영향을 주지 않는다. 
+
+<DT><B>CLONE_PID</B>
+
+<DD>
+만일
+<B>CLONE_PID</B>
+
+이 설정되면, 자식 프로세스는 부모 프로세스와 같은 동일한 프로세스 ID를 갖고 만들어진다. 
+만일 
+<B>CLONE_PID</B>
+
+이 설정되지 않으면, 자식 프로세스는 부모 프로세스와 다른 독특한 프로세스 ID를 소유한다. 
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공하면, 자식 프로세스의 PID는 부모의 실행할 쓰레드 내에 리턴된다. 실패하면, -1이 
+부모의 문맥에 리턴되고, 어떤 자식 프로세스도 생성되지 않으며, 
+<I>errno</I>
+
+가 적절하게 설정될 것이다. 
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EAGAIN</B>
+
+<DD>
+이미 너무나 많은 프로세스들이 실행중에 있다. 
+<DT><B>ENOMEM</B>
+
+<DD>
+<B>__clone</B>
+
+은 자식에 대한 작업 구조를 할당하거나, 복사될 필요가 있는 부모의 컨텍스트에 대한 부분들을 복사하는데 
+충분한 메모리를 할당할 수 없다. 
+
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>버그</H2>
+
+커널의 2.1.97버전으로서, 
+<B>CLONE_PID </B>
+
+플래그는 사용되어서는 안된다. 왜냐하면, 커널의 다른 부분들과 대부분의 시스템 소프트웨어가
+아직 프로세스 ID는 독특한 것으로서 가정하고 있기 때문이다.  
+
+libc 버전 5.  libc 6 (a.k.a. glibc 2)가 제공하는 
+<B>__clone</B>
+
+에 대한 항목이 없다. 
+<B>__clone</B>
+
+이 설명서에서 설명한 바와 같다. 
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+
+The
+<B>__clone</B>
+
+호출은 리눅스용이고, 포팅할 의도를 지닌 프로그램에서는 사용되서는 안된다. 
+프로그래밍 쓰레드 가능한 어플리케이션에 대해서, 리눅스 쓰레드 라이브러리와 같은 
+POSIX 1003.1c thread API를 구현하는 라이브러리를 사용하는 것이 좋다. 
+<B>pthread_create</B>(3thr)
+
+를 참조하라. 이 설명서 페이지는 커널 2.0.x 그리고 2.1.x, 그리고 glibc 2.0.x에 상응한다.
+
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2),
+
+<B>pthread_create</B>(3thr)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 29일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">버그</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

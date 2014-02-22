@@ -1,0 +1,63 @@
+<HTML><HEAD><TITLE>Manpage of ATEXIT</TITLE>
+</HEAD><BODY>
+<H1>ATEXIT</H1>
+Section: Linux Programmer's Manual (3)<BR>Updated: 14 September 1997<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+atexit - 정상적인 프로그램 종료시 호출될 함수 등록
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/stdlib.h">stdlib.h</A>&gt;</B>
+
+<B>int atexit(void (*</B><I>function</I><B>)(void));</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>atexit()</B>함수는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+exit">exit</A></B>(3)
+
+를 통해서나, 프로그램의 <B>main</B>으로부터의 반환 값을 통해서
+프로그램이 끝났을 때 호출 될 <I>function</I>을 등록하는 것이다.
+그렇게 등록된 함수는 그것들이 등록된 반대 순서로 호출된다; 
+어떤 변수도 지나치지 않는다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>atexit()</B>함수는 성공했을 경우 0을 반환한다. 그렇지 않으면
+-1 값을 반환한다; <I>errno</I> 은 실행되지 않는다..
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+SVID 3, BSD 4.3, ISO 9899 
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+exit">exit</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+on_exit">on_exit</A></B>(3)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

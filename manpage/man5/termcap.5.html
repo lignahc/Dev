@@ -1,0 +1,477 @@
+<HTML><HEAD><TITLE>Manpage of TERMCAP</TITLE>
+</HEAD><BODY>
+<H1>TERMCAP</H1>
+Section: Linux Programmer's Manual (5)<BR>Updated: <BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+termcap - 이용가능한 터미널 데이터베이스
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+termcap 데이터 베이스는 character-cell 터미널과 프린터의 기능을 사용하기 위한 낙후된 장치이다. 옛날 프로그램의 기능을 위한 것들만 가지고 있다; 새로운 것들은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+terminfo">terminfo</A></B>(5)
+
+데이터 베이스와 조합된 라이브러리를 사용한다
+<P>
+
+<B>/etc/termcap</B>
+
+은 여러 종류의 터미널의 기능을 열거해 놓은 ASCII 파일(the database master)이다.
+프로그램은 사용중인 터미널의 시각적 속성을 제어하기 위한 부분적인 escape 코드를 찾기 위해 termcap을 검색한다 (다른 형태의 터미널은 stty가 제어한다.).termcap 데이터 베이스는 TERM 환경 변수상에 표시되어 있다. 
+<P>
+
+Termcap의 엔트리는 새 라인을 억제하는데 쓰이는 `\'를 사용하여 논리적인 하나의 줄로 규정된다. 필드는 `:'로 나뉜다. 각 엔트리의 첫번째 필드는 왼쪽 여백에서 시작한고, '|'로 구분되는 터미널 이름들의 리스트를 내용으로 한다.
+<P>
+
+첫번째 서브필드는 (4.3과 그 이전 버전의 BSD termcap 앤트리에서)두 글자로 이루어진 짧은 이름을 가지고 있다. 이 짧은 이름은 대문자나 소문자로 이루어진다. 4.4BSD termcap 앤트리에서 이 필드는 생략된다. 
+<P>
+
+두번째 서브필드에는 (새로운 4.4BSD 형식에선 첫번째) 환경 변수 TERM이 사용하는 이름이 들어있다.이것은 소문자로 써야한다. 고를수 있는 하드웨어 기능은 하이픈을  덧붙이거나 이름 뒤에 접미사를 붙여서 표시한다.
+아래 예들을 보자.
+일반적인 접미사로는 w (more than 80 characters wide), am(automatic margins), 
+nam (no automatic margins) and rv (reverse video display)가 있다.
+세번째 서브필드는 이 termcap 앤트리를 위한 길고 서술적인 이름이 있다.
+<P>
+
+그 다음 필드는 터미널 기능을 가지고 있다; 어떤 연속된 특성 라인이라도
+왼쪽 구석으로부터 한 텝 정도 안으로 들어간다.
+<P>
+
+정해진 순서가 없더라도, 처음엔 boolean을 다음엔 numeric 마지막으로 string을 
+각각 알파벳순으로 쓰기를 권장한다
+비슷한 함수의 기능은 한 줄에 쓸 수 있다.
+<P>
+
+<PRE>
+예를 들자면 아래와 같다:
+
+Head line: vt|vt101|DEC VT 101 terminal in 80 character mode:\
+Head line: Vt|vt101-w|DEC VT 101 terminal in (wide) 132 character mode:\
+Boolean: :bs:\
+Numeric: :co#80:\
+String: :sr=\E[H:\
+</PRE><A NAME="lbAD">&nbsp;</A>
+<H3>Boolean Capabilities</H3>
+
+<PRE>
+5i      프린터는 스크린에 반영되지 않는다.
+am      자동 줄 보호를 뜻하는 자동 여백
+bs      Control-H (8 dec.) 은 백스페이스의 역할을 한다.
+bw      왼쪽 끝에서 이전 라인의 오른쪽 끝으로 백스페이스 한다.
+da      저장된 위쪽 화면을 디스플레이 한다. 
+db      저장된 아래 화면을 디스플레이 한다.
+eo      커서 자리에서 모든 문자를 지운다.
+es      상태 표시 줄에서 동작하는 escape 시퀀스와 특수 문자equences 
+gn      일반적인 장치
+hc      하드카피 터미널
+HC      맨 아랫줄에 없을 땐 커서를 보기 힘들다.
+hs      상태 표시줄을 가진다.
+hz      Hazeltine bug, 터미널이 틸데 문자를 표시할 수 없다.
+in      터미널에 스페이스가 아닌 하얀색으로 채울 널을 삽입한다.
+km      터미널이 메타 키를 가진다. 
+mi      커서의 동작을 삽입 모드로 한다.
+ms      커서의 동작을 일반/밑줄 모드로 한다.
+NP      패드가 없는 문자
+NR      ti 는 te로 바뀌지 않는다. 
+nx      패딩 하지않는다. 반드시 XON/XOFF를 사용한다
+os      터미널은 이중인자를 쓸 수 있다. 
+ul      이중인자를 사용할 수 없더라도 언더라인이 가능하다.
+xb      Beehive glitch, f1이 ESCAPE를 내보내고, f2이 ^C을 내보낸다.
+xn      newline/wraparound glitch
+xo      터미널이 xon/xoff 프로토콜을 사용한다.
+xs      특별한 타입의 문서를 그 형식에 맞게 표시한다.
+xt      Teleray glitch, 파괴적인 텝과 이상한 모드
+</PRE>
+
+<A NAME="lbAE">&nbsp;</A>
+<H3>Numeric Capabilities</H3>
+
+<PRE>
+co      컬럼의 번호
+dB      하드카피 터미널상에서 백스페이스에 milliseconds의 딜레이를 준다. 
+dC      하드카피 터미널상에서 케리지 반환에 milliseconds의 딜레이를 준다.
+dF      하드카피 터미널상에서 form feed에 milliseconds의 딜레이를 준다.
+dN      하드카피 터미널상에서 new line에 milliseconds의 딜레이를 준다.
+dT      하드카피 터미널상에서 tabulator stop의 milliseconds의 딜레이를 준다.
+dV      하드카피 터미널상에서 vertical tabulator stop에 milliseconds의 딜레이를 준다
+it      텝 위치간의 차이
+lh      소프트 라벨의 높이
+lm      메모리 라인
+lw      소프트 라벨의 넓이
+li      라인 번호
+Nl      소프트 라벨의 번호
+pb      페딩에 필요한 최소 보드
+sg      Standout glitch
+ug      Underline glitch
+vt      가상 터미널 번호
+ws      화면 넓이와 다를 경우 상태 표시줄의 넓이
+</PRE>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>String Capabilities</H3>
+
+<PRE>
+!1      쉬프트 된 save key
+!2      쉬프트 된 suspend key
+!3      쉬프트 된 undo key
+#1      쉬프트 된 help key
+#2      쉬프트 된 home key
+#3      쉬프트 된 input key
+#4      쉬프트 된 cursor left key
+%0      redo key
+%1      help key
+%2      mark key
+%3      message key
+%4      move key
+%5      next-object key
+%6      open key
+%7      options key
+%8      previous-object key
+%9      print key
+%a      쉬프트 된 message key
+%b      쉬프트 된 move key
+%c      쉬프트 된 next key
+%d      쉬프트 된 options key
+%e      쉬프트 된 previous key
+%f      쉬프트 된 print key
+%g      쉬프트 된 redo key
+%h      쉬프트 된 replace key
+%i      쉬프트 된 cusor right key
+%j      쉬프트 된 resume key
+&amp;0      쉬프트 된 cancel key
+&amp;1      reference key
+&amp;2      refresh key
+&amp;3      replace key
+&amp;4      restart key
+&amp;5      resume key
+&amp;6      save key
+&amp;7      suspend key
+&amp;8      undo key
+&amp;9      쉬프트 된 begin key
+*0      쉬프트 된 find key
+*1      쉬프트 된 command key
+*2      쉬프트 된 copy key
+*3      쉬프트 된 create key
+*4      쉬프트 된 delete character
+*5      쉬프트 된 delete line
+*6      select key
+*7      쉬프트 된 end key
+*8      쉬프트 된 clear line key
+*9      쉬프트 된 exit key
+@0      find key
+@1      begin key
+@2      cancel key
+@3      close key
+@4      command key
+@5      copy key
+@6      create key
+@7      end key
+@8      enter/send key
+@9      exit key
+al      한 라인 첨가
+AL      %1 라인 첨가
+ac      alternate character set의 맵을 그리기 위한 블록 그래픽 문자 쌍 
+ae      alternative character set을 끝낸다
+as      블록 그래픽 문자를 위한 alternative character set을 시작한다
+bc      ^H가 아니면 백스페이스한다.
+bl      오디오 벨
+bt      이전 텝의 마지막으로 이동
+cb      라인의 시작부터 커서 있는 곳까지 지운다.cc      Dummy command character
+cd      화면 끝까지 지운다.
+ce      라인 끝까지 지운다
+ch      column %1까지만 커서 수평 이동cl        화면을 지우고 커서는 home 위치로
+cm      커서를 row %1, column %2 로 이동(스크린상에서)
+CM      커서를 row %1 ,column %2 로 이동(메모리상에서)
+cr      Carriage 반환
+cs      line %1에서 %2로 스크롤한다.
+ct      텝을 지운다
+cv      line %1로 커서 수직 이동
+dc      문자 1개 삭제
+DC      문자 %1 삭제
+dl      한 라인 삭제
+DL      %1 라인 삭제
+dm      삭제 모드 시작
+do      커서를 한 라인 아래로
+DO      커서를 #1 라인 아래로
+ds      상태 표시줄 사용안함
+eA      alternate character set 사용가능
+ec      커서로부터 %1 문자 지우기
+ed      삭제 모드 종료
+ei      삽입 모드 종료
+ff      하드카피 터미널 상에서 Formfeed character 
+fs      문자를 상태 표시줄로 가기 전 위치로 돌림
+F1      기능키 f11에 의한 스트링
+F2      기능키 f12에 의한 스트링
+F3      기능키 f13에 의한 스트링 
+...     ...
+F9      기능키 f19에 의한 스트링 
+FA      기능키 f20에 의한 스트링 
+FB      기능키 f21에 의한 스트링 
+...     ...
+FZ      기능키 f45에 의한 스트링 
+Fa      기능키 f46에 의한 스트링 
+Fb      기능키 f47에 의한 스트링 
+...     ...
+Fr      기능키 f63에 의한 스트링 
+hd      커서를 반줄 내린다 
+ho      Cursor home
+hu      커서를 반줄 올린다
+i1      로그인시 초기화 문자열 1
+i3      로그인시 초기화 문자열 3is      로그인시 초기화 문자열 2
+ic      문자 하나 삽입 
+IC      %1 문자 삽입 
+if      초기화 파일
+im      삽입 모드 시작
+ip      삽입 후에 패스 시간과 특수 문자 삽입
+iP      초기화 프로그램
+K1      키 패드의 상위 왼쪽 키
+K2      키 패드의 중앙 키
+K3      키 패드의 상위 오른쪽 키 
+K4      키 패드의 아래 왼쪽 키
+K5      키 패드의 아ㅐ 오른쪽 키
+k0      기능 키 0
+k1      기능 키 1
+k2      기능 키 2
+k3      기능 키 3
+k4      기능 키 4
+k5      기능 키 5
+k6      기능 키 6
+k7      기능 키 7
+k8      기능 키 8
+k9      기능 키 9
+k;      기능 키 10
+ka      모든 텝을 지우는 키r all tabs key
+kA      라인 삽입 키
+kb      백스페이스 키
+kB      텝의 끝으로
+kC      화면 지움 키
+kd      커서 아래로 내리는 키
+kD      커서 아래 있는 문자를 지우는 키
+ke      키패드 끄기
+kE      라인의 끝까지 지우는 키
+kF      앞/아래로 스크롤 하는 키
+kh      Cursor home key
+kH      Cursor hown down key
+kI      문자/ 삽입 모드 삽입키
+kl      커서 왼쪽 키
+kL      라인 지움 키Key for delete line
+kM      삽입 모드 끝내는 키
+kN      다음 페이지로 가는 키
+kP      이전 페이지로 가는 키
+kr      커서 오른쪽 키
+kR      뒤/위로 스크롤 하는 키
+ks      키패드 켜기
+kS      화면 끝까지 지우는 키
+kt      지우기와 텝 키
+kT      팁 설정 키
+ku      커서 위쪽 키
+l0      0번째 기능 키의 라벨. f0이 없을 때 
+l1      첫번째 기능키의 라벨. f1이 없을 때
+l2      두번째 기능키의 라벨. f2가 없을 때
+...     ...
+la      10번째 기능키의 라벨. f10이 없을 때
+le      커서를 문자 하나 만큼 왼쪽으로
+ll      커서를 왼쪽 아래로 이동
+LE      커서를 %1 문자 만큼 왼쪽으로
+LF      소프트 라벨 끄기
+LO      소프트 라벨 켜기
+mb      깜빡임 시작
+MC      소프트 마진 지우기
+md      볼드 모드 시작
+me      so, us, mb, md, mr와 같은 모든 모드를 끝낸다.
+mh      half bright 모드 시작
+mk      Dark mode (Characters invisible)
+ML      left soft margin 설정
+mm      터미널을 메타 모드로 넣는다
+mo      터미널을 메타 모드에서 뺀다.
+mp      보호 모드 켜기
+mr      리버스 모드 시작
+MR      right soft margin 설정
+nd      커서를 오른쪽 한문자만큼 이동
+nw      케리지 반환 명령
+pc      패딩 문자
+pf      프린터 끄기
+pk      사용자가 입력한 것처럼 문자열 %2를 보내는 Program key %1 
+pl      로컬 모드에서 문자열 %2를 실행하는 Program key %1 
+pn      문자열 %2를 보여주는 Program soft label %1 
+po      프린터 켜기
+pO      %1 (&lt;256) byte에 프린터 켜기
+ps      스크린상의 내용을 프린터로 출력
+px      문자열 %2를 컴퓨터로 보내는 Program key %1 
+r1      터미널 설정을 위한 문자열 1을 sane mode로 되돌린다.
+r2      터미널 설정을 위한 문자열 2를 sane mode로 되돌린다.
+r3      터미널 설정을 위한 문자열 3을 sane mode로 되돌린다.
+RA      자동 여백 사용하지 않음
+rc      저장된 위치로 커서를 되돌림
+rf      문자열 파일 이름을 되돌린다
+RF      터미널로부터의 입력을 요구한다
+RI      커서를 오른쪽 %1 문자만큼 옮긴다.
+rp      %2번 문자%1을 반복한다.
+rP      문자가 보내진 후에 replace mode에서 패딩한다.
+rs      문자열을 재설정한다.
+RX      XON/XOFF flow control을 끈다.
+sa      %1 %2 %3 %4 %5 %6 %7 %8 %9 속성을 설정한다.
+SA      자동 여백 사용
+sc      커서 위치 저장
+se      standout mode 끝내기
+sf      한 라인 일반 스크롤 
+SF      %1 라인 일반 스크롤
+so      standout mode 시작
+sr      역 스크롤
+SR      %1 라인 역 스크롤
+st      현제 열에서 모든 행에 도표 작성기 멈춤을 설정한다.
+SX      XON/XOFF flow control을 끈다.
+ta      다음 하드웨어 텝으로 옮긴다.
+tc      다른 앤트리에서 터미널 설명을 입력한다.
+te      커서 움직임을 사용하는 프로그램을 종료한다.
+ti      커서 움직임을 사용하는 프로그램을 시작한다.
+ts      커서를 상태 표시줄의 %1열로 이동한다.uc 커서 아래에 있는 문자에 밑줄 치고 커서를 오른쪽으로 이동한다.
+ue      밑줄치기를 끝낸다.
+up      커서를 1라인 위로.
+UP      커서를 %1라인 위로.Cursor up %1 lines
+us      밑줄치기 시작
+vb      볼 수 있는 벨
+ve      일반 커서 보이기
+vi      커서 감추기
+vs      Standout cursor
+wi      라인 %1부터 %2까지 그리고 %3열부터 %4열까지 윈도우 설정
+XF      ^S가 없을 때 XOFF 문자 
+</PRE>
+
+<P>
+
+제어 코드와 문자열 기능을 설정하는 몇 가지 방법이 있다:
+<P>
+
+
+<P>
+
+A '^x' 는 Control-x를 뜻한다.  Control-A는 1 decimal과 같다.
+<P>
+
+\x 는 특별 코드를 뜻한다.  x 는 아래 문자들 중 하나가 될 수 있다:
+<DL COMPACT><DT><DD>
+E Escape (27)
+<BR>
+
+n Linefeed (10)
+<BR>
+
+r Carriage return (13)
+<BR>
+
+t Tabulation (9)
+<BR>
+
+b Backspace (8)
+<BR>
+
+f Form feed (12)
+<BR>
+
+0 Null character.  A \xxx 는 8진수 xxx로 쓴다.
+</DL>
+
+<DL COMPACT>
+<DT>i<DD>
+매개 변수 하나씩 증가
+<DT>r<DD>
+매개 변수 하나의 능력
+<DT>+<DD>
+이 매개 변수에 다음 문자값을 더해서 이진 출력을 한다.
+<DT>2<DD>
+2의 영역에서 이 매개 변수를 ASCII 출력한다.
+<DT>d<DD>
+3의 영역에서 이 매개 변수를 ASCII 출력한다.
+<DT>%<DD>
+
+</DL>
+<P>
+
+이진 출력을 사용할땐, null 문자를 피해야한다. 왜냐하면 이것은 문자열을 끝내기 때문이다.
+도표 작성기가 매개 변수의 이진 출력이 가능하다면 도표 작성기 확장을 재설정 해아한다.
+<DL COMPACT>
+<DT>주의:<DD>
+위에 있는 매개 변수를 위한 매타 문자는 틀릴 수 있다. 이것들은 Minix termcap이기 때문에 Linux termcap에서 동작 하지 않을 수도 있다.
+</DL>
+<P>
+
+블룩 그림 문자는 세 개의 문자열 특성으로 쓸 수 있다.:
+<DL COMPACT>
+<DT>as<DD>
+선택 문자군 시작
+<DT>ae<DD>
+끝내기
+<DT>ac<DD>
+문자쌍.  컷 문자는 블록 그림 심볼의 이름이고 두번째는 그것의 정의이다.
+</DL>
+<P>
+
+아래 이름들이 사용가능 하다.:
+<P>
+<PRE>
++       right arrow (&gt;)
+,       left arrow (&lt;)
+.       down arrow (v)
+0       full square (#)
+I       latern (#)
+-       upper arrow (^)
+'       rhombus (+)
+a       chess board (:)
+f       degree (')
+g       plus-minus (#)
+h       square (#)
+j       right bottom corner (+)
+k       right upper corner (+)
+l       left upper corner (+)
+m       left bottom corner (+)
+n       cross (+)
+o       upper horizontal line (-)
+q       middle horizontal line (-)
+s       bottom horizontal line (_)
+t       left tee (+)
+u       right tee (+)
+v       bottom tee (+)
+w       normal tee (+)
+x       vertical line (|)
+~       paragraph (???)
+</PRE>
+
+<P>
+특성이 사라질 경우, 매개 변수 값은 커서에 의해 쓰이는 디폴트로 주어진다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+termcap">termcap</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+curses">curses</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+terminfo">terminfo</A></B>(5)
+
+
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Boolean Capabilities</A><DD>
+<DT><A HREF="#lbAE">Numeric Capabilities</A><DD>
+<DT><A HREF="#lbAF">String Capabilities</A><DD>
+</DL>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

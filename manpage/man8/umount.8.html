@@ -1,0 +1,153 @@
+<HTML><HEAD><TITLE>Manpage of MOUNT</TITLE>
+</HEAD><BODY>
+<H1>MOUNT</H1>
+Section: 리눅스 프로그래머 매뉴얼 (8)<BR>Updated: 1996년 7월 5일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+umount - 화일 시스템을 언마운트
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>umount [-hV]</B>
+
+<P>
+
+<B>umount -a [-nv] [-t </B><I>화일시스템유형</I><B>]</B>
+
+<BR>
+
+<B>umount [-nv] </B><I>장치 </I><B>|</B><I> 디렉토리 </I><B>[...]</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>umount</B>
+
+명령은 화일 계층구조로부터 화일 시스템을 떼어낸다. 화일 시스템 지정방법은
+마운트된 디렉토리를 명시하거나 또는 직접 장치명을 적어주는 방법 2 가지가
+있다.
+<P>
+만약 사용 중(`busy') - 예를 들어 화일 시스템 상의 화일이 열려 있거나 어떤
+프로세스가 작업 디렉토리로 사용중이거나 그 위에 있는 스왑 화일이 사용중-인
+경우에는 언마운트시킬 수 없다는 것을 명심하라.
+또는 
+<B>umount</B>
+
+명령 자체가 libc 를 열고 libc가 예를 들어 로케일(locale)화일을 여는 경우도
+생각해볼 수 있다.
+<P>
+<B>umount</B>
+
+명령에 대한 옵션은 다음과 같다:
+<DL COMPACT>
+<DT><B>-V</B>
+
+<DD>
+버전을 출력하고 종료한다.
+<DT><B>-h</B>
+
+<DD>
+도움말 메세지를 출력하고 종료한다.
+<DT><B>-v</B>
+
+<DD>
+자세한 출력 모드.
+<DT><B>-n</B>
+
+<DD>
+<I>/etc/mtab</I>
+
+를 갱신하지 않고 언마운트한다.
+<DT><B>-a</B>
+
+<DD>
+<I>/etc/mtab</I>
+
+화일에 명시한 모든 화일 시스템을 언마운트한다.
+<DT><B>-t</B><I> 화일시스템유형</I>
+
+<DD>
+특정 화일시스템유형에만 적용하도록 지정한다. 둘 이상의 유형에 대해서는
+콤마(,)로 구분한다. 화일 시스템 목록에 대해서는 
+<B>no</B>
+
+를 접두사로 씀으로써 그것을 제외시킬 수도 있다.
+<P>
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>루프 장치(THE LOOP DEVICE)</H2>
+
+<B>umount</B>
+
+명령은 만약 사용 중인 루프 장치가 있다면 그것을 해제한다.
+<I>/etc/mtab</I>
+
+에 `loop=...'이라는 옵션을 찾을 때 그렇게 한다.
+자동으로 해제되지 않은 장치에 대해서는 `losetup -d'를 사용한다.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+losetup">losetup</A></B>(8)
+
+를 읽어보기 바란다.
+<P>
+<P>
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 화일</H2>
+
+<I>/etc/mtab</I>
+
+마운트된 화일 시스템에 대한 테이블
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>참고</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+umount">umount</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+losetup">losetup</A></B>(8).
+
+<P>
+<A NAME="lbAH">&nbsp;</A>
+<H2>HISTORY</H2>
+
+<B>umount</B>
+
+명령은 AT&amp;T UNIX 버전 6 에서 생겼다.
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">루프 장치(THE LOOP DEVICE)</A><DD>
+<DT><A HREF="#lbAF">관련 화일</A><DD>
+<DT><A HREF="#lbAG">참고</A><DD>
+<DT><A HREF="#lbAH">HISTORY</A><DD>
+<DT><A HREF="#lbAI">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

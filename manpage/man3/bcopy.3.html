@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>Manpage of BCOPY</TITLE>
+</HEAD><BODY>
+<H1>BCOPY</H1>
+Section: LINUX Programmer's Manual (3)<BR>Updated: April 9, 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+bcopy - 바이트 문자열 복사 
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;</B>
+
+<B>void bcopy (const void *</B><I>src</I><B>, void *</B><I>dest</I><B>, size_t </B><I>n</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<BR>&nbsp;<B>bcopy()</B>&nbsp;함수는&nbsp;소스&nbsp;스트링&nbsp;<I>src</I>의&nbsp;처음&nbsp;<I>n</I>&nbsp;바이트를
+<BR>&nbsp;옮기고자&nbsp;하는&nbsp;스트링&nbsp;<I>dest</I>로&nbsp;복사한다.&nbsp;<I>n</I>가&nbsp;0&nbsp;이면,&nbsp;
+복사하지 않는다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>bcopy()</B> 함수는 반환값이 없다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+4.3BSD.  This function is deprecated -- use
+<B>memcpy</B>
+
+in new programs.  
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+memccpy">memccpy</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memcpy">memcpy</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memmove">memmove</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strcpy">strcpy</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strncpy">strncpy</A></B>(3)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

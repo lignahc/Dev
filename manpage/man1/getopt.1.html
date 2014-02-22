@@ -1,0 +1,185 @@
+<HTML><HEAD><TITLE>Manpage of GETOPT</TITLE>
+</HEAD><BODY>
+<H1>GETOPT</H1>
+Section: User Commands  (1)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+<BR>BSD mandoc<BR>
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+
+
+<B>getopt</B>
+
+ - 명령행 옵션 분석
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>set -- `getopt optstring $*`</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Getopt</B>
+
+풀그림은 쉘 스크립트 파일안에서 그 쉘 스크립트의 명령행 옵션을 
+처리하고자 할 때 그것을 쉽게 처리할 수 있도록 하는데 사용된다.
+<I>optstring</I>은 그 쉘 스크립트의 명령행 옵션들이다
+(
+<A HREF="http://localhost/cgi-bin/man/man2html?3+getopt">getopt</A>(3)
+
+
+참조).
+<BR>
+
+이때, 콜론(:)이 오면, 그 앞에 있는 옵션은 그 옵션에 대한 
+공백문자가 있거나 공백문자로 구분하는 인자를 가지는 옵션으로 
+간주한다(아래 예제 참조).
+특수하게, 
+<B>--</B>
+
+옵션은 해당 스크립트 자체에 대한 옵션은 끝이 났음을 알리는 옵션이다.
+<BR>
+
+<B>Getopt</B>
+
+풀그림은 
+<B>--</B>
+
+다음에 오는 내용들은 그 스크립트의 옵션으로 간주하지 않고, 
+스크립트의 명령행 인자(<B>$1 $2</B> ...)로 간주해서 필요하다면, 
+그 인자에서 사용되는 옵션으로 처리할 수도 있다.
+<BR>
+
+이해를 쉽게 하기 위해 아래 예제를 살펴 보자.
+<A NAME="lbAE">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+다음 예제는 그 옵션만으로 사용되는 
+[a]
+
+와
+[b ]
+
+옵션과 
+[o ]
+
+옵션과 함께 이 옵션에 대한 자체적인 인자를 가지는 옵션을 
+처리하는 한 쉘 스크립트의 부분이다.
+<P>
+
+
+<BLOCKQUOTE>
+<PRE>
+set -- `getopt abo: $*`
+if test $? != 0
+then
+        echo 'Usage: ...'
+        exit 2
+fi
+for i
+do
+        case &quot;$i&quot;
+        in
+                -a|-b)
+                        flag=$i; shift;;
+                -o)
+                        oarg=$2; shift; shift;;
+                --)
+                        shift; break;;
+        esac
+done
+</PRE>
+</BLOCKQUOTE>
+
+<P>
+
+이상과 같이 작성되었을 경우에는 다음과 같은 명령행 명령이 사용될 수 있다:
+<P>
+
+
+<BLOCKQUOTE>
+<PRE>
+cmd -aoarg file file
+cmd -a -o arg file file
+cmd -oarg -a file file
+cmd -a -oarg -- file file
+</PRE>
+</BLOCKQUOTE>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+sh">sh</A>(1),
+
+
+<A HREF="http://localhost/cgi-bin/man/man2html?3+getopt">getopt</A>(3)
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>DIAGNOSTICS</H2>
+
+명령행에서 옵션이 잘못 지정되었을 경우에는 
+표준 오류 출력 장치(/dev/stderr)로 그 해당 오류 메시지를 
+출력한다. 
+<A NAME="lbAH">&nbsp;</A>
+<H2>HISTORY</H2>
+
+Henry Spencer가 Bell Labs manual page에서 일할 때 만들었다. 
+그래서, 이 풀그림의 사용법은 Bell version의 그것과 같은 형태를 취한다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>BUGS</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?3+getopt">getopt</A>(3)
+
+
+함수가 가지고 있는 벌레는 모두 가지고 있다. 이 풀그림이 이 함수를 사용하기 때문.
+<P>
+
+각종 인자들의 구분을 특수문자로 할 경우, 그것의 
+구분이 눈으로는 구분되지 않는다(공백문자로 구분한 것과 
+같게 나타나기 때문). 만약 인자 구분을 특수문자로 
+했을 경우에는 오류를 발생할 수도 있다. 
+이것은 쉽게 발견되지 않는 오류이다. 참고할 것. 
+<P>
+
+오류 메시지의 처리는 쉘에서 표준 오류 출력 장치로 보내는 것보다, 
+쉘 스크립트안에서 자체적으로 그에 맞는 오류 메시지를 출력하는 것이 
+바람직하다. 이것은 사용자가 표준 오류 출력 장치로 보내지는 
+메시지를 보지 못할 경우가 발생할 수도 있기 때문이고, 
+또한 각종 쉘에서 적당한 오류메시지를 정확하게 보낸다는 
+보장이 없기 때문이다.
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">EXAMPLE</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">DIAGNOSTICS</A><DD>
+<DT><A HREF="#lbAH">HISTORY</A><DD>
+<DT><A HREF="#lbAI">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

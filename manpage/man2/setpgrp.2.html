@@ -1,0 +1,78 @@
+<HTML><HEAD><TITLE>Manpage of GETPID</TITLE>
+</HEAD><BODY>
+<H1>GETPID</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1993년 7월 23일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+getpid, getppid - 프로세스 식별값(identification)을 얻는다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>pid_t getpid(void);</B>
+
+<BR>
+
+<B>pid_t getppid(void);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>getpid</B>는
+
+현재 프로세스의 프로세스 ID를 돌려준다. (이것은 유일한 임시 파일 이름을 만드는
+루틴에서 종종 사용된다.)
+<P>
+<B>getppid</B>능
+
+현재 프로세스의 부모 프로세스 ID를 돌려준다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>호환</H2>
+
+POSIX, BSD 4.3, SVID
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+exec">exec</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+kill">kill</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+mkstemp">mkstemp</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+tmpnam">tmpnam</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+tempnam">tempnam</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+tmpfile">tmpfile</A></B>(3)
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>역자</H2>
+
+최윤용 &lt;<A HREF="mailto:markboy@secsm.org">markboy@secsm.org</A>&gt;, 2000년 4월 22일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">호환</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+<DT><A HREF="#lbAG">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

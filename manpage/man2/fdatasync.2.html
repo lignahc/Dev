@@ -1,0 +1,122 @@
+<HTML><HEAD><TITLE>Manpage of FDATASYNC</TITLE>
+</HEAD><BODY>
+<H1>FDATASYNC</H1>
+Section: 리눅스 프로그래머 메뉴얼 (2)<BR>Updated: 1996년 4월 13일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+fdatasync - 파일의 디스크에 있는 in-core데이타를 동기화한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>#ifdef _POSIX_SYNCHRONIZED_IO</B>
+
+<P>
+<B>int fdatasync(int </B><I>fd</I><B>);</B>
+
+<P>
+<B>#endif</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>fdatasync</B>
+
+는 시스템 호출이 반환되기 전에 디스크에서 파일의 모든 데이파버퍼를 플러쉬한다.
+<B>fsync</B>
+
+와 비슷하지만, 액세스시간과 같은 메타데이타 업데이트를 요구하진 않는다.
+
+액세스 데이타베이스나 로그파일이 작은 데이타 조각을 기록하고, 곧이어 쓰여진 데이
+타을 확인하기 위해
+<B>fsync</B>
+
+를 호출하는 응용프로그램은 하드디스크에 물리적으로 저장된다. 운나쁘게도,
+<B>fsync</B>
+
+가 상상 두개의 기록장치를 초기화 할 것이다: 하나는 새로 기록된 데이타를 위함이고,
+또다른 하나는 inode에 저장된 수정시간을 업데이트하기 위함이다. 수정시간이 트랜젝션 
+개념의 한 부분이 아니라면 
+<B>fdatasync</B>
+
+는 불필요한 디스크기록장치 inode를 피하기 위해 사용된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0을 반환한다. 실패시, -1을 반환하고, 
+<I>errno</I>
+
+는 적절히 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+<I>fd</I>
+
+는 기록을 위해 열린 유효 파일 디스크립터이다.
+<DT><B>EROFS</B>, <B>EINVAL</B>
+
+<DD>
+<I>fd</I>
+
+는 동기화를 지원하지 않는 특별한 파일을 경계짓는다.is bound to a special file which does not support synchronization.
+<DT><B>EIO</B>
+
+<DD>
+에러가 동기화하는 동안 발생했다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>버그</H2>
+
+현재(리눅스 2.0.23)
+<B>fdatasync</B>
+
+는
+<B>fsync</B>
+
+와 같다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+POSIX1b (formerly POSIX.4)
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fsync">fsync</A></B>(2),
+
+B.O. Gallmeister, POSIX.4, O'Reilly, pp. 220-223 and 343.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 26일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">버그</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

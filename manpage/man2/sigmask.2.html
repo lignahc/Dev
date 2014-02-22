@@ -1,0 +1,134 @@
+<HTML><HEAD><TITLE>Manpage of SIGBLOCK</TITLE>
+</HEAD><BODY>
+<H1>SIGBLOCK</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: 31 August 1995<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+sigblock, siggetmask, sigsetmask, sigmask - 시그날 마스크 조작하기
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/signal.h">signal.h</A>&gt;</B>
+
+<P>
+<B>int sigblock(int </B><I>mask</I><B>);</B>
+
+<P>
+<B>int siggetmask(void);</B>
+
+<P>
+<B>int sigsetmask(int </B><I>mask</I><B>);</B>
+
+<P>
+<B>int sigmask(int </B><I>signum</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이 인터페이스는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sigprocmask">sigprocmask</A></B>(2).
+
+에 의해 진부한 것이 되어버렸다.
+The 
+<B>sigblock</B>
+
+시스템 호출은
+<I>mask</I>
+
+로 분류되는 시그널을 현재 전송되는 것이 막혀있는 신호군에 첨가한다.
+<P>
+
+<B>sigsetmask</B>
+
+시스템 호출은 막힌 신호군 전체를 
+<I>mask</I>.
+
+로 구분되는 새로운 신호로 바꾼다.
+<I>mask</I>
+
+에서의 전송 비트가 1이면 신호가 막힌다.
+<P>
+
+현재의 막혀있는 신호군은 
+<B>siggetmask</B>.
+
+을 사용함으로써 얻을 수 있다.
+<P>
+
+<B>sigmask</B>
+
+매크로는 주어진
+<I>signum</I>.
+
+를 위한 mask를 만드는데 제공된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>siggetmask</B>
+
+는 현재 mask된 신호들을 반환한다.
+
+<B>sigsetmask </B>
+
+와
+<B>sigblock</B>
+
+는 이전 mask된 신호를 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>주의</H2>
+
+어떤 시스템 해더 파일이 포함되기 전에
+<B>_BSD_SOURCE</B>
+
+가 정의되었을 때만 이 함수의 기본형을 사용할 수 있다. 
+<P>
+
+<B>SIGKILL</B>
+
+나
+<B>SIGSTOP</B>
+
+를 막을 순 없다.
+- 이 제한은 시스템에 강요되었다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+4.4BSD. 이 함수 호출은 BSD 4.3에서 나타나고, 외면 당했다.
+새 프로그램에선 POSIX signal facilities를 사용한다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+kill">kill</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sigprocmask">sigprocmask</A></B>(2),
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 27일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">주의</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

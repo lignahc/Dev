@@ -1,0 +1,128 @@
+<HTML><HEAD><TITLE>Manpage of APM</TITLE>
+</HEAD><BODY>
+<H1>APM</H1>
+Section: Linux Programmer's Manual (1)<BR>Updated: 10 Jan 1996<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+apm - query Advanced Power Management (APM) BIOS
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>apm [ -vVmsS ]</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>apm</B>
+
+은
+<I>/proc/apm</I>
+
+을 읽어들여서 사람이 읽을수 있는 형식으로 결과를 출력한다. 주로 배터리의
+상황 정보가 제공되므로, 이 명령은 호환성있는 APM 바이오스가 있는 랩탑
+에서 유용하다.
+<B>apm</B>
+
+은 또한 기계를 대기나 정지 상태로 만들 수 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-V, --version</B>
+
+<DD>
+<B>apm</B>
+
+프로그램의 버전을 출력하고 즉시 종료한다.
+<DT><B>-v, --verbose</B>
+
+<DD>
+APM 바이오스의 버전과 리눅스 APM 드라이버의 버전에 대한 정보를 출력한다.
+<DT><B>-m, --minutes</B>
+
+<DD>
+남은 시간은 시간:분 의 형식 대신 분으로 출력한다.
+<DT><B>-s, --suspend</B>
+
+<DD>
+가능하다면 기계를 정지 상태로 만든다.
+<DT><B>-S, --standby</B>
+
+<DD>
+가능하다면 기계를 대기 상태로 만든다.
+<DT><B>-i, --ignore</B>
+
+<DD>
+시스템이 AC 파워를 이용하고 있을때 시스템에서 발생하는 APM 정지와 대기 
+이벤트를 무시하도록 한다. 이것은 랩탑을 가지고 있으며 AC 전력이 아니라
+배터리를 이용할때만 APM 이벤트가 발생하기를 원하는 사용자에게 유용할 것이다.
+<DT><B>-n, --noignore</B>
+
+<DD>
+시스템이 AC파워를 이용하고 있을때 시스템에서 발생하는 APM 정지와 대기
+이벤트를 무시하지
+<B>않도록</B>
+
+한다. 이것이 초기 상태이다. 이 옵션은 proir &quot;apm -i&quot; 호출을 되돌리기 위한
+방법으로 제공된다.
+<DT></DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>버그</H2>
+
+<DD>
+이 프로그램은 1.3.57 이후의 커널이 필요하다. 이 프로그램은 더 오래된 커널
+이나 APM 패치로서는 동작하지 않을 것이다. 왜나하면 
+<I>/proc/apm</I>
+
+의 형식이 급격이 바뀌었기 때문이다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>파일</H2>
+
+<I>/proc/apm</I>
+
+<BR>
+
+<I>linux/drivers/char/apm_bios.c</I>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>저자</H2>
+
+이 프로그램은 Rik Faith (<A HREF="mailto:faith@cs.unc.edu">faith@cs.unc.edu</A>) 에 의해 작성되었고 GNU General
+Public License 하에서 자유롭게 배포될 수 있다. 이 프로그램에 대해 절대적인
+보장은 없다. 현재의 관리자는 Avery Pennarun (<A HREF="mailto:apenwarr@worldvisions.ca">apenwarr@worldvisions.ca</A>) 이다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+xapm">xapm</A></B>(1), <A HREF="http://localhost/cgi-bin/man/man2html?8+apmd">apmd</A><B>(8)</B>
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+서성용 &lt;<A HREF="mailto:freepooh@nownuri.net">freepooh@nownuri.net</A>&gt;, 2000년 5월 2일
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">버그</A><DD>
+<DT><A HREF="#lbAG">파일</A><DD>
+<DT><A HREF="#lbAH">저자</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

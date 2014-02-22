@@ -1,0 +1,105 @@
+<HTML><HEAD><TITLE>Manpage of CAPGET</TITLE>
+</HEAD><BODY>
+<H1>CAPGET</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: 9 Sept 1999<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+capget, capset - 프로세스 기능의 설정/소유
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#undef _POSIX_SOURCE</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/capability.h">sys/capability.h</A>&gt;</B>
+
+<P>
+<B>int capget(cap_user_header_t </B><I>header</I><B>, cap_user_data_t </B><I>data</I><B>);.sp</B>
+
+<B>int capset(cap_user_header_t </B><I>header</I><B>, const cap_user_data_t </B><I>data</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+리눅스 2.2의 경우, 슈퍼유저 (root)의 권한이 분리되었다.
+모든 프로세스는 현재 사용하고 있다고 여겨지는 유효한 기능군을 가지고 있다.
+모든 프로세스는 상속할 수 있는 기능군 또한 가지고 있다. 이것들은 <A HREF="http://localhost/cgi-bin/man/man2html?2+exedve">exedve</A>(2)와 유효하게 하거나 상속할 수 있게 하는 허가된 기능을 거치기도 한다.
+<P>
+
+이 두 함수는 기능을 소유하거나 설정하기 위한 raw kernel interface이다. 이 시스템은 리눅스에 특화 되어 있을 뿐만 아니라, 커널API 역시 이 함수를 바꾸고 사용한다.  (특히 
+<B>cap_user_*_t</B>
+
+타입의 포멧에서) 이것은 각 커널 개정판을 바꾸는 주제이다.
+<P>
+이 인터페이스들을 어플리케이션에서 사용할 수 있다면, 이식 인터페이스는
+<I><A HREF="http://localhost/cgi-bin/man/man2html?3+cap_set_proc">cap_set_proc</A></I>(3)
+
+와
+<I><A HREF="http://localhost/cgi-bin/man/man2html?3+cap_get_proc">cap_get_proc</A></I>(3);
+
+이다.
+만약 리눅스 확장을 어플리케이션에서 사용하고 자한다면, easier-to-use interfaces
+<I><A HREF="http://localhost/cgi-bin/man/man2html?3+capsetp">capsetp</A></I>(3)
+
+와 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?3+capgetp">capgetp</A></I>(3).
+
+을 사용해야 한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공하면, 0이 반환되고, 에러시에는 -1이 반환된다.
+<I>errno</I>
+
+적절히 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><FONT SIZE="-1"><B>EINVAL</B></FONT>
+<DD>
+독립변수 중 하나가 무효화 되었다.
+<DT><FONT SIZE="-1"><B>EPERM</B></FONT>
+<DD>
+승인된 군에 기능을 첨가하려 했거나, 승인된 군에 없는 유효군이나, 상속가능군에 있는 기능을 설정하려 함
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>자세한 정보</H2>
+
+이식 인터페이스는 
+<B>libcap</B>
+
+라이브러리에 의해 제공되고, 아래에서 구할 수 있다:
+<BR>
+
+<B><A HREF="ftp://linux.kernel.org/pub/linux/libs/security/linux-privs">ftp://linux.kernel.org/pub/linux/libs/security/linux-privs</A></B>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 29일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">자세한 정보</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

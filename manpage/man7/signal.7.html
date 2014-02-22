@@ -1,0 +1,157 @@
+<HTML><HEAD><TITLE>Manpage of SIGNAL</TITLE>
+</HEAD><BODY>
+<H1>SIGNAL</H1>
+Section: 리눅스 프로그래머 매뉴얼 (7)<BR>Updated: 1996년 4월 14일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+signal - 존재하는 시그널의 목록
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+리눅스는 아래 나열된 시그널을 지원한다. 몇몇 개의 시그널 번호는 
+아키텍쳐 의존적이다. 먼저 POSIX.1에서 설명하는 시그널이다.
+<P>
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD>시그널</TD><TD ALIGN=center>번호</TD><TD ALIGN=center>행동</TD><TD>설명<BR></TD></TR>
+<TR VALIGN=top><TD><HR></TD><TD><HR></TD><TD><HR></TD><TD><HR></TD></TR>
+<TR VALIGN=top><TD><B>SIGINT</B></TD><TD ALIGN=center>&nbsp;2</TD><TD ALIGN=center>A</TD><TD>키보드로부터의 인터럽트(interrupt) 시그널<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGQUIT</B></TD><TD ALIGN=center>&nbsp;3</TD><TD ALIGN=center>C</TD><TD>키보드로부터의 종료(quit) 시그널<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGILL</B></TD><TD ALIGN=center>&nbsp;4</TD><TD ALIGN=center>C</TD><TD>잘못된 명령어(Illegal Instruction)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGABRT</B></TD><TD ALIGN=center>&nbsp;6</TD><TD ALIGN=center>C</TD><TD><I><A HREF="http://localhost/cgi-bin/man/man2html?3+abort">abort</A></I>(3)로부터의 중단(abort) 시그널<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGFPE</B></TD><TD ALIGN=center>&nbsp;8</TD><TD ALIGN=center>C</TD><TD>부동 소수점 예외(exception)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGKILL</B></TD><TD ALIGN=center>&nbsp;9</TD><TD ALIGN=center>AEF</TD><TD>kill 시그널<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGSEGV</B></TD><TD ALIGN=center>11</TD><TD ALIGN=center>C</TD><TD>잘못된 메모리 참조<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGPIPE</B></TD><TD ALIGN=center>13</TD><TD ALIGN=center>A</TD><TD>깨진 파이프: 수신자가 없는 파이프에 쓰기<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGALRM</B></TD><TD ALIGN=center>14</TD><TD ALIGN=center>A</TD><TD><I><A HREF="http://localhost/cgi-bin/man/man2html?2+alarm">alarm</A></I>(2)으로부터의 타이머 시그널<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGTERM</B></TD><TD ALIGN=center>15</TD><TD ALIGN=center>A</TD><TD>종료(termination) 시그널<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGUSR1</B></TD><TD ALIGN=center>30,10,16</TD><TD ALIGN=center>A</TD><TD>사용자 정의 시그널 1<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGUSR2</B></TD><TD ALIGN=center>31,12,17</TD><TD ALIGN=center>A</TD><TD>사용자 정의 시그널 2<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGCHLD</B></TD><TD ALIGN=center>20,17,18</TD><TD ALIGN=center>B</TD><TD>자식 프로세스가 중단 또는 종료<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGCONT</B></TD><TD ALIGN=center>19,18,25</TD><TD ALIGN=center></TD><TD>중단되었다면 재개(continue)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGSTOP</B></TD><TD ALIGN=center>17,19,23</TD><TD ALIGN=center>DEF</TD><TD>프로세스 중단<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGTSTP</B></TD><TD ALIGN=center>18,20,24</TD><TD ALIGN=center>D</TD><TD>터미널에서의 중단 시그널<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGTTIN</B></TD><TD ALIGN=center>21,21,26</TD><TD ALIGN=center>D</TD><TD>백그라운드 프로세스에 대한 터미널 입력<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGTTOU</B></TD><TD ALIGN=center>22,22,27</TD><TD ALIGN=center>D</TD><TD>백그라운드 프로세스에 대한 터미널 출력<BR></TD></TR>
+</TABLE>
+
+
+다음은 POSIX.1의 시그널은 아니지만 SUSv2에서 설명하고 있는 것이다.
+<P>
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD>시그널</TD><TD ALIGN=center>번호</TD><TD ALIGN=center>행동</TD><TD>설명<BR></TD></TR>
+<TR VALIGN=top><TD><HR></TD><TD><HR></TD><TD><HR></TD><TD><HR></TD></TR>
+<TR VALIGN=top><TD><B>SIGPOLL</B></TD><TD ALIGN=center></TD><TD ALIGN=center>A</TD><TD>폴링(poll) 이벤트 (Sys V). SIGIO와 같다.<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGPROF</B></TD><TD ALIGN=center>27,27,29</TD><TD ALIGN=center>A</TD><TD>프로파일링(profiling) 타이머 시그널<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGSYS</B></TD><TD ALIGN=center>12,-,12</TD><TD ALIGN=center>C</TD><TD>루틴에 잘못된 인자 (SVID)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGTRAP</B></TD><TD ALIGN=center>5</TD><TD ALIGN=center>C</TD><TD>trace/breakpoint 트랩<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGURG</B></TD><TD ALIGN=center>16,23,21</TD><TD ALIGN=center>B</TD><TD>소켓에 대한 긴급(urgent) 상황 (4.2 BSD)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGVTALRM</B></TD><TD ALIGN=center>26,26,28</TD><TD ALIGN=center></TD><TD>가상 알람 클럭 (4.2 BSD)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGXCPU</B></TD><TD ALIGN=center>24,24,30</TD><TD ALIGN=center>C</TD><TD>CPU 시간 제한 초과 (4.2 BSD)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGXFSZ</B></TD><TD ALIGN=center>25,25,31</TD><TD ALIGN=center>C</TD><TD>파일 크기 제한 초과 (4.2 BSD)<BR></TD></TR>
+</TABLE>
+
+
+(SIGSYS, SIGXCPU, SIGXFSZ와 몇몇 아키텍쳐에서는 SIGBUS의 기본 행동은 SUSv2에서 
+C(종료와 코어 덤프)로 나와있지만 현재 리눅스(2.3.27)에서 까지는 A(종료)이다)
+
+다음은 여러 가지 다른 시그널.
+<P>
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD>시그널</TD><TD ALIGN=center>번호</TD><TD ALIGN=center>행동</TD><TD>설명<BR></TD></TR>
+<TR VALIGN=top><TD><HR></TD><TD><HR></TD><TD><HR></TD><TD><HR></TD></TR>
+<TR VALIGN=top><TD><B>SIGEMT</B></TD><TD ALIGN=center>7,-,7</TD><TD ALIGN=center></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGSTKFLT</B></TD><TD ALIGN=center>-,16,-</TD><TD ALIGN=center></TD><TD>보조프로세서의 스택 오류<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGIO</B></TD><TD ALIGN=center>23,29,22</TD><TD ALIGN=center>A</TD><TD>현재 I/O가 가능 (4.2 BSD)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGCLD</B></TD><TD ALIGN=center>-,-,18</TD><TD ALIGN=center></TD><TD>SIGCHLD와 같다.<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGPWR</B></TD><TD ALIGN=center>29,30,19</TD><TD ALIGN=center>A</TD><TD>전원 문제 (System V)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGINFO</B></TD><TD ALIGN=center>29,-,-</TD><TD ALIGN=center></TD><TD>SIGPWR와 같다.<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGLOST</B></TD><TD ALIGN=center>-,-,-</TD><TD ALIGN=center>A</TD><TD>파일 락(lock) 손실<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGWINCH</B></TD><TD ALIGN=center>28,28,20</TD><TD ALIGN=center>B</TD><TD>윈도우 크기 변경 시그널 (4.3 BSD, Sun)<BR></TD></TR>
+<TR VALIGN=top><TD><B>SIGUNUSED</B></TD><TD ALIGN=center>-,31,-</TD><TD ALIGN=center>A</TD><TD>사용되지 않는 시그널 (SIGSYS가될 것이다)<BR></TD></TR>
+</TABLE>
+
+
+(여기서 -는 시그널이 없음을 나타낸다; 세 가지 값이 있다. 첫번째 것은
+대개 alpha와 sparc에서, 중간의 것은 i386, ppc와 sh에서, 마지막 것은
+mips에서 유효한 값이다. 29번 시그널은 alpha에서는
+<B>SIGINFO</B> / <B>SIGPWR</B>이지만
+
+sparc에서는
+<B>SIGLOST</B>이다.)
+
+<P>
+
+&quot;행동&quot; 컬럼의 문자는 다음과 같은 의미이다:
+<DL COMPACT>
+<DT>A<DD>
+기본 행동이 프로세스를 종료하는 것이다.
+<DT>B<DD>
+기본 행동이 시그널을 무시하는 것이다.
+<DT>C<DD>
+기본 행동이 프로세스를 종료하고 코어를 덤프한다.
+<DT>D<DD>
+기본 행동이 프로세스를 멈추는 것이다.
+<DT>E<DD>
+핸들러를 둘 수 없는 시그널이다.
+<DT>F<DD>
+무시할 수 없는 시그널이다.
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>호환</H2>
+
+POSIX.1
+<A NAME="lbAE">&nbsp;</A>
+<H2>버그</H2>
+
+<B>SIGIO</B>와
+
+<B>SIGLOST</B>는
+
+같은 값을 갖는다.
+후자는 커널 소스에서 주석 처리되었지만, 몇몇 소프트웨어의 
+프로세스는 여전히 29번 시그널을 
+<B>SIGLOST</B>로
+
+생각한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+kill">kill</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+kill">kill</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+setitimer">setitimer</A></B>(2)
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>역자</H2>
+
+임종균 &lt;<A HREF="mailto:hermes44@secsm.org">hermes44@secsm.org</A>&gt;, 2000년 4월 21일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">호환</A><DD>
+<DT><A HREF="#lbAE">버그</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+<DT><A HREF="#lbAG">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,65 @@
+<HTML><HEAD><TITLE>Manpage of STRNLEN</TITLE>
+</HEAD><BODY>
+<H1>STRNLEN</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1999년 6월 25일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+strnlen - 고정 길이 문자열의 길이를 결정한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;</B>
+
+<B>size_t strnlen (const char *</B><I>s</I><B>, size_t </B><I>maxlen</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>strnlen</B> 함수는 끝문자인 '\0'을 포함하지 않고 대체로 <I>maxlen</I>인
+<I>s</I>가 가리키는 문자열에 있는 문자들의 수를 반환한다.
+이렇게 되면, <B>strnlen</B> 함수는  <I>s</I>에서 처음 <I>maxlen</I> 문자들만
+보며 결코 <I>s+maxlen</I>를 넘지 않는다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>strnlen</B> 함수는 만일 문자열이 <I>maxlen</I>보다 작다면 <I>strlen(s)</I>를
+반환하며, 만일 <I>s</I>가 가리키고 있는 처음 <I>maxlen</I> 문자들 사이에 '\0' 문자가 없다면 <I>maxlen</I>를 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+이 함수는 GNU 확장이다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+strlen">strlen</A></B>(3)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 2월 24일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

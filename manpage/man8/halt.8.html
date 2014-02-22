@@ -1,0 +1,117 @@
+<HTML><HEAD><TITLE>Manpage of HALT,REBOOT</TITLE>
+</HEAD><BODY>
+<H1>HALT,REBOOT</H1>
+Section: Linux System Administrator's Manual (8)<BR>Updated: December 10, 1995<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+halt, reboot - 시스템 종료
+
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>/sbin/halt</B>
+
+[<B>-n</B>]
+
+[<B>-w</B>]
+
+[<B>-d</B>]
+
+[<B>-f</B>]
+
+<BR>
+
+<B>/sbin/reboot</B>
+
+[<B>-n</B>]
+
+[<B>-w</B>]
+
+[<B>-d</B>]
+
+[<B>-f</B>]
+
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Halt</B>명령은 <B>/var/log/wtmp</B> 파일에 시스템 종료 기록을 남기고, 
+시스템 종료나 리부팅 작업을 한다. 
+만약 runlevel이 <B>0</B>이나 <B>6</B>이 아닌 상태의 시스템에서 
+<I>halt</I>나 <I>reboot</I> 명령이 사용되면, <I><A HREF="http://localhost/cgi-bin/man/man2html?8+shutdown">shutdown</A>(8)</I> 명령이 
+호출된다.(<B>-h</B>나 <B>-r</B> 옵션 기능을 함)
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>-n</B><DD>
+리부트나, 종료 전에 sync(?) 않음.
+<DT><B>-w</B><DD>
+실질적으로 리부트나 종료는 하지 않지만, wtmp 기록은 남김.
+(<B>/var/log/wtmp</B> 파일에).
+<DT><B>-d</B><DD>
+wtmp 파일에 기록을 남기지 않음. <B>-n</B> 옵션은 <B>-d</B> 옵션을 동반함.
+<DT><B>-f</B><DD>
+강제로 halt나, reboot함, shutdown을 호출하지 않음.
+
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>DIAGNOSTICS</H2>
+
+만약 슈퍼유저가 아니면, `must be superuser' 메시지가 보인다.
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>NOTES</H2>
+
+이전 <B>sysvinit</B> 판에서는 어떠한 상태에서도 곧바로 
+<I>reboot</I>, <I>halt</I>를 호출 할 수 없었다. 
+이번 판부터는 시스템의 runlevel이 1-5 값을 가지면, 
+<I>halt</I>와 <I>reboot</I>는 <I>shutdown</I>을 호출 한다.
+<P>
+
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Miquel van Smoorenburg, <A HREF="mailto:miquels@cistron.nl">miquels@cistron.nl</A>
+
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?8+shutdown">shutdown</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?1+init">init</A>(1).
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">DIAGNOSTICS</A><DD>
+<DT><A HREF="#lbAG">NOTES</A><DD>
+<DT><A HREF="#lbAH">AUTHOR</A><DD>
+<DT><A HREF="#lbAI">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

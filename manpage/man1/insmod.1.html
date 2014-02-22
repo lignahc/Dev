@@ -1,0 +1,156 @@
+<HTML><HEAD><TITLE>Manpage of INSMOD</TITLE>
+</HEAD><BODY>
+<H1>INSMOD</H1>
+Section: 리눅스 모듈 지원 (1)<BR>Updated: 1996년 12월 26일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+insmod - 로드 가능한 커널 모듈을 설치
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>insmod</B>
+
+[ -fkmpsxXv ] [ -o module_name ] object_file [ symbol=value ... ]
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>Insmod</B>
+
+는 로드 할 수 있는 모듈을 실행중인 커널에 설치한다.
+<P>
+
+<B>Insmod</B>
+
+는 커널에서 제출한 외부 심벌 표로부터 모든 심벌을 분석함으로써
+모듈을 실행중인 커널에 링크하려고 한다.
+<P>
+
+만약 오브젝트 파일의 이름이 확장자가 없이 주어졌다면,
+<B>insmod</B>
+
+는 어떤 공통의 기본 디렉토리에서 그것을 찾을 것이다.
+이 기본값을 무시하기 위해 MODPATH 환경 변수를 사용할 수 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+<DL COMPACT>
+<DT><I>-f</I>
+
+<DD>
+현재 실행중인 커널과 모듈이 컴파일된 커널의 버전이 다르더라도 모듈을 로드한다.
+<DT><I>-k</I>
+
+<DD>
+모듈에 auto-clean 플래그를 설정한다.
+이 플래그는 <B><A HREF="http://localhost/cgi-bin/man/man2html?8+kerneld">kerneld</A></B>(8)에 의해 모듈이 일정 시간동안(보통 1분)
+사용되지 않을때 모듈을 삭제하기 위해 사용될 것이다.
+<DT><I>-m</I>
+
+<DD>
+로드 맵을 출력해서, 커널 패닉의 경우에 모듈을 디버그하기 쉽도록 한다.
+<DT><I>-o</I>
+
+<DD>
+소스 오브젝트 파일의 베이스 이름에서 이름을 끌어내지 않고,
+명시적으로 모듈의 이름을 호출한다.
+<DT><I>-p</I>
+
+<DD>
+모듈이 성공적으로 로드될 수 있는지 검사한다.
+이것은 모듈 경로에서 오브젝트 파일을 찾아내서 버전을 검사하고,
+심벌을 분석한다.
+<DT><I>-s</I>
+
+<DD>
+터미널 대신에 <B><A HREF="http://localhost/cgi-bin/man/man2html?3+syslog">syslog</A></B>(3) 에 모든것을 출력한다.
+<DT><I>-v</I>
+
+<DD>
+장황한 모드.
+<DT><I>-X, -x</I>
+
+<DD>
+각각 모듈의 외부 심벌의 전부를 전달하거나 전달하지 않는다.
+기본값은 심벌이 전달되는 것이다.
+이 옵션은 모듈이 그 자신이 조절되는 심벌 테이블을 명시적으로 전달하지 않을
+경우에 유효하고, 그래서 별로 중요하지 않다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H3>모듈 파라미터</H3>
+
+어떤 모듈은 그들의 작업을 맞추기 위해 로드시에 파라미터를 받아들인다.
+이러한 파라미터들은 대부분 I/O 포트와 IRQ 번호인데,
+기계마다 각각 값이 달라서 하드웨어로는 결정될 수 없다.
+<P>
+
+2.0 계열의 커널에 맞게 만들어진 모듈에서는, 정수나 문자의 어떤 포인터 심벌도
+파라미터로 취급되고 수정될 수 있다.
+커널 2.1 계열에 착수하면서, 심벌들은 파라미터로 명시적으로 표시되어서
+오직 특정값만이 바뀔 수 있다.
+게다가 타입 정보가 제공되어 로드시에 넣은 값을 검사할 수 있다.
+<P>
+
+정수의 경우에, 모든 값은 십진수이거나, 8진수 혹은 16진수이며, 예를 들면
+17, 021, 0x11 이다.
+배열 요소들은 지정된 순서이고 콤마에 의해 구분된다.
+요소들은 값을 생략함으로써 넘어갈 수 있다.
+<P>
+
+2.0 계열의 모듈에서는, 숫자로 시작하지 않는 값은 문자열로 간주된다.
+2.1 에서, 파라미터의 유형 정보가 값을 문자열로 간주할 것인지
+지시하게 되었다.
+만약 값이 큰따옴표 (<I>&quot;</I>)로 시작한다면, 문자열은 C 에서처럼 
+이스케이프 시퀀스와 나머지 모두로 취급된다.
+쉘 프롬프트에서 인용부호 자체는 쉘 해석에서 보호되어야 함을 주의하라.
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+rmmod">rmmod</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+modprobe">modprobe</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+depmod">depmod</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+lsmod">lsmod</A></B>(1),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ksyms">ksyms</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+modules">modules</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+genksyms">genksyms</A></B>(8), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+kerneld">kerneld</A></B>(8).
+<A NAME="lbAH">&nbsp;</A>
+<H2>역사</H2>
+
+모듈 지원은 처음으로
+Bas Laarhoven &lt;<A HREF="mailto:bas@vimec.nl">bas@vimec.nl</A>&gt; 의 Anonymous Initial Linux 버전을 보고
+착상했다.
+<BR>
+
+Jon Tombs &lt;<A HREF="mailto:jon@gtex02.us.es">jon@gtex02.us.es</A>&gt; 가 버전 0.99.14 작성
+<BR>
+
+Bjorn Ekwall &lt;<A HREF="mailto:bj0rn@blox.se">bj0rn@blox.se</A>&gt; 에 의해 확장됨
+<BR>
+
+Richard Henderson &lt;<A HREF="mailto:rth@tamu.edu">rth@tamu.edu</A>&gt; 에 의해 2.1.17로 업데이트됨
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+서성용 &lt;<A HREF="mailto:pooh@kldp.org">pooh@kldp.org</A>&gt; 2000년 6월 4일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">모듈 파라미터</A><DD>
+</DL>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">역사</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

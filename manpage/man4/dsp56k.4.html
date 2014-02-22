@@ -1,0 +1,117 @@
+<HTML><HEAD><TITLE>Manpage of DSP56K</TITLE>
+</HEAD><BODY>
+<H1>DSP56K</H1>
+Section: 특수 파일 (4)<BR>Updated: 2000년 3월 1일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+dsp56k - DSP56001 인터페이스 장치
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+#include &lt;<A HREF="file:/usr/include/asm/dsp56k.h">asm/dsp56k.h</A>&gt;
+
+<B>ssize_t read (int </B><I>fd</I><B>, void * </B><I>data</I><B>, size_t </B><I>length</I><B>);</B>
+<B>ssize_t write (int </B><I>fd</I><B>, void * </B><I>data</I><B>, size_t </B><I>length</I><B>);</B>
+<B>int ioctl (int </B><I>fd</I><B>, </B><FONT SIZE="-1"><B>DSP56K_UPLOAD</B></FONT><B>, struct dsp56k_upload *</B><I>program</I><B>);</B>
+<B>int ioctl (int </B><I>fd</I><B>, </B><FONT SIZE="-1"><B>DSP56K_SET_TX_WSIZE</B></FONT><B>, int </B><I>wsize</I><B>);</B>
+<B>int ioctl (int </B><I>fd</I><B>, </B><FONT SIZE="-1"><B>DSP56K_SET_RX_WSIZE</B></FONT><B>, int </B><I>wsize</I><B>);</B>
+<B>int ioctl (int </B><I>fd</I><B>, </B><FONT SIZE="-1"><B>DSP56K_HOST_FLAGS</B></FONT><B>, struct dsp56k_host_flags *</B><I>flags</I><B>);</B>
+<B>int ioctl (int </B><I>fd</I><B>, </B><FONT SIZE="-1"><B>DSP56K_HOST_CMD</B></FONT><B>, int </B><I>cmd</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>CONFIGURATION</H2>
+
+dsp56k 디바이스는 문자 디바이스로서 메이저 넘버(major number) 55, 마이너 넘버(minor number) 0을 지닌다. 
+<A NAME="lbAE">&nbsp;</A>
+<H2>설명</H2>
+
+모토롤라 DSP6001은 Atari Falcon030 호환 컴퓨터들로 모두 프로그램 가능한 24비트 디지털 시그널 프로세서이다. 
+<B>dsp56k</B> 특수 파일은 DSP56001을 제어하는데 사용되고, 두개의 방향의 핸드쉐이크된 호스트 포트를 사용하여 데이터를
+송수신한다. 
+<P>
+
+데이터 스트림을 시스널 프로세서에 보내려며, 장치에 write()를 사용하고, 처리된 데이터를 수신하는데 read()를 
+사용한다. 데이터는 호스트 측면에서  8, 16, 24, 또는 32 비트의 양에서 보내지거나 수신될 수 있다. 하지만, DSP56001에서는 
+24 비트의 양으로 항상 보여진다. 
+
+<P>
+
+다음의 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?2+ioctl">ioctl</A></I>(2)
+
+호출은 <B>dsp56k</B> 디바이스를 제어하는데 사용된다. 
+<DL COMPACT>
+<DT><B>DSP56K_UPLOAD</B><DD>
+는 DSP56001을 재설정하고, 프로그램을 업로드한다. 
+세번째 ioctl() 인수는 a <B>struct dsp56k_binary</B>에 대한 포인터가 되어야 하며, <B>bin</B>는 DSP56001 바이너리 프로그램
+의 포인터가,  <B>len</B>는 프로그램의 길이로서 설정되고, 24 비트의 단어들로 세어진다. 
+
+<DT><B>DSP56K_SET_TX_WSIZE</B>는<DD>
+이는 DSP56001로 한번에 전송된 바이트의 숫자이다. 이러한 데이터 양은 0바이트로 패딩(padding)되거나, 네이티브 24비트 
+데이터 포맷을 맞추도록 생략될 것이다. 
+
+
+<DT><B>DSP56K_SET_RX_WSIZE</B><DD>
+는 수신 단어 크기를 설정한다. 허용된 값들은 1에서 4까지의 범위를 지니고, 
+이는 DSP56001로 한번에 전송된 바이트의 숫자이다. 이러한 데이터 양은 0바이트로 패딩(padding)되거나, 
+DSP56001의 네이티브 24비트 데이터 포맷을 맞추도록 생략될 것이다. 
+
+<DT><B>DSP56K_HOST_FLAGS</B><DD>
+는 호스트 플래그를 읽고 쓰기한다. 호스트 플래그는 네개의 일반 목적 비트로서 호스트 컴퓨터와 DSP56001에 
+의해 읽혀질 수 있다. 비트 0과 1은 호스트에 의해 작성될 수 있으며, 비트 2와 3은 DSP56001에 의해 작성될 
+수 있다. 
+
+호스트 플래그에 액세스하려면, 세번째 ioctl() 인수는 <B>struct dsp56k_host_flags</B>의 
+포인터가 되어야 한다. 만일 비트 0 혹은 1이  <B>dir</B> 멤버내에 설정된다면, <B>out</B>에서 
+상응하는 비트가 호스트 플래그로 작성될 것이다. 모든 호스트 플래그의 상태는 <B>status</B>의 
+낮은 네개의 비트로 리턴될 것이다.  
+
+<DT><B>DSP56K_HOST_CMD</B><DD>
+는 호스트 명령을 전송한다. 허용된 값은 0에서 31까지 범위를 지니며, DSP56001에서 실행되는
+프로그램에 의해 처리되는 사용자 정의 명령이다. 
+
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>파일</H2>
+
+/dev/dsp56k
+<A NAME="lbAG">&nbsp;</A>
+<H2>저자</H2>
+
+Fredrik Noring &lt;<A HREF="mailto:noring@nocrew.org">noring@nocrew.org</A>&gt;, lars brinkhoff &lt;<A HREF="mailto:lars@nocrew.org">lars@nocrew.org</A>&gt;,
+Tomas Berndtsson &lt;<A HREF="mailto:tomas@nocrew.org">tomas@nocrew.org</A>&gt;.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+linux/include/asm-m68k/dsp56k.h,
+linux/drivers/char/dsp56k.c,
+<A HREF="http://dsp56k.nocrew.org/,">http://dsp56k.nocrew.org/,</A>
+DSP56000/DSP56001 디지털 시그널 프로세서 사용자 매뉴얼
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">CONFIGURATION</A><DD>
+<DT><A HREF="#lbAE">설명</A><DD>
+<DT><A HREF="#lbAF">파일</A><DD>
+<DT><A HREF="#lbAG">저자</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

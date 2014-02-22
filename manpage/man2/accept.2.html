@@ -1,0 +1,350 @@
+<HTML><HEAD><TITLE>Manpage of ACCEPT</TITLE>
+</HEAD><BODY>
+<H1>ACCEPT</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1999년 6월 7일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+accept - 소켓에 연결을 받아들인다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</B>
+
+<P>
+<B>int accept(int </B><I>s</I><B>, struct sockaddr *</B><I>addr</I><B>, socklen_t *</B><I>addrlen</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<P>
+<B>accept</B>
+
+함수는 연결-기반 소켓 타입에 
+(<B>SOCK_STREAM</B>,
+
+<B>SOCK_SEQPACKET</B>
+
+그리고
+<B>SOCK_RDM</B>)
+
+사용된다.
+이것은 미결인 연결들을 위한 큐에서 처음 연결을 뽑아 
+<I>s</I>와
+
+거의 같은 특성을 갖는 새로 연결된 소켓을 만든다. 그리고
+소켓에 새 파일 기술자를 할당하며 이것을 반환한다.
+새로 생성된 소켓은 더이상 기다리는(listen) 상태가 아니다.
+원래의 소켓
+<I>s</I>
+
+는 이 시스템 콜에 의해 영향을 받지 않는다. 
+파일 기술자 프래그중 어떤 것은 (비-봉쇄나 async 상태같이 
+<B>F_SETFL</B>
+
+fcntl을 가지고 설정할수 있는 모든 것)
+<I>accept</I>
+
+를 통해 상속되지 않는다.
+<P>
+<P>
+
+인자
+<I>s</I>
+
+는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2)으로
+
+만들어진 소켓이며, 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+bind">bind</A></B>(2)로
+
+로컬 주소를 묶고 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+listen">listen</A></B>(2)후에
+
+연결을 기다린다.
+<P>
+인자
+<I>addr</I>
+
+는 sockaddr 구조체에 대한 포인터이다. 이 구조체는 통신 층(communication layer)
+으로 알려진 접속 실체의 주소가 채워진다.
+<I>addr</I>
+
+인자에게 전달되는 주소의 정확한 형식은 socket 가족(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2)과
+
+프로토콜 맨 페이지를 참조해라.)
+에 의해 결정된다.
+<I>addrlen</I>
+
+인자는 값-결과 파라미터이다: 그것은 
+<I>addr</I>가
+
+가리키는 구조체의 크기를 포함해야 한다.;리턴시 그것은 반환된 주소의 실제
+길이(바이트)를 포함한다.
+<I>addr</I>
+
+가 NULL이라면 어떤것도 채워지지 않는다.
+<P>
+
+만일 미결인 연결들이 큐에 존재한다면 그리고 소켓이 비-봉쇄로써 표시되지
+않았다면, 
+<B>accept</B>
+
+는 연결이 존재할때까지 호출자를 봉쇄한다.
+만일 소켓이 비-봉쇄이고 미결인 연결들이 큐에 존재한다면, 
+<B>accept</B>
+
+는 EAGAIN을 반환한다.
+<P>
+
+소켓에 들어오는 연결들을 인식하기 위해, 여러분은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2)나
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+poll">poll</A></B>(2)을
+
+사용할수 있다.
+새로운 연결이 시도되었을때 읽기 가능한 이벤트가 전달되며 여러분은 그 연결을 
+위한 소켓을 가지기 위해 
+<B>accept</B>
+
+를 호출한다.
+선택적으로, 여러분은 활동이 소켓에서 일어났을때 
+<B>SIGIO</B>
+
+를 전달하기 위해 소켓을 설정할수 있다.; 세부사항을 위해서는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+socket">socket</A></B>(7)를
+
+참조해라.
+<P>
+
+DECNet 같이 명쾌한 승인을 요구하는 프로토콜에서,
+<B>accept</B>
+
+는 단지 다음 연결 요구를 큐에서 빼내고 승인을 이야기하지는 않는것으로써
+생각될수 있다. 
+확인은 새 파일 기술자에 정상적인 읽기나 쓰기에 의해 알수 있으며 
+거절은 새 소켓을 닫음으로써 알수 있다.
+현재 단지 DECNet만이 리눅스에서 이러한 의미론을 가진다.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>주의</H2>
+
+<B>SIGIO</B>
+
+가 전달된 후나 또는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2)나
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+poll">poll</A></B>(2)가
+
+읽기 가능하다는 이벤트를 반환한후 항상 연결을 기다리는 것은 아니다.
+왜냐하면 
+<B>accept</B>
+
+가 호출된 후에 연결이 비동기적인 네트웍 에러나 다른 쓰레드에 의해 제거될수도 
+있기 때문이다. 이런일이 발생한다면 호출은 도착하는 다음 연결을 기다리며 봉쇄가
+될 것이다. 
+<B>accept</B>
+
+가 결코 봉쇄되지 않는다는 것을 보장하기 위해, 전달된 소켓 
+<I>s</I>
+
+는 
+<B>O_NONBLOCK</B>
+
+플래그 설정을 가져야 한다.(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+socket">socket</A></B>(7)를
+
+참조해라.)
+<P>
+<A NAME="lbAF">&nbsp;</A>
+<H2>반환값</H2>
+
+에러시 -1이 반환된다. 만일 성공한다면, 받아들인 소켓을 위한 기술자인 
+음이 아닌 정수를 반환한다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>에러 HANDLING</H2>
+
+Linux 
+<B>accept </B>
+
+는 
+<B>accept</B>의
+
+에러 코드때문에 새 소켓에 이미 미결인 네트웍 에러를 전달한다. 
+이러한 행동은 BSD 소켓 수행과는 다르다. 신뢰적인 작동을 위해 응용 프로그램은
+<B>accept </B>
+
+후에 프로토콜에 정의된 네트웍 에러들을 검사해야 한다. 그리고 재시도에 의해
+<B>EAGAIN</B>같은
+
+에러를 처리해야 한다.
+TCP/IP의 경우, 이것들은 
+<B>ENETDOWN</B>,
+
+<B>EPROTO</B>,
+
+<B>ENOPROTOOPT</B>,
+
+<B>EHOSTDOWN</B>,
+
+<B>ENONET</B>,
+
+<B>EHOSTUNREACH</B>,
+
+<B>EOPNOTSUPP</B>,
+
+그리고
+<B>ENETUNREACH</B>
+
+이다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EAGAIN</B> or <B>EWOULDBLOCK</B>
+
+<DD>
+소켓이 비-봉쇄로 표시되었고 어떤 연결도 받아들이기 위해 존재하지 않는다.
+<DT><B>EBADF</B>
+
+<DD>
+기술자가 유효하지 않다.
+<DT><B>ENOTSOCK</B>
+
+<DD>
+기술자는 소켓이 아니라 파일을 가리킨다.
+<DT><B>EOPNOTSUPP</B>
+
+<DD>
+가리키는 소켓이 
+<B>SOCK_STREAM</B>타입이
+
+아니다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>addr</I>
+
+파라미터가 유저 주소 공간의 쓰기 가능한 부분이 아니다.
+<DT><B>EPERM</B>
+
+<DD>
+방화벽 규칙이 연결을 막는다.
+<DT><B>ENOBUFS, ENOMEM</B>
+
+<DD>
+여유 메모리가 충분하지 않다. 이것은 메모리 할당이 시스템 메모리에 의해서가
+아니라 소켓 버퍼 제한값에 의해 제한되었다는 것을 의미하며 100%일치하지는
+않는다.
+</DL>
+<P>
+
+게다가, 새 소켓과 프로토콜을 위해 정의된 네트웍 에러들이 반환된다. 다양한
+리눅스 커널은 
+<B>EMFILE</B>,
+
+<B>EINVAL</B>,
+
+<B>ENOSR</B>,
+
+<B>ENOBUFS</B>,
+
+<B>EPERM</B>,
+
+<B>ECONNABORTED</B>,
+
+<B>ESOCKTNOSUPPORT</B>,
+
+<B>EPROTONOSUPPORT</B>,
+
+<B>ETIMEDOUT</B>,
+
+<B>ERESTARTSYS</B>
+
+같은 다른 에러들을 반환할수 있다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, 4.4BSD (
+<B>accept</B>
+
+함수는 BSD 4.2에서 처음 나타났다.)
+BSD 맨 페이지는 다섯개
+(EBADF, ENOTSOCK, EOPNOTSUPP, EWOULDBLOCK, EFAULT)의 반환 가능한 에러들을 
+문서화 했다.
+SUSv2 는 EAGAIN, EBADF, ECONNABORTED, EFAULT, EINTR,
+EINVAL, EMFILE, ENFILE, ENOBUFS, ENOMEM, ENOSR, ENOTSOCK, EOPNOTSUPP,
+EPROTO, EWOULDBLOCK 에러들을 문서화 했다.
+<P>
+<A NAME="lbAJ">&nbsp;</A>
+<H2>주의</H2>
+
+<B>accept</B>
+
+의 세번째 인자는 원래 `int *`(그리고 libc4 그리고 libc5 그리고 BSD 4.*, SunOS 4, SGI 같은 많은 다른 시스템에서)로 선언되었다.; POSIX 1003.1g 표준 초안은 이 
+타입을 `size_t *`으로 그리고 SunOS 5에서 이렇게 바꾸길 원했다. 
+POSIX 초안이 `socklen_t *`이 된후 Single Unix Specification과 glibc2는 이렇게
+하였다. 리누스 토발즈의 말을 인용하면:
+<I>_Any_ sane library _must_ have &quot;socklen_t&quot; be the same size</I>
+
+as int.  
+그밖의 것들은 BSD 소켓 층을 막는다. POSIX는 _did_를 size_t로 만들었으며
+나는(그리고 너무 많지는 않지만 다른 사람들) 실제로 매우 불만족스럽다.
+size_t는 매우 문제가 있다. 왜냐하면 size_t는 64-비트 아키텍쳐에서 &quot;int&quot;처럼 
+거의 같은 크기가 아니기 때문이다.
+그리고 그것은 &quot;int&quot;처럼 같은 크기를 가져야 한다. 왜냐하면 BSD 소켓 인터페이스가 
+그렇기 때문이다.
+어쨋든, POSIX 사람들은 결국 계기를 가지고 &quot;socklen_t&quot;를 만들었다.
+그들은 처음 위치에서는 건들지는 않았지만 일단 그들은 고쳤고 그것이 몇몇
+이해할수 없는 이유때문에 타입이라는 이름을 가져야 한다는 것을 느꼈다.
+(아마 누군가는 원래 어리석은 일을 하는 것 이상으로 얼굴 팔리는것을 좋아하지 
+않는다. 그리서 그들은 조용히 그들의 실수를 다시 이름 지었다.)
+<A NAME="lbAK">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+bind">bind</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+connect">connect</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+listen">listen</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2)
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 9월 19일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">주의</A><DD>
+<DT><A HREF="#lbAF">반환값</A><DD>
+<DT><A HREF="#lbAG">에러 HANDLING</A><DD>
+<DT><A HREF="#lbAH">에러</A><DD>
+<DT><A HREF="#lbAI">호환</A><DD>
+<DT><A HREF="#lbAJ">주의</A><DD>
+<DT><A HREF="#lbAK">관련 항목</A><DD>
+<DT><A HREF="#lbAL">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

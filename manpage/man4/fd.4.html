@@ -1,0 +1,233 @@
+<HTML><HEAD><TITLE>Manpage of FD</TITLE>
+</HEAD><BODY>
+<H1>FD</H1>
+Section: Special files (4)<BR>Updated: January 29, 1995<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+fd - 플로피 디스크 장치 
+<A NAME="lbAC">&nbsp;</A>
+<H2>CONFIGURATION</H2>
+
+플로피 드라이브는 블록 장치로서 메이저 넘버 2를 갖는다. 일반적으로 
+프롤피 드라이브는 roo.floppy(예를 들면, user root, group floppy)에 의해 
+소유되며, 모드 0660(그룹 멤버쉽을 통한 액세스 체킹)이거나, 모드 0666(누구나 
+액세스할 수 있음)
+마이너 넘버는 장치 유형, 장치 번호, 제어기 번호를 인코딩한다. 각 장치 유형(밀도와 
+트랙 수의 결합)에 대해서는, 기본 마이너 넘버가 있다. 이 기본 넘버에, 드라이브의 번호를 
+제어기에 추가하고, 만일 드라이브가 두번째 제어기 상에 있다면, 128을 추가한다. 다음의 장치 
+테이블에서 <I>n</I>는 드라이브 번호를 상징한다. 
+<P>
+
+
+<B>경고: 만일 드라이브에 의해 지원된 것보다 더 많은 트랙들을 지닌 포맷을 사용한다면, 여러분은 
+이러한 기계상의 손실을 초래할 수 있다. </B>  보통 40/80보다 더 많은 트랙들이 지원된다면, 이에 손상
+을 초래해서는 안되고, 이에 대한 어떤 보상도 이루어지지 않는다. 이러한 활용을 방지하기 위한 
+형식들에 대한 장치 항목들을 만들지 마시오. 
+<P>
+
+미디어 포맷 및 용량을 자동적으로 감지하는 드라이브 독립 장치 파일들:
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD>이름  기본 마이너(Base minor) #</TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>_</TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I></TD><TD>0<BR></TD></TR>
+</TABLE>
+
+<P>
+
+5.25인치 두배의 밀도를 지닌 장치 파일: 
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD>이름 용량 실린더 섹터 헤드 기본 마이너 #</TD><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>d360</B></TD><TD>360K</TD><TD>40</TD><TD>9</TD><TD>2</TD><TD>4<BR></TD></TR>
+</TABLE>
+
+<P>
+
+5.25인치 두배의 밀도를 지닌 장치 파일: 
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD>이름 용량 실린더 섹터 헤드 기본 마이너 #</TD><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>_</TD><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h360</B></TD><TD>360K</TD><TD>40</TD><TD>9</TD><TD>2</TD><TD>20<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h410</B></TD><TD>410K</TD><TD>41</TD><TD>10</TD><TD>2</TD><TD>48<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h420</B></TD><TD>420K</TD><TD>42</TD><TD>10</TD><TD>2</TD><TD>64<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h720</B></TD><TD>720K</TD><TD>80</TD><TD>9</TD><TD>2</TD><TD>24<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h880</B></TD><TD>880K</TD><TD>80</TD><TD>11</TD><TD>2</TD><TD>80<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h1200</B></TD><TD>1200K</TD><TD>80</TD><TD>15</TD><TD>2</TD><TD>8<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h1440</B></TD><TD>1440K</TD><TD>80</TD><TD>18</TD><TD>2</TD><TD>40<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h1476</B></TD><TD>1476K</TD><TD>82</TD><TD>18</TD><TD>2</TD><TD>56<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h1494</B></TD><TD>1494K</TD><TD>83</TD><TD>18</TD><TD>2</TD><TD>72<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>h1600</B></TD><TD>1600K</TD><TD>80</TD><TD>20</TD><TD>2</TD><TD>92<BR></TD></TR>
+</TABLE>
+
+<P>
+
+3.5인치 두배의 밀도를 지닌 장치 파일: 
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD>이름 용량 실린더 섹터 헤드 기본 마이너 #</TD><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>_</TD><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>D360</B></TD><TD>360K</TD><TD>80</TD><TD>9</TD><TD>1</TD><TD>12<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>D720</B></TD><TD>720K</TD><TD>80</TD><TD>9</TD><TD>2</TD><TD>16<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>D800</B></TD><TD>800K</TD><TD>80</TD><TD>10</TD><TD>2</TD><TD>120<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>D1040</B></TD><TD>1040K</TD><TD>80</TD><TD>13</TD><TD>2</TD><TD>84<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>D1120</B></TD><TD>1120K</TD><TD>80</TD><TD>14</TD><TD>2</TD><TD>88<BR></TD></TR>
+</TABLE>
+
+<P>
+
+3.5인치 두배의 밀도를 지닌 장치 파일: 
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD>이름 용량 실린더 섹터 헤드 기본 마이너 #</TD><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>_</TD><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H360</B></TD><TD>360K</TD><TD>40</TD><TD>9</TD><TD>2</TD><TD>12<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H720</B></TD><TD>720K</TD><TD>80</TD><TD>9</TD><TD>2</TD><TD>16<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H820</B></TD><TD>820K</TD><TD>82</TD><TD>10</TD><TD>2</TD><TD>52<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H830</B></TD><TD>830K</TD><TD>83</TD><TD>10</TD><TD>2</TD><TD>68<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H1440</B></TD><TD>1440K</TD><TD>80</TD><TD>18</TD><TD>2</TD><TD>28<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H1600</B></TD><TD>1600K</TD><TD>80</TD><TD>20</TD><TD>2</TD><TD>124<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H1680</B></TD><TD>1680K</TD><TD>80</TD><TD>21</TD><TD>2</TD><TD>44<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H1722</B></TD><TD>1722K</TD><TD>82</TD><TD>21</TD><TD>2</TD><TD>60<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H1743</B></TD><TD>1743K</TD><TD>83</TD><TD>21</TD><TD>2</TD><TD>76<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H1760</B></TD><TD>1760K</TD><TD>80</TD><TD>22</TD><TD>2</TD><TD>96<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H1840</B></TD><TD>1840K</TD><TD>80</TD><TD>23</TD><TD>2</TD><TD>116<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>H1920</B></TD><TD>1920K</TD><TD>80</TD><TD>24</TD><TD>2</TD><TD>100<BR></TD></TR>
+</TABLE>
+
+<P>
+
+3.5인치 두배의 밀도를 지닌 장치 파일: 
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD>이름 용량 실린더 섹터 헤드 기본 마이너 #</TD><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>_</TD><TD></TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>E2880</B></TD><TD>2880K</TD><TD>80</TD><TD>36</TD><TD>2</TD><TD>32<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>CompaQ</B></TD><TD>2880K</TD><TD>80</TD><TD>36</TD><TD>2</TD><TD>36<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>E3200</B></TD><TD>3200K</TD><TD>80</TD><TD>40</TD><TD>2</TD><TD>104<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>E3520</B></TD><TD>3520K</TD><TD>80</TD><TD>44</TD><TD>2</TD><TD>108<BR></TD></TR>
+<TR VALIGN=top><TD><B>fd</B><I>n</I><B>E3840</B></TD><TD>3840K</TD><TD>80</TD><TD>48</TD><TD>2</TD><TD>112<BR></TD></TR>
+</TABLE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>fd</B> 특수 파일들은 플로피 디스크 드라이브를 raw 모드로 액세스한다. 
+다음의 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+ioctl">ioctl</A></B>(2)
+
+호출은 <B>fd</B> 장치들에 의해 지원된다. 
+<DL COMPACT>
+<DT><B>FDCLRPRM</B><DD>
+는 드라이버의 매체 정보(드라이브내의 디스크 맵)를 지운다. 
+<DT><B>FDSETPRM</B><DD>
+는 디스크의 매체 정보를 설정한다. 매체 정보는 매체가 변경되면 상실된다. 
+<DT><B>FDDEFPRM</B><DD>
+는 디스크의 매체정보를 설정한다. 매체 정보는 매체가 변경되더다로 상실되지 않는다. 
+이는 자동 감지를 작동하지 못하도록 한다. 자동 감지를 다시 활성화하려면, 
+<B>FDCLRPRM</B> 명령을 내려야 한다. 
+<DT><B>FDGETDRVTYP</B><DD>
+는 드라이브의 유형(name 매개변수)을 리턴한다. 몇개 드라이브 유형에서 동작할 포맷들에 대해서는, 
+이 포맷을 지원하는 가장 오래된 드라이브 유형에 적절한 이름을 <B>FDGETDRVTYP</B>이 리턴한다. 
+<DT><B>FDFLUSH</B><DD>
+는 주어진 드라이브에 대한 버퍼 캐시를 무효로 만든다. 
+
+<DT><B>FDSETMAXERRS</B><DD>
+는 에러를 보고하고, 연산을 중지시키며, 눈금을 재고, 재설정하며, 섹터별로 읽어내기 위해 
+에러 임계치를 설정한다. 
+<DT><B>FDSETMAXERRS</B><DD>
+는 현재 에러 임계치를 얻어낸다. 
+<DT><B>FDGETDRVTYP</B><DD>
+는 드라이브의 내부 이름을 얻는다. 
+<DT><B>FDWERRORCLR</B><DD>
+쓰기 에러 통계를 소거한다. 
+<DT><B>FDWERRORGET</B><DD>
+는 쓰기 에러 통계를 읽어낸다. 이는 쓰기 에러, 첫번째 쓰기 에러의 위치 및 디스크,
+마지막 쓰기 에러의 위치 및 디스크의 총숫자를 포함한다. 디스크들은 각 디스크 변화에 따라 점증되는 
+생성 번호에 의해 확인된다. 
+
+<DT><B>FDTWADDLE</B><DD>
+약간의 마이크로초 동안 드라이브 모터를 끈다. 이는 디스크 섹터가 서로 너무 
+가까운 섹터들을 지닌 디스크에 액세스하는데 필요할 수도 있다. 
+<DT><B>FDSETDRVPRM</B><DD>
+는 다양한 드라이브 매개변수들을 설정한다. 
+<DT><B>FDGETDRVPRM</B><DD>
+는 이러한 변수들을 다시 읽어들인다. 
+<DT><B>FDGETDRVSTAT</B><DD>
+캐싱된 드라이브 상태를 얻는다. (변경된 디스크, 쓰기 금지된 등등)
+<DT><B>FDPOLLDRVSTAT</B><DD>
+드라이브를 폴링(poll)하고, 이 상태를 리턴한다. 
+<DT><B>FDGETFDCSTAT</B><DD>
+플로피 제어기 상태를 얻어낸다. 
+<DT><B>FDRESET</B><DD>
+어떤 조건들하에서 플로피 제어기를 재설정한다. 
+<DT><B>FDRAWCMD</B><DD>
+raw 명령을 플로피 제어기에 전달한다. 
+</DL>
+<P>
+
+좀더 정확한 정보에 대해서는, &lt;<A HREF="file:/usr/include/linux/fd.h">linux/fd.h</A>&gt;와 &lt;<A HREF="file:/usr/include/linux/fdreg.h">linux/fdreg.h</A>&gt;의 include 파일들을 
+참조하고, floppycontrol에 관한 맨 페이지를 참조하라. 
+<A NAME="lbAE">&nbsp;</A>
+<H2>주의</H2>
+
+다양한 포맷들은 다양한 유형의 디스크들을 읽고 쓰는데 도움을 준다. 하지만, 만일 플로피가 
+너무나 작은 내부 섹터 틈으로 포맷되어 있다면, 성능이 저하되어, 전체 트랙을 액세스하는데 
+몇초가 필요할 수가 있다. 애플 II나 맥킨토시 컴퓨터에 사용되는 GCR(그룹 코드 기록)을
+사용하여 포맷된 플로피들을 읽는 것은 불가능하다. 
+<A NAME="lbAF">&nbsp;</A>
+<H2>파일</H2>
+
+/dev/fd*
+<A NAME="lbAG">&nbsp;</A>
+<H2>저자</H2>
+
+Alain Knaff (<A HREF="mailto:Alain.Knaff@imag.fr">Alain.Knaff@imag.fr</A>), David Niemi
+(<A HREF="mailto:niemidc@clark.net">niemidc@clark.net</A>), Bill Broadhurst (<A HREF="mailto:bbroad@netcom.com">bbroad@netcom.com</A>).
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+floppycontrol">floppycontrol</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mknod">mknod</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+chown">chown</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+getfdprm">getfdprm</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+superformat">superformat</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+setfdprm">setfdprm</A></B>(8)
+
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">CONFIGURATION</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">주의</A><DD>
+<DT><A HREF="#lbAF">파일</A><DD>
+<DT><A HREF="#lbAG">저자</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,608 @@
+<HTML><HEAD><TITLE>Manpage of FTPD</TITLE>
+</HEAD><BODY>
+<H1>FTPD</H1>
+Section: Maintenance Commands (8)<BR>Updated: Jan 10, 1997<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ftpd - DARPA 인터넷 파일 전송 프로토콜 서버
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>ftpd</B>
+
+[
+<B>-d</B>
+
+] [
+<B>-v</B>
+
+] [
+<B>-l</B>
+
+] [
+<B>-t</B>
+
+timeout
+] [
+<B>-T</B>
+
+maxtimeout
+] [
+<B>-a</B>
+
+] [
+<B>-A</B>
+
+] [
+<B>-L</B>
+
+] [
+<B>-i</B>
+
+] [
+<B>-o</B>
+
+] [
+<B>-p</B>
+
+ctrlport
+] [
+<B>-P</B>
+
+dataport
+] [
+<B>-q</B>
+
+] [
+<B>-Q</B>
+
+] [
+<B>-r</B>
+
+rootdir
+] [
+<B>-s</B>
+
+] [
+<B>-S</B>
+
+] [
+<B>-u</B>
+
+umask
+] [
+<B>-V</B>
+
+] [
+<B>-w</B>
+
+] [
+<B>-W</B>
+
+] [
+<B>-X</B>
+
+]
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>Ftpd</I>
+
+는 DARPA internet file 전송 프로토콜 server의 역할을 한다.
+server는 TCP protocol을 사용하며 ``ftp'' service로 지정
+된 특정한 prot에 귀를 기울인다.; 자세한 것은 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+services">services</A></I>(5)
+
+을 참조하라.
+<P>
+<P>
+
+<B>-V</B>
+
+옵션은 저작권과 버젼 정보를 출력한다.
+<P>
+
+<B>-d</B>
+
+또는
+<B>-v</B>
+
+options을 지정하면, syslog에 디버깅 정보가 기록된다.
+<P>
+<P>
+
+<B>-l</B>
+
+option은 syslog에 각 ftp의 session을 기록한다.
+<P>
+<P>
+
+ftp server는 15분이 지나도록 아무 입력이 없으면(inactive 
+session이 발생하면) timeout이 된다.
+<B>-t</B>
+
+option으로 inactive timeout 시간을 지정할수 있다. 설정은
+
+단위로 하며 options과 초를 붙여서 쓴다.
+<B>-t</B>
+
+option을 지정하지 않았을때의 기본값은 900초이다.
+또한 이와는 다른 timeout period가 있는데 이는 
+<B>-T</B>
+
+option을 이용하여 최대로 열어 놓을수 있는 session timeout
+period를 지정할수 있다.  이것은 inactive session과 무관하다.
+설정은 
+<B>-t</B>
+
+와 동일하며 default는 2시간 이다.
+<P>
+
+<B>-a</B>
+
+option은
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A></I>(5)
+
+설정 file을 사용하도록 한다.
+<P>
+
+<B>-A</B>
+
+option은
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A></I>(5)
+
+설정 file을 사용하지 않도록 한다. 이 option은 기본 option이다.
+<P>
+
+<B>-L</B>
+
+option은 syslog에 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A></I>(8)
+
+server에 보내지는 명령들을 기록하도록 한다.
+<B>-L</B>
+
+option은 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A></I>(5)
+
+file의 사용에 의해 무시되어 질수도 있다.
+<B>-L</B>
+
+flag가 사용되어 진다면, 기본적으로 ftp server가 요청
+될때마다 명령이 logging 되어질 수 있다. 이것은 모든
+USER들의 명령이 기록되는 것을 뜻하며 만약 user가 우연히
+username을 대신하는 명령으로 password를 보냈을때 syslog를
+통해서 password가 누출될수도 있다.
+<P>
+
+<B>-i</B>
+
+option을 지정하면
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A></I>(8)
+
+server에 의해 받아들였던 file들이
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+xferlog">xferlog</A></I>(5)
+
+로 log되어 진다.
+<B>-i</B>
+
+option은 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A></I>(5)
+
+file을 사용하면 무시되어 진다.
+<P>
+
+<B>-o</B>
+
+option을 지정하면
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A></I>(8)
+
+server에 의해 전해진 file들이
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+xferlog">xferlog</A></I>(5)
+
+로 log되어 진다.
+<B>-o</B>
+
+option은 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A></I>(5)
+
+file을 사용하면 무시되어 진다.
+만약
+<B>-X</B>
+
+option을 지정하면, 
+<B>-i</B>
+
+와
+<B>-o</B>
+
+options에 의해 생성된 output은 xferlog에 저장되지 않는다. 
+그러나 하나의 중앙 loghost에 여러 host들로 부터의 output을 
+받아들이는 경우에는 syslog를 통해 저장이 된다.
+<P>
+
+<B>-u</B>
+
+option은
+<I>umask</I>
+
+를 기본 umask로 setting을 한다.
+<P>
+
+<B>-W</B>
+
+option은 user login을 wtmp file에 기록하지 않게 한다. Default (
+<B>-w</B>
+
+) 로는 모든 login과 logout이 기록이 된다.
+<P>
+
+<B>-s</B>
+
+와
+<B>-S</B>
+
+option들은 standalone 작동 모드로 daemon을 실행하게 한다.
+<B>-S</B>
+
+option은 daemon을 background로 실행을 하며, system booting시에
+startup srcitps(ie., in rc.local)를 이용할때 사용한다.
+<B>-s</B>
+
+option은 daemon을 foreground로 실행을 시키며, init로 부터 실행
+될때 주로 사용을 한다. (ie., /etc/inittab)
+<P>
+
+<B>-p</B>
+
+와
+<B>-P</B>
+
+option들은 daemon에 의해 사용되어지는 port number를 무시한다.
+일반적으로 daemon은 &quot;ftp&quot;와 ftp-data&quot;에 대해 /etc/services 를
+참조하여 port number를 결정한다. 만약 /etc/services에 &quot;ftp-data&quot;가
+지정되어 있지 않고
+<B>-P</B>
+
+option이 지정되어 있지 않다면 daemon은 control connection port 보다
+앞선 port를 사용한다.
+<B>-p</B>
+
+option은 standalone mode로 실행될때만 사용을 할수가 있다.
+<P>
+
+<B>-q</B>
+
+and
+<B>-Q</B>
+
+option들은 daemon이 PID file들의 사용여부를 결정한다.
+이 file들은 각 접근 class마다 현재 user의 수를 결정하는
+limit 지시자에 의해 요구되어 진다. PID file들의 사용을
+안하면 user limit를 사용할수 없다. Default (
+<B>-q</B>
+
+) 로는 PID file들을 사용을 한다.
+access permission이 PID file의 사용을 막을때 일반 
+user로서 server를 test할때 
+<B>-Q</B>
+
+를 지정한다. 좀더 나아가서 동시 사용자의 수를 제한하는 
+것을 막고 싶은 busy site에서는 PID file의 사용을 
+불가능하게 하는 것을 고려해 볼만하다.
+<P>
+
+<B>-r</B>
+
+option은 이미 loading시에 rootdir로 지정되어진 거을 chroot로
+daemon을 지정한다. 이것은 daemon을 통해 발생한 손상을 입은
+file들을 제한함으로서 system security를 증진시킬수 있다.
+Set is much like anonymous FTP, with additional files 
+needed which vary from system to system.
+<P>
+
+ftp server는 현재 아래에 나열된 ftp reuest들을 지원을 한다.;
+case는 구별되어 있지 않다.
+<P>
+
+<PRE>
+
+<B>Request      설명</B>
+ABOR    이전 명령을 중지
+ACCT    지정한 account를 무시
+ALLO    비어있는 저장공간을 할당
+APPE    file에 첨가
+CDUP    현재 작업 directory를 부모 directory로 이동
+CWD     작업 directory를 이동
+DELE    file 삭제
+HELP    help 정보 출력
+LIST    directory의 file list 출력 (``ls -lgA'')
+MKD     directory 생성
+MDTM    file의 마지막 변경시간 출력
+MODE    data transfer <I>mode</I> 를 지정
+NLST    directory의 file list name만 보여준다.
+NOOP    do nothing
+PASS    password를 지정
+PASV    server와 server간은 전송 비교
+PORT    data connection port를 지정
+PWD     현재 작업중인 directory를 출력
+QUIT    session 마침
+REST    불완전한 전송을 재시도
+RETR    file 정정
+RMD     directory 제거
+RNFR    filename으로 부터 rename 지정
+RNTO    filename으로 rename 지정
+SITE    일반적이지 않은 commands (다음 section 참조)
+SIZE    file size 출력
+STAT    server 상태 출력
+STOR    file 저장
+STOU    특정한 이름으로 file 저장
+STRU    data transfer <I>structure</I> 지정
+SYST    server system의 OS type 출력
+TYPE    data transfer <I>type</I> 지정
+USER    user name 지정
+XCUP    현재 작업 directory를 부모 directory로 이동 (deprecated)
+XCWD    change working directory (deprecated)
+XMKD    directory 생성 (deprecated)
+XPWD    현재 작업 directory 출력 (deprecated)
+XRMD    directory 제거 (deprecated)
+</PRE>
+
+<P>
+
+아래에 나열된 것은 일반적인 명령이 아니거나 UNIX 특수 명령 들이며
+SITE 명령에 수반되어 사용되어 진다.
+<P>
+
+<PRE>
+
+<B>Request      설명</B>
+UMASK   umask를 변경. <I>E.g.</I> SITE UMASK 002
+IDLE    idle-timer를 지정. <I>E.g.</I> SITE IDLE 60
+CHMOD   file의 mode을 변경. <I>E.g.</I> SITE CHMOD 755 filename
+HELP    help 정보를 출력. <I>E.g.</I> SITE HELP
+NEWER   특정 날짜 이후의 file을 출력
+MINFO   SITE NEWER와 유사, 하지만 좀더 자세한 정보를 출력
+GROUP   특정 gourp 접근을 요구. <I>E.g.</I> SITE GROUP foo
+GPASS   특정 group 접근 암호를 지정. <I>E.g.</I> SITE GPASS bar
+EXEC    program을 실행.  <I>E.g.</I> SITE EXEC program params
+</PRE>
+
+<P>
+
+여기서 생략된 Internet RFC 959에 지정된 몇몇의 ftp request들은 
+인식은 되지만 그리 쓸모있지는 않다. MDTM과 SIZE는 RFC 959에 지정되어 
+있지는 않지만 다음 FTP RFC에 update될 예정이다.
+<P>
+
+ftp server는 internet RFC 959에 기술되어진 것 처럼 telnet &quot;Interrupt
+Porcess&quot; (IP) signal과 Telnet stream 명령의 Telnet &quot;Synch&quot; signal에
+의해서 ABOR 명령이 진행될때 active file 전송은 중지될 것이다.
+만약 STST 명령이 data 전송중에 받아진다면, Telnet IP와 Synch에 의해
+진행된 transfer status는 되돌려 질것이다.
+<P>
+
+<I>Ftpd</I>
+
+interpret file name들은 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?1+csh">csh</A></I>(1)
+
+에 의하여 사용되어지는 &quot;golbbing&quot; 규약에 따른다. 이것은 user들이
+metacharacter &quot;*?[]{}~&quot;를 이용할수 있도록 한다.
+<P>
+
+인증된
+<I>Ftpd</I>
+
+user들은 4가지 규칙을 따른다.
+<DL COMPACT>
+<DT>1)<DD>
+username은 password data base,
+<I>/etc/passwd,</I>
+
+또는 OS를 통새 접근할수 있는 무엇에 존재해야 한다. 이 경우 password는
+어떤 file 작용이 실행되어지기 전에 client에 의해서 준비 되어야 한다.
+<DT>2)<DD>
+user name이
+<I>/etc/ftpusers</I>
+
+에 있어서는 안된다.
+<DT>3)<DD>
+user는 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?3+getusershell">getusershell</A></I>(3)
+
+에 의해 반환되어지는 standard shell을 가져야 한다.
+<DT>4)<DD>
+username이 &quot;anonymous&quot; 또는 &quot;ftp&quot; 일때, anonymous ftp
+계정이 password file(user &quot;ftp&quot;)에 존재해야만 한다. 이 경우
+client의 hostname이나 e-mail address를 password로 하여 login을
+허락을 한다.
+</DL>
+<P>
+
+마지막의 경우
+<I>ftpd</I>
+
+는 client의 접근 권한을 제한하기 위해 특별한 작업을 수행한다. server는
+보안의 침해를 막기 위하여 &quot;ftp&quot; user의 home directory로
+<I><A HREF="http://localhost/cgi-bin/man/man2html?2+chroot">chroot</A></I>(2)
+
+명령으로 변경시켜 버린다. (anonymous의
+
+를 
+
+file에 존재하는 &quot;ftp&quot;라는 user의 home directory-보통은 /home/ftp-로 
+바꿔 버린다는 의미이다.) 이것은 &quot;ftp&quot; subtree는 조심해서 구성되어
+진다는 것을 의미하며 아래에 나열된 규칙을 따른다.
+<DL COMPACT>
+<DT>~ftp)<DD>
+home directory의 소유권을 super-user와 쓰기 권한이 없는 다른 user로
+지정을 한다.
+<DT>~ftp/bin)<DD>
+home directory의 소유권을 super-user와 쓰기 권한이 없는 다른 user로
+지정을 한다.
+<I><A HREF="http://localhost/cgi-bin/man/man2html?1+ls">ls</A></I>(1)
+
+program은 list 명령을 지원하기 위하여 반드시 존재해야 한다. 이 program은
+mode 111의 소유권을 가져야 한다.
+<DT>~ftp/etc)<DD>
+home directory의 소유권을 super-user와 쓰기 권한이 없는 다른 user로
+지정을 한다.  
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+passwd">passwd</A></I>(5)
+
+와
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+group">group</A></I>(5)
+
+file은 ls 명령을 실행했을때 숫자(UID, GID)가 아닌 사용자명이 나오도록 하기
+위해서 이다. OS에 의존하며, 다른 요구되는 file들이 있다. libary rutine
+<I><A HREF="http://localhost/cgi-bin/man/man2html?3+getpwent">getpwent</A></I>(3)
+
+에 대한 man page를 check하도록 한다.
+passwd의 password field는 사용되지 않으며 실제의 암호화된 password들이
+포함되어 있지 않다. 이 file들은 mode 444의 permision을 가지며 
+super-user에게 소유권이 있다. ~ftp/etc directory안의 group, passwd 
+file들을 system의 /etc/passwd와 /etc/group file로 복사를 하여 사용하면 
+안된다.
+<DT>~ftp/pub)<DD>
+~ftp/pub에서 일반 user들에게 file upload를 허락하려면 적당히 mode 777
+또는 mode 733의 permision으로 directory를 만들면 된다. 하지만 pub
+dirctory는 read permision만을 주는 것을 권장하며 upload는 ~ftp/incoming
+이라는 directory를 만들어 사용하기를 권장하며 upload directory의 소유권은
+super-user가 아닌 ftp에 있어야 한다는 것을 명심한다. 또한 ftp user의 권한
+으로 upload 한 file은 지울수가 없으므로 file만 올리는 것 보다는 설명서도
+같이 올리도록 message file을 이용하여 권고하도록 한다.
+</DL>
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>BSD/OS SYSTEM만의 인증 MECHANISM</H2>
+
+ftpd에 의해 사용되어 지는 인증 machanism은 
+<I>/etc/login.conf</I>
+
+에 있는 users class와 match되는 &quot;auth-ftp&quot; entry에 의해 결정된다.
+(
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+login.conf">login.conf</A></I>(5)
+
+를 참조하라) 만약 class에 대한 &quot;auth-ftp&quot; entry가 없다면 대신에 일반적인
+&quot;auth&quot; entry가 사용되어 질것이다. 교차하는 인증 machanism은 &quot;joe:skey&quot; 
+처럼 콜론(&quot;:&quot;)이 첨가되어 지정이 된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>일반적인 FTP 확장자들</H2>
+
+<P>
+
+FTP server에는 아래와 같이 특정한 file 확장자로서 몇가지 기능을 수행할수
+있다:
+<P>
+
+<PRE>
+ 실제 Filename  지정한 Filename      실행
+ -------------  ------------------  -----------------------------------
+ &lt;filename&gt;.Z   &lt;filename&gt;          압축을 풀고나서 전송
+ &lt;filename&gt;     &lt;filename&gt;.Z        전송전 file을 압축
+ &lt;filename&gt;     &lt;filename&gt;.tar      전송전 file을 Tar로 묶음
+ &lt;filename&gt;     &lt;filename&gt;.tar.Z    전송전 file을 Tar로 묶고 압축
+</PRE>
+
+<P>
+
+또한 FTP server는 확실한 e-mail 주소를 위한 check를 시도하며, 이 test를
+통과하지 못하면 user에게 경고 message를 출력한다. FTP client가 &quot;long
+replies&quot; (i.e multiline responses)에 걸려 있는 user들을 위해 password의
+첫번째 character를 dash를 사용하는 것은 server의 lreply() 함수를 불가능
+하게 한다.
+<P>
+
+FTP server는 또한 모든 file의 전송과 수신을 log 할수 있으며, 발생되는 
+각 file의 전송에 대한 정보에 따라서 관리를 한다.
+<P>
+<P>
+
+<PRE>
+Mon Dec  3 18:52:41 1990 1 wuarchive.wustl.edu 568881 /files.lst.Z 
+a _ o a <A HREF="mailto:chris@wugate.wustl.edu">chris@wugate.wustl.edu</A> ftp 0 *
+
+  %.24s %d %s %d %s %c %s %c %c %s %s %d %s
+    1   2  3  4  5  6  7  8  9  10 11 12 13
+
+  1 DDD MMM dd hh:mm:ss YYYY 형식의 현재시간
+  2 초 단위의 전송시간
+  3 remote host name
+  4 byte 단위의 file size
+  5 name of file
+  6 전송 type (a&gt;scii, b&gt;inary)
+  7 특수 action flags (필요에 따라 연계):
+        C   file이 압축되어짐
+        U   file이 압축되어지지 않음
+        T   file이 tar로 묶임
+        _   아무것도 발생하지 않음
+  8 file 이 user에게 보내지거나 (o&gt;utgoing), user로 부터 받음 (i&gt;ncoming)
+  9 접근한 방식 (r&gt;eal, a&gt;nonymous, g&gt;uest) -- mostly for FTP
+ 10 local username 또는 &quot;ftp&quot; user의 경우 login시에 password로 입력한
+    e-amil address
+ 11 service 명 ('ftp', other)
+ 12 인증방식 (bitmask)
+        0   none
+        1   RFC931 인증
+ 13 인증되어진 user id (if available, '*' otherwise)
+</PRE>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ftp">ftp</A>(1)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getusershell">getusershell</A>(3)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+syslogd">syslogd</A>(8)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A>(5)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+xferlog">xferlog</A>(5)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+umask">umask</A>(2)</B>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>버그</H2>
+
+anonymous 계정은 안전하지가 못하며 가능한 막는 것이 좋다.
+<P>
+
+server는 지정된 port number로서 socket들을 만들기 위하여
+super-user로서 실행이 되어져야 한다. 이것은 login 되어진
+user의 영향력 있는 user id를 지속하며 socket에 address를
+속박할때 super-user의 권한을 얻을수가 있기 때문이다. 가능한 
+보안 구멍에 대해서 세밀히 조사되어 져야 하지만 아무리 해도 
+불가능하다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+김정균 &lt;<A HREF="mailto:admin@oops.org">admin@oops.org</A>&gt; 2000년 8월 4일
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">BSD/OS SYSTEM만의 인증 MECHANISM</A><DD>
+<DT><A HREF="#lbAF">일반적인 FTP 확장자들</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">버그</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

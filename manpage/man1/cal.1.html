@@ -1,0 +1,104 @@
+<HTML><HEAD><TITLE>Manpage of CAL</TITLE>
+</HEAD><BODY>
+<H1>CAL</H1>
+Section: User Commands  (1)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+<BR>BSD mandoc<BR>
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+
+
+<B>cal</B>
+
+ - 달력 출력
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>cal</B>
+
+[-<B>jy</B>
+
+]
+
+[<I>month </I>[<I>year</I>
+
+]
+
+
+
+]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Cal</B>
+
+명령은 간단한 달력을 보여준다.
+아무런 명령행 인자가 없으면, 시스템의 현재 달을 보여준다.
+사용할 수 있는 옵션은 다음과 같다:
+The options are as follows:
+<DL COMPACT>
+<P>
+
+<DT><B>-j</B>
+
+
+<DD>
+율리우스력(구태양력)으로 출력.
+<DT><B>-y</B>
+
+
+<DD>
+현재 년도 모든 달을 모두 보여준다.
+</DL>
+<P>
+
+<P>
+
+사용할 수 있는 연도는 1-9999 이며, 
+년도를 지정할 경우에는 세기가 생략되어서는 안된다. 
+``<B>cal 89</B>
+
+''
+
+명령이면 1989년 달력을 보여주지 않고 89년 달력을 보여준다.
+연도 다음에 오는 숫자는 달로 인식한다. 그렇기 때문에, 
+1-12까지만의 숫자만 사용할 수 있다. 
+이런 명령행 인자가 아무것도 없으면, 현재 달의 달력만 보여준다.
+<P>
+
+즉, 명령행 인자로 사용할 수 있는 가장 작은 값은 1 1 (서기 1년 1월)이다.
+<P>
+
+그레고리오력(지금의 태양력)은 1752년에 9월에 세번째 개정된 것을 
+사용한다. 
+이번 버전에서는 1900년 이전의 년도들에 대해서 제대로 인식한다.
+재 개정되면서 1900년 이전 년도들의 날짜 수가 10일 삭제되었다.
+그래서, 1900년 이전의 달력들을 볼 때 조금 이상하게 생각할 수도 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>HISTORY</H2>
+
+<B>cal</B>
+
+
+명령은 Version 6 AT&amp;T UNIX에서 처음 나타났다.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">HISTORY</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

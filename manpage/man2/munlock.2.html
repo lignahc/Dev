@@ -1,0 +1,127 @@
+<HTML><HEAD><TITLE>Manpage of MUNLOCK</TITLE>
+</HEAD><BODY>
+<H1>MUNLOCK</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1995년 11월 26일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+munlock - 메모리의 일정 부분에 대한 페이징을 다시 가능하게 한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/sys/mman.h">sys/mman.h</A>&gt;</B>
+
+<B>int munlock(const void *</B><I>addr</I><B>, size_t </B><I>len</I><B>);
+</B></PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>munlock</B>은
+
+<I>addr</I>부터
+
+<I>len</I>
+
+바이트만큼 범위의 메모리에 대한 페이징을 다시 가능하게 한다.
+지정된 메모리 범위의 일부를 포함하는 모든 페이지들은 
+<B>munlock</B>이
+
+호출된 후 커널에 의해 다시 외부 스왑 공간으로 이동된다.
+<P>
+메모리 잠근은 스택이 아니다.
+즉,  
+<B>mlock</B>이나
+
+<B>mlockall</B>이
+
+여러번 호출되어 여러번 잠겼던 페이지는 상응하는 범위에 대한
+<B>munlock</B>이나
+
+<B>munlockall</B>를
+
+단 한번 호출하여 잠금을 풀 수 있다.
+여러 위치나 여러 프로세스에 의해 잠겨진 페이지는 적어도 하나의 
+위치나 프로세스에 의해 잠겨져 있는 한 RAM에서 계속적으로 잠금이 유지된다.
+<P>
+<B>mlock</B>과
+
+<B>munlock</B>를
+
+이용할 수 있는 POSIX 시스템에서 
+<B>_POSIX_MEMLOCK_RANGE</B>는
+
+&lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;에 정의되어 있으며 &lt;<A HREF="file:/usr/include/limits.h">limits.h</A>&gt;에서
+<B>PAGESIZE</B>는
+
+페이지당 바이트 수를 가리킨다.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 
+<B>munlock</B>은
+
+0을 리턴한다. 에러시, -1이 리턴되며, 
+<I>errno</I>는
+
+적절한 값으로 설정된다. 그리고 해당 프로세스의 주소 공간의
+잠금에 어떠한 변화도 일어나지 않는다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>ENOMEM</B>
+
+<DD>
+지정된 주소의 일정 부분이 해당 프로세스 주소 공간의 페이지와 
+일치하지 않는다.
+<DT><B>EINVAL</B>
+
+<DD>
+<I>len</I>이
+
+양수가 아니다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+POSIX.1b, SVr4.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+munlock">munlock</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+mlockall">mlockall</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+munlockall">munlockall</A></B>(2)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 5월 20일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

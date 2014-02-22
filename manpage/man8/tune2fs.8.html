@@ -1,0 +1,221 @@
+<HTML><HEAD><TITLE>Manpage of TUNE2FS</TITLE>
+</HEAD><BODY>
+<H1>TUNE2FS</H1>
+Section: Maintenance Commands (8)<BR>Updated: 1996년 5월<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+tune2fs - 개정판 확장 화일시스템의 파라미터를 튜닝한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>개용</H2>
+
+<B>tune2fs</B>
+
+[
+<B>-l</B>
+
+]
+[
+<B>-c</B>
+
+<I>최대 마운트 횟수</I>
+
+]
+[
+<B>-e</B>
+
+<I>에러 발생시 반응</I>
+
+]
+[
+<B>-i</B>
+
+<I>각 점검 간의 간격</I>
+
+]
+[
+<B>-m</B>
+
+<I>예약 블럭 퍼센트</I>
+
+]
+[
+<B>-r</B>
+
+<I>예약 블럭 갯수</I>
+
+]
+[
+<B>-u</B>
+
+<I>사용자</I>
+
+]
+[
+<B>-g</B>
+
+<I>그룹</I>
+
+]
+장치명
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>tune2fs</B>
+
+은 리눅스 개정판 확장 화일시스템의 몇몇 변경가능한 파라미터값을 설정한다.
+<P>
+
+파라미터 변경시 읽기/쓰기 마운트된 화일 시스템에 tune2fs 를 절대 사용하지
+말라.
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션 </H2>
+
+<DL COMPACT>
+<DT><I>-c 최대 마운트 횟수</I>
+
+<DD>
+각 화일 시스템 점검 사이에 최대 몇 번의 마운트가 가능한지 설정
+<DT><I>-e 에러 발생시 반응</I>
+
+<DD>
+에러가 발생했을 때의 커널 코드의 반응양식을 변화시킨다.
+<I>errors-behavior</I>
+
+값은 다음 값을 가질 수 있다:
+<BR>
+
+	continue		정상적으로 실행을 계속한다.
+<BR>
+
+	remount-ro	읽기 전용으로 다시 마운트한다.
+<BR>
+
+	panic		커널 패닉을 일으킨다.
+<DT><I>-g 그룹</I>
+
+<DD>
+예약된 블럭을 사용할 수 있는 사용자 그룹을 설정한다.
+<BR>
+
+<I>그룹</I>
+
+값은 GID 또는 그룹명이 올 수 있다.
+<DT><I>-i 각 점검 간의 간격[d|m|w]</I>
+
+<DD>
+화일 시스템 점검 간의 최대 시간 간격을 설정한다.
+접미어를 두지 않거나 `d'는 날짜, `m'은 달, `w'은 주를 뜻한다.
+0 값은 시간 점검을 하지 않게 한다.
+<DT><I>-l</I>
+
+<DD>
+화일 시스템의 수퍼블럭 내용을 나열한다.
+<DT><I>-m 예약 블럭 퍼센트</I>
+
+<DD>
+주어진 장치의 예약 블럭 퍼센트를 조절한다.
+<DT><I>-r 예약 블럭 갯수</I>
+
+<DD>
+주어진 장치 상의 예약 블럭 갯수를 조절한다.
+<DT><I>-u 사용자</I>
+
+<DD>
+예약 블럭을 사용할 수 있는 사용자를 설정한다.
+<I>사용자</I>
+
+는 UID 또는 사용자명이 될 수 있다.
+</DL>
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>버그</H2>
+
+아직 버그를 찾지 못했다. 버그가 있을 수는 있으나 있을 것 같지 않다.
+<P>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+<B>이 유틸리티는 여러분의 책임 하에 실행하기 바란다. 여려분은 화일 시스템을</B>
+
+<B>수정하고 있는 것이다.</B>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>저자</H2>
+
+<B>tune2fs </B>
+
+은 ext2 화일시스템의 개발자이자 관리책임자인 Remy Card &lt;<A HREF="mailto:card@masi.ibp.fr">card@masi.ibp.fr</A>&gt;씨가
+만들었다.
+<BR>
+
+<B>tune2fs</B>
+
+은 Theodore Ts'o &lt;<A HREF="mailto:tytso@mit.edu">tytso@mit.edu</A>&gt;씨가 만든 ext2fs 라이브러리를 사용한다.
+<BR>
+
+이 맨페지이즌 Christian Kuhtz &lt;<A HREF="mailto:chk@data-hh.Hanse.DE">chk@data-hh.Hanse.DE</A>&gt;씨가 작성하였다.
+<BR>
+
+시간에 의한 점검은 Uwe Ohse &lt;<A HREF="mailto:uwe@tirka.gun.de">uwe@tirka.gun.de</A>&gt;씨가 추가하였다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>구할 수 있는 곳</H2>
+
+<B>tune2fs</B>
+
+은 <A HREF="ftp://ftp.ibp.fr">ftp.ibp.fr</A> 또는 tsx-11.mit.edu 에서 익명 ftp 를 통하여 
+/pub/linux/packages/ext2fs 디렉토리에서 구할 수 있다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>참고</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+dumpe2fs">dumpe2fs</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+e2fsck">e2fsck</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mke2fs">mke2fs</A></B>(8)
+
+<P>
+<P>
+<A NAME="lbAK">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개용</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션 </A><DD>
+<DT><A HREF="#lbAF">버그</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">저자</A><DD>
+<DT><A HREF="#lbAI">구할 수 있는 곳</A><DD>
+<DT><A HREF="#lbAJ">참고</A><DD>
+<DT><A HREF="#lbAK">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

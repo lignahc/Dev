@@ -1,0 +1,156 @@
+<HTML><HEAD><TITLE>Manpage of CHATTR</TITLE>
+</HEAD><BODY>
+<H1>CHATTR</H1>
+Section: User Commands  (1)<BR>Updated: 1996년 5월<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+chattr - 리눅스 개정판 확장 화일시스템 상의 화일 속성 변경
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>chattr</B>
+
+[
+<B>-RV</B>
+
+]
+[
+<B>-v</B>
+
+버전
+]
+[
+모드
+]
+<I>화일들...</I>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>chattr</B>
+
+은 개정판 확장 화일시스템의 화일 속성을 변경한다.
+<P>
+
+심볼릭 모드의 형식은 +-=[Sacdisu] 이다.
+<P>
+
+`+' 연산자는 주어진 속성을 현재 화일의 속성에 추가한다.
+`-' 연산자는 속성을 제거한다. `=' 연산자는 화일이 갖는 속성을 오로지
+주어진 속성만 갖도록 설정한다.
+<P>
+
+`Sacdisu' 라는 문자들은 화일에 대한 속성을 나타낸다.
+동시적 갱신 (S), 추가만 지원(a), 압축상태(c), 면역상태 (i), 덤프 안함 (d),
+안전한 지움(s), 지울 수 없음 (u).
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><I>-R</I>
+
+<DD>
+디렉토리와 그 이하 모든 내용의 속성을 회귀적으로 변환시킨다.
+<DT><I>-V</I>
+
+<DD>
+변화된 속성에 대하여 자세히 출력한다.
+<DT><I>-v 버전</I>
+
+<DD>
+화일에 버전을 설정한다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>속성</H2>
+
+`a' 속성을 지닌 화일은 쓰기시에 오로지 추가모드로만 열 수 있다.
+<P>
+`c' 속성을 지닌 화일은 커널에 의해 디스크 상에 압축 상태로 저장된다.
+화일로부터 읽기 작업을 하면 압축이 풀린 자료가 반환된다. 쓰기 작업은
+디스크 상에 저장하기 전에 자동으로 압축된다.
+<P>
+`d' 속성을 지닌 화일은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+dump">dump</A></B>(8)
+
+명령 수행시 백업되지 않는다.
+<P>
+`i' 속성을 가진 화일은 수정할 수 없다: 지울 수도 이름을 변경할 수도 그리고
+링크도 가할 수 없으며 어떤 자료도 써질 수 없다.
+오로지 수퍼유저만이 다시 이 속성을 설정하거나 지울 수 있다.
+<P>
+`s' 속성을 가진 화일이 지워질 때는 일단 블럭들이 모두 0 으로 되고 다시
+디스크상에 씌여진다.
+<P>
+`S' 속성을 가진 화일이 수정될 때는 그 변화가 디스크 상에 동기화된다.
+이것은 마치 `sync' 마운트 옵션을 몇몇 화일에게 부여한 것과 같다.
+<P>
+`u' 속성을 가진 화일이 지워지면 그 내용이 저장된다. 사용자는 다시 복구할 수
+있다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>저자</H2>
+
+<B>chattr</B>
+
+은 ext2 화일시스템의 개발자이자 관리책임자인 Remy Card &lt;<A HREF="mailto:card@masi.ibp.fr">card@masi.ibp.fr</A>&gt;씨가
+만들었다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>버그와 제한 사항</H2>
+
+ext2 화일시스템 0.5a 까지는 커널에 의해 `c'와 `u' 속성이 제대로 지켜지지
+않고 있다.
+<P>
+
+이러한 속성들은 다음 버전의 ext2 화일 시스템에서 구현될 것이다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>AVAILABILITY</H2>
+
+<B>chattr</B>
+
+은 <A HREF="ftp://ftp.ibp.fr">ftp.ibp.fr</A> 또는 tsx-11.mit.edu 에서 익명 ftp 를 통하여 
+/pub/linux/packages/ext2fs 디렉토리에서 구할 수 있다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>참고</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+lsattr">lsattr</A></B>(1)
+
+<P>
+<A NAME="lbAK">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">속성</A><DD>
+<DT><A HREF="#lbAG">저자</A><DD>
+<DT><A HREF="#lbAH">버그와 제한 사항</A><DD>
+<DT><A HREF="#lbAI">AVAILABILITY</A><DD>
+<DT><A HREF="#lbAJ">참고</A><DD>
+<DT><A HREF="#lbAK">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:56 GMT, March 25, 2004
+</BODY>
+</HTML>

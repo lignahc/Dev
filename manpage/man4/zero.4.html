@@ -1,0 +1,75 @@
+<HTML><HEAD><TITLE>Manpage of NULL</TITLE>
+</HEAD><BODY>
+<H1>NULL</H1>
+Section: 리눅스 프로그래머 매뉴얼 (4)<BR>Updated: 1992년 11월 21일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+null, zero - 데이터 소멸점(sink)
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>null</B>나 <B>zero</B> 특수 파일에 쓴 데이터는 버려진다.
+<P>
+
+<B>null</B> 특수 파일에서 읽으면 항상 EOF를 리턴하는 반면, <B>zero</B>에서
+읽으면 항상 \0 문자를 리턴한다.
+<P>
+
+<B>null</B>와 <B>zero</B>는 다음과 같이 만들어진다:
+<DL COMPACT><DT><DD>
+<P>
+mknod -m 666 /dev/null c 1 3
+<BR>
+
+mknod -m 666 /dev/zero c 1 5
+<BR>
+
+chown root:mem /dev/null /dev/zero
+<P>
+</DL>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>주의</H2>
+
+이 장치가 모든 사용자에게 쓰기와 읽기 가능하지 않으면, 많은 프로그램이
+이상한 동작을 할 것이다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>파일</H2>
+
+/dev/null
+<BR>
+
+/dev/zero
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mknod">mknod</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+chown">chown</A></B>(1)
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>역자</H2>
+
+임종균 &lt;<A HREF="mailto:hermes44@secsm.org">hermes44@secsm.org</A>&gt;, 2000년 4월 21일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">주의</A><DD>
+<DT><A HREF="#lbAE">파일</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+<DT><A HREF="#lbAG">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

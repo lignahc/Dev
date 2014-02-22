@@ -1,0 +1,60 @@
+<HTML><HEAD><TITLE>Manpage of GROUP</TITLE>
+</HEAD><BODY>
+<H1>GROUP</H1>
+Section: Linux Programmer's Manual (5)<BR>Updated: December 29 1992<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+group - user group file
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>/etc/group</B>은 사용자들이 속한 그룹을 규정하는 ASCII 파일이다.
+한 줄에 한명씩 있고, 각 줄마다 형식을 가지고 있다:
+<P>
+<DL COMPACT><DT><DD>
+group_name:passwd:GID:user_list
+</DL>
+
+<P>
+각 부분이 뜻하는 것은 아래와 같다:
+<DL COMPACT>
+<DT>group_name<DD>
+그룹의 이름.
+<DT>password<DD>
+(암호화 된)그룹 패스워드. 이 부분이 비어있다면, 
+패스워드가 필요 없는 것이다.
+<DT>GID<DD>
+숫자로 된 그룹ID.
+<DT>user_list<DD>
+그룹 구성원 모두의 사용자 이름,콤마로 구분된다.
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>파일</H2>
+
+/etc/group
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+login">login</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+newgrp">newgrp</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+passwd">passwd</A></B>(5)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">파일</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

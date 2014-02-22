@@ -1,0 +1,86 @@
+<HTML><HEAD><TITLE>Manpage of TTYTYPE</TITLE>
+</HEAD><BODY>
+<H1>TTYTYPE</H1>
+Section: 리눅스 프로그래머 메뉴얼 (5)<BR>Updated: 1993년 7월 24일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ttytype - 기본 터미널타입을 맵핑하기위한 터미널 장치
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<I>/etc/ttytype</I>
+
+파일은 tty행을 가진 termcap/terminfo 터미널 타입명과 일치한다.
+각 행은 터미널 타입뒤에 공백이 오고, 마지막으로 
+tty명(
+<I>/dev/</I>)
+
+없는 장치명)으로 되어있다.
+
+이런 점은 사용자의 현재 tty를 위한 기본 터미널명의 환경변수 TERM을 설정하는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+tset">tset</A></B>(1)
+
+프로그램에 의해 사용된다.
+
+이런 도구는 유닉스 미니컴퓨터에서 프로그램에 의하지 않고 배선에 의한
+character-cell 터미널 기능을 지원하는 전통적인 시간-공유 환경을 위해 
+디자인되었다.
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>예제</H2>
+
+전형적으로
+<I>/etc/ttytype</I>
+
+는:
+<DL COMPACT><DT><DD>
+<P>
+con80x25 tty1
+<BR>
+
+vt320 ttys0
+이다.
+<P>
+</DL>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>파일</H2>
+
+<DL COMPACT>
+<DT><I>/etc/ttytype</I>
+
+<DD>
+tty 정의 파일.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+getty">getty</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+terminfo">terminfo</A></B>(5), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+termcap">termcap</A></B>(5)
+
+
+
+
+
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">예제</A><DD>
+<DT><A HREF="#lbAE">파일</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,112 @@
+<HTML><HEAD><TITLE>Manpage of NAMEI</TITLE>
+</HEAD><BODY>
+<H1>NAMEI</H1>
+Section: User Commands  (1)<BR>Updated: Local<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+namei - 터미날 포인트가 발견되기 전까지 경로이름을 보여준다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>namei</B>
+
+<I>[-mx]</I>
+
+<I>경로이름</I>
+
+<I>[ 경로이름 ... ]</I>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>경로이름</I>에 사용될 인자는 유닉스 파일의 어떠한 형태
+(심블릭 링크, 일반 파일, 경로, 기타등등)도 사용될 수 있다.
+그러면, <B>namei</B>는 그 <I>경로이름</I>에 관련된 모든 
+파일을 보여준다. 
+만약 심블릭 링크가 발견되면, 그 해당 링크한 원본 파일에 대해서도 
+들여쓰기를 해서, 그 정보를 모두 보여준다. 
+<P>
+
+이 풀그림은 &quot;too many levels of symbolic links
+(너무 많은 수준으로 링크된 파일)&quot;의 오류를 발견하는데, 
+유용하게 쓰인다.
+<P>
+
+출력되는 각 줄의 처음에는 그 파일의 형태를 알리는 문자를 표시하는데, 
+그것은 다음과 같다.
+<P>
+
+<PRE>
+   f: = 입력된 <I>경로이름</I>
+    d = 경로
+    l = 심블릭 링크 (링크 대상이 된 파일은 다음에 들여쓰기로 보여준다.)
+    s = 소켓
+    b = 블럭 장치
+    c = 캐릭터 장치
+    - = 일반 파일
+    ? = 알 수 없는 파일
+</PRE>
+
+<P>
+
+<I>Namei</I>
+
+명령은 현재 시스템에서 처리될 수 있는 최대 심블릭 갯수(다중 심블릭)에 
+대한 유용한 정보를 제공한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-x</B>
+
+<DD>
+마운트 된 파일시스템의 경로에 대해서는 'd' 대신 'D'를 표시한다.
+<DT><B>-m</B>
+
+<DD>
+<A HREF="http://localhost/cgi-bin/man/man2html?1+ls">ls</A>(1)에서 사용하듯이 각 파일의 모드를 보여준다. 
+예를 들면 'rwxr-xr-x'.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>만든이</H2>
+
+Roger Southwick  (<A HREF="mailto:rogers@amadeus.wr.tek.com">rogers@amadeus.wr.tek.com</A>)
+<A NAME="lbAG">&nbsp;</A>
+<H2>벌레</H2>
+
+있을지도 모름.
+<A NAME="lbAH">&nbsp;</A>
+<H2>CAVEATS</H2>
+
+만약에 두 파일이 서로 심블릭 링크되어 순환되고 있는 상태라면, 
+이 풀그림은 계속해서 그 정보를 보여준다. 
+이때는 SIGINT 시그날(일반적으로 ^C)로 멈추어야한다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+ls">ls</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+stat">stat</A>(1)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">만든이</A><DD>
+<DT><A HREF="#lbAG">벌레</A><DD>
+<DT><A HREF="#lbAH">CAVEATS</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:56 GMT, March 25, 2004
+</BODY>
+</HTML>

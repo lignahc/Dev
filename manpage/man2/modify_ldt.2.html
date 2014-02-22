@@ -1,0 +1,145 @@
+<HTML><HEAD><TITLE>Manpage of MODIFY_LDT</TITLE>
+</HEAD><BODY>
+<H1>MODIFY_LDT</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1995년 6월 22일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+modify_ldt - ldt를 가져오거나 설정한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/linux/ldt.h">linux/ldt.h</A>&gt;</B>
+<B>#include &lt;<A HREF="file:/usr/include/linux/unistd.h">linux/unistd.h</A>&gt;</B>
+
+<B>_syscall3( int, modify_ldt, int, func, void *, ptr, unsigned long, bytecount )</B>
+
+<B>int modify_ldt(int </B><I>func</I><B>, void *</B><I>ptr</I><B>, unsigned long </B><I>bytecount</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>modify_ldt</B>는
+
+프로세스를 위해 지역 기술자 테이블(local descriptor table, ldt)을 읽거나 쓴다.
+ldt는 i386 프로세스에 의해 사용되는 프로세스당 메모리 관리 테이블이다.
+이 테이블에 관한 더 많은 정보를 원한다면, Intel 386 프로세스 핸드북을 
+참조해라.
+<P>
+
+<I>func</I>가
+
+0이라면, 
+<B>modify_ldt</B>는
+
+<I>ptr</I>가
+
+가리키는 메모리로 ldt를 읽어들인다.
+읽을 바이트 수는 
+<I>bytecount</I>보다
+
+작으며 ldt의 실제 크기를 나타낸다.
+<P>
+
+<I>func</I>가
+
+1이라면,
+<B>modify_ldt</B>는
+
+하나의 ldt 엔트리를 수정한다.
+<I>ptr</I>는
+
+<I>modify_ldt_ldt_s</I>
+
+구조체를 가리키며
+<I>bytecount</I>는
+
+이 구조체의 크기와 같아야 한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시,
+<B>modify_ldt</B>는
+
+읽은(읽기 시에) 바이트의 실제 수나 0(쓰기 시에)을 반환한다.
+실패시,
+<B>modify_ldt</B>는
+
+-1을 반환하며
+<I>errno</I>는
+
+적당한 값으로 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>ENOSYS</B>
+
+<DD>
+<I>func</I>가
+
+0도 1도 아니다.
+<DT><B>EINVAL</B>
+
+<DD>
+<I>ptr</I>이
+
+0이거나, 
+<I>func</I>가
+
+1이고
+<I>bytecount</I>가
+
+<I>modify_ldt_ldt_s</I>구조체의
+
+크기와 같지 않을 경우나,
+<I>func</I>가
+
+1이고 새로운 ldt 엔트리가 허용되지 않는 값이다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>ptr</I>이
+
+주소 공간이 아닌 곳을 가리키고 있다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+이 함수는 리눅스에 의존적이며 호환성을 염두에 둔 프로그램에서 사용해서는
+안된다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+vm86">vm86</A></B>(2)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 5월 28일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

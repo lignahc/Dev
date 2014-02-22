@@ -1,0 +1,106 @@
+<HTML><HEAD><TITLE>Manpage of KBDRATE</TITLE>
+</HEAD><BODY>
+<H1>KBDRATE</H1>
+Section: Linux Programmer's Manual (8)<BR>Updated: 1994.6.22.<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+kbdrate - 글쇠 누름 속도에 대해서 다시 지정한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>kbdrate [ -s ] [ -r</B>
+
+rate
+<B>] [ -d</B>
+
+delay
+<B>]</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>kbdrate</B>
+
+풀그림은 IBM 글쇠판의 rate와 delay 값을 바꾸는데 사용된다. 
+<P>
+아무 옵션 없이 사용하면, 초기값으로 rate는 10.9, delay는 250으로 지정된다. 
+이것이 IBM 표준이다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-s</B>
+
+<DD>
+아무 메시지를 보여주지 않고 끝낸다.
+<DT><B>-r</B><I> rate</I>
+
+<DD>
+글쇠 rate 값을 바꾼다. 
+rate 란, 1초 동안 찍을 수 있는 글자 수를 말한다. 
+<I>rate</I> 값은 2.0부터 30.0까지다. 이 값이 지정되면, 
+시스템에서 처리할 수 있는 가장 적당한 값으로 변환되어 그 값이 지정된다. 
+실질적으로 지정할 수 있는 값은 다음과 같다:
+2.0, 2.1, 2.3, 2.5, 2.7, 3.0, 3.3, 3.7, 4.0, 4.3, 4.6,
+5.0, 5.5, 6.0, 6.7, 7.5, 8.0, 8.6, 9.2, 10.0, 10.9, 12.0, 13.3, 15.0, 16.0,
+17.1, 18.5, 20.0, 21.8, 24.0, 26.7, 30.0.
+<DT><B>-d</B><I> delay</I>
+
+<DD>
+글쇠의 delay 값을 바꾼다.
+delay란 글쇠를 누르고 있을 때, 이것이 연속 글쇠 누름이냐, 아니면, 
+단순 글쇠 누름이냐를 판단하는 밀리초(1/1000초)이다. 
+<I>delay</I> 값은 250부터 1000까지다. 실질적으로 사용될 수 있는 
+값은 다음과 같다:
+250mS, 500mS, 750mS,
+and 1000mS.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>BUGS</H2>
+
+모든 글쇠판이 모든 rate를 지원하지는 않는다.
+<P>
+
+모든 글쇠판이 똑같은 rate 값을 사용하지는 않는다.
+<P>
+
+Gateway AnyKey keyboard에서는 rate 지정이 바르게 작동되지 않는다. 
+만약, 누군가가 Gateway AnyKey keyboard의 글쇠 처리 방법을 알고 있다면, 
+<A HREF="mailto:faith@cs.unc.edu">faith@cs.unc.edu</A>로 편지를 부탁한다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 파일</H2>
+
+<I>/etc/rc.local</I>
+
+<BR>
+
+<I>/dev/port</I>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>만든이</H2>
+
+Rik Faith (<A HREF="mailto:faith@cs.unc.edu">faith@cs.unc.edu</A>)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">BUGS</A><DD>
+<DT><A HREF="#lbAG">관련 파일</A><DD>
+<DT><A HREF="#lbAH">만든이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

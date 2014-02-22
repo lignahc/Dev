@@ -1,0 +1,142 @@
+<HTML><HEAD><TITLE>Manpage of KILLALL</TITLE>
+</HEAD><BODY>
+<H1>KILLALL</H1>
+Section: 사용자 명령 (1)<BR>Updated: 1999년 9월 7일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+killall - 이름에 의해 프로세스를 죽인다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+
+<B>killall</B>
+
+[<B>-egiqvw</B>]
+
+[<B>-</B><I>signal</I><B></B>]
+
+<I>name ...</I>
+
+<BR>
+
+<B>killall</B>
+
+-l
+
+<BR>
+
+<B>killall</B>
+
+-V
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>killall</B>
+
+은 지정된 명령이 실행중인 모든 프로세스에 시그널을 보낸다.
+만약 시그널 이름이 지정되지 않으면, SIGTERM 이 보내진다.
+<P>
+
+시그널은 이름이나(예를 들면, <B>-HUP</B>) 숫자에 의해(에를 들면, <B>-1</B>) 지정될 수 있다. 시그널 0 (프로세스가 존재하는지 검사) 는 오직 숫자에 의해서만 지정될 수 있다.
+<P>
+
+만약 명령 이름이 슬래쉬(<B>/</B>)를 포함한다면, 특정한 파일을 실행중인 프로세스들은 이름에 상관없이 죽도록 선택된다.
+<P>
+
+<B>killall</B> 는 나열된 명령에서 아무런 프로세스도 죽지 않으면 0이 아닌 코드를 반환한다.
+만약 각 명령마다 최소한 하나의 프로세스라도 죽었으면, <B>killall</B>는 0을 반환한다.
+<P>
+
+<B>killall</B> 프로세스는 절대 자기자신을 죽이지 않는다(그러나 다른 <B>killall</B> 는 죽일 수 있다).
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-e</B><DD>
+매우 긴 이름에 대해 정확한 짝을 요구한다.
+만약 명령 이름이 15글자가 넘으면, 완전한 이름은 이용불가능할수도 있다
+(다시 말하면 그것이 바뀔수 있다는 것이다.)
+이런 경우에, <B>killall</B> 는 처음 15자 이내가 맞는 것은 모두 죽일 것이다.
+<B>-e</B> 옵션을 지정하면, 이러한 영역은 지나치게 된다.
+<B>killall</B> 는 <B>-v</B> 옵션이 <B>-e</B> 옵션과 함께 지정되어 있으면,
+각각의 지나친 엔트리마다 메시지를 출력한다.
+<DT><B>-g</B><DD>
+프로세스가 속한 프로세스 그룹을 죽인다.
+같은 프로세스 그룹에 속한 여러개의 프로세스들이 발견되더라도 시그널은 그룹당 한번만 보내진다.
+<DT><B>-i</B><DD>
+죽이기전에 확인을 위해 상호적으로 물어본다.
+<DT><B>-l</B><DD>
+알려진 모든 시그널 이름 목록을 보여준다.
+<DT><B>-q</B><DD>
+프로세스가 전혀 죽지 않았어도 불평하지 않는다.
+<DT><B>-v</B><DD>
+시그널이 성공적으로 보내졌다면 보고한다.
+<DT><B>-V</B><DD>
+버전 정보를 출력한다.
+<DT><B>-w</B><DD>
+모든 죽여진 프로세스들이 죽도록 기다린다. <B>kiiall</B> 는 1 초에 한번씩 죽여진 프로세스들이 여전시 존재하는지 검사해서 아무것도 남지 않게 될때 반환한다.
+<B>killall</B> 는 시그널이 무시되거나, 영향이 없을 경우, 프로세스가 좀비 상태에 머무르게 될 경우에 영원히 기다릴 수도 있음에 유의하라.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>파일</H2>
+
+<PRE>
+/proc   proc 파일 시스템의 위치
+</PRE>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>알려진 버그들</H2>
+
+파일에 의해서 죽이는 것은 실행중에 개방된 실행파일에 대해서만 동작한다.
+즉, 순수 실행파일이 아닌것은 이런식으로 죽일 수 없다.
+<P>
+
+<B>killall</B> <I>name</I> 을 치는 것은 리눅스가 아닌 시스템에서는 원하는 결과를 얻지 못할지도 모른다는 것에 유의하라. 특히 특권을 가진 사용자일 경우에 더욱 유의하라.
+<P>
+
+<B>killall -w</B> 는 검색하는 동안 어떤 프로세스가 없어지고 같은 PID를 가진 다른 프로세스로 치환되더라도 탐지하지 못한다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>저자</H2>
+
+Werner Almesberger &lt;<A HREF="mailto:Werner.Almesberger@epfl.ch">Werner.Almesberger@epfl.ch</A>&gt;
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+kill">kill</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+fuser">fuser</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+pidof">pidof</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+ps">ps</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?2+kill">kill</A>(2)
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+서성용 &lt;<A HREF="mailto:pooh@kldp.org">pooh@kldp.org</A>&gt; 2000년 6월 2일
+<P>
+<P>
+<P>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">파일</A><DD>
+<DT><A HREF="#lbAG">알려진 버그들</A><DD>
+<DT><A HREF="#lbAH">저자</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

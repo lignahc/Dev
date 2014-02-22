@@ -1,0 +1,220 @@
+<HTML><HEAD><TITLE>Manpage of SETBUF</TITLE>
+</HEAD><BODY>
+<H1>SETBUF</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 11월 29일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+setbuf, setbuffer, setlinebuf, setvbuf - 스트림 버퍼링 작동들
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+
+<B>#include &lt;<A HREF="file:/usr/include/stdio.h">stdio.h</A>&gt;</B>
+
+<P>
+<B>void setbuf(FILE *</B><I>stream</I><B>, char *</B><I>buf</I><B>);</B>
+
+<BR>
+
+<B>void setbuffer(FILE *</B><I>stream</I><B>, char *</B><I>buf</I><B>, size_t</B><I>size</I><B>);</B>
+
+<BR>
+
+<B>void setlinebuf(FILE *</B><I>stream</I><B>);</B>
+
+<BR>
+
+<B>int setvbuf(FILE *</B><I>stream</I><B>, char *</B><I>buf</I><B>, int </B><I>mode</I>
+
+<B>, size_t </B><I>size</I><B>);</B>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이용할수 있는 버리핑의 3가지 타입은 비 버퍼링, 블럭 버퍼링 그리고 라인 
+버퍼링이다.
+출력 스트림이 비 버퍼링일때, 정보는 쓰자마자 목적 파일이나 터미널에 나타난다.;
+블럭 버퍼링일때 많은 문자들은 블럭으로써 저장되고 쓰여진다;
+라인 버퍼링일때 문자들은 뉴라인이 출력될때까지나 터미널 장치(stdin)에 부착된 스트림에서 입력이 읽혀질때까지 저장된다.
+함수 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+fflush">fflush</A></B>(3)는
+
+블럭을 지우도록 강요할때 쓰여진다.(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+fclose">fclose</A></B>(3)를
+
+참조해라.)
+보통 모든 파일들은 블럭 버퍼링이다. 처음 I/O 작동들이 파일에서 일어날때,
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+malloc">malloc</A></B>(3)이
+
+불려진다. 그리고 버퍼를 얻는다.
+만일 스트림이 터미널에 연계되어 있다면(보통
+<I>stdout</I>
+
+처럼), 스트림은 라인 버퍼링이다. 표준 에러 스트림
+<I>stderr</I>
+
+는 항상 기본적으로 비 버퍼링이다.
+<P>
+
+<B>setvbuf</B>
+
+함수는 버퍼링을 바꾸기 위해 어떤때든지 열려진 스트림에 사용될수 있다.
+<I>mode</I>
+
+인자는 다음 세 매크로중 하나이어야 한다:
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>_IONBF</B>
+
+<DD>
+비 버퍼링
+<DT><B>_IOLBF</B>
+
+<DD>
+라인 버퍼링
+<DT><B>_IOFBF</B>
+
+<DD>
+완전히 버퍼링
+</DL>
+</DL>
+
+<P>
+
+비-버퍼링 파일들을 제외하고, 
+<I>buf</I>
+
+인자는 적어도
+<I>size</I>
+
+바이트 만큼 긴 버퍼를 가리켜야 한다.; 이 버퍼는 현재 버퍼 대신 사용된다.
+만일 인자
+<I>buf</I>
+
+가 
+<B>NULL</B>이라면,
+
+단지 모드만이 영향을 받는다; 새로운 버퍼는 다음 읽고 쓰기 작동시 할당된다.
+<I>setvbuf</I>
+
+함수는 어떤때든지 사용가능하지만 ``active''가 아닐때는 스트림의 모드만
+바꿀수 있다: 즉, 어떤 I/O 전이나 
+<B>fflush</B>호출
+
+바로 후에.
+<P>
+
+다른 세 함수는 
+<B>setvbuf</B>호출을
+
+위한 별칭이다.
+<B>setbuf</B>
+
+함수는 정확시 다음 호출과 같다.
+<P>
+
+<DL COMPACT><DT><DD>
+setvbuf(stream, buf, buf ? _IOFBF : _IONBF, BUFSIZ);
+</DL>
+
+<P>
+
+<B>setbuffer</B>
+
+함수는 
+버퍼의 크기가 기본값
+<B>BUFSIZ</B>
+
+로 결정되는것 보다는 호출자까지라는 것을 제외하고는 같다.
+<B>setlinebuf</B>
+
+함수는 정확히 다음과 같다:
+<P>
+
+<DL COMPACT><DT><DD>
+setvbuf(stream, (char *)NULL, _IOLBF, 0);
+</DL>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+fopen">fopen</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+fclose">fclose</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+fflush">fflush</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+fread">fread</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+malloc">malloc</A></B>(3), 
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+puts">puts</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+printf">printf</A></B>(3)
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>표준</H2>
+
+<B>setbuf</B>
+
+와
+<B>setvbuf</B>
+
+함수는  ANSI C3.159-1989 (``ANSI C'')에 따른다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>버그</H2>
+
+<B>setbuffer</B>
+
+와
+<B>setlinebuf</B>
+
+함수는 4.2BSD 이전버전에는 호환되지 않는다. 그리고 Linux에서는 이용할수
+없다. 4.2BSD와 4.3BSD 시스템에서, 
+<B>setbuf</B>
+
+는 항상 suboptimal 버퍼 사이즈를 사용해야 하며 피해져야 한다.
+
+여러분은 
+<I>buf</I>
+
+와 그것이 가리키는 공간은 
+<I>stream</I>
+
+이 닫혀지는 시간에도, 프로그램 종료시에도 여전히 존재하는 곳임을 확실히 
+해야 한다.
+
+예를 들어, 다음은 불법적이다:
+<PRE>
+
+#include &lt;<A HREF="file:/usr/include/stdio.h">stdio.h</A>&gt;
+int main()
+{
+    char buf[BUFSIZ];
+    setbuf(stdin, buf);
+    printf(&quot;Hello, world!\n&quot;);
+    return 0;
+}
+</PRE>
+
+<P>
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 2월 26일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+<DT><A HREF="#lbAF">표준</A><DD>
+<DT><A HREF="#lbAG">버그</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

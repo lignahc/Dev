@@ -1,0 +1,115 @@
+<HTML><HEAD><TITLE>Manpage of HD</TITLE>
+</HEAD><BODY>
+<H1>HD</H1>
+Section: Linux Programmer's Manual (4)<BR>Updated: 17 December 1992<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+hd - MFM/IDE 하드 디스크 장치
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>Hd*</B>는 포멧되지 않은 MFM/IDE하드에 억세스하기 위한 블록 장치이다.
+프라이머리 IDE 콘트롤러에 있는 마스터 드라이브는(주 장치 번호 3번)
+<B>hda</B>이다;슬레이브는 <B>hdb</B>이다. 세컨드 콘트롤러에 있는 
+마스터 드라이브는(주 장치 번호 22번)<B>hdc</B>이다. 
+그리고 슬레이브는 <B>hdd</B>이다.
+<P>
+
+일반적인 IDE 블록 장치이름은 아래와 같은 형태를 가진다.
+<B>hd</B><I>X</I>, 혹은
+<B>hd</B><I>XP,</I><B>이</B><I>경우</I><I>X</I>
+
+는 물리적인 드라이브를 표시하고,
+<I>P</I>
+
+는 물리적인 드라이브상의 파티션을 표시하는 번호이다.
+첫번째 형태인,
+<B>hd</B><I>X,</I>
+
+는 전체 드라이브를 표시하는데 쓰인다.
+파티션 번호는 파티션이 발견된 순서에 따라 할당되고, 
+비어이 있지않고, 확장 파티션이 아니어야 번호를 받을 수 있다.
+하지만 그것이 쓰이지 않거나 확장된 것임에 상관없이 
+1-4까지의 파티션 번호는 MBR(프라이머리 파티션)상의 
+4개의 파티션에게 할당된다, 그래서 첫번째 논리적 파티션은
+<B>hd</B><I>X</I><B>5</B>이 된다.
+.
+DOS 타입의 파티션과, BSD-disklabel 파티션이 모두 지원된다
+거의 63개의 파티션을 만들 수 있다..
+<P>
+
+예를들어,
+<B>/dev/hda</B>
+
+는 시스템상의 첫번째 IDE 드라이브 전체를 나타낸다; 그리고
+<B>/dev/hdb3</B>
+
+는 세컨드 드라이브의 세번째 도스 프라이머리 파티션을 뜻한다.
+<P>
+
+대체로 아래와 같이 만들어진다:
+<DL COMPACT><DT><DD>
+<P>
+mknod -m 660 /dev/hda b 3 0
+<BR>
+
+mknod -m 660 /dev/hda1 b 3 1
+<BR>
+
+mknod -m 660 /dev/hda2 b 3 2
+<BR>
+
+...
+<BR>
+
+mknod -m 660 /dev/hda8 b 3 8
+<BR>
+
+mknod -m 660 /dev/hdb b 3 64
+<BR>
+
+mknod -m 660 /dev/hdb1 b 3 65
+<BR>
+
+mknod -m 660 /dev/hdb2 b 3 66
+<BR>
+
+...
+<BR>
+
+mknod -m 660 /dev/hdb8 b 3 72
+<BR>
+
+chown root:disk /dev/hd*
+</DL>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>파일</H2>
+
+/dev/hd*
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mknod">mknod</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+chown">chown</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8), <B><A HREF="http://localhost/cgi-bin/man/man2html?4+sd">sd</A></B>(4)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">파일</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

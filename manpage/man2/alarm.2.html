@@ -1,0 +1,102 @@
+<HTML><HEAD><TITLE>Manpage of ALARM</TITLE>
+</HEAD><BODY>
+<H1>ALARM</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1993년 7월 21일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+alarm - 시그널 전달을 위한 알람을 설정한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<B>unsigned int alarm(unsigned int </B><I>seconds</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>alarm</B>은
+
+<I>seconds</I>초
+
+후에 프로세스에 SIGALRM 시그널이 전달되도록 설정한다.
+<P>
+만약 
+<I>seconds</I>가
+
+0이면 
+<B>alarm</B>이
+
+수행되지 않는다.
+<P>
+어떤 경우에도 이전에 설정된
+<B>alarm</B>은
+
+은 취소된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>alarm</B>은
+
+이전에 설정된 알람이 시그널을 전달할 때까지 남은 시간을 초 단위의 
+숫자로 반환하거나, 이전에 설정된 알람이 없다면 0을 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>주의</H2>
+
+<B>alarm</B> 과 <B>setitimer</B>는
+
+같은 타이머를 공유한다; 한 쪽을 호출하면 다른 쪽을 간섭할 것이다.
+<P>
+스케줄링 지연이 임의의 시간 동안 프로세스의 수행을 지연시킬 수도 있다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID, POSIX, X/OPEN, BSD 4.3
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+setitimer">setitimer</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+signal">signal</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sigaction">sigaction</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+gettimeofday">gettimeofday</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+pause">pause</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+sleep">sleep</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+임종균 &lt;<A HREF="mailto:hermes44@secsm.org">hermes44@secsm.org</A>&gt;, 2000년 4월 14일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">주의</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

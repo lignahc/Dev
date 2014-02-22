@@ -1,0 +1,182 @@
+<HTML><HEAD><TITLE>Manpage of LOGGER</TITLE>
+</HEAD><BODY>
+<H1>LOGGER</H1>
+Section: User Commands  (1)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+<BR>BSD mandoc<BR>
+BSD 4.3
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<B>logger</B>
+
+ - system log 기록
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>logger</B>
+
+[-<B>is</B>
+
+]
+
+[-<B>f </B><I>file</I>
+
+
+
+]
+
+[-<B>p </B><I>pri</I>
+
+
+
+]
+
+[-<B>t </B><I>tag</I>
+
+
+
+]
+
+[<I>message ...</I>
+
+]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Logger</B>
+
+명령은 
+시스템 기록 모듈인 
+<A HREF="http://localhost/cgi-bin/man/man2html?3+syslog">syslog</A>(3)
+
+
+함수를 쉘 명령으로 구현한 것이다.
+<P>
+
+Options:
+<P>
+
+<DL COMPACT>
+<P>
+
+<DT><B>-i</B>
+
+
+<DD>
+매 줄마다 <B>logger</B>의 프로세스 ID를 기록한다.
+<DT><B>-s</B>
+
+
+<DD>
+system log와 같이 메시지를 표준 오류 장치에 기록한다.
+<DT><B>-f </B><I>file </I>
+
+
+
+
+<DD>
+기록 파일 지정
+<DT><B>-p </B><I>pri </I>
+
+
+
+
+<DD>
+우선권이 있는 메시지를 지정한다.
+<I>pri</I>에는 숫자형식으로 오거나,
+``facility.level'' 식으로도 올 수 있다.
+예를 들어, ``-p local3.info'' 옵션은 
+<I>local3</I>
+
+focility에서 
+<I>info </I><B>rmational</B>
+
+
+
+수준으로 메시지가 기록된다.
+초기값은 ``user.notice.''
+<DT><B>-t </B><I>tag </I>
+
+
+
+
+<DD>
+<I>tag</I>
+
+를 매 줄마다 기록
+<DT><B></B><I>message</I>
+
+
+<DD>
+<I>message</I>를 기록한다. 만약 이것이 지정되지 않고, 
+-<B>f</B>
+
+옵션을 사용하지 않으면, 표준 입력에서 기록할 내용을 입력받는다.
+</DL>
+<P>
+
+<P>
+
+The
+<B>logger</B>
+
+풀그림은 오류 없이 끝나면 0, 오류가 있으면, 0보다 큰 수를 리턴한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+
+<BLOCKQUOTE>
+<PRE>
+logger System rebooted
+
+logger -p local0.notice -t HOSTIDM -f /dev/idmc
+</PRE>
+</BLOCKQUOTE>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?3+syslog">syslog</A>(3),
+
+
+<A HREF="http://localhost/cgi-bin/man/man2html?8+syslogd">syslogd</A>(8)
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>STANDARDS</H2>
+
+<B>logger</B>
+
+명령은 
+St -p1003.2
+
+시스템과 호환되고자 한다.
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">EXAMPLES</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">STANDARDS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

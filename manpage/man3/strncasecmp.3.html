@@ -1,0 +1,70 @@
+<HTML><HEAD><TITLE>Manpage of STRCASECMP</TITLE>
+</HEAD><BODY>
+<H1>STRCASECMP</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 4월 11일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+strcasecmp, strncasecmp - 대 소문자를 구분하지 않고 두개의 문자열을 비교
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;</B>
+
+<B>int strcasecmp(const char *</B><I>s1</I><B>, const char *</B><I>s2</I><B>);</B>
+
+<B>int strncasecmp(const char *</B><I>s1</I><B>, const char *</B><I>s2</I><B>, size_t </B><I>n</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>strcasecmp()</B> 함수는 대 소문자를 구분하지 않고, 두 문자열 <I>s1</I>과 <I>s2</I>를 비교한다.
+이 함수는 만일 <I>s1</I>가 <I>s2</I>보다 작거나 일치하거나 큰 경우에 각각 0 보다 작은 정수, 0, 0보다
+큰 정수를 반환한다.
+<P>
+
+<B>strncasecmp()</B> 함수는 <I>s1</I>의 문자들 중 처음 <I>n</I>만을 비교한다는 것을 제외하고 비슷하다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>strcasecmp()</B>와 <B>strncasecmp()</B> 함수는 만일 <I>s1</I>(또는 처음 <I>n</I> 바이트)가 
+<I>s2</I>보다 작거나 일치하거나 큰 경우에 각각 0 보다 작은 정수, 0, 0보다 큰 정수를 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+BSD 4.4
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+bcmp">bcmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memcmp">memcmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strcmp">strcmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strcoll">strcoll</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strncmp">strncmp</A></B>(3)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 4월 9일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

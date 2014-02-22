@@ -1,0 +1,192 @@
+<HTML><HEAD><TITLE>Manpage of ISALPHA</TITLE>
+</HEAD><BODY>
+<H1>ISALPHA</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1995년 9월 2일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+isalnum, isalpha, isascii, isblank, iscntrl, isdigit, isgraph, islower, 
+isprint, ispunct, isspace, isupper, isxdigit - 문자 유형별 루틴들
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/ctype.h">ctype.h</A>&gt;</B>
+
+<B>int isalnum (int </B><I>c</I><B>);</B>
+<B>int isalpha (int </B><I>c</I><B>);</B>
+<B>int isascii (int </B><I>c</I><B>);</B>
+<B>int isblank (int </B><I>c</I><B>);</B>
+<B>int iscntrl (int </B><I>c</I><B>);</B>
+<B>int isdigit (int </B><I>c</I><B>);</B>
+<B>int isgraph (int </B><I>c</I><B>);</B>
+<B>int islower (int </B><I>c</I><B>);</B>
+<B>int isprint (int </B><I>c</I><B>);</B>
+<B>int ispunct (int </B><I>c</I><B>);</B>
+<B>int isspace (int </B><I>c</I><B>);</B>
+<B>int isupper (int </B><I>c</I><B>);</B>
+<B>int isxdigit (int </B><I>c</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이들 함수들은 
+<B>unsigned char</B>
+
+나
+<B>EOF</B>값을
+
+가져야만 하는 
+<I>c</I>가
+
+현재 로케일에 따라 어떤 문자 종류에 들어 있는지를 검사한다.
+<DL COMPACT>
+<DT><B>isalnum()</B>
+
+<DD>
+알파벳 등의 문자와 숫자를 검사한다.; 이 함수는 
+<B>(isalpha(</B><I>c</I><B>) || isdigit(</B><I>c</I><B>))</B><I></I>
+
+과 동일하다.
+<DT><B>isalpha()</B>
+
+<DD>
+알파벳 문자를 검사한다; 표준 <B>&quot;C&quot;</B> 로케일에서, 
+<B>(isupper(</B><I>c</I><B>) || islower(</B><I>c</I><B>))</B><I></I>
+
+과 동일하다.
+몇몇 로케일에서, 
+<B>isalpha()</B>
+
+가 참인 추가적인 문자들이 있다--대문자나 소문자도 아닌 문자들.
+<DT><B>isascii()</B>
+
+<DD>
+<I>c</I>가 ASCII 문자 집합에 속하는 
+7-bit
+<I>unsigned char</I>
+
+인지를 검사한다.
+이 함수는 BSD 확장이며 또한 SVID 확장이다.
+<DT><B>isblank()</B>
+
+<DD>
+blank 문자인지 검사한다.; 즉, 스페이스나 탭.
+이 함수는 GNU 확장이다.
+<DT><B>iscntrl()</B>
+
+<DD>
+제어 문자인지 검사한다.
+<DT><B>isdigit()</B>
+
+<DD>
+숫자(0-9)인지 검사한다.
+<DT><B>isgraph()</B>
+
+<DD>
+스페이스를 제외한 프린트 가능 문자인지 검사한다.
+<DT><B>islower()</B>
+
+<DD>
+소문자인지 검사한다.
+<DT><B>isprint()</B>
+
+<DD>
+스페이스를 포함한 프린트 가능 문자인지 검사한다.
+<DT><B>ispunct()</B>
+
+<DD>
+스페이스나 알파벳등 문자와 숫자가 아닌 프린트 가능 문자인지 검사한다.
+<DT><B>isspace()</B>
+
+<DD>
+white-space문자를 검사한다.
+<B>C</B>
+
+와
+<B>POSIX</B>
+
+로케일에서, 여기에는: 스페이스, form-feed
+(<B>'\f'</B>),
+
+뉴 라인
+(<B>'\n'</B>),
+
+캐리지 리턴
+(<B>'\r'</B>),
+
+수평 탭
+(<B>'\t'</B>),
+
+그리고 수직 탭
+(<B>'\v'</B>).
+
+<DT><B>isupper()</B>
+
+<DD>
+대문자인지 검사한다.
+<DT><B>isxdigit()</B>
+
+<DD>
+16진수 숫자인지를 검사한다. 즉
+
+<B>0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F</B>.
+
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+리턴 값은 만일 문자
+<I>c</I>
+
+가 테스트되는 종류이면 0이 아닌값이 그렇지 않으면 0 값을 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+ANSI - C, BSD 4.3.
+<B>isascii()</B> 는 BSD 확장이며 또한 SVID 확장이다.
+<B>isblank()</B> 는 GNU 확장이다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+클래스에 속한 문자들의  세부사항은 현재 로케일에 의존한다. 예를 들어,
+<B>isupper()</B>
+
+는 A를 인시하지 못한다.-- 기본 
+<B>C</B>
+
+로케일에서 대문자로써 umlaut
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+tolower">tolower</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+toupper">toupper</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+setlocale">setlocale</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?7+ascii">ascii</A></B>(7), <B><A HREF="http://localhost/cgi-bin/man/man2html?7+locale">locale</A></B>(7)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 2월 25일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

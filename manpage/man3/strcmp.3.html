@@ -1,0 +1,75 @@
+<HTML><HEAD><TITLE>Manpage of STRCMP</TITLE>
+</HEAD><BODY>
+<H1>STRCMP</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 4월 11일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+strcmp, strncmp - 두 문자열 비교
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;</B>
+
+<B>int strcmp(const char *</B><I>s1</I><B>, const char *</B><I>s2</I><B>);</B>
+
+<B>int strncmp(const char *</B><I>s1</I><B>, const char *</B><I>s2</I><B>, size_t </B><I>n</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>strcmp()</B> 함수는 두 문자열 <I>s1</I>와 <I>s2</I>를 비교한다.
+이 함수는 <I>s2</I>에 비하여 <I>s1</I>가 작으면 음수를, 같으면 0을,
+크면 양수를 반환한다.
+<P>
+
+<B>strncmp()</B> 함수는 <I>s1</I>의 처음 <I>n</I> 문자만 비교하는 것을 제외하면
+<B>strcmp()</B>와 비슷하다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>strcmp()</B>와 <B>strncmp()</B> 함수는 만약 <I>s1</I> 
+(또는 처음 <I>n</I> 바이트)가 발견되면 0보다 작거나, 같거나, 
+큰 정수를 반환한다.
+각각은 <I>s2</I>에 비하여 작거나, 같거나, 크다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+SVID 3, POSIX, BSD 4.3, ISO 9899
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+bcmp">bcmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memcmp">memcmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strcasecmp">strcasecmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strncasecmp">strncasecmp</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+strcoll">strcoll</A></B>(3)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+배성훈 &lt;<A HREF="mailto:plodder@kldp.org">plodder@kldp.org</A>&gt;, 2000년 7월 18일
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

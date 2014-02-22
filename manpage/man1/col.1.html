@@ -1,0 +1,189 @@
+<HTML><HEAD><TITLE>Manpage of COL</TITLE>
+</HEAD><BODY>
+<H1>COL</H1>
+Section: User Commands  (1)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+<BR>BSD mandoc<BR>
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+
+
+<B>col</B>
+
+ - 입력으로부터 줄 바꿈문자(line feed)를 바꾸는 필터
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>col</B>
+
+[-<B>bfx</B>
+
+]
+
+[-<B>l </B><I>num</I>
+
+
+
+]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Col</B>
+
+필터는 &quot;\n\r&quot; 문자를 &quot;\n&quot; 문자로 바꾸어 주는 필터이다. 
+또한 공백문자를 탭문자로 바꾸고, 백스페이스 문자를 없애는 기능을 
+한다. 이 필터는 
+<A HREF="http://localhost/cgi-bin/man/man2html?1+nroff">nroff</A>(1)
+
+
+와
+<A HREF="http://localhost/cgi-bin/man/man2html?1+tbl">tbl</A>(1)
+
+
+출력물의 처리에 아주 유용하게 쓰인다. 
+(이 두 풀그림에 의해서 만들어지는 대표적인 출력이 man의 cat 파일이다.
+즉, cat 파일을 단순 텍스트 파일로 바꾸는데 아주 유용하게 쓰인다.)
+<P>
+
+<B>Col</B>
+
+필터는 표준 입력으로 받아서 표준 출력으로 보낸다. (즉, 파일로 저장하려면,
+파이프와 방향전환이 필요하다.)
+<P>
+
+여기서 사용되는 옵션은 다음과 같다:
+<DL COMPACT>
+<P>
+
+<DT><B>-b</B>
+
+
+<DD>
+어떠한 백스페이스 문자도 출력하지 않는다.
+이것은 팩스페이스 문자와 연결되는 마지막 문자만 출력한다. 
+<DT><B>-f</B>
+
+
+<DD>
+밑줄 속성을 가진 문자열을(Forward half line feed) 변환하지 
+않는다. 일반적으로 밑줄 속성을 가진 문자열들은 다음줄에서 
+밑줄(-)이 나타난다.(그런데, 실질적으로 <B><A HREF="http://localhost/cgi-bin/man/man2html?1+colcrt">colcrt</A>(1)</B> 필터를 
+사용하지 않고는 제대로 이 기능이 나타나지 않더군요. - 옮긴이 말)
+<DT><B>-h</B>
+
+
+<DD>
+여러 공백문자를 탭문자로 바꾼다.
+<DT><B>-x</B>
+
+
+<DD>
+여러 공백문자들을 그대로 둔다.
+<DT><B>-l </B><I>num</I>
+
+
+
+
+
+
+<DD>
+메모리에 한번에 둘수 있는 최대 줄수를 
+<I>num</I>
+
+줄로 한다.
+초기값은 128줄이다.
+</DL>
+<P>
+
+<P>
+
+다음은 
+<B>col</B>
+
+명령에서 변환대상이 되는 각종 문자들이다:
+<P>
+
+<DL COMPACT>
+<P>
+
+<DT><B>ESC-7</B>
+<DD>
+reverse line feed (escape then 7)
+<DT><B>ESC-8</B>
+<DD>
+half reverse line feed (escape then 8)
+<DT><B>ESC-9</B>
+<DD>
+half forward line feed (escape then 9)
+<DT><B>backspace</B>
+<DD>
+moves back one column (8); ignored in the first column
+<DT><B>carriage return</B>
+<DD>
+(13)
+<DT><B>newline</B>
+<DD>
+forward line feed (10); also does carriage return
+<DT><B>shift in</B>
+<DD>
+shift to normal character set (15)
+<DT><B>shift out</B>
+<DD>
+shift to alternate character set (14)
+<DT><B>space</B>
+<DD>
+moves forward one column (32)
+<DT><B>tab</B>
+<DD>
+moves forward to next tab stop (9)
+<DT><B>vertical tab</B>
+<DD>
+reverse line feed (11)
+</DL>
+<P>
+
+<P>
+
+윗 문자들과 영문, 숫자, 글쇠판에 있는 각종 기호를 제외한 
+나머지 문자들은 모두 무시되어버린다.
+(즉 한글은 완전 무시되어버린다. - 옮긴이 말)
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+expand">expand</A>(1),
+
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+nroff">nroff</A>(1),
+
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+tbl">tbl</A>(1)
+
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>HISTORY</H2>
+
+<B>col</B>
+
+명령은 Version 6 AT&amp;T UNIX에서 처음 사용되었다.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+<DT><A HREF="#lbAF">HISTORY</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

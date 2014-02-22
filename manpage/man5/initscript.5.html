@@ -1,0 +1,84 @@
+<HTML><HEAD><TITLE>Manpage of INITSCRIPT</TITLE>
+</HEAD><BODY>
+<H1>INITSCRIPT</H1>
+Section: Linux System Administrator's Manual (5)<BR>Updated: December 23, 1995<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+initscript - inittab 명령을 실행하는 스크립트.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+/bin/sh /etc/initscript id runlevels action process
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<I>/etc/initscript</I> 파일이 존재하면, 
+<B>init</B>는 <I>inittab</I>으로 부터 명령을 실행하기 위해 이 파일을 
+사용한다. 이 스크립트는 모든 프로세스를 위한 
+<B>ulimit</B>나 <B>umask</B> 초기값같은 것을 지정하는데, 
+사용될 수 있다. 
+<A NAME="lbAE">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+아래는 initscript의 한 예제이다. 
+이 파일은 자신의 시스템에 <I>/etc/initscript.sample</I> 파일로 
+있을 것이다.
+<DL COMPACT><DT><DD>
+<P>
+<PRE>
+
+#
+# initscript   Executed by <A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A>(8) for every program it
+#              wants to spawn like this:
+#
+# /bin/sh /etc/initscript &lt;id&gt; &lt;level&gt; &lt;action&gt; &lt;process&gt;
+#
+
+# Set umask to safe level, and enable core dumps.
+umask 022
+ulimit -c 2097151
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export PATH
+
+# Execute the program.
+eval exec &quot;$4&quot;
+
+
+</DL>
+</PRE><A NAME="lbAF">&nbsp;</A>
+<H2>FILES</H2>
+
+/etc/inittab,
+/etc/initscript.
+<A NAME="lbAG">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Miquel van Smoorenburg ,&lt;<A HREF="mailto:miquels@cistron.nl">miquels@cistron.nl</A>&gt;
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?5+inittab">inittab</A>(5).
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">EXAMPLES</A><DD>
+<DT><A HREF="#lbAF">FILES</A><DD>
+<DT><A HREF="#lbAG">AUTHOR</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

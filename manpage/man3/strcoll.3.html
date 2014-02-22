@@ -1,0 +1,76 @@
+<HTML><HEAD><TITLE>Manpage of STRCOLL</TITLE>
+</HEAD><BODY>
+<H1>STRCOLL</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 4월 12일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+strcoll - 현재 로케일을 사용하여 두 문자열을 비교한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;</B>
+
+<B>int strcoll(const char *</B><I>s1</I><B>, const char *</B><I>s2</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>strcoll()</B> 함수는 두 문자열 <I>s1</I>과 <I>s2</I>를 비교한다.
+이 함수는 만일 <I>s1</I>이 <I>s2</I>보다 작거나 같거나 클때, 각각
+0 보다 작은 정수나 0, 0 보다 큰 정수를 반환한다.
+비교는 문자열에 기반하며 프로그램의 현재 로케일 카테고리 <I>LC_COLLATE</I>
+에 맞게 해석된다.
+(<B><A HREF="http://localhost/cgi-bin/man/man2html?3+setlocale">setlocale</A></B>(3) 참조).
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>strcoll()</B> 함수는 두 문자열이 현재 로케일에 맞게 해석될때, 
+만일 <I>s1</I>이 <I>s2</I>보다 작거나 같거나 클때, 각각 0 보다 작은 정수나 0, 
+0 보다 큰 정수를 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+SVID 3, BSD 4.3, ISO 9899
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+<I>&quot;POSIX&quot;</I> 나 <I>&quot;C&quot;</I> 로케일에서, <B>strcoll()</B>는  
+<B>strcmp()</B>와 동일하다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+bcmp">bcmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memcmp">memcmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strcasecmp">strcasecmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strcmp">strcmp</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+strxfrm">strxfrm</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+setlocale">setlocale</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 2월 24일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

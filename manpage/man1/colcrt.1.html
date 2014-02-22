@@ -1,0 +1,173 @@
+<HTML><HEAD><TITLE>Manpage of COLCRT</TITLE>
+</HEAD><BODY>
+<H1>COLCRT</H1>
+Section: User Commands  (1)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+<BR>BSD mandoc<BR>
+BSD 3
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<B>colcrt</B>
+
+ - 밑줄 속성을 가진 문자 변환 필터
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>colcrt</B>
+
+[-
+
+]
+
+[-<B>2</B>
+
+]
+
+[<I>file ...</I>
+
+]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Colcrt</B>
+
+필터는 밑줄 속성을 가진 문자를 
+볼 수 없는 터미날이나, 인쇄할 수 없는 프린터를 위해,
+일반 텍스트 문서에서 그 문자 밑에 밑줄문자(-)를 
+넣어주는 필터이다. 
+<P>
+
+사용할 수 있는 옵션은 다음과 같다:
+<DL COMPACT>
+<P>
+
+<DT><B>-
+
+</B>
+<DD>
+밑줄 속성이 있는 문자열 아랫줄은 모두 밑줄로 표시한다.
+이 옵션은 특별하게 
+<A HREF="http://localhost/cgi-bin/man/man2html?1+tbl">tbl</A>(1)
+
+
+명령에 의해서 만들어지는 표상자를 미리 보는데 유용하게 사용된다.
+<DT><B>-2</B>
+
+
+<DD>
+이 옵션을 사용하지 않으면, 밑줄 속성이 있는 문자열이 있는 
+다음줄에만 밀줄문자(-)를 추가하기 위해 줄이 첨가된다. 
+이것을 인쇄할 경우에 줄 간격이 이상하게 되어 읽기가 불편하다. 
+이런 것을 대비해서 이 옵션을 사용하면, 밑줄 속성이 없는 문자열에서도 
+무조건 다음줄은 공백으로 한줄 띄우게 된다. 
+</DL>
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+<B>colcrt</B>
+
+필터는 전형적으로 다음과 같이 사용된다.
+
+<PRE>
+tbl exum2.n | nroff -ms | colcrt - | more
+</PRE>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+nroff">nroff</A>(1),
+
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+troff">troff</A>(1),
+
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+col">col</A>(1),
+
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+more">more</A>(1),
+
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+ul">ul</A>(1)
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>BUGS</H2>
+
+`-
+
+'
+
+옵션을
+사용했음에도 불구하고 밑줄 문자가 만들어지지 않을 경우도 있다.
+<P>
+
+102줄 이상 되는 문서에서는 백업이 불가능하다.
+<P>
+
+가운데줄 속성(흔히 취소선이라고함,overstriking)을 가진 문자들에 
+대해서는 변환이 불가능하다. 
+`|'
+
+기능을 이용할 경우에는 
+`-'
+
+문자나,
+`+'
+
+문자로 보여질 수도 있다.
+<P>
+
+한글이 있는 문자열은 변환 불가능(팻치가 시급함)
+<P>
+
+이미 두 공백문자가 있는 문서 안의 슈퍼스크립트나 하위스크립트 처리를 
+위해서 약간의 준비과정이 필요하다.(?)
+<A NAME="lbAH">&nbsp;</A>
+<H2>HISTORY</H2>
+
+<B>colcrt</B>
+
+
+명령은 
+BSD 3.0 
+에서 처음 사용되었다.
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">EXAMPLES</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">BUGS</A><DD>
+<DT><A HREF="#lbAH">HISTORY</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:56 GMT, March 25, 2004
+</BODY>
+</HTML>

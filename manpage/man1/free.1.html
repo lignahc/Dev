@@ -1,0 +1,101 @@
+<HTML><HEAD><TITLE>Manpage of FREE</TITLE>
+</HEAD><BODY>
+<H1>FREE</H1>
+Section: Linux User's Manual (1)<BR>Updated: 20 Mar 1993 <BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+free - 시스템의 빈 메모리와 사용한 메모리의 양을 출력
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>free </B>[<B>-b</B> | <B>-k</B> | <B>-m</B>] [<B>-o</B>] [<B>-s</B>
+
+<I>delay</I>
+
+] [<B>-t</B>] [<B>-V</B>]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>free</B> 는 시스템의 비어있거나 사용된 물리적인 메모리와 스왑 메모리의
+전체 양을 출력한다. 또한 커널에 의해 사용되는 공유 메모리와
+버퍼도 출력한다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>Options</H3>
+
+<B>-b</B> 스위치는 메모리의 양을 바이트로 표시한다. 
+<B>-k</B> 스위치는(기본값) 킬로바이트로 표시한다.
+<B>-m</B> 스위치는 메가바이트로 표시한다.
+<P>
+
+<B>-t</B> 스위치는 총계가 포함된 줄을 출력한다.
+<P>
+
+<B>-o</B> 스위치는 &quot;버퍼에 조정된&quot; 줄의 출력을 비활성화한다. (이것이)
+지정되지 않는한 <B>free</B> 는 사용된/빈 메모리 보고서 에서/로 버퍼 메모리를
+뺀다/더한다(개별적으로!).
+<P>
+
+<B>-s</B> 스위치는 <I>delay</I> 초마다 계속해서 출력을 하도록 한다.
+실제로 <I>delay</I> 에 어떤 부동 소수점 수도 사용할 수 있다. 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+usleep">usleep</A></B>(3)
+
+은 마이크로세컨드 수준의 지연 시간에 사용된다..
+<P>
+
+<B>-V</B> 는 버전 정보를 출력한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>파일</H2>
+
+
+
+<I>/proc/meminfo</I>-- 메모리 정보
+
+
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ps">ps</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+top">top</A>(1)</B>
+
+<P>
+<A NAME="lbAH">&nbsp;</A>
+<H2>저자</H2>
+
+Written by Brian Edmonds. 
+<P>
+Send bug reports to &lt;<A HREF="mailto:procps-bugs@redhat.com">procps-bugs@redhat.com</A>&gt;
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+서성용 &lt;<A HREF="mailto:freepooh@nownuri.net">freepooh@nownuri.net</A>&gt;, 2000년 5월 26일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAE">Options</A><DD>
+</DL>
+<DT><A HREF="#lbAF">파일</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">저자</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

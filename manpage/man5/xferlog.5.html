@@ -1,0 +1,267 @@
+<HTML><HEAD><TITLE>Manpage of XFERLOG</TITLE>
+</HEAD><BODY>
+<H1>XFERLOG</H1>
+Section: File Formats (5)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+xferlog - FTP server logfile
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<P>
+
+The
+<B>xferlog</B>
+
+file은 FTP server daemon (
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A></B>(8)
+
+) 의 logging 정보를 포함한다. 이 file은 보통 /usr/adm 에서 볼수 있으나, 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A></B>(8)
+
+의 options을 사용함에 따라 어디든지 위치되어 질수 있다.
+Each server entry is composed of a single line of the following form, 
+with all fields being separated by spaces.
+각 server 항목은 아래의 form으로 이루어진 한줄로 구성되어 지며, 모든 
+field는 space로 구분 되어 진다.
+<DL COMPACT>
+<DT><DD>
+<I>current-time&nbsp;&nbsp; transfer-time&nbsp;&nbsp; remote-host&nbsp;&nbsp; file-size&nbsp;&nbsp; filename&nbsp;&nbsp; transfer-type&nbsp;&nbsp; special-action-flag&nbsp;&nbsp; direction&nbsp;&nbsp; access-mode&nbsp;&nbsp; username&nbsp;&nbsp; service-name&nbsp;&nbsp; authentication-method&nbsp;&nbsp; authenticated-user-id&nbsp;&nbsp; completion-status</I>
+
+</DL>
+<P>
+
+<DL COMPACT>
+<DT><I>current-time</I>
+
+<DD>
+은 &quot;DDD MMM dd hh:mm:ss YYYY&quot; 형식의 현재 local 시간이다.
+DDD는 주중의 요일을, MMM은 월을, dd는 날짜를, hh는 시를, mm은 
+분을, ss는 초를, 그리고 YYYY는 년도를 나타낸다.
+<DT><I>transfer-time</I>
+
+<DD>
+은 전송을 위한 총 시간을 말하며 초단위로 표시한다.
+<DT><I>remote-host</I>
+
+<DD>
+는 원격 host 이름이다.
+<DT><I>file-size</I>
+
+<DD>
+는 byte단위의 전송된 file의 크기이다.
+<DT><I>filename</I>
+
+<DD>
+은 전송된 file의 이름이다.
+<DT><I>transfer-type</I>
+
+<DD>
+은 전송의 형태를 나타내는 하나의 character이다.
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><B>a</B>
+
+<DD>
+는 ascii 전송을 뜻한다.
+<DT><B>b</B>
+
+<DD>
+는 binary 전송을 뜻한다.
+
+</DL>
+</DL>
+
+</DL>
+
+<DT><I>special-action-flag</I>
+
+<DD>
+는 어떤 특정한 action이 발생하는 것을 나타내는 하나 또는 그 이상의
+character flag 이다. 아래에 나열된 것 중의 하나 또는 그 이상으로
+사용할수 있다.
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><B>C</B>
+
+<DD>
+file은 압축되어져 있다.
+<DT><B>U</B>
+
+<DD>
+file은 압축이 되어져 있지 않다.
+<DT><B>T</B>
+
+<DD>
+file이 tar로 묶여져 있다.
+<DT><B>_</B>
+
+<DD>
+아무런 action이 발생하지 않았다.
+
+</DL>
+</DL>
+
+</DL>
+
+<DT><I>direction</I>
+
+<DD>
+은 전송의 지시이다.
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><B>o</B>
+
+<DD>
+outgoing
+<DT><B>i</B>
+
+<DD>
+incoming
+
+</DL>
+</DL>
+
+</DL>
+
+<DT><I>access-mode</I>
+
+<DD>
+는 user가 어떻게 login을 하는가에 대한 방법이다.
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><B>a</B>
+
+<DD>
+(anonymous) 는 익명 손님 user들을 위한 것이다.
+<DT><B>g</B>
+
+<DD>
+(guest) is for an passworded guest user (see the
+(guest) 는 password를 소유한 손님 user들을 위한 것이다. (
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A>(5)</B>
+
+의 
+<B>guestgroup</B>
+
+명령을 참조하라)
+<DT><B>r</B>
+
+<DD>
+(real) 은 인증이 가능한 local user를 위한 것이다.
+
+</DL>
+</DL>
+
+</DL>
+
+<DT><I>username</I>
+
+<DD>
+은 local username 이다. 만약 손님 이라면, 주어진 ID
+문자열을 뜻한다.
+<DT><I>service-name</I>
+
+<DD>
+은 발생되어지는 service의 이름이며 보통은 FTP이다.
+<DT><I>authentication-method</I>
+
+<DD>
+는 인증에 사용되어 지는 방법이다. 아래중의 하나를 사용한다.
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><B>0</B>
+
+<DD>
+none
+<DT><B>1</B>
+
+<DD>
+RFC931 Authentication
+
+</DL>
+</DL>
+
+</DL>
+
+<DT><I>authenticated-user-id</I>
+
+<DD>
+는 인증 방법에 의해 되돌려지는 user  id 이다. 인증되어진 user 
+id가 사용불가 하다면 * 이 사용되어 진다.
+<DT><I>completion-status</I>
+
+<DD>
+는 전송 상태를 나타내는 하나의 character이다.
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><B>c</B>
+
+<DD>
+완전한 전송
+<DT><B>i</B>
+
+<DD>
+불완전한 전송
+
+</DL>
+</DL>
+
+</DL>
+
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>파일</H2>
+
+
+<DL COMPACT>
+<DT><B>/usr/adm/xferlog</B>
+
+<DD>
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A>(8),</B>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A>(5)</B>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>역자</H2>
+
+김정균 &lt;<A HREF="mailto:admin@oops.org">admin@oops.org</A>&gt; 1999년 8월 4일
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">파일</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+<DT><A HREF="#lbAF">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,188 @@
+<HTML><HEAD><TITLE>Manpage of MOUSE</TITLE>
+</HEAD><BODY>
+<H1>MOUSE</H1>
+Section: Special files (4)<BR>Updated: February 10, 1996<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+mouse - 시리얼 마우스 인터페이스
+<A NAME="lbAC">&nbsp;</A>
+<H2>CONFIG</H2>
+
+시리얼 마우스는 시리얼 RS232/V24 다이얼아웃 라인에 연결된다. 
+설명을 보려면, 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+ttys">ttys</A></B>(4)을<B>보라.</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="lbAE">&nbsp;</A>
+<H3>Introduction</H3>
+
+The pinout of the usual 9 pin plug as used for serial mice is:
+시리얼 마우스에 쓰이는 9핀 플러그의 핀아웃은 다음가 같다. 
+<TABLE>
+<TR VALIGN=top><TD ALIGN=center>핀</TD><TD ALIGN=right>이름&nbsp;&nbsp;&nbsp;&nbsp;</TD><TD ALIGN=right>용도<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>2</TD><TD ALIGN=center>RX</TD><TD>Data<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>3</TD><TD ALIGN=center>TX</TD><TD>-12 V, Imax = 10 mA<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>4</TD><TD ALIGN=center>DTR</TD><TD>+12 V, Imax = 10 mA<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>7</TD><TD ALIGN=center>RTS</TD><TD>+12 V, Imax = 10 mA<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>5</TD><TD ALIGN=center>GND</TD><TD>Ground<BR></TD></TR>
+</TABLE>
+
+위는 명세이다. 사실상, 대부분의 마우스에는 9 V로 충분하다. 
+<P>
+
+마우스 드라이버는 RTS를 낮추고, 이를 다시 올리므로서 마우스를 인식할 수 있다. 
+대략 14ms이후에, 마우스는 데이터 라인에  0x4D ('M')를 전송할 것이다. 그리고 63ms 
+이후에, 마이크로소프트 호환 3버튼 마우스가 0x33 ('3')을 전송할 것이다.
+<P>
+
+The relative mouse movement is sent as <I>dx</I> (positive means right)
+and <I>dy</I> (positive means down).  Various mice can operate at different
+speeds.  To select speeds, cycle through the
+speeds 9600, 4800, 2400 and 1200 bit/s, each time writing the two characters
+from the table below and waiting 0.1 seconds.  The following table shows
+available speeds and the strings that select them:
+상대적인 마우스 움직임은 <I>dx</I> (positive means right)
+and <I>dy</I> (positive means down)로서 보내진다. 다양한 마우스는 다른 속도로 동작한다 속도를 선택하려면, 
+초당 전송 속도 9600, 4800, 2400 and 1200비트 중 선택할 수 있고, 두 문자를 작성하는데 
+<TABLE>
+<TR VALIGN=top><TD ALIGN=center>속도(비트/초) 문자열</TD><TD ALIGN=right>&nbsp;&nbsp;&nbsp;&nbsp;</TD><TD ALIGN=right><BR></TD></TR>
+<TR VALIGN=top><TD>9600</TD><TD>*q</TD></TR>
+<TR VALIGN=top><TD>4800</TD><TD>*p</TD></TR>
+<TR VALIGN=top><TD>2400</TD><TD>*o</TD></TR>
+<TR VALIGN=top><TD>1200</TD><TD>*n</TD></TR>
+</TABLE>
+
+
+데이터 패킷의 첫번째 바이트는 동기화목적으로 사용될 수 있다. 
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>마이크로소프트 프로토콜</H3>
+
+
+<B>마이크로소프트</B> 프로토콜은 1 스타트 비트, 7데이터 비트, 패리티
+비트(없음), 1 스탑 비트를 1200 비트/초의 속도로 사용한다. 데이터는 3바치트
+패킷으로 RxD로 전송된다. <I>dx</I>와 <I>dy</I> 움직임들은 상호 보완적으로
+전송되고, <I>lb</I> (<I>rb</I>)는 왼쪽 (오른쪽) 버튼이 눌러졌을때 설정된다. 
+
+<TABLE>
+<TR VALIGN=top><TD ALIGN=center>byte</TD><TD ALIGN=right>d6&nbsp;&nbsp;&nbsp;&nbsp;</TD><TD ALIGN=right>d5<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>1</TD><TD ALIGN=center>1</TD><TD ALIGN=center>lb<BR></TD><TD ALIGN=center>rb<BR></TD><TD ALIGN=center>dy7<BR></TD><TD ALIGN=center>dy6<BR></TD><TD ALIGN=center>dx7<BR></TD><TD ALIGN=center>dx6<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>2</TD><TD ALIGN=center>0</TD><TD ALIGN=center>dx5<BR></TD><TD ALIGN=center>dx4<BR></TD><TD ALIGN=center>dx3<BR></TD><TD ALIGN=center>dx2<BR></TD><TD ALIGN=center>dx1<BR></TD><TD ALIGN=center>dx0<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>3</TD><TD ALIGN=center>0</TD><TD ALIGN=center>dy5<BR></TD><TD ALIGN=center>dy4<BR></TD><TD ALIGN=center>dy3<BR></TD><TD ALIGN=center>dy2<BR></TD><TD ALIGN=center>dy1<BR></TD><TD ALIGN=center>dy0<BR></TD></TR>
+</TABLE>
+
+<A NAME="lbAG">&nbsp;</A>
+<H3>3-버튼 마이크로소프트 프로토콜</H3>
+
+
+원래의 마이크로소프트 마우스는 오직 두개의 버튼을 갖고 있다. 하지만, 일부
+세개의 버튼을 갖는 마우스들 역시 마이크로소프트 프로토콜을
+사용한다. 가운데 버튼을 누르거나, 해제시켜놓으면, 0 움직임을 갖는 패킷을
+전송하거나 아무런 버튼도 눌러지지 않았다는 것을 알리는 패킷이 보고된다. 
+(따라서 다른 2버튼과는 달리, 가운데 버튼의 상태는 각 패킷내에서 보고되지
+않는다. )
+<A NAME="lbAH">&nbsp;</A>
+<H3>로지텍 프로토콜</H3>
+
+로지텍 시리얼 3버튼 마우스는 마이크로소프트 프로토콜의 다른 확장을
+사용한다. 가운데 버튼이 위를 향하면, 3바이트 패킷이 전송된다. 가운데
+버튼이 아래를 향하면, 4바이트의 패킷이 전송되고, 4번째 바이트는
+0x20(혹은 최소한 0x20비트로 설정되도록 함) 값을 지닌다. 특히, 다른
+나머지 버튼들이 아래를 향할때,  가운데 버튼을 누르면, 0,0,0,0x20으로
+보고된다. 
+
+<A NAME="lbAI">&nbsp;</A>
+<H3>마우스시스템 프로토콜</H3>
+
+<B>Mousesystems</B> 프로토콜은 1200비트/초의 속도로 1 스타트 비트, no
+패리티 비트, 2 스톱 비트를 ?쨈? 데이터는 5바이트 패킷내에 RxD로
+보내진다. <I>dx</I>는 두개의 보완적인 값의 합계로서 전송되고, fIdy는 
+두개의 보완적인 값들의 두개의 합계의 무효를 전송한다.  <I>lb</I> (<I>mb</I>,
+<I>rb</I>)은 왼쪽(가운데, 오른쪽) 버튼이 눌러졌을때 소거된다. 
+
+<TABLE>
+<TR VALIGN=top><TD ALIGN=center>byte</TD><TD ALIGN=right>d7&nbsp;&nbsp;&nbsp;&nbsp;</TD><TD ALIGN=right>d6<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>1</TD><TD ALIGN=center>1</TD><TD ALIGN=center>0<BR></TD><TD ALIGN=center>0<BR></TD><TD ALIGN=center>0<BR></TD><TD ALIGN=center>0<BR></TD><TD ALIGN=center>lb<BR></TD><TD ALIGN=center>mb<BR></TD><TD ALIGN=center>rb<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>2</TD><TD ALIGN=center>0</TD><TD ALIGN=center>dxa6<BR></TD><TD ALIGN=center>dxa5<BR></TD><TD ALIGN=center>dxa4<BR></TD><TD ALIGN=center>dxa3<BR></TD><TD ALIGN=center>dxa2<BR></TD><TD ALIGN=center>dxa1<BR></TD><TD ALIGN=center>dxa0<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>3</TD><TD ALIGN=center>0</TD><TD ALIGN=center>dya6<BR></TD><TD ALIGN=center>dya5<BR></TD><TD ALIGN=center>dya4<BR></TD><TD ALIGN=center>dya3<BR></TD><TD ALIGN=center>dya2<BR></TD><TD ALIGN=center>dya1<BR></TD><TD ALIGN=center>dya0<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>4</TD><TD ALIGN=center>0</TD><TD ALIGN=center>dxb6<BR></TD><TD ALIGN=center>dxb5<BR></TD><TD ALIGN=center>dxb4<BR></TD><TD ALIGN=center>dxb3<BR></TD><TD ALIGN=center>dxb2<BR></TD><TD ALIGN=center>dxb1<BR></TD><TD ALIGN=center>dxb0<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>5</TD><TD ALIGN=center>0</TD><TD ALIGN=center>dyb6<BR></TD><TD ALIGN=center>dyb5<BR></TD><TD ALIGN=center>dyb4<BR></TD><TD ALIGN=center>dyb3<BR></TD><TD ALIGN=center>dyb2<BR></TD><TD ALIGN=center>dyb1<BR></TD><TD ALIGN=center>dyb0<BR></TD></TR>
+</TABLE>
+
+
+바이트 4와 5는 바이트 2와 3이 전송된 후부터 발생한 변경에 대해 설명한다. 
+
+<A NAME="lbAJ">&nbsp;</A>
+<H3>썬 프로토콜(Sun protocol)</H3>
+
+
+The <B>Sun</B> 프로토콜은 위의 5바이트 마우스 시스템 프로토콜의 3바이트
+버전이다. 마지막 2 바이트는 전송되지 않는다. 
+
+<A NAME="lbAK">&nbsp;</A>
+<H3>MM 프로토콜</H3>
+
+The <B>MM</B> 프로토콜은 1200 비트/초의 속도로  1 시작 비트, 8 데이터
+비트,추가 패리티 비트 그리고 정지 비트를 사용한다. 
+데이터는 3바이트 패킷으로 RxD에 전송된다.<I>dx</I>와 <I>dy</I>는 단일 signed
+값으로 전달되며, 사인 비트는 음수값으로 지정된다.  <I>lb</I> (<I>mb</I>, 
+<I>rb</I>)는 왼쪽(가운데, 오른쪽)버튼이 눌려졌을때, 설정된다. 
+<TABLE>
+<TR VALIGN=top><TD ALIGN=center>byte</TD><TD ALIGN=right>d7&nbsp;&nbsp;&nbsp;&nbsp;</TD><TD ALIGN=right>d6<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>1</TD><TD ALIGN=center>1</TD><TD ALIGN=center>0<BR></TD><TD ALIGN=center>0<BR></TD><TD ALIGN=center>dxs<BR></TD><TD ALIGN=center>dys<BR></TD><TD ALIGN=center>lb<BR></TD><TD ALIGN=center>mb<BR></TD><TD ALIGN=center>rb<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>2</TD><TD ALIGN=center>0</TD><TD ALIGN=center>dx6<BR></TD><TD ALIGN=center>dx5<BR></TD><TD ALIGN=center>dx4<BR></TD><TD ALIGN=center>dx3<BR></TD><TD ALIGN=center>dx2<BR></TD><TD ALIGN=center>dx1<BR></TD><TD ALIGN=center>dx0<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=right>3</TD><TD ALIGN=center>0</TD><TD ALIGN=center>dy6<BR></TD><TD ALIGN=center>dy5<BR></TD><TD ALIGN=center>dy4<BR></TD><TD ALIGN=center>dy3<BR></TD><TD ALIGN=center>dy2<BR></TD><TD ALIGN=center>dy1<BR></TD><TD ALIGN=center>dy0<BR></TD></TR>
+</TABLE>
+
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>FILES</H2>
+
+<DL COMPACT>
+<DT><I>/dev/mouse</I>
+
+<DD>
+일반적으로 사용되는 심볼릭 링크로서, 마우스 장치를 가리킨다. 
+</DL>
+<A NAME="lbAM">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+ttys">ttys</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+gpm">gpm</A></B>(8)
+
+
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">CONFIG</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DL>
+<DT><A HREF="#lbAE">Introduction</A><DD>
+<DT><A HREF="#lbAF">마이크로소프트 프로토콜</A><DD>
+<DT><A HREF="#lbAG">3-버튼 마이크로소프트 프로토콜</A><DD>
+<DT><A HREF="#lbAH">로지텍 프로토콜</A><DD>
+<DT><A HREF="#lbAI">마우스시스템 프로토콜</A><DD>
+<DT><A HREF="#lbAJ">썬 프로토콜(Sun protocol)</A><DD>
+<DT><A HREF="#lbAK">MM 프로토콜</A><DD>
+</DL>
+<DT><A HREF="#lbAL">FILES</A><DD>
+<DT><A HREF="#lbAM">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,220 @@
+<HTML><HEAD><TITLE>Manpage of FSTAB</TITLE>
+</HEAD><BODY>
+<H1>FSTAB</H1>
+Section: 리눅스 프로그래머 매뉴얼 (5)<BR>Updated: 1993년 11월 27일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+fstab - 화일 시스템에 대한 고정적인 정보 저장
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/fstab.h">fstab.h</A>&gt;</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>fstab</B>
+
+화일에 다양한 화일 시스템에 대한 정보를 기술한다.
+<B>fstab</B>
+
+화일은 프로그램에 의해 읽히기만 할 뿐 쓰기에는 사용되지 않는다. 이 화일을
+제대로 만드는 일은 시스템 관리자의 책임이다. 한 줄마다 하나의 화일 시스템에
+대하여 기술한다. 한 줄 상의 각 필드는 탭 또는 스페이스로 구분된다. 그 순서는
+매우 중요하다.
+왜냐하면
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck">fsck</A></B>(8), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8), and <B><A HREF="http://localhost/cgi-bin/man/man2html?8+umount">umount</A></B>(8)
+
+와 같은 프로그램들이 
+<B>fstab</B>
+
+에 있는 내용을 순차적으로 읽기 때문이다.
+<P>
+첫번째 필드인
+(<I>fs_spec</I>)
+
+에서는 마운트될 블럭 특별 장치 또는 원격 화일 시스템을 적는다.
+<P>
+두번째 필드인
+(<I>fs_file</I>)
+
+에서는 그 화일 시스템을 마운트할 마운트 포인트를 적는다. 스왑 파티션의 경우
+이 값은 ``none''이라고 적는다.
+<P>
+세번째 필드인
+(<I>fs_vfstype</I>)
+
+에서는 화일 시스템의 유형을 적는다. 현재 지원되는 3 가지 유형의 화일 시스템을
+지원하고 있다:
+<DL COMPACT>
+<DT><I>minix</I>
+
+<DD>
+로컬 화일 시스템으로서 화일명의 길이는 14 또는 30 자를 지원한다.
+<DT><I>ext</I>
+
+<DD>
+로컬 화일 시스템으로서 긴 화일명, 더 큰 inode 를 지원한다. 이 화일 시스템은
+<I>ext2</I>
+
+화일 시스템으로 교체되었고 더 이상 쓰이지 않는다.
+<DT><I>ext2</I>
+
+<DD>
+로컬 화일 시스템으로서 긴 화일명, 더 큰 inode 를 지원하며 기타 많은 기능을
+지원하고 있다.
+<DT><I>xiafs</I>
+
+<DD>
+로컬 화일 시스템으로서 긴 화일명, 더 큰 inode 를 지원하며 기타 많은 기능을
+지원하고 있다.
+<DT><I>msdos</I>
+
+<DD>
+MS-DOS 파티션에 대한 로컬 화일 시스템.
+<DT><I>hpfs</I>
+
+<DD>
+HPFS 파티션에 대한 로컬 화일 시스템.
+<DT><I>iso9660</I>
+
+<DD>
+CD-ROM 드라이브에 사용되는 로컬 화일 시스템.
+<DT><I>nfs</I>
+
+<DD>
+원격 시스템의 파티션을 마운트할 때 쓰이는 화일 시스템.
+<DT><I>swap </I>
+
+<DD>
+스와핑에 사용되는 디스크 파티션.
+</DL>
+<P>
+
+만약
+<I>vfs_fstype</I>
+
+이 ``ignore''라고 적혀 있다면 그 줄은 무시된다. 현재 사용되고 있지 않은
+디스크 파티션을 보여줄 때 유용하다.
+<P>
+네번째 필드인
+(<I>fs_mntops</I>)
+
+에서는 화일 시스템에 관련된 마운트 옵션을 기술한다.
+<P>
+It is formatted as a comma separated list of options.  It contains at least
+각 옵션은 콤마(,)로 구분된다. 최소한 마운트 유형과 각 화일 시스템에 알맞는
+추가 옵션으로 구성된다. nfs 화일 시스템이 아닌 경우, 각 마운트 옵션에 대해서는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8)
+
+를 보기 바란다.
+nfs 화일 시스템에 관련된 옵션에 대해서는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+nfs">nfs</A></B>(5)
+
+을 참고하라.
+<P>
+다섯번째 필드인
+(<I>fs_freq</I>)
+
+에서는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+dump">dump</A></B>(8)
+
+명령에 의해 덤프될 화일 시스템을 표시해둔다. 만약 다섯번째 필드가 존재하지
+않는다면 0 이라는 값이 반환되고
+<B>dump</B>
+
+는 해당 화일 시스템이 덤프될 필요없다고 생각한다.
+<P>
+여섯번째 필드인
+(<I>fs_passno</I>)
+
+에서는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck">fsck</A></B>(8)
+
+프로그램에 의해 부팅시 어떤 화일 시스템을 점검할 것인지 기재한다.
+루트 화일 시스템은
+<I>fs_passno</I>
+
+값 1 을 가져야 하며 다른 화일 시스템은
+<I>fs_passno</I>
+
+값 2 를 갖는다. 한 드라이브에 들어있는 화일 시스템은 순서대로 점검되지만
+여러 다른 드라이브 상에 존재하는 화일 시스템은 하드웨어적 병렬처리가
+가능하므로 동시에 이뤄진다. 여섯번째 필드가 존재하지 않거나 0 인 경우 0 이
+반환되며
+<B>fsck</B>
+
+은 주어진 화일 시스템을 점검할 필요가 없다고 생각한다.
+<P>
+<B>fstab</B>
+
+화일로부터 자료를 일기 위한 루틴으로는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getmntent">getmntent</A></B>(3)
+
+이 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 화일</H2>
+
+<I>/etc/fstab</I>
+
+<B>fstab</B>
+
+화일은
+<I>/etc</I>
+
+디렉토리에 놓여 있다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>버그</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8)
+
+안의 문서가 더욱 최신 정보를 가지고 있다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>참고</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getmntent">getmntent</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+swapon">swapon</A></B>(8), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+nfs">nfs</A></B>(5)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>HISTORY</H2>
+
+<B>fstab</B>
+
+형식은 4.0BSD에서 생겼다.
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">관련 화일</A><DD>
+<DT><A HREF="#lbAF">버그</A><DD>
+<DT><A HREF="#lbAG">참고</A><DD>
+<DT><A HREF="#lbAH">HISTORY</A><DD>
+<DT><A HREF="#lbAI">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

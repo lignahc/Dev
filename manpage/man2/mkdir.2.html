@@ -1,0 +1,190 @@
+<HTML><HEAD><TITLE>Manpage of MKDIR</TITLE>
+</HEAD><BODY>
+<H1>MKDIR</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1994년 3월 29일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+mkdir - 디렉토리를 만든다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/sys/stat.h">sys/stat.h</A>&gt;</B>
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+<B>#include &lt;<A HREF="file:/usr/include/fcntl.h">fcntl.h</A>&gt;</B>
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<B>int mkdir(const char *</B><I>pathname</I><B>, mode_t </B><I>mode</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>mkdir</B>는<B></B>
+
+<I>pathname</I>이라는<I></I>
+
+이름의 디렉토리를 만들려고 시도한다.
+
+<I>mode</I>는<I></I>
+
+사용할 수 있는 권한에 대한 허가권을 지정한다.
+이것은 일반적으로 프로세스의
+<B>umask</B>에
+
+의해 수정된다: 만들어진 파일의 허가권은 
+<B>(mode &amp; ~umask)</B>이다.
+
+새롭게 만들어진 디렉토리는 프로세스의 유효(effective) uid의 소유이다.
+만일 파일을 포함하는 디렉토리가 그룹 id 비트가 설정되어 있거나,
+파일 시스템이 BSD 그룹 의미(semantics)로 마운트 되어 있다면, 
+새 디렉토리는 부모로부터 그룹 소유권을 상속받는다:
+그렇지 않으면, 프로세스의 유효 gid의 소유가 된다.
+
+만일 부모 디렉토리가 그룹 id 비트가 설정되어 있다면 디렉토리는
+새롭게 생성될 것이다.
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>mkdir</B>는<B></B>
+
+성공시 0을 반환한다. 에러가 발생하면 -1을 반환한다(
+<I>errno</I>는<I></I>
+
+적당한 값으로 설정된다.)
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EEXIST</B>
+
+<DD>
+<I>pathname</I>가<I></I>
+
+이미 존재한다.(반드시 디렉토리인것은 아니다.)
+<DT><B>EFAULT</B>
+
+<DD>
+<I>pathname</I> 접근할수 있는 주소 공간이외를 가리키고 있다.
+
+<DT><B>EACCES</B>
+
+<DD>
+부모 디렉토리가 프로세스에게 쓰기 허가권을 허락하지 않았거나, 
+<I>pathname</I>안에<I></I>
+
+있는 디렉토리 중 하나가 찾기(실행) 허가권이 없다.
+<DT><B>ENAMETOOLONG</B>
+
+<DD>
+<I>pathname</I>이 너무 길다.
+
+<DT><B>ENOENT</B>
+
+<DD>
+<I>pathname</I>에<I></I>
+
+있는 디렉토리 요소가 존재하지 않거나 또는 심볼릭 링크이다.
+<DT><B>ENOTDIR</B>
+
+<DD>
+<I>pathname</I>에<I></I>
+
+디렉토리로서 사용한 요소가 사실은 디렉토리가 아니다.
+<DT><B>ENOMEM</B>
+
+<DD>
+이용할 수 있는 커널 메모리가 충분하지 않다.
+<DT><B>EROFS</B>
+
+<DD>
+<I>pathname</I>은<I></I>
+
+읽기-전용 파일 시스템에 있는 파일을 가리키고 있다.
+<DT><B>ELOOP</B>
+
+<DD>
+너무 많은 심볼릭 링크를 
+<I>pathname</I>에서<I></I>
+
+만났다.
+<DT><B>ENOSPC</B>
+
+<DD>
+<I>pathname</I>을<I></I>
+
+포함하는 장치에 새 디렉토리를 위한 공간이 없다.
+<DT><B>ENOSPC</B>
+
+<DD>
+사용자 디스크 쿼터(quota)를 다 사용해서 새 디렉토리를 만들 수 없다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, POSIX, BSD, SYSV, X/OPEN.  SVr4 문서는 EIO, EMULTIHOP 그리고 
+ENOLINK 에러 조건을 추가적으로 기술했다.; POSIX.1은 ELOOP을 생략했다.
+<P>
+
+NFS를 이루고 있는 프로토콜에서 몇가지 부적절한 것이 있다.
+이것 중 몇몇은 
+<B>mkdir</B>에<B></B>
+
+영향을 준다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+read">read</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+write">write</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fcntl">fcntl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+close">close</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+unlink">unlink</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+mknod">mknod</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+stat">stat</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+umask">umask</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+mount">mount</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+fopen">fopen</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 5월 26일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

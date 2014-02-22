@@ -1,0 +1,176 @@
+<HTML><HEAD><TITLE>Manpage of proftpd</TITLE>
+</HEAD><BODY>
+<H1>proftpd</H1>
+Section: Maintenance Commands (8)<BR>Updated: July 2000<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+proftpd - 전문적인 설정, 보안 File Transfer Protocol Server
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>proftpd</B>
+
+[
+<B>-hlntv</B>
+
+] [
+<B>-d</B><I> debuglevel</I>
+
+] [
+<B>-c</B><I> config-file</I>
+
+] [
+<B>-p</B><I> 0|1</I>
+
+]
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>proftpd</B>
+
+는 전문적인 File Transfer Protocol (FTP) server daemon이다.   server는 FTP
+service가 이루어지기 위해 접속될때마다 또는 stand-alone daemon으로서 실행
+되는 것을 대체될때 Internet &quot;super-server&quot; <A HREF="http://localhost/cgi-bin/man/man2html?8+inetd">inetd</A>(8) 에 의하여 시작된다.
+<B>proftp</B>
+
+가 standalone mode로 작동할때 그리고 SIGHUP를 받을때 proftp는 config file
+을 다시 읽을 것이다.
+<B>-n</B>
+
+option이 없이 standalone으로 작동할 경우 SIGHUP 신호를 진행할때 쉽게
+하기 위하여 자신의 PID를 /var/run/proftpd.pid에 기록하게 된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-h,--help</B>
+
+<DD>
+간단한 사용설명을 보여주며, 가능한 모든 option들을 포함하고 있다.
+<DT><B>-n,--nodaemon</B>
+
+<DD>
+standalone mode로 proftpd process를 실행한다.(configuration file에서 처럼 설정
+되어져 있어야 한다) but does not background the process or disassociate it from 
+the controlling tty.  게다가 모든 ourput (log 또는 debug 메세지들) 은 syslog 
+maechanism 보다 오히려 stout으로 보내지게 된다. debugging을 위해서는 
+<B>-d option</B> 을 가장 자주 사용하게 된다.
+<DT><B>-v,--version</B>
+
+<DD>
+stdout으로 ProFTPD의 version number를 출력한다.
+<DT><B>-d,--debug</B><I> debuglevel</I>
+
+<DD>
+proftpd의 내부 debug lovel을 설정한다.(일반적으로 0 이다) <I>debuglevel</I> 은
+0에서 5 사이의 정수값을 가진며, debug stdout 보다 더 높은 숫자로서 가지게 된다.
+일반적으로 debug message들은 <B>DEBUG</B> facility 를 이용하여 <B>syslog</B>
+로 보내지게 된다. 하지만 <B>-n option</B> 을 이용하면 모든 output들은 stdout으로
+보내지게 된다.
+<DT><B>-c,--config</B><I> config-file</I>
+
+<DD>
+시작시에 <B>/etc/proftpd.conf</B> 에서 발견되는 기본 설정 file을 무시하고
+다른 <I>config-file</I> 로 지정할수 있다.
+<DT><B>-t,--configtest</B>
+
+<DD>
+설정 파일을 읽어서 문법 에러가 있는지 확인을 한다.
+<DT><B>-p,--persistent</B><I> 0|1</I>
+
+<DD>
+default persistent password를 지원한다. Disables는 0, enable은 1 이며 각 
+platform을 통해 설정 시간을 결정한다. 이 option은 <B>오직</B> default support에만
+영향을 미치며, 실행시에 <B>PersistentPasswd</B> 지시자에 의해서 무시되어 질수
+있다.
+<DT><B>-l,--list</B>
+
+<DD>
+proftpd에 compile되어진 module들의 list를 보여 준다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>파일</H2>
+
+
+<B>/usr/sbin/proftpd</B>
+
+<BR>
+
+<B>/usr/bin/ftpwho</B>
+
+<BR>
+
+<B>/usr/bin/ftpcount</B>
+
+<BR>
+
+<B>/usr/sbin/ftpshut</B>
+
+<BR>
+
+<B>/var/log/xferlog</B>
+
+<BR>
+
+<B>/var/run/proftpd-[pid]</B>
+
+<BR>
+
+<B>/var/run/proftpd-inetd</B>
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>저자</H2>
+
+<P>
+
+ProFTPD는 Floody에 의하여 처음 개발되어 졌으나 현재는 MacGyver
+(aka Habeeb J. Dihu)에 의하여 개발되어 지고 있다. &lt;<A HREF="mailto:macgyver@tos.net">macgyver@tos.net</A>&gt;
+[<A HREF="http://www.macgyver.org]">http://www.macgyver.org]</A>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+inetd">inetd</A>(8),</B><A HREF="http://localhost/cgi-bin/man/man2html?1+ftp">ftp</A>(1),<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ftpwho">ftpwho</A>(1),</B><A HREF="http://localhost/cgi-bin/man/man2html?1+ftpcount">ftpcount</A>(1),<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpshut">ftpshut</A>(8)</B>
+
+<P>
+
+proftpd 설정의 문서는 <A HREF="http://www.proftpd.net에서">http://www.proftpd.net에서</A> 볼수 있다.
+<P>
+
+버그 리포트는 <A HREF="http://bugs.proftpd.net">http://bugs.proftpd.net</A> 으로 한다. 도움및 지원은 Proftpd
+메일링 리스트를 이용하도록 한다. 메일링 리스트는 <A HREF="mailto:proftp@proftpd.net">proftp@proftpd.net</A> 이다.
+(<A HREF="http://www.proftpd.lists.html">http://www.proftpd.lists.html</A> 을 참조하라)
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+김정균 &lt;<A HREF="mailto:admin@oops.org">admin@oops.org</A>&gt;, 2000년 8월 4일
+김현철 &lt;<A HREF="mailto:mindgame@kldp.org">mindgame@kldp.org</A>&gt;, 2000년 11월 18일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">파일</A><DD>
+<DT><A HREF="#lbAG">저자</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

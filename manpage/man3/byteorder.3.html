@@ -1,0 +1,80 @@
+<HTML><HEAD><TITLE>Manpage of BYTEORDER</TITLE>
+</HEAD><BODY>
+<H1>BYTEORDER</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 4월 15일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+htonl, htons, ntohl, ntohs -호스트와 네트웍 바이트 순서 사이로 값들을 바꾼다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/netinet/in.h">netinet/in.h</A>&gt;</B>
+
+<B>unsigned long int htonl(unsigned long int </B><I>hostlong</I><B>);</B>
+
+<B>unsigned short int htons(unsigned short int </B><I>hostshort</I><B>);</B>
+
+<B>unsigned long int ntohl(unsigned long int </B><I>netlong</I><B>);</B>
+
+<B>unsigned short int ntohs(unsigned short int </B><I>netshort</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>htonl()</B> 함수는 long 정수형 <I>hostlong</I>을 호스트 바이트 순서에서 
+네트웍 바이트 순서로 바꾼다.
+<P>
+
+<B>htons()</B> 함수는 short 정수형 <I>hostshort</I>을 호스트 바이트 순서에서
+네트웍 바이트 순서로 바꾼다.
+<P>
+
+<B>ntohl()</B> 함수는 long 정수형 <I>netlong</I>를 네트웍 바이트 순서에서 호스트
+바이트 순서로 바꾼다.
+<P>
+
+<B>ntohs()</B> 함수는 short 정수형 <I>netshort</I>를 네트웍 바이트 순서에서
+호스트 바이트 순서로 바꾼다.
+<P>
+
+i80x86에서, 호스트 바이트 순서는 Least Significant Byte가 앞에 오고,
+반면에 Internet에서 사용되고 있는 네트웍 바이트 순서는 Most Significant Byte가
+앞에 온다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>호환</H2>
+
+BSD 4.3
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+gethostbyname">gethostbyname</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservent">getservent</A></B>(3)
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 4월 30일 
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">호환</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+<DT><A HREF="#lbAG">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

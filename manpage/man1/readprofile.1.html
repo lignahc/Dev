@@ -1,0 +1,242 @@
+<HTML><HEAD><TITLE>Manpage of READPROFILE</TITLE>
+</HEAD><BODY>
+<H1>READPROFILE</H1>
+Section: User Commands  (1)<BR>Updated: January 1995<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+readprofile - kernel profiling 정보를 읽기 위한 연장
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>readprofile</B>
+
+[
+<I>옵션</I>
+
+]
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>버전</H2>
+
+이 매뉴얼 페이지는 readprofile 버전 1.1에 대한 것이다.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>설명</H2>
+
+<P>
+<P>
+
+<B>readprofile</B>
+
+풀그림은 
+<B>/proc/profile</B>
+
+파일을 읽어 그 정보를 표준 출력으로 보여준다.
+출력은 세칸으로 나뉘어 출력되는데, 
+첫째칸에는 clock ticks의 숫자, 둘째칸에는 
+많은 틱스(ticks)가 발생되는 커널 안의 C 함수 이름,
+셋째칸에는 프로시져의 일반화된(normalized) `load(사용량)'를 보여준다.
+그 프로시져의 `load' 틱스의 숫자와 프로시져의 길이 사이 비율로 계산된다.
+이렇게 각 정보를 읽기 쉽게 공백문자를 채워서 보여준다.
+<P>
+<P>
+
+사용할 수 있는 옵션은 다음과 같다.
+<P>
+<DL COMPACT>
+<DT>-m<B> 맵파일</B>
+
+<DD>
+맵파일을 지정한다. 초기값은 
+<B>/usr/src/linux/System.map.</B>
+
+커널 버전 1.1.7x 종류에서는 
+<B>readprofile</B>
+
+명령이 이 초기 맵 파일을 열지 못하는 경우가 있다. 이럴때는,
+이 옵션을 사용해서 맵 파일을 
+<B>/usr/src/linux/zSystem.map</B>
+
+으로 지정한다.
+한번도 스스로 커널을 컴파일 한적이 없다면, 이 옵션을 사용해야한다.
+파일 이름에서 `.gz'로 끝나는 압축파일을 지정할 수도 있으며, 이때는 
+이 풀그림에서 자동으로 풀어서 사용한다.
+<P>
+<DT>-p<B> 프로파일</B>
+
+<DD>
+읽을 profile 파일을 지정한다. 초기값은 
+<B>/proc/profile</B>
+
+파일이다. 
+이 옵션은 커널을 바꾸었을 때 이전 커널의 프로파일을 보려고 할때
+유용하게 쓰인다. 
+<B>/proc/profile</B>
+
+파일은 `cat', `cp' 명령으로 사용자가 원하는 복사본 파일을 
+만들 수 있다. 이 파일이 `.gz' 확장자가 있어 압축되어 있으면, 
+자동으로 풀어서 보여준다. 프로파일은 
+<B>gzip</B>
+
+명령으로 압축을 하면 50-100배 가량 크기를 줄일 수 있다.
+<P>
+<DT><B>-i</B>
+
+<DD>
+Info. 이 옵션은  
+커널에 의해서 사용되는 profiling 단계만 보여준다.
+profiling 단계란 profiling 버퍼의 resolution이며, 
+커널 환경설정(`make config')하는 동안 선택된다.
+<B>-t</B>
+
+(terse) 옵션이
+<B>-i</B>
+
+옵션과 함께 사용되면  10진수만 보여진다.
+<P>
+<DT><B>-a</B>
+
+<DD>
+맵 파일의 모든 심블를 보여준다. 
+초기값으로 틱스값이 0인 프로시져는 보여주지 않는다.
+<P>
+<DT><B>-r</B>
+
+<DD>
+profiling 버퍼를 리셋한다. 이 옵션은 root만 사용할 수 있다. 
+왜냐하면 
+<B>/proc/profile</B>
+
+파일에 쓰기를 할 수 있는 권한이 root에게만 있기 때문이다.
+<P>
+<DT><B>-t</B>
+
+<DD>
+Terse(간략하게 보여주기). 
+이 옵션은 공백문자 채움을 하지 않고 보여준다. 이것은 
+<B>readprofile</B>
+
+명령이 실행될 때의 원시적인 포멧 방식이다.
+<P>
+<DT><B>-v</B>
+
+<DD>
+자세하기 보여주기.
+이 옵션은 네칸으로 보여주는데, 첫번째는 커널 함수들의 RAM 주소,
+둘번째는 함수 이름, 세번째는 클럭 틱스값, 네번째는 사용량.
+<P>
+<DT><B>-V</B>
+
+<DD>
+버전 정보를 보여주고 마친다.
+<P>
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+클럭 틱스 순서로 프로파일링 버퍼 보기:
+<PRE>
+   readprofile | sort -nr | less
+
+</PRE>
+
+프로시져 크기가 큰 것 순으로 20개만 보기:
+<PRE>
+   readprofile | sort -nr +2 | head -20
+
+</PRE>
+
+파일시스템에 관한 프로파일만 보기:
+<PRE>
+   readprofile | grep _ext2
+
+</PRE>
+
+메모리 주소와 함께 모든 커널 정보 보기:
+<PRE>
+   readprofile -av | less
+
+</PRE>
+
+예전에 작성해둔 압축된 프로파일 보기(현재 커널 정보가 아님):
+<PRE>
+   readprofile -p ~/profile.freeze.gz -m /zImage.map
+
+</PRE>
+
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>벌레</H2>
+
+<P>
+<P>
+
+<B>readprofile</B>
+
+풀그림은 커널 버전이 1.1.73 이상 버전에서 사용이 가능한다.
+그 이전 버전에서는 
+<B>/proc/profile</B>
+
+파일이 없기 때문이다.
+<P>
+<P>
+
+이 풀그림을 사용하기 위해서는 먼저 커널을 다시 환경설정하고, 
+다시 컴파일 하고, 다시 부팅해야한다. 
+No profiling module is available, and it wouldn't be easy to
+build. So this can be construed as a feature.
+<P>
+<P>
+
+Profiling is disabled when interrupts are inhibited. This means that many
+profiling ticks happen when interrupts are re-enabled. Watch out for
+misleading information.
+<P>
+<A NAME="lbAH">&nbsp;</A>
+<H2>만든이</H2>
+
+Readprofile and /proc/profile are by Alessandro Rubini (<A HREF="mailto:rubini@ipvvis.unipv.it">rubini@ipvvis.unipv.it</A>)
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 파일</H2>
+
+<PRE>
+/proc/profile              프로파일링 버퍼의 이진파일.
+/usr/src/linux/System.map  커널의 심블 테이블
+/usr/src/linux/zSystem.map 심블 테이블의 옛이름 
+
+/usr/src/linux/*           프로파일 정보로 나타날 모든 파일
+</PRE>
+
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">버전</A><DD>
+<DT><A HREF="#lbAE">설명</A><DD>
+<DT><A HREF="#lbAF">EXAMPLES</A><DD>
+<DT><A HREF="#lbAG">벌레</A><DD>
+<DT><A HREF="#lbAH">만든이</A><DD>
+<DT><A HREF="#lbAI">관련 파일</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

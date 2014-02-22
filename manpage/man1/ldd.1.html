@@ -1,0 +1,137 @@
+<HTML><HEAD><TITLE>Manpage of LDD</TITLE>
+</HEAD><BODY>
+<H1>LDD</H1>
+Section: User Commands  (1)<BR>Updated: 30 October 2000<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ldd - 공유 라이브러리의 의존성을 출력한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>문법</H2>
+
+<B>ldd</B>
+
+[OPTION]...
+
+FILE...
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>ldd</B>
+
+명령행에서 주어진 각 프로그램이나 공유 라이브러리가 필요로 하는
+공유 라이브러리를 출력한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-V&nbsp;--version</B>
+
+<DD>
+<B>ldd</B>의
+
+버전 번호를 출력한다.
+<DT><B>-v&nbsp;--verbose</B>
+
+<DD>
+심볼 버전 정보 등과 같은 모든 정보를 출력한다.
+<DT><B>-d&nbsp;--data-relocs</B>
+
+<DD>
+재배치를 하고, 빠진 객체를 보고한다. (ELF 형식에서만 동작한다.)
+<DT><B>-r&nbsp;--function-relocs</B>
+
+<DD>
+데이터와 함수에 대해 재배치를 하고, 빠진 객체나 함수에 대해 보고한다.
+(ELF 형식에서만 동작한다.)
+<DT><B>--help</B>
+
+<DD>
+사용법을 출력한다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>주의</H2>
+
+<B>ldd</B>의
+
+표준 버전은 glibc2에 따라온다. Libc5에는 오래된 버전이 따라오며,
+아직도 몇몇 시스템에는 존재한다.
+libc5 버전에서는 긴 옵션이 지원되지 않는다. 반면에 glibc2 버전에서는
+<B>-V</B>
+
+옵션이 지원되지 않고, 
+<B>--version</B>
+
+옵션만 지원된다.
+<P>
+
+이 프로그램의 libc5 버전은 명령행에서 주어진 라이브러리에 '/'가
+포함되어 있는 경우 이를 라이브러리의 이름으로 사용한다.
+그렇지 않은 경우에는 표준 위치에 있는 라이브러리들을 검색한다.
+현재 디렉토리에 있는 공유 라이브러리에 대해 이를 실행할 경우에는
+이름 앞에 './'을 붙여야 한다.
+
+
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>버그</H2>
+
+<B>ldd</B>는
+
+a.out 공유 라이브러리와는 동작하지 않는다.
+<P>
+
+<B>ldd</B>는
+
+<B>ldd</B>
+
+지원이
+컴파일러 릴리즈에 포함되기 전에 만들어진 아주 오래된
+a.out 프로그램과는 동작하지 않는다.
+만약 이런 프로그램들에
+<B>ldd</B>를
+
+사용한다면, 프로그램은 <I>argc</I> = 0 값을 가지고 실행하려고 시도할
+것이며, 그 결과는 예측할 수 없다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>저자</H2>
+
+David Engel.
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ldconfig">ldconfig</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ld.so">ld.so</A></B>(8)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+윤현호 &lt;<A HREF="mailto:hhyoon@kldp.org">hhyoon@kldp.org</A>&gt;, 2002년 7월 29일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">문법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">주의</A><DD>
+<DT><A HREF="#lbAG">버그</A><DD>
+<DT><A HREF="#lbAH">저자</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

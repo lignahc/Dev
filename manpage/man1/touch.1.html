@@ -1,0 +1,127 @@
+<HTML><HEAD><TITLE>Manpage of TOUCH</TITLE>
+</HEAD><BODY>
+<H1>TOUCH</H1>
+Section: User Commands  (1)<BR>Updated: GNU File Utilities<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+touch - 파일의 시간 정보를 바꾼다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>touch</B>
+
+[-acfm] [-r file] [-t MMDDhhmm[[CC]YY][.ss]]
+[-d time] [--time={atime,access,use,mtime,modify}] [--date=time]
+[--reference=file] [--no-create] [--help] [--version] file...
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+이 문서는 더이상 최신 정보를 담고 있지않다. 그래서, 
+몇몇 틀릴 경우도 있고, 부족한 경우도 있을 것이다. 
+완전한 매뉴얼을 원하면, Texinfo 문서를 참조하기 바란다.
+<P>
+
+이 매뉴얼 페이지는 
+<B>touch</B>
+
+명령의 GNU 버전에 대한 것이다.
+<B>touch</B>
+
+명령은 주어진 파일의 최근 사용시간과 최근 변경 시간(파일 내용이 바뀐 시간)을
+시스템의 현재 시간으로 바꾼다. 
+이때 그런 파일이 없으면 0 바이트 크기의 이름만 있는 파일을 만든다.
+만약, 첫번째 오는 <I>filename</I><B>에 해서 
+</B><I>-t</I>
+
+옵션이 사용되고 나머지 <I>filename</I><B>에 대해서 특별히 
+</B><I>-d</I>,
+
+<I>-r</I>,
+
+<I>-t</I>
+
+옵션이 사용되고 있지 않다면, 나머지 모든 파일들은 
+그 첫번째 파일에서 사용할 시간값을 그대로 사용하게 된다. 
+이런 것을 방지하려면, 
+<I>--</I>
+
+옵션을 사용해서 각각의 옵션들을 분리 시킨다.
+<P>
+
+If  changing both the access and modification times to the
+current time, 
+<B>touch </B>
+
+can change the  timestamps  for  files
+that  the  user running it does not own but has write per
+mission for.  Otherwise, the user must own the files.
+<A NAME="lbAE">&nbsp;</A>
+<H3>OPTIONS</H3>
+
+<DL COMPACT>
+<DT><I>-a, --time=atime, --time=access, --time=use</I>
+
+<DD>
+최근 파일 사용 시간(access time)만 바꾼다.
+<DT><I>-c, --no-create</I>
+
+<DD>
+파일이 이미 존재하지 하고 있지 않다면, 새로 만들지 않는다.
+<DT><I>-d, --date time</I>
+
+<DD>
+현재 시간 대신 지정한 
+<I>time</I>
+
+갑을 사용하는데, 이것은 다양한 형식이 될 수 있다. 
+이 시간에는 월 이름, 지역, `am', `pm' 등이 포함될 수도 있다.
+<DT><I>-f</I>
+
+<DD>
+무시; 이 옵션은 BSD 버전과 호환을 위해 있을 뿐.
+<DT><I>-m, --time=mtime, --time=modify</I>
+
+<DD>
+최근 파일 변경 시간(modify time)만 바꾼다.
+<DT><I>-r, --reference file</I>
+
+<DD>
+현재 시간 대신 지정한 
+<I>file</I>의 시간으로 바꾼다.
+<DT><I>-t MMDDhhmm[[CC]YY][.ss]</I>
+
+<DD>
+현재 시간 대신 지정한 시간(MM:달, DD:날, hh:시, mm:분, [CC]YY:년, SS:초)으로
+바꾼다.
+<DT><I>--help</I>
+
+<DD>
+도움말 정보를 보여주고 마친다.
+<DT><I>--version</I>
+
+<DD>
+버전 정보를 보여주고 마친다.
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DL>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+</DL>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,296 @@
+<HTML><HEAD><TITLE>Manpage of FSCK</TITLE>
+</HEAD><BODY>
+<H1>FSCK</H1>
+Section: Maintenance Commands (8)<BR>Updated: 1996년 5월<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+fsck - 리눅스 화일 시스템을 점검하고 수리한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>개용</H2>
+
+<B>fsck</B>
+
+[
+<B>-AVRTNP</B>
+
+]
+[
+<B>-s</B>
+
+]
+[
+<B>-t</B>
+
+<I>화일시스템유형</I>
+
+]
+[
+<B>화일시스템옵션</B>
+
+]
+<I>화일시스템 [ ... ]</I>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>fsck</B>
+
+은 리눅스 화일 시스템을 점검하고 필요에 따라 수리할 때 사용한다.
+<I>화일시스템</I>
+
+은 장치명(예. /dev/hda1, /dev/sdb2 )이거나 화일 시스템이 마운트된 마운트
+포인트(예. /, /usr, /home )이다. 서로 다른 물리적 드라이브 상의 여러 화일
+시스템을 점검하는 경우 병렬 처리가 가능하다. 병렬 처리를 사용하므로 점검에
+드는 시간을 절약할 수 있다.
+<P>
+
+<B>fsck</B>
+
+의 종료 코드는 다음 값의 합계로 나타난다:
+<BR>
+
+	0	-&nbsp;에러 없음
+<BR>
+
+	1	-&nbsp;화일 시스템 에러 고쳐짐
+<BR>
+
+	2	-&nbsp;리부팅이 필요함
+<BR>
+
+	4	-&nbsp;화일 시스템 에러를 고치지 않고 그대로 둠
+<BR>
+
+	8	-&nbsp;실행 에러
+<BR>
+
+	16	-&nbsp;사용법 또는 문법 에러
+<BR>
+
+	128	-&nbsp;공유 라이브러리 에러
+<BR>
+
+<B>-A</B>
+
+옵션을 주고 점검한 모든 화일 시스템에 대해서는 각 화일 시스템에 대한 모든
+종료 코드가 비트연산 OR 되어 표시된다.
+<P>
+
+사실
+<B>fsck</B>
+
+은 리눅스에서 사용가능한 화일 시스템 점검 
+프로그램(<B>fsck</B>.<I>화일시스템유형</I>)에 
+대한 프론트엔드 (front-end)일 뿐이다.
+각 시스템 고유의 점검 프로그램은 우선 /sbin 에서 찾고 다음에는 /etc/fs,
+/etc 그리고 최종적으로는 PATH 환경 변수에 나열된 디렉토리에서 찾는다.
+세부 사항에 대해서는 각 시스템 고유의 점검 프로그램에 대한 맨 페이지를
+참고하기 바란다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-A</B>
+
+<DD>
+<I>/etc/fstab</I>
+
+화일에 표시된 모든 화일 시스템을 한 번 씩 모두 점검한다.
+보통
+<I>/etc/rc</I>
+
+시스템 초기화 화일에서 각 시스템마다 일일이 명령을 내리지 않고 
+일괄적으로 점검할 때 사용된다.
+<DT><B>-R</B>
+
+<DD>
+<B>-A</B>
+
+플래그와 같이 사용될 때 루트 화일 시스템은 제외하도록 한다.
+(이미 읽기-쓰기 가능으로 마운트되어 있는 경우)
+<DT><B>-T</B>
+
+<DD>
+시작할 때 제목을 보여주지 않는다.
+<DT><B>-N</B>
+
+<DD>
+실행하지는 말고 어떤 작업을 할 것인지만 보여준다.
+<DT><B>-P</B>
+
+<DD>
+<B>-A</B>
+
+플래그가 설정되어 있을 때 다른 화일 시스템과 루트 화일 시스템을 병렬처리하여
+점검한다. 루트 화일 시스템에 에러가 있는 경우에는 e2fscsk 바이너리와 같은
+것들이 깨져있을 수 있기 때문에 안전한 방법은 아니다. 루트 화일 시스템을
+좀 더 작고 컴팩트하게 다시 파티션하길 원하지 않는 시스템 관리자들을 위해서만
+제공되는 옵션이다.
+<DT><B>-s</B>
+
+<DD>
+fsck 동작을 시리얼화한다. 대화형 모드에서 여러 화일 시스템을 점검할 때 
+유용하다.( 주의 : 
+<B>e2fsck</B>
+
+은 기본값으로 대화형으로 실행한다.
+<B>e2fsck</B>
+
+을 비대화형 모드로 실행하려면
+<B>-p</B>
+
+또는
+<B>-a</B>
+
+옵션을 주어 에러를 자동 치유하거나
+<B>-n</B>
+
+을 주어 고치지 않고 그대로 놔두도록 해야 한다.)
+<DT><B>-V</B>
+
+<DD>
+실행되는 각 화일 시스템용 명령을 포함하여 자세한 출력을 수행한다.
+<DT><B>-t</B><I>&nbsp;화일시스템유형</I>
+
+<DD>
+점검할 화일 시스템 유형을 지정한다.
+<B>-A </B>
+
+플래그가 설정되어 있는 경우
+<I>화일시스템유형</I>
+
+에 맞는 것만 점검한다.
+<I>화일시스템유형</I>
+
+앞에
+<B>no</B>
+
+를 붙이면 
+<I>화일시스템유형</I>
+
+아닌 것만 점검한다.
+<P>
+보통
+<I>/etc/fstab </I>
+
+화일에 들어있는
+<I>화일시스템유형</I>
+
+을 따른다.
+만약 해당 유형을 알아낼 수 없을 때는
+<B>fsck</B>
+
+는 
+<B>-t</B>
+
+옵션에서 주어진 값을 사용한다.
+주어진 값이 유효하지 않다면 현재로서는 기본값인 ext2 가 사용된다.
+<DT><B>화일시스템옵션</B>
+
+<DD>
+<B>fsck</B>
+
+에 의해 이해되지 않는 옵션 또는
+<B>--</B>
+
+옵션 뒤에 오는 옵션은 각 화일 시스템 고유의 점검 프로그램의 옵션으로
+취급한다.
+</DL>
+<P>
+
+현재 표준적인 화일 시스템 고유의 옵션은 변동 중이다. 비록 확실하게 보장할
+수는 없지만 다음 옵션들은 대부분의 점검 프로그램에서 지원한다.
+<DL COMPACT>
+<DT><B>-a</B>
+
+<DD>
+물어봄 없이 자동으로 복구한다.( 주의하여 사용하기 바란다 )
+<B>e2fsck</B>
+
+은
+<B>-a</B>
+
+옵션을 단지 호환성을 위해 제공할 뿐이다. 이 옵션은 e2fsck의
+<B>-p</B>
+
+옵션으로 매핑된다.
+<DT><B>-r</B>
+
+<DD>
+화일 시스템 복구시 질문을 하게끔 한다. 주의 : 여러 fsck 가 병렬모드로
+작동하고 있을 때 사용하는 것은 좋지 않다.
+<B>e2fsck</B>
+
+의 기본 동작 방식이므로 주의하기 바란다. 이 옵션은 단지 호환성 때문에
+제공될 뿐이다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>저자</H2>
+
+Theodore Ts'o (<A HREF="mailto:tytso@mit.edu">tytso@mit.edu</A>)
+<P>
+
+이 맨페이지는 Remy Card 씨의 ext2 화일 시스템에 대한 설명을 David Engel,
+Fred van Kempen씨가 자신의 fsck 프론트엔드 프로그램 설명에 적은 것을 또 다시
+배껴 적은 것일 뿐이다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 화일</H2>
+
+<I>/etc/fstab</I>.
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>참고</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+fstab">fstab</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mkfs">mkfs</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck.minix">fsck.minix</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck.ext2">fsck.ext2</A></B>(8)
+
+또는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+e2fsck">e2fsck</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck.xiafs">fsck.xiafs</A></B>(8).
+
+<P>
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개용</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">저자</A><DD>
+<DT><A HREF="#lbAG">관련 화일</A><DD>
+<DT><A HREF="#lbAH">참고</A><DD>
+<DT><A HREF="#lbAI">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

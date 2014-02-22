@@ -1,0 +1,72 @@
+<HTML><HEAD><TITLE>Manpage of NEWGRP</TITLE>
+</HEAD><BODY>
+<H1>NEWGRP</H1>
+Section: Linux Programmer's Manual (1)<BR>Updated: 9 October 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+newgrp - 자신이 소속된 그룹을 새 그룹으로 바꾼다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>newgrp [ </B><I>group</I><B> ]</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Newgrp</B>
+
+명령은 
+changes the group identification of its caller, analogously to
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+login">login</A></B>(1).
+
+명령으로 로그인 할 때 식별되는 그룹을 바꾼다. 
+<I>group</I>으로 사용될 수 있는 값은 /etc/group 파일안에 
+있는 그룹의 이름이나, GID 값이여야 하며, 
+명령행 인자에서 이 값을 특별히 지정하지 않으면, 현재 자신의 
+그룹으로 바꾼다. 
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>FILES</H2>
+
+<I>/etc/group</I>
+
+<BR>
+
+<I>/etc/passwd</I>
+
+<P>
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+login">login</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+group">group</A></B>(5)
+
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Originally by Michael Haardt. Currently maintained by 
+Peter Orbaek (<A HREF="mailto:poe@daimi.aau.dk">poe@daimi.aau.dk</A>).
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">FILES</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">AUTHOR</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

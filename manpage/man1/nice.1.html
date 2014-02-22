@@ -1,0 +1,87 @@
+<HTML><HEAD><TITLE>Manpage of NICE</TITLE>
+</HEAD><BODY>
+<H1>NICE</H1>
+Section: Misc. Reference Manual Pages (1L)<BR>Updated: GNU 쉘 유틸리티<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+nice - 스케쥴링 우선권을 변경하여 프로그램을 수행한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>nice</B>
+
+[-n 조정수치] [-adjustment] [--adjustment=조정수치]
+[--help] [--version] [command [arg...]]
+<A NAME="lbAD">&nbsp;</A>
+<H2>개요</H2>
+
+이 맨페이지는 GNU 버전의
+<B>nice</B>
+
+를 다룬다.
+대부분의 쉘들은 같은 이름, 같은 기능의 내장 기능을 가지고 있을 것이다.
+<P>
+
+만약 아무런 인수도 주어지지 않으면,
+<B>nice</B>
+
+는 상속받은 현재의 스케쥴링 우선권을 출력한다.
+인수가 있다면
+<B>nice</B>
+
+주어진
+<I>명령</I>
+
+을
+조정된 스케쥴링 우선권으로 실행한다.
+<I>조정수치</I>
+
+가 생략되면 명령의 우선권은 10 만큼 증가한다. 수퍼유저는 음의 조정수치를
+부여할 수 있다. 
+<B>nice</B>
+
+에 의해 조정될 수 있는 범위는 -20 ( 가장 높은 우선권 )에서 19 ( 가장 낮은
+우선권 )까지이다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+<DL COMPACT>
+<DT><I>-n adjustment, -adjustment, --adjustment=adjustment</I>
+
+<DD>
+명령의 우선권에 10 대신
+<I>조정수치</I>
+
+를 더한다.
+<DT><I>--help</I>
+
+<DD>
+표준출력으로 사용법을 출력하고 정상적으로 종료한다.
+<DT><I>--version</I>
+
+<DD>
+표준출력으로 버전정보를 출력하고 정상적으로 종료한다.
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">개요</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

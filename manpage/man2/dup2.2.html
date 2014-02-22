@@ -1,0 +1,141 @@
+<HTML><HEAD><TITLE>Manpage of DUP</TITLE>
+</HEAD><BODY>
+<H1>DUP</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1994년 8월 21일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+dup, dup2 - 파일 디스크립터를 복사한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<B>int dup(int </B><I>oldfd</I><B>);</B>
+<B>int dup2(int </B><I>oldfd</I><B>, int </B><I>newfd</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>dup</B> 그리고 <B>dup2</B>는
+
+파일 디스크립터
+<I>oldfd</I>에
+
+대한 복사본을 생성한다.
+<P>
+<B>dup</B> 또는 <B>dup2</B>가 성공적으로 수행되면,
+<I>oldfd</I>
+
+디스크립터와 복사된 새로운 디스크립터는 서로 공유되어 사용될 것이다.
+이 디스크립터들은 락(lock), 파일 위치 포인터 그리고 플래그를 공유한다; 
+예를 들어, 만약 파일 위치가 한 디스크립터에서
+<B>lseek</B>를
+
+사용해 변경되면 이 변경된 위치는 다른 디스크립터에도 영향을 미친다.
+<P>
+그러나 이 두 디스크립터는 close-on-exec 플래그는 공유하지 않는다.
+<P>
+<B>dup</B>는
+
+복사되어질 새로운 디스크립터로, 사용되지 않는 가장 작은 디스크립터 
+번호를 이용한다.
+<P>
+<B>dup2</B>는
+
+필요하다면 먼저 <I>newfd</I>를 닫고, <I>oldfd</I>를 <I>newfd</I>
+
+에 복사한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>dup</B> 그리고 <B>dup2</B>
+
+는 복사된 새로운 디스크립터를 리턴하다. 또는 에러 
+(<I>errno</I> 값을 적절하게 설정한다)
+가 발생한 경우에는 -1을 리턴한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+<I>oldfd</I>이
+
+열린 파일 디스크립터가 아니거나,
+<I>newfd</I>가
+
+파일 디스크립터의 허용된 범위를 넘어선 경우이다.
+<DT><B>EMFILE</B>
+
+<DD>
+프로세스가 이미 최대로 열 수있는 파일 디스크립터의 갯수를 가진 상태에서
+새로운 파일 디스크립터를 열고자 시도한 경우이다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>경고</H2>
+
+<I>newfd</I>가
+
+허용 가능한 범위 밖의 값일 때,
+<B>dup2</B>에
+
+의해 리턴된 에러값은
+<B>fcntl(</B>..., <B>F_DUPFD</B>, ...<B>)</B>에
+
+의해 리턴된 에러값과는 다르다. 어떤 시스템에서는 
+<B>dup2</B>가
+
+<B>F_DUPFD</B>와
+
+같은
+<B>EINVAL</B>을
+
+리턴하기도 한다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID, POSIX, X/OPEN, BSD 4.3. SVr4에서는 추가적으로
+EINTR와 ENOLINK 에러 상태를 기술하고 있다. POSIX.1는 EINTR을
+추가했다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fcntl">fcntl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+close">close</A></B>(2).
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+정동현 &lt;<A HREF="mailto:dhjung@serome.co.kr">dhjung@serome.co.kr</A>&gt;, 2000년 4월 20일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">경고</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

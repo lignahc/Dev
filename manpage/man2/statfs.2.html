@@ -1,0 +1,243 @@
+<HTML><HEAD><TITLE>Manpage of STATFS</TITLE>
+</HEAD><BODY>
+<H1>STATFS</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1997년 8월 21일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+statfs, fstatfs - 파일 시스템 통계를 가져온다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/vfs.h">sys/vfs.h</A>&gt;</B>
+
+<P>
+<B>int statfs(const char *</B><I>path</I><B>, struct statfs *</B><I>buf</I><B>);</B>
+
+<BR>
+
+<B>int fstatfs(int </B><I>fd</I><B>, struct statfs *</B><I>buf</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>statfs</B>
+
+는 마운트된 파일시스템에 관한 정보를 반환한다.
+<I>path</I>
+
+는 마운트된 파일 시스템내 파일의 경로 이름이다.
+<I>buf</I>
+
+는 다음과 같이 정의된
+<I>statfs</I>
+
+구조체에 대한 포인터이다:
+<P>
+<DL COMPACT><DT><DD>
+<PRE>
+struct statfs {
+   long    f_type;     /* 파일 시스템 타입(아래에서 보여준다) */
+   long    f_bsize;    /* 최적화된 전송 블럭 크기 */
+   long    f_blocks;   /* 파일 시스템내 총 데이터 블럭들 */
+   long    f_bfree;    /* 파일 시스템내 여유 블럭들 */
+   long    f_bavail;   /* 비-슈퍼 유저를 위한 여유 블럭들 */
+   long    f_files;    /* 파일 시스템내 총 파일 노드들 */
+   long    f_ffree;    /* 파일 시스템내 여유 파일 노드들 */
+   fsid_t  f_fsid;     /* 파일 시스템 ID */
+   long    f_namelen;  /* 파일 이름의 최대 길이 */
+   long    f_spare[6]; /* 나중을 위한 여유분 */
+};
+
+파일 시스템 타입들:
+
+linux/affs_fs.h:
+   AFFS_SUPER_MAGIC      0xADFF
+linux/ext_fs.h:
+   EXT_SUPER_MAGIC       0x137D
+linux/ext2_fs.h:
+   EXT2_OLD_SUPER_MAGIC  0xEF51
+   EXT2_SUPER_MAGIC      0xEF53
+linux/hpfs_fs.h:
+   HPFS_SUPER_MAGIC      0xF995E849
+linux/iso_fs.h:
+   ISOFS_SUPER_MAGIC     0x9660
+linux/minix_fs.h:
+   MINIX_SUPER_MAGIC     0x137F /* orig. minix */
+   MINIX_SUPER_MAGIC2    0x138F /* 30 char minix */
+   MINIX2_SUPER_MAGIC    0x2468 /* minix V2 */
+   MINIX2_SUPER_MAGIC2   0x2478 /* minix V2, 30 char names */
+linux/msdos_fs.h:
+   MSDOS_SUPER_MAGIC     0x4d44
+linux/ncp_fs.h:
+   NCP_SUPER_MAGIC       0x564c
+linux/nfs_fs.h:
+   NFS_SUPER_MAGIC       0x6969
+linux/proc_fs.h:
+   PROC_SUPER_MAGIC      0x9fa0
+linux/smb_fs.h:
+   SMB_SUPER_MAGIC       0x517B
+linux/sysv_fs.h:
+   XENIX_SUPER_MAGIC     0x012FF7B4
+   SYSV4_SUPER_MAGIC     0x012FF7B5
+   SYSV2_SUPER_MAGIC     0x012FF7B6
+   COH_SUPER_MAGIC       0x012FF7B7
+linux/ufs_fs.h:
+   UFS_MAGIC             0x00011954
+linux/xia_fs.h:
+   _XIAFS_SUPER_MAGIC    0x012FD16D
+</PRE>
+
+</DL>
+
+<P>
+
+특별한 파일 시스템을 위해 정의되지 않은 필드들은 -1로 설정된다.
+<B>fstatfs</B>
+
+는 기술자
+<I>fd</I>에
+
+의해 참조되는 열린 파일에 관한 같은 정보를 반환한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0이 리턴된다. 에러시, -1이 리턴되며, 
+<I>errno</I>
+
+는 적당한 값으로 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<B>statfs</B>:
+
+<DL COMPACT>
+<DT><B>ENOTDIR</B>
+
+<DD>
+<I>path</I>
+
+의 경로 요소가 디렉토리가 아니다.
+<DT><B>ENAMETOOLONG</B>
+
+<DD>
+<I>path</I>
+
+가 너무 길다.
+<DT><B>ENOENT</B>
+
+<DD>
+<I>path</I>
+
+가 가리키는 파일이 존재하지 않는다.
+<DT><B>EACCES</B>
+
+<DD>
+탐색 허가권이 
+<I>path</I>의
+
+경로 요소에서 거부되었다.
+<DT><B>ELOOP</B>
+
+<DD>
+너무 많은 상징 연결들을 
+<I>path</I>해석시에
+
+만났다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>Buf</I>
+
+나
+<I>path</I>
+
+가 유효하지 않는 주소를 가리키고 있다.
+<DT><B>EIO</B>
+
+<DD>
+파일 시스템을 읽거나 슬는 동안 I/O 에러가 발생했다.
+<DT><B>ENOMEM</B>
+
+<DD>
+이용할수 있는 커널 메모리가 충분하지 않다.
+<DT><B>ENOSYS</B>
+
+<DD>
+파일 시스템
+<I>path</I>
+
+는 
+<B>statfs</B>를
+
+지원하지 않는다.
+</DL>
+<P>
+
+<B>fstatfs</B>:
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+<I>fd</I>
+
+는 유효한 열려진 파일 기술자가 아니다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>buf</I>
+
+가 유효하지 않은 주소를 가리키고 있다.
+<DT><B>EIO</B>
+
+<DD>
+파일 시스템을 읽고 쓰는 동안 I/O 에러가 발생했다.
+<DT><B>ENOSYS</B>
+
+<DD>
+파일 시스템
+<I>fd</I>
+
+가
+<B>statfs</B>를
+
+지원하지 않는다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+4.4BSD.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+stat">stat</A></B>(2)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 9월 16일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

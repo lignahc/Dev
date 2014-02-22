@@ -1,0 +1,233 @@
+<HTML><HEAD><TITLE>Manpage of SERVICES</TITLE>
+</HEAD><BODY>
+<H1>SERVICES</H1>
+Section: Linux Programmer's Manual (5)<BR>Updated: 11 Jan 1996<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+services - 인터넷 네트워크 서비스 리스트
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>services</B>
+
+는 인터넷 서비스를 위한 친근한 텍스트 형태의 이름과 원래 할당된 포트 번호와 
+프로토콜 타입 간의 맵핑을 제공하는 단순한 ASCII파일이다.
+모든 네트워킹 프로그램은 서비스를 위한 포트 번호(와 프로토콜)을 
+얻기 위해 이 파일을 조사해 봐야한다.
+C 라이브러리 루틴
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservent">getservent</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservbyname">getservbyname</A></B>(3),<B></B>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservbyport">getservbyport</A></B>(3),<B></B>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+setservent">setservent</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+endservent">endservent</A></B>(3)
+
+은 프로그램으로부터 이 파일에 대한 질문을 지원한다.
+
+포트 번호는 IANA (Internet Assigned NumbersAuthority)에 의해 할당받고,
+포트 번호를 할당 받을 때 그들의 현제 정책은 TCP아 UDP 프로토콜로 할당한다. 
+그러므로 하나의 서비스를 하더라도 대부분의 앤트리는 두개씩 가지고 있다
+
+1024번 아래쪽 포트 번호는(보통 'low numbered' port라고 부르는) 루트에 의해서만
+묶일 수 있다. (
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+bind">bind</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?7+tcp">tcp</A></B>(7),  <B><A HREF="http://localhost/cgi-bin/man/man2html?7+udp">udp</A></B>(7).
+
+를 참조) 그러므로, 낮은 번호의 포트에 연결된 클라이언트는 그 포트에서의 서비스가 
+표준 실행이고, 사용자에 의해 실행되는 낮은 품질의 서비스가 아니라는 것을 믿을 수 있다.
+IANA에 의해 분류된 잘 알려진 포트 번호는 일반적으로 루트 범위에 위치한다.
+
+The presence of an entry for a service in the 
+<B>services</B>
+
+파일 상에 서비스를 위한 앤트리가 존재한다는 것은 꼭 서비스가 
+현제 컴퓨터 상에서 실행되고 있다는 것을 뜻하진 않는다.
+제공되는 인터넷 서비스의 형태를 알려면
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+inetd.conf">inetd.conf</A></B>(5)
+
+를 참조하라. 모든 네트워킹 서비스가 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+inetd">inetd</A></B>(8), 
+
+에 의해 시작된 것도 아니고,
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+inetd.conf">inetd.conf</A></B>(5). 
+
+에 적용되는 것도 아니라는 것을 상기하자.
+특히, 뉴스 (NNTP)와 메일 (SMTP) 서버는 종종 시스템 부트 스크립트로 시작된다.
+
+The location of the
+<B>services</B>
+
+파일의 위치는 
+<I>/usr/include/netdb.h</I>
+
+에 있는 
+<B>_PATH_SERVICES</B>
+
+에 의해 정의된다.
+이것은 보통
+<I>/etc/services</I>.
+
+로 설정된다.
+각각의 라인은 하나의 서비스를 표현하고, 아래와 같은 형태를 가진다:
+<DL COMPACT>
+<DT><DD>
+<I>service-name&nbsp;&nbsp;&nbsp;port</I><B>/</B><I>protocol&nbsp;&nbsp;&nbsp;</I>[<I>aliases ...</I>]
+<DT>각각의 항목은:<DD>
+<DT><I>service-name</I>
+
+<DD>
+은 서비스가 알려지고, 널리 퍼진 친근한 이름이다. 이것은 민감한 경우이다. 종종
+<I>service-name</I>
+
+뒤에 클라이언트 프로그램의 이름이 들어가기도 한다.
+<DT><I>port</I>
+
+<DD>
+는 이 서버가 사용하는 포트 번호이다.(십진수)
+<DT><I>protocol</I>
+
+<DD>
+은 사용되는 프로토콜의 타입이다. 이 항목은
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+protocols">protocols</A></B>(5)
+
+파일에 있는 엔트리와 맞아야한다. 일반적인 타입은 
+<B>tcp</B>
+
+와
+<B>udp</B>
+
+가 있다.
+<DT><I>aliases</I>
+
+<DD>
+는 이 서비스를 위한 다른 이름들의 리스트들과 구분되는 선택적인 공간 혹은 텝이다.
+(아래 버그란을 참조하자). 이 이름도 민감한 경우이다.
+</DL>
+<P>
+
+
+공간이나 텝이나 영역을 나누는데 사용할 수 있다.
+
+주석은 hash sign (#)으로 시작해서 그 줄의 끝까지 계속된다.
+빈 줄은 넘어간다.
+
+<I>service-name</I>
+
+는 파일의 첫번째 열에서 시작해야 한다. 왜냐하면 첫 공간은 지우지 않기 때문이다.
+<I>service-names</I>
+
+은 빈공간과 텝을 제외하곤 어떤 출력 가능한 문자라도 된다. 하지만 문자를 평범하게 
+선택하는 것이 종종 내부에서 일어나는 문제를 최소화 시켜주기도 한다. 
+Eg: a-z, 0-9, 그리고 하이픈(-)은 합리적인 선택이다.
+
+파일 안에 모든 라인은 이 형태를 따른다. (일반적으로, 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservent">getservent</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservbyname">getservbyname</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservbyport">getservbyport</A></B>(3).
+
+는 그것들을 조용히 넘어다닌다. 하지만 이 행동이 이것이 확실한 것은 아니다.)
+
+<I>port</I>
+
+번호와
+<I>protocol</I>
+
+이름 사이의 슬래쉬(/)는 슬래쉬도 되고 콤마(,)도 된다. 최근 설치에선 콤마의 사용이 줄었다.
+
+이 파일은 Yellow Pages.NIS나 BIND.Hesiod와 같이 긴 이름의 서비스 네트웍을 사용하는 네트웍에 배포되었다.
+
+견본
+<B>services</B>
+
+파일은 아래와 같다:
+<DL COMPACT><DT><DD>
+<PRE>
+
+
+msp             18/tcp          # message send protocol
+msp             18/udp          # message send protocol
+chargen         19/tcp          ttytst sourcechargen         19/udp          ttytst source
+ftp             21/tcp
+# 22 - unassigned
+telnet          23/tcp
+
+</PRE>
+
+</DL>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>버그</H2>
+
+최대 35개의 이름이 있다.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservent">getservent</A></B>(3)
+
+코드를 쓰는 방법에 달려있다..
+
+<B>BUFSIZ</B>
+
+(일반적으로 1024) 문자보다 긴 줄은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservent">getservent</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservbyname">getservbyname</A></B>(3),  <B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservbyport">getservbyport</A></B>(3).
+
+가 무시한다. 하지만 이것은 다음 줄을 잘못 해석하게 한다. 
+<A NAME="lbAE">&nbsp;</A>
+<H2>파일</H2>
+
+<DL COMPACT>
+<DT><I>/etc/services</I>
+
+<DD>
+The Internet network services list.TP
+<I>/usr/include/netdb.h</I>
+
+Definition of
+<B>_PATH_SERVICES</B>
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservent">getservent</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservbyname">getservbyname</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getservbyport">getservbyport</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+setservent">setservent</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+endservent">endservent</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+protocols">protocols</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+listen">listen</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+inetd.conf">inetd.conf</A></B>(5),.BR<B><A HREF="http://localhost/cgi-bin/man/man2html?8+inetd">inetd</A></B>(8).
+
+
+Assigned Numbers RFC, most recently RFC 1700, (AKA STD0002)
+
+Guide to Yellow Pages Service
+
+Guide to BIND/Hesiod Service
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">버그</A><DD>
+<DT><A HREF="#lbAE">파일</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

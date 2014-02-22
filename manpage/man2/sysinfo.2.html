@@ -1,0 +1,105 @@
+<HTML><HEAD><TITLE>Manpage of SYSINFO</TITLE>
+</HEAD><BODY>
+<H1>SYSINFO</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1997년 8월 25일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+sysinfo - 전체적인 시스템 통계 정보를 반환한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/sysinfo.h">sys/sysinfo.h</A>&gt;</B>
+
+<P>
+<B>int sysinfo(struct sysinfo *</B><I>info</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>sysinfo</B>는
+
+다음 구조체 안에 정보를 반환한다.
+<P>
+<DL COMPACT><DT><DD>
+<PRE>
+struct sysinfo {
+        long uptime;              /* 부팅 이후 지나간 초단위 시간*/
+        unsigned long loads[3];   /* 1, 5, 그리고 15 분 부하 평균*/
+        unsigned long totalram;   /* 사용할 수 있는 총 메모리 크기*/
+        unsigned long freeram;    /* 이용할 수 있는 메모리 크기*/
+        unsigned long sharedram;  /* 공유 메모리의 양*/
+        unsigned long bufferram;  /* 버퍼에 의해 사용된 메모리*/
+        unsigned long totalswap;  /* 총 스왑 공간의 크기*/
+        unsigned long freeswap;   /* 이용할 수 있는 스왑 공간*/
+        unsigned short procs;     /* 현재 프로세스의 수*/
+        char _f[22];              /* 구조체를 64 bytes로 채운다(pad)*/
+};
+</PRE>
+
+</DL>
+
+<P>
+<B>sysinfo</B>는
+
+전체적인 시스템 통계 정보를 가져올 수 있는 간단한 방법을 제공한다.
+또한 <I>/dev/kmem</I>를 읽는것보다 훨씬 호환성이 좋다.
+사용 예를 볼려면, <A HREF="http://localhost/cgi-bin/man/man2html?2+intro">intro</A>(2)를 참조해라.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0을 반환한다. 에러시, -1을 반환하며,
+<I>errno</I>는
+
+적당한 값으로 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EFAULT</B>
+
+<DD>
+<I>struct&nbsp;sysinfo</I>가 가리키는 포인터가 유효하지 않다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+이 함수는 리눅스에 의존적이므로 호환성을 염두에 둔 프로그램에서
+사용해서는 안된다.
+<P>
+리눅스 커널은 0.98.pl6 이후에 sysinfo시스템 콜을 가지고 있다.
+리눅스 libc는 5.3.5 이후에 sysinfo() 루틴을 포함하였으며 glibc에서는
+1.9 이후에 포함하였다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+proc">proc</A></B>(5)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 5월 28일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

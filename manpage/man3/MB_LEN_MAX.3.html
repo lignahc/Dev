@@ -1,0 +1,70 @@
+<HTML><HEAD><TITLE>Manpage of MB_LEN_MAX</TITLE>
+</HEAD><BODY>
+<H1>MB_LEN_MAX</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1999년 7월 4일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+MB_LEN_MAX - 사용할 수 있는 모든 로케일에서 문자의 최대 바이트 수
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/limits.h">limits.h</A>&gt;</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>MB_LEN_MAX</B>
+
+매크로는 모든 로케일에 걸쳐서 한 문자를 표현하는데 필요한 바이트 수의
+상한이다. 
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환 값</H2>
+
+1 이상의 정수형 상수.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+ANSI C, POSIX.1
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+<B>MB_LEN_MAX</B>의 내용과 <B>sizeof(wchar_t)</B>의 결과는
+
+전혀 관계 없다. 예를 들어 GNU libc에서,
+<B>MB_LEN_MAX</B>의 값은 6인데 반해 <B>sizeof(wchar_t)</B>의 결과는 4이다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+MB_CUR_MAX">MB_CUR_MAX</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+류정욱 &lt;<A HREF="mailto:compiler@kldp.org">compiler@kldp.org</A>&gt;, 2000년 4월 19일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환 값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,496 @@
+<HTML><HEAD><TITLE>Manpage of rpm</TITLE>
+</HEAD><BODY>
+<H1>rpm</H1>
+Section: 레드햇 리눅스 (8)<BR>Updated: 1996년 7월 15일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+rpm - 레드햇 패키지 관리자
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>rpm</B> [옵션들] 
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>rpm</B> 은 강력한 <I>패키지 관리자</I> 로서 
+각각의 소프트웨어 패키지를 만들고 설치하고 질문하고 검증하고 갱신하며
+제거할 수 있다.
+<I>패키지</I> 란  설치할 화일들과 이름, 버전, 설명 등을
+포함하는 패키지 정보를 지닌 저장 화일이다.
+<P>
+기본적인 7 가지 동작 모드가 있으며 각각 다른 옵션들을 갖는다.
+<I>설치</I>, <I>질문</I>,
+<I>검증</I>, <I>서명 확인</I>, <I>제거</I>, <I>제작</I>,
+그리고 <I>데이터베이스 재건설</I> 이 바로 그것이다.
+<P>
+설치 모드:
+<BR>
+
+<I></I><B>    rpm -i [설치옵션] &lt;패키지 화일&gt;+</B>
+
+<BR>
+
+질문 모드:
+<BR>
+
+<I></I><B>    rpm -q [질문옵션]</B>
+
+<BR>
+
+검증 모드:
+<BR>
+
+<I></I><B>    rpm -V|-y|--verify [검증옵션]</B>
+
+<BR>
+
+서명 확인 모드:
+<BR>
+
+<I></I><B>    rpm --checksig &lt;패키지화일&gt;+</B>
+
+<BR>
+
+제거 모드:
+<BR>
+
+<I></I><B>    rpm -e &lt;패키지명&gt;+</B>
+
+<BR>
+
+제작 모드:
+<BR>
+
+<I></I><B>    rpm -b</B><I>O</I><B> [제작옵션] &lt;패키지스펙&gt;+</B>
+
+<BR>
+
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>일반적 옵션</H2>
+
+다음 옵션들은 각기 다른 모드에서도 사용가능하다.
+<DL COMPACT>
+<DT><B>-vv</B><DD>
+아주 자세하게 디버깅 정보를 출력한다.
+<DT><B>--keep-temps</B><DD>
+임시 화일을 지우지 않는다. (/tmp/rpm-*). rpm 을 디버깅할 때만
+주로 사용한다.
+<DT><B>--quiet</B><DD>
+최대한 출력을 자제하며 오로지 에러 메세지만 출력한다.
+<DT><B>--help</B><DD>
+좀 더 긴 사용법 설명서를 출력한다.
+<DT><B>--version</B><DD>
+사용 중인 rpm 의 버전을 한 줄로 표시한다.
+<DT><B>--rcfile &lt;화일&gt;</B><DD>
+<B>/etc/rpmrc</B> 또는 <B>$HOME/.rpmrc</B> 을 사용하지 않고
+<B>&lt;file&gt;</B> 을 사용하도록 한다.
+<DT><B>--root &lt;dir&gt;</B><DD>
+모든 동작에 대하여 최상위 디렉토리를 주어진 디렉토리로 설정하고 작업한다.
+예를 들어 설치시 주어진 디렉토리를 / 라고 생각하고 그것을 기준으로
+설치해나간다.
+<P>
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>설치 옵션</H2>
+
+rpm 설치 명령의 일반적인 형태는 다음과 같다.
+<P>
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT><B>rpm -i [설치옵션들] &lt;패키지화일&gt;+</B><BR>
+<P>
+
+<DL COMPACT>
+<DT><B>--force</B><DD>
+--replacepkgs, --replacefiles, --oldpackage 를 모두 사용한 것과
+같다.
+<DT><B>-h, --hash</B><DD>
+패키지를 풀 때 해쉬마크(#)를 표시한다. 총 갯수는 50 개이다.
+좀 더 나은 출력을 위해서는 <B>-v</B> 를 함께 사용하라.
+<DT><B>--oldpackage</B><DD>
+새로운 패키지를 지우고 더 예전 패키지로 교체할 때 사용한다.
+<DT><B>--percent</B><DD>
+패키지 화일을 풀 때 퍼센트 표시를 한다. 다른 도구로부터 rpm 을 이용할 때
+사용할 목적으로 만들어졌다.
+<DT><B>--replacefiles</B><DD>
+이미 설치된 다른 패키지의 화일을 덮어쓰면서라도 패키지를 강제로 설치한다.
+<DT><B>--replacepkgs</B><DD>
+패키지가 이미 설치되어 있다 하더라도 다시 설치한다.
+<DT><B>--root </B><I>&lt;디렉토리&gt;</I><DD>
+<I>&lt;디렉토리&gt;</I>를 루트로 하는 시스템에 설치를 수행한다.
+데이터베이스는 <I>&lt;디렉토리&gt;</I> 밑에서 갱신되고 <I>pre</I> 또는 <I>post</I>
+스크립트는 <I>&lt;디렉토리&gt;</I>로 chroot() 한 후 실행됨을 의미한다.
+<DT><B>--noscripts</B><DD>
+preinstall, postinstall 스크립트를 실행하지 않는다.
+<DT><B>--excludedocs</B><DD>
+문서라고 표시되어 있는 화일(맨페이지와 texinfo 문서)은 설치하지 않는다.
+<DT><B>--includedocs</B><DD>
+문서 화일을 포함한다. 이 옵션은 rpmrc 화일에 <I>excludedocs: 1</I> 이라는
+것이 명시되어 있을 때만 필요하다.
+<DT><B>--nodeps</B><DD>
+패키지를 설치하기 전에 의존성을 검사하지 않는다.
+<DT><B>--test</B><DD>
+패키지를 실제로 설치하지는 않고 충돌 사항이 있는지 점검하고 보고한다.
+<DT><B>-U, --upgrade</B><DD>
+현재 설치되어 있는 패키지를 새로운 버전의 RPM으로 업그레이드하라.
+인스톨과 같지만 예전 버전의 것이 자동으로 지워진다는 것이 다르다.
+<P>
+<P>
+<P>
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>질문 옵션</H2>
+
+rpm 질문 옵션의 일반적인 형식은 다음과 같다.
+<P>
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT><B>rpm -q [질문옵션]</B><BR>
+<P>
+
+여러분은 패키지 정보가 표시될 형식을 결정해주어야 한다.
+<B>--queryformat</B> 옵션 뒤에 형식 문자열을 적어주면 된다.
+<P>
+질문 형식은 표준 <B><A HREF="http://localhost/cgi-bin/man/man2html?3+printf">printf</A>(3)</B> 형식을 약간 변형한 것이다.
+형식은 정적 문자열과( 개행문자, 탭, 그리고 다른 특수문자에
+대한 표준 C 문자 이스케이프 표기) <B><A HREF="http://localhost/cgi-bin/man/man2html?3+printf">printf</A>(3)</B> 형식지정자로 구성되어
+있다.
+<B>rpm</B>은 이미 출력 형태를 알고 있으므로 타입 지정자는 생략하고
+<B>{}</B> 문자로 묶어서 헤더 태그의 이름으로 바꾸어 주어야 한다.
+태그명 중 <B>RPMTAG_</B> 부분은 생략해야 하며 태그명 앞에는 <B>-</B> 문자를
+적어주어야 한다.
+<P>
+예를 들어 질문 대상 패키지의 이름만 출력하고자 하는 경우 여러분은 
+<B>%{NAME}</B> 을 형식 문자열로 사용해야 한다. 패키지명과 배포판 정보를
+두 개의 칼럼으로 표시하고자 할 때는 <B>%-30{NAME}%{DISTRIBUTION}</B> 라고
+적는다.
+<P>
+<B>rpm</B> 은 <B>--querytags</B> 옵션을 주면 인식하고 있는 모든 태그의
+목록을 보여준다.
+<P>
+질문 옵션에는 2 가지 세트가 있다: 패키지 선택과 정보 선택
+<P>
+패키지 선택 옵션:
+<BR>
+
+<DL COMPACT>
+<DT><B></B><I>&lt;패키지명&gt;</I><DD>
+<B></B><I>&lt;package_name&gt;</I>라는 이름의 패키지에 대한 질문를 수행한다.
+<DT><B>-a</B><DD>
+모든 패키지에 대하여 질문를 수행한다.
+<DT><B>-whatrequires </B><I>&lt;기능&gt;</I><DD>
+제대로 작동하기 위해서는 <I>&lt;기능&gt;</I> 을 필요로 하는 모든 패키지에 대하여
+질문을 수행한다.
+<DT><B>-whatprovides </B><I>&lt;가상&gt;</I><DD>
+<I>&lt;virtual&gt;</I> 기능을 제공하는 모든 패키지에 대하여 질문을 수행한다.
+<DT><B>-f </B><I>&lt;화일&gt;</I><DD>
+<I>&lt;화일&gt;</I>를 포함하는 패키지에 대하여 질문을 수행한다.
+<DT><B>-F</B><DD>
+<B>-f</B> 와 같지만 화일명을 표준 입력에서 읽는다.
+<DT><B>-p </B><I>&lt;패키지화일&gt;</I><DD>
+설치된 또는 설치되지 않은 <I>&lt;패키지화일&gt;</I> 에 대하여 질문을 수행한다.
+<DT><B>-P</B><DD>
+<B>-p</B> 와 같지만 패키지 화일명을 표준 입력에서 읽는다.
+<P>
+
+정보 선택 옵션:
+<BR>
+
+<DT><B>-i</B><DD>
+패키지 이름, 버전, 설명 등의 정보를 출력한다.
+만약 <B>--queryformat</B> 이 주어져 있다면 그것을 이용하여 출력한다.
+<DT><B>-R</B><DD>
+현재 패키지지가 의존하고 있는 패키지 목록을 보여준다.
+(<B>--requires</B> 과 같음)
+<DT><B>--provides</B><DD>
+패키지가 제공하는 기능을 보여준다.
+<DT><B>-l</B><DD>
+패키지 안의 화일을 보여준다.
+<DT><B>-s</B><DD>
+패키지 안에 든 화일의 <I>상태</I>를 보여준다.(<B>-l</B>은 포함)
+각 화일의 상태는 <I>normal</I>(정상), <I>not installed</I>(설치되지 않음),
+<I>replaced</I>른 것으로 교체됨)의 값을 갖는다.
+<DT><B>-d</B><DD>
+문서 화일만 보여준다.(<B>-l</B>은 포함)
+<DT><B>-c</B><DD>
+설정 화일만 보여준다.(<B>-l</B>은 포함)
+<DT><B>--scripts</B><DD>
+설치, 제거 과정에 사용되는 쉘 스크립트가 있다면 그 내용을 출력한다.
+<DT><B>--dump</B><DD>
+다음과 같은 화일 정보를 덤프한다: 경로 크기 수정일, MD5 체크섬, 모드,
+소유자, 그룹, 설정 화일 여부, 문서 화일 여부, rdev, 심볼릭 링크 여부.
+최소한 <B>-l</B>, <B>-c</B>, <B>-d</B> 이들 옵션 중 하나가 사용되어야
+한다.
+<P>
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>검증 옵션</H2>
+
+rpm 검증 옵션의 일반적인 형태는 다음과 같다.
+<P>
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT><B>rpm -V|-y|--verify [검증옵션]</B><BR>
+<P>
+
+설치되어 있는 화일들에 대하여 rpm 데이터베이스에 저장된 내용과 오리지널
+패키지의 내용을 비교한다. 검증 내용은 크기, MD5 체크섬, 퍼미션, 타입, 소유자,
+그룹 등이다. 차이점이 발견되면 출력한다. 패키지 지시 옵션은 패키지 질문
+옵션에서와 같다.
+<P>
+출력 형식은 8 자의 문자열이다. &quot;<B>c</B>&quot;은 설정 화일을 의미하며 그리고
+화일명이 나타난다. 각각의 8 개 문자는 RPM 데이터베이스에 저장된 속성과 비교한
+결과를 나타낸다. &quot;.&quot; (피리어드) 문자는 이상없음을 나타낸다. 비교 결과 문제점이
+발견되면 다음과 같은 문자가 나타난다.
+<P>
+<DL COMPACT>
+<DT><B>5</B><DD>
+MD5 체크섬
+<DT><B>S</B><DD>
+화일 크기
+<DT><B>L</B><DD>
+심볼릭 링크
+<DT><B>T</B><DD>
+갱신일
+<DT><B>D</B><DD>
+장치
+<DT><B>U</B><DD>
+사용자
+<DT><B>G</B><DD>
+그룹
+<DT><B>M</B><DD>
+퍼미션과 화일 타입을 포함한 모드
+<P>
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>서명 확인</H2>
+
+rpm 서명 확인 명령은 다음과 같다.
+<P>
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT><B>rpm --checksig &lt;패키지화일&gt;+</B><BR>
+<P>
+
+패키지의 오리지널 여부를 가려내기 위하여 패키지 안에 든 PGP 서명을 점검한다.
+PGP 설정 정보는 /etc/rpmrc 에서 읽어온다.
+세부사항은 &quot;PGP 서명&quot; 섹션을 보기 바란다.
+<P>
+<A NAME="lbAJ">&nbsp;</A>
+<H2>제거 옵션</H2>
+
+rpm 제거 명령의 일반적인 형태는 다음과 같다.
+<P>
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT><B>    rpm -e &lt;패키지화일&gt;+</B><BR>
+<P>
+
+<DL COMPACT>
+<DT><B>--noscripts</B><DD>
+preunistall, postuninstall 스크립트를 실행하지 않는다.
+<DT><B>--nodeps</B><DD>
+패키지 제거시 의존성을 검사하지 않는다.
+<DT><B>--test</B><DD>
+실제로 패키지를 제거하는 것은 아니고 테스트해본다.
+<B>-vv</B> 옵션.
+<P>
+</DL>
+<A NAME="lbAK">&nbsp;</A>
+<H2>제작 옵션</H2>
+
+rpm 제작 명령의 일반적 형식은 다음과 같다.
+<P>
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;<B>rpm&nbsp;-b</B><I>O</I>&nbsp;[제작옵션]&nbsp;&lt;패키지&nbsp;스펙&gt;+
+<P>
+
+<B>-b</B><I>O</I> 은 제작 단계와 제작할 패키지를 나타내는 것으로서 다음 중
+하나의 값을 갖는다:
+<P>
+<DL COMPACT>
+<DT><B>-bp</B><DD>
+스펙 화일의 &quot;%prep&quot; 단계를 실행한다. 보통 소스를 풀고 패치를 가하는 작업이다.
+<DT><B>-bl</B><DD>
+&quot;목록 점검&quot;을 한다. &quot;%files&quot; 섹션은 확장 매크로이다. 이 화일들이 존재하는지
+여부를 알아본다.
+<DT><B>-bc</B><DD>
+&quot;%build&quot; 단계를 수행한다.( prep 단계를 한 후 ) 
+보통 make 에 해당하는 일을 해낸다.
+<DT><B>-bi</B><DD>
+&quot;%install&quot; 단계를 수행한다.( prep, build 단계를 거친 후 )
+보통 make install 에 해당하는 일을 한다.
+<DT><B>-bb</B><DD>
+바이너리 패키지를 만든다.( prep, build, install 단계를 수행한 후 )
+<DT><B>-ba</B><DD>
+바이너리와 소스 패키지를 만든다.( prep, build, install 단계를 수행한 후 )
+</DL>
+<P>
+
+다음 옵션도 사용가능하다:
+<DL COMPACT>
+<DT><B>--short-circuit</B><DD>
+중간 단계를 거치지 않고 지정한 단계로 직접 이동한다.
+<B>-bc</B> 와 <B>-bi</B>하고만 쓸 수 있다.
+<DT><B>--timecheck</B><DD>
+&quot;시간점검&quot;을 0 ( 불가능 )으로 설정한다. 이 값은 rpmrc 에서 &quot;timecheck:&quot; 로
+설정할 수 있다. 시간점검값은 초로 표시되는데 화일이 패키징되는 걸리는 최대
+시간을 정한다. 시간을 초과하는 화일들에 대하여 경고 메시지가 출력된다. 
+<DT><B>--clean</B><DD>
+패키지를 만든 후 build 디렉토리를 지운다.
+<DT><B>--test</B><DD>
+어떠한 build 단계를 거치지 않는다.
+스펙 화일을 테스트할 때 유용하다.
+<DT><B>--sign</B><DD>
+패키지 안에 PGP 서명을 넣는다. 패키지를 누가 만들었는지 확인할 수 있다.
+/etc/rpmrc 에 대한 설명은 PGP 서명 섹션을 읽어보라.
+<P>
+</DL>
+<A NAME="lbAL">&nbsp;</A>
+<H2>재제작, 재컴파일 옵션</H2>
+
+<P>
+단 두 가지만 있을 뿐이다:
+<P>
+<I></I><B>rpm --recompile &lt;소스패키지화일&gt;+</B>
+
+<P>
+<I></I><B>rpm --rebuild &lt;소스패키지화일&gt;+</B>
+
+<P>
+rpm 은 주어진 소스 패키지를 설치하고 prep, 컴파일, 설치를 해준다.
+<B>--rebuild</B>는 새로운 바이너리 패키지도 만들어준다.
+제작을 마치면 build 디렉토리는 <B>--clean</B> 옵션에서와 마찬가지로
+지워진다. 패키지로부터 나온 소스와 스펙화일은 삭제된다.
+<P>
+<A NAME="lbAM">&nbsp;</A>
+<H2>기존의 RPM에 서명하기</H2>
+
+<P>
+<I></I><B>rpm --resign &lt;바이너리패키지화일&gt;+</B>
+
+<P>
+패키지 화일에 새로운 서명을 한다. 기존의 서명은 삭제된다.
+<P>
+<A NAME="lbAN">&nbsp;</A>
+<H2>PGP 서명</H2>
+
+<P>
+서명 기능을 사용하기 위해서는 PGP 를 사용할 수 있어야 한다.( 여러분의 패스
+걸린 디렉토리 설치되어 있어야 한다 ) 그리고 RPM 공개키를 포함하는 공개키 링을
+찾을 수 있어야 한다. 기본적으로 RPM은 PGPPATH에서 지시하는 PGP 기본 설정을
+사용한다. PGP가 기본적으로 사용하는 키링을 갖고 있지 않을 때는 /etc/rpmrc
+화일에 다음과 같이 설정해두어야 한다.
+<P>
+<DL COMPACT>
+<DT><B>pgp_path</B><DD>
+/usr/lib/rpm 대신 쓰일 경로명. 여러분의 키링을 포함해야 한다.
+</DL>
+<P>
+
+<P>
+여러분이 만든 패키지에 서명을 하려면, 여러분은 자신의 공개키와 비밀키 한 쌍을
+만들어두어야 한다.( PGP 매뉴얼 참고 )
+/etc/rpmrc 에 적는 것 말고도 다음 사항을 추가해야 한다:
+<P>
+<DL COMPACT>
+<DT><B>signature</B><DD>
+서명 유형. 현재로서는 pgp 만 지원된다.
+<DT><B>pgp_name</B><DD>
+여러분의 패키지에 서명할 user 명을 적는다.
+</DL>
+<P>
+
+<P>
+패키지 제작시 --sign 옵션을 추가한다.
+여러분의 입력을 받고 나면 패키지가 만들어지고 동시에 서명된다.
+<P>
+<A NAME="lbAO">&nbsp;</A>
+<H2>데이터베이스 재생성 옵션</H2>
+
+<P>
+rpm 데이터베이스를 다시 만드는 명령은 다음과 같다.
+<P>
+
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT><B>rpm --rebuilddb</B><BR>
+<P>
+
+<P>
+이 모드와 사용되는 옵션으로는 <B>--dbpath</B> 와 <B>--root</B> 둘 뿐이다.
+<P>
+<A NAME="lbAP">&nbsp;</A>
+<H2>관련 화일</H2>
+
+<PRE>
+/etc/rpmrc
+~/.rpmrc
+/var/lib/rpm/packages
+/var/lib/rpm/pathidx
+/var/lib/rpm/nameidx
+/tmp/rpm*
+</PRE>
+
+<P>
+
+<A NAME="lbAQ">&nbsp;</A>
+<H2>참고</H2>
+
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+glint">glint</A></I>(8)<I>,</I>
+
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+rpm2cpio">rpm2cpio</A></I>(8)<I>,</I>
+
+<B><A HREF="http://www.redhat.com/rpm">http://www.redhat.com/rpm</A></B>
+
+<PRE>
+</PRE><A NAME="lbAR">&nbsp;</A>
+<H2>저자</H2>
+
+<PRE>
+Marc Ewing &lt;<A HREF="mailto:marc@redhat.com">marc@redhat.com</A>&gt;
+Erik Troan &lt;<A HREF="mailto:ewt@redhat.com">ewt@redhat.com</A>&gt;
+</PRE>
+
+<A NAME="lbAS">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">일반적 옵션</A><DD>
+<DT><A HREF="#lbAF">설치 옵션</A><DD>
+<DT><A HREF="#lbAG">질문 옵션</A><DD>
+<DT><A HREF="#lbAH">검증 옵션</A><DD>
+<DT><A HREF="#lbAI">서명 확인</A><DD>
+<DT><A HREF="#lbAJ">제거 옵션</A><DD>
+<DT><A HREF="#lbAK">제작 옵션</A><DD>
+<DT><A HREF="#lbAL">재제작, 재컴파일 옵션</A><DD>
+<DT><A HREF="#lbAM">기존의 RPM에 서명하기</A><DD>
+<DT><A HREF="#lbAN">PGP 서명</A><DD>
+<DT><A HREF="#lbAO">데이터베이스 재생성 옵션</A><DD>
+<DT><A HREF="#lbAP">관련 화일</A><DD>
+<DT><A HREF="#lbAQ">참고</A><DD>
+<DT><A HREF="#lbAR">저자</A><DD>
+<DT><A HREF="#lbAS">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

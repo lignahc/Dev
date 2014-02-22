@@ -1,0 +1,172 @@
+<HTML><HEAD><TITLE>Manpage of ACCESS</TITLE>
+</HEAD><BODY>
+<H1>ACCESS</H1>
+Section: 시스템 호출 (2)<BR>Updated: 1998년 1월 13일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+access - 파일의 사용자 권한을 체크한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<B>int access(const char *</B><I>pathname</I><B>, int </B><I>mode</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>access</B>
+
+는 프로세스가 파일에 읽고,쓰고 것이 가능한지 체크한다. 
+만일 경로명이 심볼릭링크라면 링크 테스트로 원본 파일을
+체크하게 된다.
+
+<I>mode</I>
+
+는 하나이상의 R_OK , W_OK , X_OK and F_OK로 구성된 허상(mask)
+이다.
+
+<B>R_OK</B>, <B>W_OK</B> and <B>X_OK</B>
+
+는 각각 파일의 존재, 읽기, 쓰기, 실행권한 체크를 요구한다. F_OK는
+단지 파일의 존재유무의 체크만을 요구한다.
+
+테스트는 파일이 위치하고 있는 디렉토리의 권한에 의존하고, 디렉토리와 심
+볼릭 링크 파일도 같은 이치이다.
+
+커널에의해 실행될때의 id보다는 프로세스의 실제 UID나 GID를 체크하게 된다.
+이것은 set-UID프로그램실행을 허락하기 위함이다.
+
+파일 타입이나 내용이 아닌 억세스 비트(access bits)만을 체트한다. 그러므로, 
+만일 디렉토리가 &quot;쓰기 가능&quot;이라면,  디렉토리안에 파일을 생성할 수 있지만,
+디렉토리가 파일로써 쓰여질수 있는것은 아니다.
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+모든 요구하는 권한이 받아들여져 성공하게 되면, 0이 반환된다. 
+적어도 하나 이상이 거절되거나 에러가 나면 -1이 반환되고, errno가 적절하게 셋팅된다.
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EACCES</B>
+
+<DD>
+요구한 접근이 파일에 의해 거절되거나 경로명안의 어느 한 디렉토리에 의해 거절되었다.
+<DT><B>EROFS</B>
+
+<DD>
+쓰기 권한이 read-only인 파일 시스템에 의해 거절되었다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>경로명</I>
+
+의 위치가 당신이 접근할 수 있는 주소공간 밖에 있다.
+<DT><B>EINVAL</B>
+
+<DD>
+<I>모드</I>
+
+가 적절하지 않다.
+<DT><B>ENAMETOOLONG</B>
+
+<DD>
+<I>경로명</I>
+
+이 너무길다.
+<DT><B>ENOENT</B>
+
+<DD>
+<I>경로명</I>
+
+의 디렉토리 구성이 접근 가능하지만 존재하지 않거나 깨진 링크이다.
+<DT><B>ENOTDIR</B>
+
+<DD>
+<I>경로명</I>
+
+의 디렉토리가 실제 디렉토리가 아니다.
+<DT><B>ENOMEM</B>
+
+<DD>
+커널 메모리가 부족하다.
+<DT><B>ELOOP</B>
+
+<DD>
+너무많은 심볼릭링크가 
+<I>경로명</I>
+
+안에 존재한다.
+<DT><B>EIO</B>
+
+<DD>
+I/O 에러.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>RESTRICTIONS</H2>
+
+<B>access</B>
+
+는 요구한 접근타입(access types)의 호출이 실패하면, 다른 타입이 성공
+한다하더라도 에러를 반환한다.
+<P>
+
+<B>access</B>
+
+는 UID 맵핑이 가능한 NFS파일 시스템에서 작동하지 않을 수 있다. 왜냐하면
+UID맵핑은 사용자가 볼 수없는 서버에서 실행되기 때문이다.
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+SVID, AT&amp;T, POSIX, X/OPEN, BSD 4.3
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+stat">stat</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chmod">chmod</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+chown">chown</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+setuid">setuid</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+setgid">setgid</A></B>(2)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 29일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">RESTRICTIONS</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

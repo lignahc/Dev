@@ -1,0 +1,363 @@
+<HTML><HEAD><TITLE>Manpage of STTY</TITLE>
+</HEAD><BODY>
+<H1>STTY</H1>
+Section: Misc. Reference Manual Pages (1L)<BR>Updated: GNU 쉘 유틸리티<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+stty - 터미널 라인 설정을 변화/출력한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>stty</B>
+
+[설정...]
+<BR>
+
+<B>stty</B>
+
+{-a,--all,-g,--help,--save,--version}
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이 맨페이지는 GNU 버전의
+<B>stty</B>
+
+를 다룬다.
+아무런 인수도 주어지지 않으면,
+<B>stty</B>
+
+은 보드율(baud), 회선 제어 번호( 지원하는 시스템에서만 ), `stty sane'
+으로부터 변화한 회선 설정값들을 보여준다. 모드 읽기/설정은 표준입력이
+연결되어 있는 tty 회선에서 이루어진다.
+<P>
+
+<B>stty</B>
+
+는 터미널 회선 작동방식을 변화시키는 옵션아닌 인수로서 다음을 받아들인다.
+어떤 기능 앞에 `[-]' 표시를 한 것은 `-' 을 앞에 두어 그 기능을 해제할 수
+있다는 뜻이다. 일부 인수들은 모든 시스템에서 사용가능하지는 않다. 왜냐하면
+그것은 비POSIX 확장기능을 사용하기 때문이다. 그러한 인수들은 `(np)'라고
+표시해두겠다.
+<P>
+
+제어 설정:
+<P>
+<DL COMPACT>
+<DT>[-]parenb<DD>
+출력에서 패리티 비트를 발생하고 입력에서 패리티 비트를 기대한다.
+<DT>[-]parodd<DD>
+홀수 패리티 설정( `-' 는 짝수 ).
+<DT>cs5 cs6 cs7 cs8<DD>
+문자의 크기를 5, 6, 7, 8 비트로 설정한다.
+<DT>[-]hupcl [-]hup<DD>
+마지막 프로세스가 tty 를 닫으면 Hangup 신호를 보낸다.
+<DT>[-]cstopb<DD>
+문자 당 두 개의 정지 비트를 사용한다. ( `-' 는 하나 )
+<DT>[-]cread<DD>
+입력을 받아들인다.
+<DT>[-]clocal<DD>
+모뎀 제어 신호를 불가능으로 설정.
+<DT>[-]crtscts (np)<DD>
+RTS/CTS 핸드쉐이킹을 설정한다.
+</DL>
+<P>
+
+입력 설정:
+<P>
+<DL COMPACT>
+<DT>[-]ignbrk<DD>
+break를 무시.
+<DT>[-]brkint<DD>
+break는 인터럽트 신호를 유발한다.
+<DT>[-]ignpar<DD>
+패리티 에러를 무시한다.
+<DT>[-]parmrk<DD>
+패리티 에러를 표시한다( 255-0-문자 순서로 )
+<DT>[-]inpck<DD>
+입력 패리티 검사를 실행한다.
+<DT>[-]istrip<DD>
+입력 문자의 상위(8번째) 비트를 지운다.
+<DT>[-]inlcr<DD>
+개행문자를 캐리지 리턴으로 번역한다.
+<DT>[-]igncr<DD>
+캐리지 리턴을 무시한다.
+<DT>[-]icrnl<DD>
+캐리지 리턴을 개행 문자로 번역한다.
+<DT>[-]ixon<DD>
+XON/XOFF 흐름제어를 설정한다.
+<DT>[-]ixoff [-]tandem<DD>
+시스템의 입력 버퍼가 거의 차면 정지 문자를 보내도록 한다. 그리고 나서
+버퍼가 비면 시작 문자를 보낸다.
+<DT>[-]iuclc (np)<DD>
+대문자를 소문자로 번역한다.
+<DT>[-]ixany (np)<DD>
+어떤 문자든 출력을 다시 시작할 수 있게 허용한다. ( `-' 은 오로지 시작 문자만
+허용 )
+<DT>[-]imaxbel (np)<DD>
+버퍼가 찬 상태에서 문자가 도착하면 경고음을 내고 입력 버퍼를 플러쉬하지
+않는다.
+</DL>
+<P>
+
+출력 설정:
+<P>
+<DL COMPACT>
+<DT>[-]opost<DD>
+후처리 출력.
+<DT>[-]olcuc (np)<DD>
+소문자를 대문자로 번역한다.
+<DT>[-]ocrnl (np)<DD>
+캐리지 리턴을 개행 문자로 번역한다.
+<DT>[-]onlcr (np)<DD>
+개행 문자를 캐리지 리턴-개행 문자로 번역한다.
+<DT>[-]onocr (np)<DD>
+첫번째 칼럼에서는 캐리지 리턴을 출력하지 않는다.
+<DT>[-]onlret (np)<DD>
+개행문자가 캐리지 리턴을 수행한다.
+<DT>[-]ofill (np)<DD>
+지연 시간 타이밍 대신 채움 문자를 사용한다.
+<DT>[-]ofdel (np)<DD>
+널 문자 대신 채움 문자로 Delete 문자를 사용한다.
+<DT>nl1 nl0 (np)<DD>
+개형 문자 지연 스타일.
+<DT>cr3 cr2 cr1 cr0 (np)<DD>
+캐리지 리턴 지연 스타일.
+<DT>tab3 tab2 tab1 tab0 (np)<DD>
+수평 탭 지연 스타일.
+<DT>bs1 bs0 (np)<DD>
+백스페이스 지연 스타일.
+<DT>vt1 vt0 (np)<DD>
+수직 탭 지연 스타일.
+<DT>ff1 ff0 (np)<DD>
+폼 피드 지연 스타일.
+</DL>
+<P>
+
+지역 설정:
+<P>
+<DL COMPACT>
+<DT>[-]isig<DD>
+인터럽트, 종료, 서스펜드 특수 문자 사용가능.
+<DT>[-]icanon<DD>
+erase, kill, werase, rprnt 특수 문자 사용가능.
+<DT>[-]iexten<DD>
+비POSIX 특수 문자 사용가능.
+<DT>[-]echo<DD>
+입력 문자를 반향(echo)한다.
+<DT>[-]echoe, [-]crterase<DD>
+erase 문자를 백스페이스-스페이스-백스페이스로 반향한다.
+<DT>[-]echok<DD>
+kill 문자 후에 개행 문자를 반향한다.
+<DT>[-]echonl<DD>
+다른 문자는 반향하지 않더라도 개행문자는 반향한다.
+<DT>[-]noflsh<DD>
+인터럽트나 종료 문자 후 플러쉬하는 것을 방지한다.
+<DT>[-]xcase (np)<DD>
+icanon 이 설정되어 이을 때 입력, 출력에 있어서 대문자를 해당 문자의 소문자
+앞에 `\'를 붙여서 사용할 수 있게 해준다.
+<DT>[-]tostop (np)<DD>
+터미널에 쓰기를 시도하려는 백그라운드 작업을 멈추게 한다.
+<DT>[-]echoprt [-]prterase (np)<DD>
+`\'와 `/' 사이에서 지워진 문자를 다시 반향한다.
+<DT>[-]echoctl [-]ctlecho (np)<DD>
+제어 문자를 글자 그대로가 아니라 모자 표기법 (`^c')으로 반향한다.
+<DT>[-]echoke [-]crtkill (np)<DD>
+echoctl과 echok 설정 대신 echoprt, echoe 설정값을 사용하여 한 줄의 각 문자를
+지움으로써 kill 특수 문자를 반향한다.
+</DL>
+<P>
+
+조합 설정:
+<P>
+<DL COMPACT>
+<DT>[-]evenp [-]parity<DD>
+parenb -parodd cs7와 같다.  `-'을 쓰면, -parenb cs8와 같다.
+<DT>[-]oddp<DD>
+parenb parodd cs7와 같다.  `-'을 쓰면, -parenb cs8와 같다.
+<DT>[-]nl<DD>
+-icrnl -onlcr와 같다.  `-'을 쓰면, icrnl -inlcr -igncr
+onlcr -ocrnl -onlret 와 같다.
+<DT>ek<DD>
+erase, kill 특수문자를 원래의 값으로 되돌린다.
+<DT>sane<DD>
+cread -ignbrk brkint -inlcr -igncr icrnl -ixoff
+-iuclc -ixany imaxbel opost -olcuc -ocrnl onlcr -onocr -onlret
+-ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0 isig icanon iexten echo echoe echok
+-echonl -noflsh -xcase -tostop -echoprt echoctl echoke 와 같으며, 또한
+모든 특수 문자를 원래의 값으로 되돌린다.
+<DT>[-]cooked<DD>
+brkint ignpar istrip icrnl ixon opost isig icanon와 같으며, 
+min, time 문자가 같으면 eof, eol 문자 또한 원래의 값으로 되돌린다.
+`-'를 사용하면 raw 와 같다.
+<DT>[-]raw<DD>
+-ignbrk -brkint -ignpar -parmrk -inpck -istrip -inlcr
+-igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel
+-opost -isig -icanon -xcase min 1 time 0와 같다.
+`-'를 사용하면, cooked 와 같다.
+<DT>[-]cbreak<DD>
+-icanon와 같다.
+<DT>[-]pass8<DD>
+-parenb -istrip cs8와 같다.  `-'를 사용하면, parenb istrip cs7와 같다.
+<DT>[-]litout<DD>
+-parenb -istrip -opost cs8와 같다.  `-'를 사용하면, parenb
+istrip opost cs7와 같다.
+<DT>[-]decctlq (np)<DD>
+-ixany와 같다.
+<DT>[-]tabs (np)<DD>
+tab0와 같다.  `-'를 사용하면, tab3와 같다.
+<DT>[-]lcase [-]LCASE (np)<DD>
+xcase iuclc olcuc와 같다.
+<DT>crt<DD>
+echoe echoctl echoke와 같다.
+<DT>dec<DD>
+echoe echoctl echoke -ixany와 같으며, 또한 
+인터럽트 문자를 Ctrl-C, erase를 Del, kill을 Ctrl-U로 설정한다.
+</DL>
+<P>
+
+특수 문자:
+<P>
+<P>
+
+특수문자의 기본값은 시스템마다 다르다. `이름 값'이라는 문법으로 설정된다.
+여기서 이름은 아래에 나타내었고 값은 글자 그대로의 모자 표시법(`^c')
+또는 16진수를 의미하는 `0x', 8 진수를 나타내는 `0', 또는 그냥 10 진수로
+표기하는 것이 가능하다. 값에다 `^-'을 부여하거나 또는 `undef' 하는 경우
+그 특수문자는 사용할 수 없게 된다.
+<P>
+<DL COMPACT>
+<DT>intr<DD>
+인터럽트 신호를 보낸다.
+<DT>quit<DD>
+종료 신호를 보낸다.
+<DT>erase<DD>
+마지막 문자를 지운다.
+<DT>kill<DD>
+현재 한 줄을 지운다.
+<DT>eof<DD>
+화일의 끝임을 알린다( 입력 종료 )
+<DT>eol<DD>
+한 행의 끝.
+<DT>eol2 (np)<DD>
+한 행을 마치기 위한 별도의 문자.
+<DT>swtch (np)<DD>
+다른 쉘 계층으로 스위칭.
+<DT>start<DD>
+멈춰진 출력을 다시 시작한다.
+<DT>stop<DD>
+출력을 멈춘다.
+<DT>susp<DD>
+터미널 정지 신호를 보낸다.
+<DT>dsusp (np)<DD>
+입력을 플러쉬한 후 터미널 정지 신호를 보낸다.
+<DT>rprnt (np)<DD>
+현재 행을 다시 그린다.
+<DT>werase (np)<DD>
+마지막 단어를 지운다.
+<DT>lnext (np)<DD>
+특수문자라 할 지라도 다음 문자는 글자 그대로 입력한다.
+</DL>
+<P>
+
+특수 설정:
+<P>
+<DL COMPACT>
+<DT>min N<DD>
+-icanon이 설정되었을 때 time 값이 지날 때까지 한 번의 읽기를 만족시킬
+수 있는 무자의 최소 갯수를 정한다.
+<DT>time N<DD>
+-icanon이 설정되었을 때 min 갯수의 문자가 입력되지 않았을 때의 타임 아웃
+시간을 1/10초 단위로 설정한다.
+<DT>ispeed N<DD>
+입력 속도를 N 으로 설정한다.
+<DT>ospeed N<DD>
+출력 속도를 N 으로 설정한다.
+<DT>rows N (np)<DD>
+커널에게 터미널이 N 행을 가지고 있다고 전한다.
+<DT>cols N columns N (np)<DD>
+커널에게 터미널이 N 열을 가지고 있다고 전한다.
+<DT>size (np)<DD>
+커널이 인식하고 있는 터미널의 행렬 수를 출력한다.
+( 커널 내부에서 행렬을 지원하지 않는 시스템은 환경 변수
+<B>LINES</B>
+
+과
+<B>COLUMNS</B>
+
+값을 대신 사용한다. 하지만 GNU
+<B>stty</B>
+
+는 그것에 대해서 아는 바가 없다. )
+<DT>line N (np)<DD>
+회선 제어 N 을 사용한다.
+<DT>speed<DD>
+터미널 속도를 표시한다.
+<DT>N<DD>
+입/출력 속도를 N 으로 설정한다. N 은 다음 값 중에 하나가 될 수 있다:
+0 50 75 110
+134 134.5 150 200 300 600 1200 1800 2400 4800 9600 19200 38400 exta
+extb.  exta은 19200과 같고; extb은 38400과 같다.  
+-clocal 이 설정되어 있는 경우 0 은 회선을 정지시킨다.
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+<DL COMPACT>
+<DT><I>-a, --all</I>
+
+<DD>
+사람이 읽을 수 있는 형태로 현재 설정을 출력한다.
+<DT><I>--help</I>
+
+<DD>
+표준출력으로 사용법을 출력하고 정상적으로 종료한다.
+<DT><I>-g, --save</I>
+
+<DD>
+현재 설정값을 되돌리기 위하여
+또 다른
+<B>stty</B>
+
+에게 인수로 넘기기 위한 형태로 현재의 설정값을 출력한다.
+<DT><I>--version</I>
+
+<DD>
+표준출력으로 버전정보를 출력하고 정상적으로 종료한다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+<DT><A HREF="#lbAF">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

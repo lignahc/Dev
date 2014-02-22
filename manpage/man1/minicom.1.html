@@ -1,0 +1,836 @@
+<HTML><HEAD><TITLE>Manpage of MINICOM</TITLE>
+</HEAD><BODY>
+<H1>MINICOM</H1>
+Section: User Commands  (1)<BR>Updated: 1996년 1월 18일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+minicom - 간편한 시리얼 통신 풀그림
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>minicom</B>
+
+[-somlz] [-c on|off] [-d 전화번호색인] [-a on|off]
+
+<BR>
+
+
+[-t 터미날이름] [-p 장치이름] [<I>환경설정파일</I>]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>minicom</B>
+
+풀그림은 TELIX 풀그림과 비슷하지만, 소스 코드와 함께 
+함께 공개된, 거의 모든 유닉스 시스템에서 실행되는 통신 풀그림이다.
+이 풀그림의 특징은, 전화 자동 걸기 기능과, 시리얼 장치에 대한 
+UUCP-스타일의 잠금 파일(lock file) 제공, 혼자말 기능, 갈무리, 
+다중 사용자를 위한 개별 환경 설정, 기타 여러 가지가 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>명령행</H2>
+
+<DL COMPACT>
+<DT><B>-s</B>
+
+<DD>
+<B>환경설정.</B>
+
+이것은 시스템 관리자(root)만이 사용할 수 있는 옵션이다.
+이 옵션이 지정되면, <B>minicom</B>은 초기화 되지 <I>않고</I>,
+곧바로 환경설정 차림표가 나타난다.
+이 옵션은 시스템의 통신 환경이 바뀌거나, 처음으로 
+<B>minicom</B>을 실행시키고자 할 때, 사용된다. 
+대부분의 시스템에서는 그냥 컴파일 될 때의 초기값을 
+사용하는 것으로 충분할 것이다.
+<DT><B>-o</B>
+
+<DD>
+초기화 하지 않음. 이 옵션은 minicom이 실행될 때, 초기화 
+함수 부분을 생략하게 한다. 이 옵션은 전화를 끊지 않고, 
+잠시 minicom을 종료했을 경우, 다시 그 상태 그대로를 복구 
+하고자 할 때 유용하게 사용된다. 하지만, 이 옵션은 
+lock 파일 검사 같은 것을 하지 않게 되어 제대로 동작 
+되지 않을 수도 있다.
+<DT><B>-m</B>
+
+<DD>
+명령글쇠(command-key)를 Meta나 Alt 글쇠로 바꾼다.
+minicom의 명령글쇠에 대한 초기값은 Ctrl-A로 되어 있다. 
+이 옵션을 사용하면, 이 명령글쇠를 Meta나 Alt 글쇠로 
+바꿀 수 있다. 
+<DT><B>-M</B>
+
+<DD>
+-m 옵션과 같으나, Meta나 Alt 글쇠와 함께 입력되는 글쇠의 
+8번째 비트에 지정한다.(128 + 문자 코드 값을 보냄)
+<DT><B>-z</B>
+
+<DD>
+터미날 상황선을 사용. 이 옵션은 <I>termcap</I>이나, <I>terminfo</I>
+데이타베이스 안의 관계된 정보를 가지고 있는 터미날에서만 작동한다.
+<DT><B>-l</B>
+
+<DD>
+<B>8비트문자 처리.</B>
+
+이 옵션은 8비트권 문자에들 대해서 그대로 출력한다.
+이 옵션이 지정되어야 한글이 보여진다.
+<DT><B>-a</B>
+
+<DD>
+<B>속성.</B>
+
+이 옵션은 'on' 또는 'off'의 인자를 갖는다.
+televideo 같은 몇몇 터미날에서는 시시콜콜한 속성 처리를 한다.
+이런 터미날을 사용한다면, 이 옵션의 값을 'off'로 정해주어야 
+한다. 초기값은 'on'이다.
+<DT><B>-t</B>
+
+<DD>
+<B>터미날</B>
+
+형태를 지정해준다. 이옵션의 인자로 지정한 값이 TERM 환경 변수로 
+대치된다. 
+이것은 물론 <I>termcap</I>에 지정되어 있는 터미날 이름을 
+지정해 주어야 한다.
+<DT><B>-c</B>
+
+<DD>
+<B>색깔</B>
+
+사용. 리눅스 콘솔과 같은 몇몇 터미날에서는 표준 ANSI 처리를 
+허용해서, 칼라를 사용할 수 있다. 이런 색깔 사용은 
+termcap에 의존적으로 이루워지기에 (TERM 환경변수의 터미날에서
+색깔 지원 여부에 따르기 때문에) 초기값은 'off'이다. 
+
+두는 것도 괜찮은 방법이다.
+<DT><B>-d</B>
+
+<DD>
+<B>전화걸기</B>
+
+인자로 주워지는 전화번호로 minicom이 시작하면서 바로 전화를 
+걸어준다. 여기서 사용되는 인자는 전화번호부의 색인번호나,
+전화번호부에 있는 이름이다.
+<DT><B>-p</B>
+
+<DD>
+<B>P</B>seudo
+
+터미날 사용.
+초기 환경 설정값으로 지정된 터미날 포트값을 무시하고, 
+지정한 터미날로 연결한다. 여기서 지정되는 값은 
+의사 터미날(pseudo tty, 터미날장치 이름)여야 하며, 
+그 파일 이름은 (/dev/)tty[p-z][0-f] 여야한다.
+</DL>
+<P>
+
+<DL COMPACT><DT><DD>
+<B>minicom</B>
+
+이 시작될 때, 먼저 MINICOM 환경 변수를 찾는다. 
+그리고, 그 값은 minicom의 명령행 옵션으로 대치된다.
+그래서, 다음과 이 했다면,
+<P>
+
+<DL COMPACT><DT><DD>
+
+MINICOM='-m -c on'
+<P>
+
+export MINICOM
+<P>
+
+
+<P>
+
+</DL>
+
+또는 기타 쉘에서 환경변수를 지정하는 방법으로 지정했다면, 
+minicom은 &lt;Alt&gt; 글쇠를 명령글쇠로 칼라를 사용하는 것으로 
+환경을 지정한다. 이때, 만일 터미날 환경이 바뀌어 
+칼라를 사용하지 말아야 할경우에는 단지 명령행에서 
+
+</DL>
+
+<DL COMPACT>
+<DT><B>환경설정파일</B>
+
+<DD>
+<I>환경설정파일</I>
+
+은 보다 재밌다. 보통, minicom은 &quot;minirc.dfl&quot; 라는 파일을 
+읽어 환경을 설정한다. 
+반면, 이 값이 부여되면, &quot;minirc.<I>환경설정파일</I>&quot;을 
+읽게 된다.
+그래서, 이 옵션은 여러가지 다양한 환경 설정을 사용할 수있게 해준다.
+다른 포트, 다른 사용자등.. 필요에 따라 적당한 환경 파일을 
+사용하면 된다. 보통 이 이름으로 tty1, tty64, sio2.. 이런식의 
+이름을 사용한다. 만일 사용자 자신의 환경 설정 파일을 만들었다면, 
+그것은 자신의 홈 디렉토리에 '.minirc.dfl' 파일로 저장될 것이다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>사용하기</H2>
+
+minicom은 창중심으로 작동된다. 각종 기능들은 하위 창을 호출 하여
+사용하는데, 이런 팝업창(기능창, 하위창)을 열기 위해서는 
+명령글쇠와 나머지 한 글쇠를 누른다. 명령글쇠의 초기값은 Ctrl-A이다.
+이 글에서는 Ctrl-A 표기를 C-A로 표기한다. 
+또한 C-A O에서 이 명령글쇠를 사용자 바꿀 수 있고, 명령행 옵션으로
+Alt글쇠로 바꿀 수 있으나,
+여기서는 C-A로 통일 하겠다.
+C-A 다음에 오는 글쇠는 영문자 A-Z까지인데, 여기서는 대소문자 
+구분은 하지 않는다. minicom의 전체적인 기능을 보려면, 
+C-A Z로 도움말을 호출하면 된다. 
+<P>
+
+
+팝업창에서의 커서를 옮겨가는 방법은: 
+<DL COMPACT>
+<DT><B>위로</B>
+
+<DD>
+윗 화살표 또는 'k'
+<DT><B>아래로</B>
+
+<DD>
+아래 화살표 또는 'j'
+<DT><B>왼쪽</B>
+
+<DD>
+왼쪽 화살표 또는 'h'
+<DT><B>오른쪽</B>
+
+<DD>
+오른쪽 화살표 또는 'l'
+<DT><B>선택, 적용</B>
+
+<DD>
+Enter
+<DT><B>취소</B>
+
+<DD>
+ESC.
+
+</DL>
+<P>
+
+화면은 두분으로 나뉘는데, 24줄은 터미날 에뮬레이터 화면이며, 
+여기서는 ANSI와 VT100 에뮬레이션을 한다. 마지막 한줄은 
+상황선이다. 만일 화면이 25줄이 되지 못해 마지막 상황선을 
+보여주지 못한다면, C-A 글쇠를 누를 때만 상황선이 나타난다.
+On terminals
+that have a special status line that will be used if the termcap
+information is complete <I>and</I> the <B>-k</B> flag has been given.
+<P>
+
+
+minicom안에서 사용할 수 있는 명령을 알파벳 순으로 나열했다.
+<DL COMPACT>
+<DT><B>C-A</B>
+
+<DD>
+명령 글쇠로 다음에 나열되는 단일 문자는 이 명령 글쇠를 먼저 
+친다음 쳐야한다.
+<DT><B>A</B>
+
+<DD>
+줄바꿈 문자의 처리를 전환한다. 
+이 명령은 일반적으로 터미날에서 계단현상(다음줄의 첫 내용이 
+다음줄 첫칸에 나타나지 않고, 윗줄의 끌나는 부분 바로 아랫칸에 
+나타나는 현상)이 나타날 때 사용한다. 
+구체적으로 말하면, 줄바꿈 문자가 on 상태가 되면, \r\n 문자로, 
+off 상태면, \n 문자로 처리된다.
+<DT><B>B</B>
+
+<DD>
+지나간 화면 보기. 사용글쇠는 위로 <B>u</B>, 아래로 <B>d</B>, 
+한 화면 위로 <B>b</B>, 한 화면 아래로 <B>f</B>, 이며, 화살표 글쇠가 
+있다면, 화살표 모양 그대로, PageUp, PageDown 글쇠도 그 의미 그대로 
+작동한다.
+<DT><B>C</B>
+
+<DD>
+화면 지우기.
+<DT><B>D</B>
+
+<DD>
+전화걸기. 또는 전화걸기 창을 연다.
+<DT><B>E</B>
+
+<DD>
+자국방향 echo 켬/끔.
+<DT><B>F</B>
+
+<DD>
+모뎀에 정지 신호를 보낸다.
+<DT><B>G</B>
+
+<DD>
+혼자말을 실행한다.
+<DT><B>H</B>
+
+<DD>
+전화끊기.
+<DT><B>I</B>
+
+<DD>
+Toggle the type of escape sequence that the cursor keys send between
+normal and applications mode. (See also the comment about the status
+line below).
+<DT><B>J</B>
+
+<DD>
+쉘 나드리를 한다.
+<DT><B>K</B>
+
+<DD>
+화면을 지우고, kermit을 실행한 뒤, kermit을 종료하면 다시 minicom으로 돌아온다.
+<DT><B>L</B>
+
+<DD>
+갈무리 기능 켬/끔.
+on 상태이면, 화면에 보여지는 모든 내용이 파일로 저장된다.
+<DT><B>M</B>
+
+<DD>
+모뎀 초기화 명령을 보냄.
+<DT><B>O</B>
+
+<DD>
+minicom 환경설정.
+<DT><B>P</B>
+
+<DD>
+모뎀 상태 설정. 모뎀 속도, 패리티, 비트 등을 바꿀 수 있다.
+<DT><B>Q</B>
+
+<DD>
+모뎀 재설정 없이(전화를 끊지 않고) minicom을 마친다.
+매크로가 바뀌었다 해도, 저장되지 않는다. 
+<DT><B>R</B>
+
+<DD>
+파일 받기. (외부 프로토콜을 다양하게 선택할 수 있음)
+<DT><B>S</B>
+
+<DD>
+파일 보내기
+<DT><B>T</B>
+
+<DD>
+터미날 에뮬레이터 선택. ANSI와 VT100을 선택할 수 있다.
+대부분의 한글을 지원하는 호스트에 접속해서 한글을 
+제대로 보려면 ANSI로 지정해야 한다.
+<DT><B>W</B>
+
+<DD>
+한 줄이 화면보다 길경우 자동으로 줄 바꿈을 하는 기능을 켬/끔.
+<DT><B>X</B>
+
+<DD>
+모뎀을 재설정하고(전화를 끊고) minicom 마침. 
+매크로가 바뀌었다면, 저장되지 않는다.
+<DT><B>Z</B>
+
+<DD>
+도움말 창을 보여줌.
+
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>전화걸기 창</H2>
+
+C-A D 글쇠를 치면, 전화번호부가 나타난다.
+여기서 전화번호를 추가, 삭제, 편집 할 수 있다. 
+커서를 전화걸기 원하는 곳으로 옮겨놓고, &quot;dial&quot;을 선택하면, 
+전화를 걸 수 있다. 전화를 거는 동안 ESC 글쇠를 누르면, 
+전화 걸기를 취소한다. 다른 글쇠를 누르면, 전화걸기 창은 닫기지만, 
+전화걸기는 계속된다. 전화번호부는 &quot;.dialdir&quot; 파일로 홈 디렉토리에
+저장된다. 전화번호부에서의 커서 이동은 화살표 글쇠로도 할 수 있다. 
+또한 PageUp, PageDown 글쇠도 사용할 수 있으며, 
+이 글쇠가 없는 경우에는 Ctrl-B, Ctrl-F로 각각 위 아래로 이동할 
+수 있다. 사이띄우게로 전화를 걸 전화번호를 선택할 수 있는데, 
+이렇게 선택된 전화번호는 만일 통화중일 경우 선택된 전화번호 중에 
+번갈아가며, 전화를 걸어준다. 
+<P>
+
+&quot;edit&quot;는 말 그대로, 전화번호를 편집하는 것으로 간단히 설명하면,
+
+<DL COMPACT>
+<DT><B>A - Name</B>
+
+<DD>
+전화번호의 이름.
+<DT><B>B - Number</B>
+
+<DD>
+전화번호
+<DT><B>C - Dial string #</B>
+
+<DD>
+접속을 위한 특별한 번호를 지정한다. 
+여기에는 3가지 종류가 있는데, 자세한 이야기는 <B>모뎀과 전화걸기</B>
+부분에서 다룬다.
+<DT><B>D - Local echo</B>
+
+<DD>
+자국방향 echo 기능을 켤것인, 끌 것인지 지정.
+<DT><B>E - Script </B>
+
+<DD>
+전화 걸기가 성공했을 때, 실행할 혼자말을 지정한다.
+(자세한 이야기는 <B>runscript</B> 맨페이지를 참조)
+<DT><B>F - Username</B>
+
+<DD>
+runscript 풀그림의 &quot;$LOGIN&quot; 변수로 사용할 사용자 이름을 
+지정한다.
+<DT><B>G - Password</B>
+
+<DD>
+&quot;$PASS&quot; 변수로 사용할 비밀번호.
+<DT><B>H - Terminal Emulation</B>
+
+<DD>
+ANSI 또는 VT100 선택.
+<DT><B>I - Backspace key sends</B>
+
+<DD>
+Backspace, Delete 코드값 지정.
+<DT><B>J - Line settings</B>
+
+<DD>
+모뎀 상태를 지정한다. 속도, 패리티, 비트.
+초기값은 현재 모뎀 상태이다.
+이것은 모뎀이 여러개 있을 때 유용하게 쓰인다.
+
+</DL>
+<P>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>환경설정</H2>
+
+C-A O를 치면, minicom의 환경설정을 할 수 있다. 
+여기서는 minicom의 거의 모든 환경을 사용자 별로 바꿀 수 있다.
+물론 시스템 관리자만 바꿀 수 있는 것도 있다.
+이런 것은 * 표로 표시해 두었다.
+<P>
+
+
+<B>Filenames and paths</B>
+
+<P>
+
+<DL COMPACT><DT><DD>
+여기 있는 항목들은 시스템의 초기값으로 지정되어 있다.
+<DL COMPACT>
+<DT><B>A - upload</B>
+
+<DD>
+자료 업로드 경로.
+<DT><B>B - download</B>
+
+<DD>
+다운로드 경로.
+<DT><B>C - script</B>
+
+<DD>
+혼자말 파일이 있는 경로
+<DT><B>D - Script program</B>
+
+<DD>
+혼자말 파일을 실행시킬 풀그림. 
+초기값은 &quot;runscript&quot;이다. 물론, 자신이 사용하기 좋은 
+다른 것으로 바꾸어도 된다.(예, /bin/sh 또는 &quot;expect&quot;)
+stdin, stdout은 모뎀에 연결되고, stderr는 화면에 연결될 
+수 있는 것이면 가능하다.
+<DL COMPACT><DT><DD>
+혼자말을 실행시킬 풀그림은 절대 경로(/로 시작하는 경로)로 
+지정되어야 하며, 나머지는 상대 경로로(홈 디렉토리에 대한) 
+지정되어도 된다.
+</DL>
+
+<DT><B>E - Kermit program</B>
+
+<DD>
+kermit의 경로 지정. 이때 '%l'은 파일이름으로, '%b' baudrate로 
+대치된다.
+</DL>
+</DL>
+
+
+
+<P>
+
+<B>File Transfer Protocols</B>
+
+
+<P>
+
+<DL COMPACT><DT><DD>
+여기서 정의되는 프로토콜을 C-A s/r 글쇠를 눌러 
+파일 업/다운로드를 할 때 사용된다.
+&quot;Name&quot;은 프로토콜을 지정할 때 보여지는 이름이며, 
+&quot;Program&quot;은 프로토콜의 경로와 파일 이름이며, 
+&quot;Up/Down&quot;은 그 프로토콜이 어디 쓰일 것인지,
+&quot;Fullscr&quot;은 그 프로토콜이 실행될 때 화면 전체를 
+사용할 것인지, 아니면, stderr로 minicom의 창을 
+사용할 것인지를 지정하며, 
+&quot;IO-Red&quot;는 minicom이 그 프로토콜의 표준 입출력을 
+모뎀 포트에서 분리할 것인지, 말것인지를 지정한다.
+옛날 sz, rz는 전체 화면이 아니며, IO-Red는 Yes이다.
+반면 curses 기반의 최신 rz는 stdin, stdout의 방향전환이 
+필요없으며, 전체 화면을 사용한다.
+모든 프로토콜은 그 사용자의 UID를 가지며, 
+UID=root로는 사용되지 않는다. '%l', '%b'는 kermit에서 
+사용하는 것과 같이 사용된다.
+</DL>
+
+
+<P>
+
+<B>Serial port setup</B>
+
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><B>*A - Serial device</B>
+
+<DD>
+/dev/tty1 대부분의 경우.
+/dev/cua&lt;n&gt; 또는 /dev/modem 리눅스 경우.
+<DT><B>*B - Lock file location</B>
+
+<DD>
+대부분의 시스템에서는 /usr/spool/uucp이다. 리눅스의 경우는 
+/var/lock 경로를 사용한다. 이 경로가 없다면, minicom에서는 
+잠금파일(lockfile)을 사용하지 못한다.
+<DT><B>*C - Callin program</B>
+
+<DD>
+uugetty나 시리얼 포트에 뭔가가 있다면, 
+mode 응답신호를 dialin/dialout 모드로 바꾸기 위해 
+실행할 풀그림이 필요하다. 이때, dialin 모드를 
+전환할 풀그림을 여기서 지정한다. 
+<DT><B>*D - Callout program</B>
+
+<DD>
+dialout 모드로 전환할 풀그림을 지정.
+<DT><B>E - Baud/Par/Bits</B>
+
+<DD>
+minicom이 실행될 때의 모뎀 상태를 지정.
+
+</DL>
+<P>
+
+왼쪽 입력 부분이 비어 있다면, 그것은 사용하지 않음을 뜻한다.
+그래서, 잠금기능이나, dialin/out 기능들을 사용하지 않으려면, 
+그냥 비워두면 된다. 여기서 주의할 것은 
+callin, callout 풀그림들은 &quot;root&quot; ID로만 실행된다. 
+</DL>
+
+<P>
+
+<B>Modem and Dialing</B>
+
+
+<P>
+
+<DL COMPACT><DT><DD>
+이 부분은 사용자 모뎀의 개별적인 환경설정을 하는 부분이다. 
+이 부분에 대해서는 자세하게 설명할 수가 없다. 
+왜냐하면, 사용자의 모뎀을 가장 잘 아는 사람은 사용자 
+자신이기 때문이다. 자세한 것은 각 모뎀의 설명서를 참조하기 
+바란다. 여기서 주의할 점은 제어 문자의 제어 코드(C에서 \)는
+
+초기값으로 지정된 값은 일반 Hayes 호환 모뎀을 대상으로 
+지정된다.(만든이가 Hayes 모뎀을 하기에. :-))
+<P>
+
+<DL COMPACT>
+<DT><B>M - Dial time</B>
+
+<DD>
+전화 걸기 시간
+<DT><B>N - Delay before redial</B>
+
+<DD>
+통화중일 때 다시 걸기 하기전에 기다리는 시간.
+<DT><B>O - Number of tries</B>
+
+<DD>
+통화중일 다시 걸 최대 횟수.
+<DT><B>P - Autobaud detect</B>
+
+<DD>
+이것이 on 되면, 접속 상태의 호스트쪽 속도로 자동으로 
+일치시킨다.
+<DT><B>Q - Drop DTR to hangup</B>
+
+<DD>
+일반적으로 minicom에서의 전화끊기는 Hayes 모뎀에서 
+사용하는 끊기 과정을 (+++ATH0) 사용한다. 하지만, 
+사용하는 모뎀이 DTR 라인을 지원한다면, 이 DTR라인을 끊음으로 
+전화 끊기를 할 수 있다.
+<DT><B>R - Modem has DCD line</B>
+
+<DD>
+모뎀과 시스템이 DCD 라인을 지원하다면, minicom에서 
+그것을 사용한다. 
+
+</DL>
+<P>
+
+</DL>
+
+<DL COMPACT><DT><DD>
+<B>위에서 * 표로 나타나는 부분에 대해서는 비록 모든 사용자가 </B>
+
+<B>필요에 따라 바꿀 수는 있지만, 저장되지는 않는다.</B>
+
+</DL>
+
+<P>
+
+<B>Screen and keyboard</B>
+
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><B>A - Command key is</B>
+
+<DD>
+명령 글쇠 지정. 'ALT'나 'meta key'로 지정되면, 
+그 글쇠 자체로 명령글쇠 기능을 한다.
+<DT><B>B - Backspace key sends</B>
+
+<DD>
+아직도 몇몇 VT100 터미날에서는 BS 대신 DEL 코드를 보내야 하는 
+것이 있다. 이런 경우에 지정해 준다. 
+(물론 대부분 초기값을 사용하면 될 것이다.)
+<DT><B>C - Status line is</B>
+
+<DD>
+상황선을 보일 것인지 말것인지를 지정한다.
+몇몇 터미날에서는 이 상황선 자체가 스크롤 되는 경우가 
+발생하는데, 이때는 보이지 않게 해 두는 것이 좋다. 
+<DT><B>D - Alarm sound</B>
+
+<DD>
+소리를 낼 것인지를 지정한다. 소리는 연결이 되었을 때, 
+자료 송/수신이 끝났을 때 난다.
+<DT><B>E - Foreground Color (menu)</B>
+
+<DD>
+팝업 창들의 전경색 지정.
+<DT><B>F - Background Color (menu)</B>
+
+<DD>
+팝업 창들의 배경색 지정.
+<DT><B>G - Foreground Color (term)</B>
+
+<DD>
+터미날 창의 전경색 지정.
+<DT><B>H - Background Color (term)</B>
+
+<DD>
+터미날 창의 배경색 지정.
+<DT><B>I - Foreground Color (stat)</B>
+
+<DD>
+상황선의 전경색 지정.
+<DT><B>J - Background Color (stat)</B>
+
+<DD>
+상황선의 배경색 지정.
+<DT><B>K - History buffer size</B>
+
+<DD>
+지나간 화면을 저장할 버퍼의 크기
+<DT><B>L - Macros file</B>
+
+<DD>
+매크로 정의되어 있는 파일의 경로와 파일 이름.
+이때의 경로는 절대경로를 지정한다.
+minicom에서는 F1-F10의 각각 256 문자의 매크로를 정의할 수 있다. 
+파일이름의 지정은 파일이름을 입력하고 Enter를 누르는 순간 
+그 매크로들이 지정된다. 그 지정한 파일을 만들 권한이 없으면, 
+오류 메시지를 보여주며, 다시 입력할 것을 요구한다. 
+그리고 바르게 입력되면 그파일이 있는지 확인하고, 있으면, 
+그 파일을 불러오고 없으면, 새로 만든다.
+<DT><B>M - Edit Macros</B>
+
+<DD>
+매크로 정의 창을 만든다.
+참고로 매크로 정의부분에서는 한글입력이 되지 않는다. 
+<DT><B>N - Macros enabled</B>
+
+<DD>
+매크로를 사용할 것인지를 지정한다. 
+No로 지정되면, VT100/VT220 기능 글쇠 코드값을 보낸다.
+</DL>
+</DL>
+
+
+<DL COMPACT>
+<DT><B>Edit Macros</B>
+
+<DD>
+이부분에서는 F1부터 F10 글쇠들에 대한 매크로를 정의할 수 있다. 
+이 창의 아래부분에는 각종 특별한 의미를 지니는 글쇠들의 
+표현 방법을 설명하고 있다. 제어 문자는 '^'로 표현하며, 
+
+1초간의 지연(delay)을 둘 수도 있다. 이 매크로는 
+ftp, telnet의 로그인, 기타 여러가지 단순 작업에 유용하게 
+쓰일 것이다. 각 매크로의 지정은 Enter로 끝나며, 
+입력 상태에서는 왼쪽, 오른쪽 화살표와 Home, End, Delete, BackSpace
+편집 글쇠를 사용할 수 있다. 취소는 ESC 글쇠이다.
+
+
+<DT><B>Save setup as dfl</B>
+
+<DD>
+초기 환경파일인 .dfl 파일로 저장한다.
+<DT><B>Save setup as..</B>
+
+<DD>
+이것은 .minirc.????의 ????부분을 지정해서 저장하는 것이다. 
+이것은 minicom을 실행에서 'minicom ????' 이렇게 특정 환경으로 
+실행하고 할 때 사용된다. 이 저장 방법은 root만 사용할 수 있다.
+<DT><B>Exit</B>
+
+<DD>
+각종 환경들을 저장 없이 마친다. ESC 글쇠와 같은 역활을 한다.
+<DT><B>Exit from minicom</B>
+
+<DD>
+root만이 'minicom -s' 명령으로 실행했을 때 보이는 항목이다. 
+이것은 환경 설정만 하고 minicom을 마친다.
+
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>상황선</H2>
+
+상황선은 다양한 정보를 보여주는데, 
+대부분 그 글자 그대로의 의미를 뜻한다. 
+APP, CUR 같은 설명이 필요한 부분도 있지만.
+VT100 커서 글쇠는 두가지 모드가 있을 수 있다. 
+하나는 application 모드이고, 다른 하나는 cursor 모드이다. 
+escape sequence 처리 방법에 따라 구분되는 것인데, 
+가령, minicom 실행중에 j 명령으로 쉘로 나가서, 
+vi를 실행시켰을 경우, ESC 글쇠가 제대로 동작하지 않을 경우가 
+있다. 이때, 커서 글쇠 모드를 바꾸어 준다. 
+구체적으로 말할 수 없는 것은 각각의 터미날 환경마다 
+다 다르기 때문에, 이렇게만 설명하겠다.
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>보안 문제</H2>
+
+minicom을 실행할 때, 특정 사용자가 특정 환경을 사용하는 금지할 필요가 
+있는데, 이때, &quot;minicom.users&quot; 파일로 그 지정이 가능하다. 
+이 파일의 문법은 다음과 같다.
+<P>
+
+<DL COMPACT><DT><DD>
+&lt;사용자ID&gt; &lt;환경파일&gt; [환경파일...]
+</DL>
+
+<P>
+
+
+다음과 같이 입력한다.
+<P>
+
+<DL COMPACT><DT><DD>
+miquels dfl
+</DL>
+
+<P>
+
+또한 그 외의 환경 파일들도 사용할 수 있게 하려면, 
+환경 파일의 이름 뒤에 계속 덧 붙혀 주면 된다.
+한 사용자가 모든 환경 파일을 사용할 수 있게 하려면, 
+단지 그 사용자의 ID만 적어 주고 뒷부분은 생략한다.
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>기타</H2>
+
+minicom이 먹통이 되었을 경우에는 SIGTERM 시그날로 종료한다. 
+이것은 kill -15, 또는 그냥 &quot;kill &lt;minicompid&gt;&quot;로 종료시키는 것을
+의미한다. 이렇게 종료하는 것이 가장 안전하며, 이렇게 
+마칠때는 모든 것을 재설정하면서 끝낸다. 
+PP
+현재의 minicom은 갑자기 너무 많은 ESC 문자 처리(ESC [)를 해야할 
+경우에는 제대로 하지 못하는 경우가 발생하기도 한다.
+<P>
+
+이부분의 문제는 리눅스 시스템 자체의 ESC 문자 처리에 
+있기 때문에 해킹을 해 보던지, 그대로, 사용하다 시스템 차원에서 
+이문제가 해결 되기를 기다리는 것이 가장 좋은 방법인것 같다. :-)
+<A NAME="lbAL">&nbsp;</A>
+<H2>관련파일</H2>
+
+minicom에는 각종 환경 파일들이 있는데, 대게, 
+/var/lib/minicom, /usr/local/etc, /etc 경로 안에 
+있게 된다. 
+이 경로의 초기값은 컴파일 될 때 지정된다.
+그리고, <I>minicom -h</I> 명령으로 그 값을 확인 할 수 있다.
+또한 <B><A HREF="http://localhost/cgi-bin/man/man2html?1+runscript">runscript</A></B>(1) 에서 사용할 수 있는 각종 데모 파일들을 
+그 경로 안에서 볼 수도 있을 것이다.
+<P>
+<PRE>
+minicom.users
+minirc.*
+$HOME/.minirc.*
+$HOME/.dialdir
+</PRE>
+
+<A NAME="lbAM">&nbsp;</A>
+<H2>버전</H2>
+
+이 문서는 minicom 버전 1.71을 대상으로 쓰여졌다.
+<A NAME="lbAN">&nbsp;</A>
+<H2>만든이</H2>
+
+Miquel van Smoorenburg (<A HREF="mailto:miquels@drinkel.ow.org">miquels@drinkel.ow.org</A>, <A HREF="mailto:miquels@cistron.nl">miquels@cistron.nl</A>)가 
+만들었다. 
+<P>
+
+이 매뉴얼 페이지는 minicom의 README 파일의 내용을 
+그대로 인용했으나, Michael K. Johnson(<A HREF="mailto:johnsonm@stolaf.edu">johnsonm@stolaf.edu</A>)에
+의해서 몇몇 부분이 바뀌었다.
+<P>
+
+한글부분 이야기는 제가(<A HREF="mailto:teodeul@chollian.dacom.co.kr">teodeul@chollian.dacom.co.kr</A>) 추가했습니다.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">명령행</A><DD>
+<DT><A HREF="#lbAF">사용하기</A><DD>
+<DT><A HREF="#lbAG">전화걸기 창</A><DD>
+<DT><A HREF="#lbAH">환경설정</A><DD>
+<DT><A HREF="#lbAI">상황선</A><DD>
+<DT><A HREF="#lbAJ">보안 문제</A><DD>
+<DT><A HREF="#lbAK">기타</A><DD>
+<DT><A HREF="#lbAL">관련파일</A><DD>
+<DT><A HREF="#lbAM">버전</A><DD>
+<DT><A HREF="#lbAN">만든이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:56 GMT, March 25, 2004
+</BODY>
+</HTML>

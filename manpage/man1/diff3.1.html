@@ -1,0 +1,311 @@
+<HTML><HEAD><TITLE>Manpage of DIFF3</TITLE>
+</HEAD><BODY>
+<H1>DIFF3</H1>
+Section: User Commands  (1)<BR>Updated: October 2002<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+<B>diff3</B> - 세 개의 파일들 사이에서 다른 점을 찾는다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>diff3</B>
+
+[<B>-3aeimxAETX</B>] [<B>-L</B> <I>LABEL</I>] [<B>--easy-only</B>] [<B>--ed</B>]
+[<B>--initial-tab</B>] [<B>--label=</B><I>LABEL</I>] [<B>--merge</B>]
+[<B>--overlap-only</B>] [<B>--show-all</B>] [<B>--show-overlap</B>]
+[<B>--text</B>] <I>MINE OLDER YOUR
+</I><B>diff3</B>
+
+[<B>-v</B>] [<B>--help</B>] [<B>--version</B>]
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>diff3</B>는
+
+세 개의 파일을 비교해서 다른 점을 출력한다.
+비교되는 세 개의 파일은
+<I>MINE</I>,
+
+<I>OLDER</I>,
+
+그리고
+<I>YOURS</I>이다.
+
+세 파일 중 최대 한개는
+`<B>-</B>'
+
+가 될 수 있는데, 이것은
+<B>diff3</B>에게
+
+그 파일에 해당하는 내용을 표준 입력에서 읽어들이라는 뜻이다.
+보통 <B>diff3</B>는 작업을 수행하기 위해 <B><A HREF="http://localhost/cgi-bin/man/man2html?1+diff">diff</A></B>(1)를 호출한다.
+하지만, <B>DIFF</B> 환경 변수를 수정해서 다른 프로그램을 사용할 수도 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-3, --easy-only</B>
+
+<DD>
+중첩되지 않는 변화만 출력하라는 점을 제외하고는
+<B>-e</B>와
+
+비슷하다.
+<DT><B>-a, --text</B>
+
+<DD>
+텍스트 파일이 아닌 것같이 보이더라도 모든 파일을
+텍스트 파일로 취급하고, 이것들을 한줄 한줄씩 비교하게 한다.
+<DT><B>-e, --ed</B>
+
+<DD>
+<I>OLDER</I>
+
+를 기준으로
+<I>YOURS</I>
+
+와 다른 점을
+<I>MINE</I>
+
+에 적용시키기 위한
+<I>ed</I>
+
+스크립트를 만든다.
+<DT><B>-i</B>
+
+<DD>
+System V 호환성을 위해
+<B>ed</B>
+
+스크립트 끝에 `<B>w</B>'와 `<B>q</B>' 명령을 추가한다.
+이 옵션은 반드시
+<B>-AeExX3</B>
+
+옵션 중 하나와 함께 쓰여야 하며,
+<B>-m</B>
+
+옵션과는 함께 쓰일 수 없다.
+<DT><B>-m, --merge</B>
+
+<DD>
+첫번째 파일에 edit 스크립트를 적용하고, 결과를 표준 출력으로 보낸다.
+<B>diff3</B>에서 <B>ed</B>로 파이핑하는 것과는 달리,
+이 작업은 이진 파일이나 종결되지 않은 줄에 대해서도 동작한다.
+edit 스크립트 옵션이 지정되어 있지 않으면 <B>-A</B> 옵션으로 가정하고 수행한다.
+<DT><B>-x, --overlap-only</B>
+
+<DD>
+<B>-e</B>
+
+옵션과 비슷하지만, 중첩된 변화만을 출력한다.
+<DT><B>-A, --show-all</B>
+
+<DD>
+<I>OLDER</I>
+
+를 기준으로
+<I>YOURS</I>
+
+와의 차이점을
+<I>MINE</I>
+
+에 통합시킨다.
+이때 모든 중첩된 변화는 괄호 줄로 묶어놓는다. 
+<DT><B>-E, --show-overlap</B>
+
+<DD>
+<B>-e</B>
+
+옵션과 비슷하지만, 첫번째와 세번째 파일의
+중첩된 차이점을 묶는 괄호 줄을 보여준다.
+<B>-e</B>
+
+옵션과 같이 사용했을 때, 중첩된 차이점은
+아래와 같은 형식으로 나온다.
+<P>
+<PRE>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; <I>MINE</I>
+lines from <I>MINE</I>
+=======
+lines from <I>YOURS</I>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; <I>YOURS</I>
+</PRE>
+
+<DT><B>-L </B><I>LABEL</I><B>, --label=</B><I>LABEL</I>
+
+<DD>
+<B>-A</B>, <B>-E</B>, <B>-X</B> 옵션에서 사용되는
+괄호 출력을 위해
+<I>LABEL</I>
+
+라벨을 사용한다.
+이 옵션은 세개의 입력 파일에 대해 각각 한번씩 적용시켜야 한다.
+기본 라벨은 입력 파일의 이름이다.
+그래서
+<B>diff3 -L X -L Y -L Z -m A B C</B>
+
+명령은
+<B>diff3 -m A B C</B>
+
+명령과 같은 동작을 하지만, 출력에서 입력 파일의 이름이
+<B>A</B>,
+
+<B>B</B>,
+
+<B>C</B>
+
+대신
+<B>X</B>,
+
+<B>Y</B>,
+
+<B>Z</B>로
+
+붙게 된다.
+<DT><B>-T, --initial-tab</B>
+
+<DD>
+일반 형식에서 각 줄 앞에 두개의 빈칸 대신 탭을 출력한다.
+이것은 각 줄을 탭으로 정렬하기 위해 사용된다.
+<DT><B>-X</B>
+
+<DD>
+<B>-E</B>와 비슷하지만, 중첩된 변화만을 출력한다.
+다른 말로, <B>-x</B>와 비슷하지만,
+<B>-E</B> 옵션에서처럼 차이점을 괄호로 묶는다.
+<DT><B>--help</B>
+
+<DD>
+사용법을 표준 출력에 보여주고, 종료한다.
+<DT><B>-v, --version</B>
+
+<DD>
+<B>diff3</B>의
+
+버전 정보를 출력한다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>출력 형식</H2>
+
+
+
+
+
+
+
+
+
+
+각각의 차이를 나타내는 텍스트 블럭은 `<B>====</B>'로 표시된 줄로 시작한다.
+세 파일의 차이를 나타내는 블럭에서는 단순한 `<B>====</B>' 갖고,
+두 파일의 차이를 나타내는 블럭에서는
+`<B>1</B>', <B>2</B>', `<B>3</B>'
+
+중 한쪽에 그 차이가 나는 파일을 나타내기 위해 추가된다.
+각 블럭에는 2개, 또는 3개의 입력행 세트가 포함되어
+각각의 행 세트가 어느 파일에서 나온 것인지 나타내는
+1개 또는 2개의 명령어가 앞에 나오게 된다.
+기본 동작에서는 입력행 앞에 2개의 빈칸이 붙어
+명령어와 구별할 수 있게 되어 있다.
+`<B>-T</B>' 옵션이 설정되면, <B>diff3</B>는 빈칸 대신 탭을 사용하므로
+입력에 있던 탭에 의한 자리수가 그대로 보존된다.  
+<A NAME="lbAG">&nbsp;</A>
+<H3>명령어 형식</H3>
+
+<DL COMPACT>
+<DT><I>FILE</I><B>:</B><I>L</I><B>a</B>
+
+<DD>
+
+
+
+
+
+이 블럭은 <I>FILE</I>의 <I>L</I> 행 다음에 나타나야 할 것으로,
+그 파일에는 존재하지 않는다.
+이 파일을 수정해 다른 파일과 같게 하려면, 다른 파일에서 블럭을 가져와 추가해야 한다.
+예를 들어 `1:11a'은 이 블럭은 첫번째 파일의 11 행 다음에 나와야 할 것으로
+첫번째 파일에는 포함되지 않은 것 말한다.
+<DT><I>FILE</I><B>:</B><I>R</I><B>c</B>
+
+<DD>
+
+
+
+
+
+
+이 블럭에는 <I>FILE</I>의 행 범위 <I>R</I>이 포함되어 있다.
+행 범위 <I>R</I>은 2 개의 행 번호를 쉼표로 단락지은 것이다.
+숫자가 하나라면 한 줄 범위라고 해석된다.
+이 파일을 편집해 다른 파일과 같게 하려면, 그 행 범위를 다른 파일로부터 가져와 변경해야 한다.
+예를 들어, `2:11,13c'은 이 블럭이 두번째 파일의 11-13 행의 내용을 포함한다는 의미이다.
+<P>
+
+
+입력행 묶음의 마지막 행이 개행으로 끝나지 않은 경우는
+출력의 다음 행이 `<B>\</B>'로 시작되므로
+개행으로 끝나는 경우와 구별할 수 있다.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>진단</H2>
+
+<B>diff3</B>는
+
+아래 값 중 하나를 반환하고 종료한다.
+<DL COMPACT>
+<DT><B>0</B>
+
+<DD>
+<B>diff3</B>가 성공적으로 종료되었으며, 중첩된 변화(충돌)을 찾지 못했다.
+<DT><B>1</B>
+
+<DD>
+충돌이 발견되었다.
+<DT><B>2</B>
+
+<DD>
+오류가 발생했다.
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+cmp">cmp</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+comm">comm</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+diff">diff</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+ed">ed</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+patch">patch</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+sdiff">sdiff</A>(1).
+<A NAME="lbAJ">&nbsp;</A>
+<H2>주의</H2>
+
+Report bugs to <A HREF="mailto:bug-gnu-utils@gnu.org">bug-gnu-utils@gnu.org</A>.
+Page updated by Ragnar Hojland Espinosa &lt;<A HREF="mailto:ragnar@ragnar-hojland.com">ragnar@ragnar-hojland.com</A>&gt;
+<A NAME="lbAK">&nbsp;</A>
+<H2>번역</H2>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>) 2004년 3월 24일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">출력 형식</A><DD>
+<DL>
+<DT><A HREF="#lbAG">명령어 형식</A><DD>
+</DL>
+<DT><A HREF="#lbAH">진단</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">주의</A><DD>
+<DT><A HREF="#lbAK">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 00:48:21 GMT, April 01, 2004
+</BODY>
+</HTML>

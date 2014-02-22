@@ -1,0 +1,117 @@
+<HTML><HEAD><TITLE>Manpage of FTOK</TITLE>
+</HEAD><BODY>
+<H1>FTOK</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 11월 1일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ftok - 경로와 프로젝트 식별자를 시스템 V IPC 키 값으로 변환한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B># include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+<B># include &lt;<A HREF="file:/usr/include/sys/ipc.h">sys/ipc.h</A>&gt;</B>
+</PRE>
+
+<P>
+<B>key_t ftok ( char *</B><I>pathname</I><B>,</B>
+
+<B>char </B><I>proj</I><B> )</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이 함수는 접근 가능하고 실제로 존재하는 파일의 경로와 
+프로젝트 식별자를
+<B>key_t</B>
+
+타입의 시스템 V IPC 키 값으로 변환한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환 값</H2>
+
+성공적인 경우에는 정상적으로 변환된
+<B>key_t</B>
+
+값을, 그렇지 않으면
+<B>-1</B>
+
+을 반환하고
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+stat">stat</A></B>(2)
+
+시스템 콜에 관한 에러를 표시하기 위해
+<B>errno</B>
+
+값을 설정한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>버그</H2>
+
+변환 한
+<B>key_t</B>
+
+값은
+<I>pathname</I>의
+
+i-node 번호와 디스크 파일이 위치한 파일 시스템의 
+부(minor) 장치 번호를 얻기 위해
+<I>pathname</I>에
+
+부합하는 디스크 파일의 상태를 저장하고 있다. 따라서 이 값은 
+i-node 번호의 하위 16비트와, 부 장치 번호의 
+8비트 그리고
+<I>proj</I>
+
+값의 8비트를 조합해서 만든다. 그러므로 이 알고리즘은 유일한 키
+값을 보장할 수 없다. 실제로
+<DL COMPACT>
+<DT>*<DD>
+같은 파일에 링크된 서로 다른 이름의 파일은 같은 키 값을 생성한다.
+<DT>*<DD>
+드문 경우이지만, i-node 번호의 하위 16비트를 사용하기 
+때문에, 서로 다른 i-node를 가지는 파일이 서로 같은 
+키 값을 가지는 경우가 있다.
+<DT>*<DD>
+드문 경우이지만, 주(major) 장치 번호를 분간할 수 없기 때문에, 
+여러 개의 디스크 제어 장치를 가지는 시스템에서도 역시 이런
+충돌이 일어날 수 있다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ipc">ipc</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+msgget">msgget</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+semget">semget</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmget">shmget</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+stat">stat</A></B>(2).
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+정동현 &lt;<A HREF="mailto:dhjung@serome.co.kr">dhjung@serome.co.kr</A>&gt;, 2000년 4월 21일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환 값</A><DD>
+<DT><A HREF="#lbAF">버그</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

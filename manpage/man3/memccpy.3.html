@@ -1,0 +1,66 @@
+<HTML><HEAD><TITLE>Manpage of MEMCCPY</TITLE>
+</HEAD><BODY>
+<H1>MEMCCPY</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 4월 10일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+memccpy - 메모리 영역 복사하기.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;</B>
+
+<B>void *memccpy(void *</B><I>dest</I><B>, const void *</B><I>src</I><B>, int </B><I>c</I><B>, size_t </B><I>n</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>memccpy()</B> 함수는 메모리 영역 <I>src</I>에서 메모리 영역 <I>dest</I>로
+단지 <I>n</I> 바이트만을 복사하며, 문자 <I>c</I>가 발견되었을때 멈춘다.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+<B>memccpy()</B> 함수는 <I>c</I> 다음에 <I>dest</I>중 다음 문자에 대한 
+포인터를 반환한다. 만일 <I>c</I>가 <I>src</I>의 처음 <I>n</I>개의 문자들중에
+발견되지 않는다면 NULL을 반환한다.
+<P>
+<A NAME="lbAF">&nbsp;</A>
+<H2>CONFORMING TO</H2>
+
+SVID 3, BSD 4.3
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+bcopy">bcopy</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memcpy">memcpy</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memmove">memmove</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strcpy">strcpy</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+strncpy">strncpy</A></B>(3)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 2월 20일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAF">CONFORMING TO</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

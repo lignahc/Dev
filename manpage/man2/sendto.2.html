@@ -1,0 +1,296 @@
+<HTML><HEAD><TITLE>Manpage of SEND</TITLE>
+</HEAD><BODY>
+<H1>SEND</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: July 1999<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+send, sendto, sendmsg - 소켓으로부터의 메시지를 보낸다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</B>
+
+<P>
+<B>int send(int </B><I>s</I><B>, const void *</B><I>msg</I><B>, size_t </B><I>len</I><B>,</B>
+
+<B>int </B><I>flags</I><B>);</B>
+
+<BR>
+
+<B>int sendto(int </B><I>s</I><B>, const void *</B><I>msg</I><B>, size_t </B><I>len</I><B>,</B>
+
+<B>int </B><I>flags</I><B>, const struct sockaddr *</B><I>to</I><B>, socklen_t </B><I>tolen</I><B>);</B>
+
+<BR>
+
+<B>int sendmsg(int </B><I>s</I><B>, const struct msghdr *</B><I>msg</I><B>,</B>
+
+<B>int </B><I>flags</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>Send</B>,
+
+<B>sendto</B>,
+
+그리고
+<B>sendmsg</B>
+
+는 다른 소켓으로 메시지를 보내는데 사용된다.
+<B>Send</B>
+
+은 소켓이
+<I>connected</I>
+
+상태에 있을 때 사용된다. 반면 
+<B>sendto</B>
+
+와
+<B>sendmsg</B>
+
+언제든 사용할 수 있다.
+<P>
+
+목표의 주소는
+<I>to</I>
+
+가 그것의 크기를 정하는
+<I>tolen</I>
+
+과 함께 주어진다. 메시지의 길이는
+<I>len</I>.
+
+으로 주어진다. 메시지가 너무 길어서 기초적인 프로토콜을 사용해 자동으로 넘어갈 수 없다면, 에러
+<B>EMSGSIZE</B>
+
+가 반환되고, 메시지는 전해지지 않는다.
+<P>
+
+<B>send</B>.
+
+에는 전달을 실패할 징후는 없다. 국부적으로 지적되는 에러는 -1의 반환값에 의해 지적된다.
+<P>
+
+메시지가 소켓의 send 버퍼에 맞지 않으면,
+<B>send</B>
+
+는 소켓이 non-blocking I/O mode에 있지 않는다면 일반적으로 막는다
+non-blocking mode에서 이런 경우엔,
+<B>EAGAIN</B>
+
+을 반환한다.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2)
+
+호출은 언제 다음 자료를 보낼지를 결정하는데 쓰인다.
+<P>
+
+<I>flags</I>
+
+매개 변수는 flagword이고, 아래 flag를 가질 수 있다:
+
+<DL COMPACT>
+<DT><B>MSG_OOB</B>
+
+<DD>
+<I>out-of-band</I>
+
+data를 이 개념을 지원하는 소켓으로 보낸다 (e.g.
+<B>SOCK_STREAM</B>);
+
+기초 프로토콜은 반드시
+<I>out-of-band</I>
+
+data를 지원한다..
+<DT><B>MSG_DONTROUTE</B>
+
+<DD>
+패킷을 전송하는데 게이트웨이를 사용하지 않고, 직접 연결된 네트웍을 통해서 호스트로 보낸다. 이것은 diagnostic 혹은 routing program에 의해서만 사용된다. 이것은 오직 프로토콜군을 위해서만 정의된다; 패킷 소켓은 하지 않는다.
+<DT><B>MSG_DONTWAIT</B>
+
+<DD>
+non-blocking operation을 가능케 한다; operation이 막혔을 때
+<B>EAGAIN </B>
+
+가 반환된다. (이것은 또한
+<B>O_NONBLOCK</B>
+
+을 
+<B>F_SETFL</B>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fcntl">fcntl</A>(2)</B>
+
+와 함께 사용하는 것을 가능하게 할 수 있다.)
+<DT><B>MSG_NOSIGNAL</B>
+
+<DD>
+다른 한쪽 끝이 연결을 끊었을 때, 소켓으로부터 비롯된 스트림상의 에러에
+<B>SIGPIPE </B>
+
+을 보내지 않도록 요구한다.
+<B>EPIPE</B>
+
+에러는 여전히 반환된다.
+</DL>
+<P>
+
+<I>msghdr</I>
+
+구조에 대한 설명을 보려면
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+recv">recv</A></B>(2)
+
+을 보라.
+<I>msg_control </I>
+
+와
+<I>msg_controllen </I>
+
+구성요소를 사용하는 제어 정보를 보낼 수 있다. 커널이 처리할 수 있는 최대 제어 버퍼의 길이는
+<B>net.core.optmem_max </B>
+
+sysctl에 의해 소켓단위로 제한되어 있다. ;
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+socket">socket</A></B>(7).
+
+을 보라
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+보내진 문자의 수를 반환하거나 에러 발생시 -1을 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+이것은 소켓 레이어에 의해 발생되는 몇몇 표준적인 에러다. 추가적인 에러는 기초 프로토콜 모듈로부터 발생되거나 반환된다; 각각의 매뉴얼을 참조하라.
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+실제하지 않는 descriptor가 지정되었다.
+<DT><B>ENOTSOCK</B>
+
+<DD>
+독립변수
+<I>s</I>
+
+가 소켓이 아니다.
+<DT><B>EFAULT</B>
+
+<DD>
+실제하지 않는 사용자 공간 주소가 매개변수로 지정되었다.
+<DT><B>EMSGSIZE</B>
+
+<DD>
+소켓이 메시지를 자동으로 보내줄 것을 요청했지만, 보내진 메시지의 크기가 이것을 불가능하게 하였다.
+<DT><B>EAGAIN</B>혹은 <B>EWOULDBLOCK</B>
+
+<DD>
+소켓이 non-blocking을 표시하였고, 요구된 operation이 깨졌다.
+<DT><B>ENOBUFS</B>
+
+<DD>
+네트웍 인터페이스를 위한 출력 큐가 가득 찼다.
+이것은 일반적으로 인터페이스가 전송을 멈추는 것으로 나타난다. 하지만 이것은 순간적인 정체로 인한 것이다.
+(이것은 리눅스에서는 일어날 수 없다. 장치 큐가 넘칠 때 패킷은 조용히 중단된다.)
+<DT><B>EINTR</B>
+
+<DD>
+신호가 발생했다.
+<DT><B>ENOMEM</B>
+
+<DD>
+사용 가능한 메모리가 없다.
+<DT><B>EINVAL</B>
+
+<DD>
+실제 사용되지 않는 독립변수가 통과했다. 
+<DT><B>EPIPE</B>
+
+<DD>
+소켓으로부터의 연결에서 로컬 앤드가 꺼졌다.
+<B>MSG_NOSIGNAL </B>
+
+이 설정되어 있지 않을 경우, 프로세스 역시
+<B>SIGPIPE </B>
+
+를 받는다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+4.4BSD, SVr4, POSIX 1003.1g draft (이 함수는 4.2BSD에 있다).
+<A NAME="lbAH">&nbsp;</A>
+<H2>주의</H2>
+
+위에서 주어진 초기치는 Single Unix Specification을 따른다,
+glibc2와 마찬가지이다:
+<I>flags</I>
+
+독립변수는 BSD 4.*에서 `int'이다. 하지만, libc4와 libc5에선 `unsigned int'이다;
+<I>len</I>
+
+독립변수는 BSD 4.*과 libc4에서 `int'이다. 하지만 libc5에선 `size_t'이다;
+<I>tolen</I>
+
+독립변수는 BSD 4.*과 libc4, libc5에서 `int'이다.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+accept">accept</A></B>(2).
+
+도 참조하라.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fcntl">fcntl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+recv">recv</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+getsockopt">getsockopt</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sendfile">sendfile</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+write">write</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+socket">socket</A></B>(7),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+ip">ip</A></B>(7),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+tcp">tcp</A></B>(7),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+udp">udp</A></B>(7)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 8월 1일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">주의</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

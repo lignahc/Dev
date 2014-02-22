@@ -1,0 +1,187 @@
+<HTML><HEAD><TITLE>Manpage of FSCK</TITLE>
+</HEAD><BODY>
+<H1>FSCK</H1>
+Section: Linux Programmer's Manual (8)<BR>Updated: 10 January 1994<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+fsck.minix - minix 파일 시스템 검사
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>fsck.minix [ -larvsmf ]</B>
+
+장치이름
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>fsck.minix</B>
+
+풀그림은 리눅스용 MINIX 파일시스템을 검사하는 풀그림이다.
+이 버전은 14 문자와 30 문자 파일이름 옵션을 지원한다.
+<P>
+이 풀그림은 현재 그 해당 파일 시스템을 사용하지 않고 있을 때 
+사용할 수 있다.즉 현재 마운트 되어 있는 파일시스템에 대해서는 
+검사할 수 없다. 이것은 누군가가 그 파일시스템에 쓰기를 할 수도 있기 
+때문.
+<P>
+<I>장치이름</I>으로 사용될 파일은 일반적으로 다음과 같다:
+<PRE>
+<DL COMPACT><DT><DD>/dev/hda[1-8]
+/dev/hdb[1-8]
+/dev/sda[1-8]
+/dev/sdb[1-8]
+</DL>
+</PRE>
+
+<P>
+파일 시스템이 바뀌었다면(가령, 수정된 경우), 
+&quot;FILE SYSTEM HAS CHANGED&quot; 메시지를 보이고, 
+종료되기 전에 세번 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sync">sync</A></B>(2)
+
+한다.
+처음으로 파일시스템을 만들고, 검사하는 것이 아니라면, 
+다시 리부팅을 할 필요는 없다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>경고</H2>
+
+<B>fsck.minix</B>
+
+명령을 마운트된 파일시스템을 대상으로 사용해서는 안된다.
+만약 이렇게 사용해 버리면, 사용하고 있는 파일이 지워지거나, 
+오히려 아무 문제 없는 파일 시스템에 손상을 가하는 결과를 
+초래할지도 모른다.
+그런데 부득이하게 마운트된 것을 검사해야 할 경우(가령, 루트 파일시스템이
+minix인 경우)에는 검사하는 동안 디스크 쓰기를 하지 말아야하며, 
+&quot;zombies&quot; 파일(유령파일, 고아파일)이 없어야 한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-l</B>
+
+<DD>
+검사하는 파일시스템 안에 있는 모든 파일이름을 보여준다.
+<DT><B>-r</B>
+
+<DD>
+사용자에게 어떻게 할 것인지 물어본다.
+<DT><B>-a</B>
+
+<DD>
+사용자에게 물어보지 않고 문제가 있으면 자동으로 고친다.
+이것은 -r 옵션을 사용했을 때 초기값으로 지정된 그값으로 처리한다.
+이 옵션은 파일 시스템 오류의 예외적인 현상에 대해서는 
+제대로 처리 못할 경우도 있다.
+<DT><B>-v</B>
+
+<DD>
+검사 상황을 자세하게 보여준다.
+<DT><B>-s</B>
+
+<DD>
+슈퍼-블럭 정보를 보여준다.
+<DT><B>-m</B>
+
+<DD>
+&quot;mode not cleared&quot; 경고 메시지를 활성화 한다.
+<DT><B>-f</B>
+
+<DD>
+사용 중인 표시가 있는 파일 시스템에 대해서도 강제로 파일 시스템 검사를 한다.
+(이런 표시는 파일 시스템이 언마운트되었을 때, 커널에 의해서 표시된다.)
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck">fsck</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck.ext">fsck.ext</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck.ext2">fsck.ext2</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+fsck.xiafs">fsck.xiafs</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mkfs">mkfs</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mkfs.minix">mkfs.minix</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mkfs.ext">mkfs.ext</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mkfs.ext2">mkfs.ext2</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mkfs.xiafs">mkfs.xiafs</A></B>(8).
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+reboot">reboot</A></B>(8)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>검사</H2>
+
+여러가지 검사 메시지가 있는데, 일반적으로 사용할 때 나타난다.
+<P>
+지정한 장치가 없을 때(즉, 그런 드라이브, 파티션이 없을 때)는
+&quot;unable to read super block&quot; 메시지를 보여주고, 
+지정한 장치가 있으나, 그것이 MINIX 파일 시스템이 아닐 때는
+&quot;bad magic number in super-block&quot; 메시지를 보여준다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>마침 코드</H2>
+
+<B>fsck.minix</B>
+
+에서 만들어지는 마침 코드(리턴값)는 다음과 같다.
+<DL COMPACT>
+<DT>0<DD>
+오류 없음.
+<DT>3<DD>
+파일 시스템 오류 수정. 현제 파일 시스템이 마운트 되어 있는 상태라면, 
+리부팅 해야한다.
+<DT>4<DD>
+파일 시스템 오류를 수정하지 못한 것이 남아 있음.
+<DT>8<DD>
+작업 수행중에 오류 발생.
+<DT>16<DD>
+사용법이나, 문법이 틀림.
+</DL>
+<P>
+
+위와 같이, 이 풀그림은 0, 3, 4, 7, 8, 16 만 리턴한다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>만든이</H2>
+
+Linus Torvalds (<A HREF="mailto:torvalds@cs.helsinki.fi">torvalds@cs.helsinki.fi</A>)가 처음 만들었고,
+<BR>
+
+Rik Faith (<A HREF="mailto:faith@cs.unc.edu">faith@cs.unc.edu</A>)가 리턴값 처리 부분 추가,
+<BR>
+
+Dr. Wettstein(<A HREF="mailto:greg%wind.uucp@plains.nodak.edu">greg%wind.uucp@plains.nodak.edu</A>)이 <I>장치이름</I> 인자 사용 추가,
+<BR>
+
+Daniel Quinlan (<A HREF="mailto:quinlan@yggdrasil.com">quinlan@yggdrasil.com</A>)이 마운트 되어 있는 파일 시스템 검사 
+부분 기능 추가.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">경고</A><DD>
+<DT><A HREF="#lbAF">옵션</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">검사</A><DD>
+<DT><A HREF="#lbAI">마침 코드</A><DD>
+<DT><A HREF="#lbAJ">만든이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,139 @@
+<HTML><HEAD><TITLE>Manpage of LAST,LASTB</TITLE>
+</HEAD><BODY>
+<H1>LAST,LASTB</H1>
+Section: Linux System Administrator's Manual (1)<BR>Updated: March 11, 1996<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+last, lastb - 사용자들의 마지막 로그인했는 기록 목록을 보여준다.
+
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>last</B>
+
+[<B>-R</B>]
+
+[<B>-</B><I>num</I>]
+
+[ -<B>n</B> <I>num</I> ]
+
+[<B>-adx</B>]
+
+[ -<B>f</B> <I>file</I> ]
+
+[<I>name...</I>]
+
+[<I>tty...</I>]
+
+<BR>
+
+<B>lastb</B>
+
+[<B>-R</B>]
+
+[<B>-</B><I>num</I>]
+
+[ -<B>n</B> <I>num</I> ]
+
+[ -<B>f</B> <I>file</I> ]
+
+[<B>-adx</B>]
+
+[<I>name...</I>]
+
+[<I>tty...</I>]
+
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Last</B>
+
+명령은 <B>/var/log/wtmp</B> 파일이나, <B>-f</B> 옵션에서 지정한 
+파일을 통해서 사용자의 로그인, 로그아웃 시간을 보여준다. 
+특정 사용자의 이름이나, tty를 지정할 수 있으며, 
+이렇게 지정되면, 해당 사용자의 로그인 정보만을 보여준다.
+tty의 이름은 생략될 수 있어, <B>last 0</B> 명령은 
+<B>last tty0</B> 명령과 같은 기능을 한다. 
+<B>last</B>가 실행 중에 <FONT SIZE="-2">SIGINT</FONT>(인터럽트 글쇠, 
+주로 Ctrl-C에 의해서 만들어지는 신호)가 감지되거나, 
+<FONT SIZE="-2">SIGQUIT</FONT>(마침 글쇠, 주로 Ctrl-\에 의해서 만들어지는 신호)가 
+감지되면, 실행을 마친다.
+<P>
+
+접속 사용자 이름에 <B>reboot</B>라고 나오는 것은 시스템이 
+reboot된 것을 나타낸다. 즉 <B>last reboot</B> 명령으로 
+기록 파일이 만들어진 후부터 reboot 되었는 기록을 모두 볼 수 있다.
+<P>
+
+<B>Lastb</B> 명령은 접속 실패를 기록하는 파일인 <B>/var/log/btmp</B>
+파일을 대상으로 한다는 것을 제외하고는 <B>last</B> 명령과 같다.
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>-</B><I>num</I><DD>
+<I>num</I> 만큼의 줄만 보여준다.
+<DT><B>-n</B> <I>num</I><DD>
+윗 기능과 같음.
+<DT><B>-R</B><DD>
+<B>hostname</B> 필드를 보여주지 않음.
+<DT><B>-a</B><DD>
+<B>hostname</B> 필드를 마지막에 보여줌. 이 옵션은 다음 옵션과 함께 
+요용하게 쓰임.
+<DT><B>-d</B><DD>
+다른 호스트에서 접속한 것만 보여줌.
+<DT><B>-x</B><DD>
+shutdown이 일어난 상태나, run level이 바뀐 상태도 보여줌.
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>NOTES</H2>
+
+<I>wtmp</I> 파일이나, <I>btmp</I> 파일이 없을 수도 있다. 
+시스템은 이런 파일이 있을 경우에만, 로그인 정보를 그 파일에 기록한다. 
+만약 없는데, 이제부터 last 명령을 사용하고 싶다면, 
+단지 간단하게 <B>touch</B> 명령을 사용해서 각 파일을 만들어 놓으면 된다.
+(예를 들면, <I>touch /var/log/wtmp</I>).
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Miquel van Smoorenburg, <A HREF="mailto:miquels@cistron.nl">miquels@cistron.nl</A>
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?8+shutdown">shutdown</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?1+login">login</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A>(8)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">NOTES</A><DD>
+<DT><A HREF="#lbAG">AUTHOR</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

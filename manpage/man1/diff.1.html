@@ -1,0 +1,694 @@
+<HTML><HEAD><TITLE>Manpage of DIFF</TITLE>
+</HEAD><BODY>
+<H1>DIFF</H1>
+Section: GNU Tools (1)<BR>Updated: 1993-09-22<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+diff - 두 파일의 차이점을 비교한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>diff</B>
+
+[options] from-file to-file
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+diff는두개의 파일을 비교하여 그 차이점을 출력한다. 가장 단순한 경우에
+<I>diff</I>
+
+는
+<I>from-file</I>
+
+과
+<I>to-file</I>
+
+두 파일의 내용을 비교한다.
+파일명 대신에
+<B>-</B>
+
+를 써 넣으면, 표준 입력을 파일대신 사용한다.
+특별한 경우로,
+<B>diff - -</B>
+
+는 표준입력 자기 자신을 비교한다.
+<P>
+<I>from-file</I>
+
+이 디렉토리,
+<I>to-file</I>
+
+은 파일일 때
+<I>diff</I>
+
+는
+<I>to-file</I>
+
+과
+<I>from-file</I>
+
+디렉토리 안에 있는 
+<I>to-file </I>
+
+과 같은 이름의 파일을 찾아 비교한다.
+반대의 경우도 마찬가지이다.
+이때,
+<B>-</B>
+
+와는 비교할 수 없다.
+<P>
+<I>from-file</I>
+
+과
+<I>to-file</I>
+
+이 모두 디렉토리라면,
+<I>diff</I>
+
+는 알파벳 순서로 두 디렉토리 안의
+상응하는 파일을 비교한다.
+이때
+<B>-r</B>
+
+이나
+<B>--recursive</B>
+
+옵션이 주어지지 않으면 재귀적으로(아래 디렉토리에 대해 다시 명령 적용) 동작하지 않는다.
+<I>diff</I>
+
+는 파일인 것처럼 디렉토리 내에 포함된
+내용 자체를 비교하지는 않는다.
+표준 입력은 이름이 없고, ``같은 이름을
+가진 파일''의 개념을 적용할
+수 없기 때문에 정확히 지정된
+파일 이름으로는 사용할 수 없다.
+<P>
+<B>diff</B>
+
+옵션들은
+<B>-</B>
+
+로 시작된다. 그래서 보통
+<I>from-file</I>
+
+과
+<I>to-file</I>
+
+은
+<B>-</B>
+
+로 시작하지 않는다.
+하지만,
+<B>--</B>
+
+을 인자로 사용했을 경우, 다른 인자들은
+<B>-</B>
+
+로 시작하더라도 파일 이름으로 취급된다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+아래는 GNU
+<I>diff</I>
+
+에서 쓰이는 모든 옵션들의 요약이다.
+대부분의 옵션은 같은 기능을 하는 두 개의
+이름을 갖는다. 하나는
+<B>-</B>
+
+가 앞에 오는 단일 문자이고, 다른 하나는
+<B>--</B>
+
+이 앞에 오는 긴 이름이다. 부가적인 인자를
+받지 않는 복수의 단일 문자
+옵션은 단일 명령 옵션에 결합될 수 있다.
+<B>-ac</B>
+
+는
+<B>-a -c</B>
+
+와 같다. 긴 이름의 옵션은 그 이름의
+특정 부분만으로 줄여 쓸 수 있다. 대괄호
+(<B>[</B>
+
+and
+<B>]</B>)
+
+는 옵션이 부가적인 인자를 가질 수도 있다는 것을 의미한다.
+<DL COMPACT>
+<DT><B>-</B><I>lines</I>
+
+<DD>
+문맥을
+<I>lines</I>
+
+줄 만큼 보여준다. (여기서
+<I>lines</I>
+
+는 정수이다.)
+이 옵션에서는 특별히 출력 형태를 지정하지 않는다.
+이 옵션은
+<B>-c</B>
+
+혹은
+<B>-u</B>
+
+과 같이 사용하지 않으면 아무런 효과가 없다.
+이 옵션은 일반적으로 잘 쓰이지 않는 옵션이다.
+<I>patch</I>
+
+가 제대로 동작하기 위해서는 적어도
+두 줄 이상의 문맥이 필요하다.
+<DT><B>-a</B>
+
+<DD>
+텍스트 형태의 파일이 아니더라도,
+텍스트 형태의 파일로 인식하고
+두 파일을 줄단위로 비교한다.
+<DT><B>-b</B>
+
+<DD>
+공백 문자의 양의 차이는 무시한다.
+<DT><B>-B</B>
+
+<DD>
+빈 줄의 추가나 삭제는 무시한다.
+<DT><B>--brief</B>
+
+<DD>
+정확한 차이점을 비교하는 것이 아니라,
+단순히 두 파일이 다른가만 비교한다.
+<DT><B>-c</B>
+
+<DD>
+context 출력 형식을 사용한다.
+<DT><B>-C </B><I>lines</I>
+
+<DD>
+<BR>
+
+
+<DT><B>--context[=</B><I>lines</I><B>]</B>
+
+<DD>
+context 출력 형태를 사용해서
+<I>lines</I>
+
+줄을 보여준다. 만약
+<I>lines</I>
+
+가 지정되지 않으면, 세 줄을 보여준다.
+<I>patch</I>
+
+가 제대로 동작하기 위해서는 일반적으로
+최소한 두 줄의 문맥이 필요하다.
+<DT><B>--changed-group-format=</B><I>format</I>
+
+<DD>
+if-then-else 형식에서 두 파일 사이에
+다른 줄을 포함하는 문단을 보여줄 때,
+<I>format</I>
+
+형식을 사용한다.
+<DT><B>-d</B>
+
+<DD>
+아주 조그마한 변화라도 찾도록 검색
+알고리즘을 바꾼다.
+이 옵션은
+<I>diff</I>
+
+수행 속도를 아주 느리게 한다.
+<DT><B>-D </B><I>name</I>
+
+<DD>
+선처리기 매크로
+<I>name</I>
+
+을 이용해서, 합쳐진 if-then-else 형식
+출력을 만든다.
+<DT><B>-e</B>
+
+<DD>
+<BR>
+
+
+<DT><B>--ed</B>
+
+<DD>
+적절한
+<I>ed</I>
+
+스크립트 출력을 만든다.
+<DT><B>--exclude=</B><I>pattern</I>
+
+<DD>
+디렉토리를 비교할 때, 파일과 하위 디렉토리의
+basename이
+<I>pattern</I>
+
+과 일치하면
+무시한다.
+<DT><B>--exclude-from=</B><I>file</I>
+
+<DD>
+디렉토리를 비교할 때, 파일과 하위 디렉토리의
+basename이
+<I>file</I>
+
+에 있는 어떤 패턴과 일치하면 무시한다.
+<DT><B>--expand-tabs</B>
+
+<DD>
+입력 파일들의 탭 정렬을 유지하기 위해,
+출력에서 탭(tab)을 공백문자로 확장시킨다.
+<DT><B>-f</B>
+
+<DD>
+<I>ed</I>
+
+스크립트와 비슷하게 출력한다. 하지만, 파일에
+나타난 순서대로 차이점을 나타낸다.
+<DT><B>-F </B><I>regexp</I>
+
+<DD>
+context와 unified 형식에서, 차이가 있는
+각각의 문단에 대해
+<I>regexp</I>
+
+와 일치하는 앞에 나오는 몇몇 줄의 내용을 보여준다.
+<DT><B>--forward-ed</B>
+
+<DD>
+<I>ed</I>
+
+스크립트와 비슷하게 출력한다. 하지만,
+파일에 나타난 순서대로 차이점을 나타낸다.
+<DT><B>-h</B>
+
+<DD>
+현재 이 옵션은 쓰이지 않는다. 단지
+유닉스 호환성을 유지하기 사용된다.
+<DT><B>-H</B>
+
+<DD>
+작은 차이점들이 많은 큰 파일을 빠르게 처리하기 위해 사용된다.
+<DT><B>--horizon-lines=</B><I>lines</I>
+
+<DD>
+일반 접두사(common prefix)의 마지막
+<I>lines</I>
+
+줄과
+일반 접미사(common suffix)의 처음
+<I>lines</I>
+
+줄을 제외하지 않는다.
+<DT><B>-i</B>
+
+<DD>
+대소문자를 구분하지 않는다. 대문자와
+소문자를 같게 취급한다.
+<DT><B>-I </B><I>regexp</I>
+
+<DD>
+<I>regexp</I>
+
+에 맞는 줄의 삽입 혹은 삭제에 대한 변화를 무시한다.
+<DT><B>--ifdef=</B><I>name</I>
+
+<DD>
+선처리기 매크로
+<I>name</I>
+
+을 이용해서, 합쳐진 if-then-else 형식으로 출력한다.
+<DT><B>--ignore-all-space</B>
+
+<DD>
+행을 비교할 때 공백 문자를 무시한다.
+<DT><B>--ignore-blank-lines</B>
+
+<DD>
+빈 줄의 추가나 삭제는 무시한다.
+<DT><B>--ignore-case</B>
+
+<DD>
+대소문자를 구분하지 않는다. 대문자와
+소문자를 같이 취급한다.
+<DT><B>--ignore-matching-lines=</B><I>regexp</I>
+
+<DD>
+<I>regexp</I>
+
+에 맞는 줄의 삽입 혹은 삭제에 대한 변화를 무시한다.
+<DT><B>--ignore-space-change</B>
+
+<DD>
+공백 문자의 차이는 무시한다.
+<DT><B>--initial-tab</B>
+
+<DD>
+일반 형태나 context 형태의 출력에서 각 줄의
+텍스트 앞에 공백 문자 대신 탭을 출력한다.
+줄의 탭의 정렬이 자연스러워지게 된다.
+<DT><B>-l</B>
+
+<DD>
+한 페이지씩 보기 위해
+<I>pr</I>
+
+을 통해 출력을 한다.
+<DT><B>-L </B><I>label</I>
+
+<DD>
+<BR>
+
+
+<DT><B>--label=</B><I>label</I>
+
+<DD>
+context 형식과 unified 형식 헤더에서
+파일 이름 대신 지정된 라벨을 사용한다.
+<DT><B>--left-column</B>
+
+<DD>
+두행 출력(side by side) 형식에서 공통적으로
+나오는 라인은 왼쪽 행에만 출력한다.
+<DT><B>--line-format=</B><I>format</I>
+
+<DD>
+if-then-else 형식에서
+모든 입력 줄을 출력하는데
+<I>format</I>
+
+을 사용한다.
+<DT><B>--minimal</B>
+
+<DD>
+약간의 차이라도 찾을 수 있도록 검색
+알고리즘을 바꾼다. 이것은
+<I>diff</I>
+
+처리 속도를 느리게, 때론 아주 느리게 만든다.
+<DT><B>-n</B>
+
+<DD>
+RCS 형식으로 출력한다.
+각 명령이 줄의 수를 지정한다는 것만 제외하고는
+<B>-f</B>
+
+와 비슷하다.
+<DT><B>-N</B>
+
+<DD>
+<BR>
+
+
+<DT><B>--new-file</B>
+
+<DD>
+디렉토리 비교에서, 어떤 파일이 한 디렉토리에만 있다면
+다른 디렉토리에는 비어었는 파일이 있는 것처럼 비교한다.
+<DT><B>--new-group-format=</B><I>format</I>
+
+<DD>
+if-then-else 형식에서, 두번째 파일에서 나온 줄의
+그룹을 출력할 때
+<I>format</I>
+
+을 사용한다.
+<DT><B>--new-line-format=</B><I>format</I>
+
+<DD>
+if-then-else 형식에서, 두번째 파일에서 나온 줄을
+출력할 때
+<I>format</I>
+
+을 사용한다.
+<DT><B>--old-group-format=</B><I>format</I>
+
+<DD>
+if-then-else 형식에서, 첫번째 파일에서 나온 줄의
+그룹을 출력할 때
+<I>format</I>
+
+을 사용한다.
+<DT><B>--old-line-format=</B><I>format</I>
+
+<DD>
+if-then-else 형식에서, 첫번째 파일에서 나온 줄을
+출력할 때
+<I>format</I>
+
+을 사용한다.
+<DT><B>-p</B>
+
+<DD>
+차이가 있는 부분이 어느 C 함수 안에 있는지 보여준다.
+<DT><B>-P</B>
+
+<DD>
+디렉토리를 비교할 때, 두 개의 디렉토리 중 두번째 디렉토리에만 파일이 존재한다면, 첫번째
+디렉토리에는 사실 파일이 없지만 비어있는 파일이 있는 것처럼 비교한다.
+<DT><B>--paginate</B>
+
+<DD>
+페이지 단위로 출력하기 위해
+<I>pr</I>
+
+을 통해 출력한다.
+<DT><B>-q</B>
+
+<DD>
+두 파일의 자세한 차이점이 비교하는 것이 아니라,
+단순히 두 파일이 다른지만 알려준다.
+<DT><B>-r</B>
+
+<DD>
+두 디렉토리를 비교할 때, 모든 하위 디렉토리는 재귀적으로(recursively) 비교한다.
+<DT><B>--rcs</B>
+
+<DD>
+RCS 형식으로 출력한다.
+각 명령이 줄의 수를 지정한다는 것만 제외하고는
+<B>-f</B>
+
+와 비슷하다.
+<DT><B>--recursive</B>
+
+<DD>
+두 디렉토리를 비교할 때, 모든 하위 디렉토리는 재귀적으로(recursively) 비교한다.
+<DT><B>--report-identical-files</B>
+
+<DD>
+<BR>
+
+
+<DT><B>-s</B>
+
+<DD>
+비교하는 두 파일이 같을 때만 출력한다.
+<DT><B>-S </B><I>file</I>
+
+<DD>
+디렉토리를 비교할 때,
+<I>file</I>
+
+에서부터 비교를 시작한다.
+이 옵션은 보통 이전 비교에서 중간에 멈췄을 경우,
+다시 시작할 때 사용하기에 적절하다.
+<DT><B>--sdiff-merge-assist</B>
+
+<DD>
+<I>sdiff</I>
+
+를 위해 추가적인 정보를 출력한다.
+<I>sdiff</I>
+
+가
+<I>diff</I>
+
+를 실행할 때 이 옵션을 이용한다.
+이 옵션은 직접 사용자가 이용하는 옵션은 아니다.
+<DT><B>--show-c-function</B>
+
+<DD>
+차이가 있는 부분이 어느 C 함수 안에 있는지 보여준다.
+<DT><B>--show-function-line=</B><I>regexp</I>
+
+<DD>
+context 형식과 unified 형식 출력에서,
+각각의 차이가 있는 단락에 대해
+<I>regexp</I>
+
+과 일치하는 앞의 몇 줄을 보여준다.
+<DT><B>--side-by-side</B>
+
+<DD>
+side-by-side (두 열) 형식으로 출력한다.
+<DT><B>--starting-file=</B><I>file</I>
+
+<DD>
+디렉토리를 비교할 때,
+<I>file</I>
+
+에서부터 비교를 시작한다.
+이 옵션은 보통 이전 비교에서 중간에 멈췄을 경우,
+다시 시작할 때 사용하기에 적절하다.
+<DT><B>--suppress-common-lines</B>
+
+<DD>
+side-by-side 형식 출력에서 같은 내용의 줄은
+출력하지 않는다.
+<DT><B>-t</B>
+
+<DD>
+입력 파일의 탭 정렬을 유지하기 위해, 출력할 때
+탭을 공백 문자(space)로 변환해서 출력한다.
+<DT><B>-T</B>
+
+<DD>
+일반 형태나 context 형태의 출력에서 각 줄의
+텍스트 앞에 공백 문자 대신 탭을 출력한다.
+일반적으로 보이게 하기 위해 각 줄에서 탭들을 정렬한다.
+<DT><B>--text</B>
+
+<DD>
+텍스트 파일이 아닌 파일이더라도, 모든 파일을
+텍스트 파일로 다루고, 줄 단위로 비교한다.
+<DT><B>-u</B>
+
+<DD>
+unified 출력 형식을 사용한다.
+<DT><B>--unchanged-group-format=</B><I>format</I>
+
+<DD>
+if-then-else 형식에서, 두 파일에 공통으로 들어있는
+줄의 그룹을 출력하는데
+<I>format</I>
+
+을 사용한다.
+<DT><B>--unchanged-line-format=</B><I>format</I>
+
+<DD>
+if-then-else 형식에서, 두 파일에 공통으로 들어있는
+줄을 출력할 때
+<I>format</I>
+
+을 사용한다.
+<DT><B>--unidirectional-new-file</B>
+
+<DD>
+디렉토리를 비교할때, 두개의 디렉토리중 두번째 디렉토리에만 파일이 존재한다면, 첫번째
+디렉토리에는 사실 파일이 없지만 빈 파일이 있는 것처럼 처리한다.
+<DT><B>-U </B><I>lines</I>
+
+<DD>
+<BR>
+
+
+<DT><B>--unified[=</B><I>lines</I><B>]</B>
+
+<DD>
+unified 출력 형태를 사용해서, 문맥의
+<I>lines</I>
+
+줄을 보여준다. 만약
+<I>lines</I>
+
+가 지정되지 않으면, 세 줄을 보여준다.
+<I>patch</I>
+
+가 제대로 동작하기 위해서는 일반적으로
+최소한 두 줄 이상의 문맥이 필요하다.
+<DT><B>-v</B>
+
+<DD>
+<BR>
+
+
+<DT><B>--version</B>
+
+<DD>
+<I>diff</I>
+
+의 버전 정보를 출력한다.
+<DT><B>-w</B>
+
+<DD>
+각 줄을 비교할 때, 공백은 무시한다.
+<DT><B>-W </B><I>columns</I>
+
+<DD>
+<BR>
+
+
+<DT><B>--width=</B><I>columns</I>
+
+<DD>
+side-by-side 출력 형식에서, 한 열을
+<I>columns</I>
+
+만큼의 넓이로 출력한다.
+<DT><B>-x </B><I>pattern</I>
+
+<DD>
+디렉토리들을 비교할 때,
+<I>pattern</I>
+
+과 일치하는 basename을 갖는 파일과
+하위 디렉토리를 무시한다.
+<DT><B>-X </B><I>file</I>
+
+<DD>
+디렉토리들을 비교할 때,
+<I>file</I>
+
+에 포함된 어떠한 형태와 일치하는 basename을 갖는
+파일과 하위 디렉토리를 무시한다.
+<DT><B>-y</B>
+
+<DD>
+side-by-side 출력 형식을 사용한다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+cmp">cmp</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+comm">comm</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+diff3">diff3</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+ed">ed</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+patch">patch</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+pr">pr</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+sdiff">sdiff</A>(1).
+<A NAME="lbAG">&nbsp;</A>
+<H2>진단</H2>
+
+종료시 0은 차이점이 없는 것이고, 1은 차이점이 있는 것, 2는 문제가 발생한 것을 의미한다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>번역</H2>
+
+ASPLINUX &lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 29일
+<BR>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>), 2004년 3월 8일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+<DT><A HREF="#lbAG">진단</A><DD>
+<DT><A HREF="#lbAH">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 04:04:38 GMT, January 31, 2005
+</BODY>
+</HTML>

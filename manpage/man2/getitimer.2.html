@@ -1,0 +1,240 @@
+<HTML><HEAD><TITLE>Manpage of GETITIMER</TITLE>
+</HEAD><BODY>
+<H1>GETITIMER</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: 5 August 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+getitimer, setitimer - interval timer의 값을 얻거나 설정한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+
+<DL COMPACT>
+<DT>
+<B>#include &lt;<A HREF="file:/usr/include/sys/time.h">sys/time.h</A>&gt;</B>
+
+<P>
+<DT>
+<B>int getitimer(int</B>
+
+<I>which</I><B>,</B>
+
+<B>struct itimerval</B>
+
+<B>*</B><I>value</I><B>);</B>
+
+<DT>
+<B>int setitimer(int</B>
+
+<I>which</I><B>,</B>
+
+<B>const struct itimerval</B>
+
+<B>*</B><I>value</I><B>,</B>
+
+<B>struct itimerval</B>
+
+<B>*</B><I>ovalue</I><B>);</B>
+
+
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+시스템은 3개의 interval timer를 가진 각 프로세스를 제공한다. 모든 타이머가 작동을
+멈추면, 프로세스가 시그널을 보내고 타이머는 다시 작동을 시작한다.
+<DL COMPACT>
+<DT><B>ITIMER_REAL</B>
+
+<DD>
+실시간의 감소율과 
+<B>SIGALRM</B>
+
+의 만료기간을 넘겨준다.
+<DT><B>ITIMER_VIRTUAL</B>
+
+<DD>
+프로세스가 실행되고 있을때 감소율과 
+<B>SIGVTALRM</B>
+
+의 만료기간을 넘겨준다.
+<DT><B>ITIMER_PROF</B>
+
+<DD>
+프로세스가 진행되고 있거나, 시스템이 프로세스를 대신해 실행할때 감소율.
+<B>ITIMER_VIRTUAL</B>,
+
+를 결부시켜 생각하면, 이 타이머는 대개 사용자와 커널공간에 응용프로그램에 의해
+보내진 프로파일 시간에 쓰인다. 
+<B>SIGPROF</B>
+
+는 만료기간을 넘겨준다.
+</DL>
+<P>
+
+타이머 값은 다음 구조에의해 정의된다:
+
+<DL COMPACT><DT><DD>
+<PRE>
+<DD>struct itimerval {
+    struct timeval it_interval; /* next value */
+    struct timeval it_value;    /* current value */
+};
+struct timeval {
+    long tv_sec;                /* seconds */
+    long tv_usec;               /* microseconds */
+};
+</PRE>
+
+</DL>
+
+
+<P>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+Getitimer">Getitimer</A></B>(2)
+
+는 
+<B>ITIMER_REAL</B>,
+
+<B>ITIMER_VIRTUAL</B>,
+
+나
+<B>ITIMER_PROF</B>
+
+중 하나에 의해 지정된 타이머를 위해 현재 설정한
+<I>value</I>
+
+에 의해 지정된 구조로 채워진다.
+<B>it_value</B>
+
+는 타이머에 남겨진 시간의 양으로 설정되거나 타이머가 작동하지 않으면 0이다.
+비슷하게,
+<B>it_interval</B>
+
+는 reset 값으로 설정된다.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+Setitimer">Setitimer</A></B>(2)
+
+는 
+<I>value</I>
+
+값으로 지정된 타이머를 설정한다.
+<I>ovalue</I>
+
+가 0이 아니면, 타이머의 이전 값은 그곳에 저장된다.
+<P>
+
+시그널을 생성하는 
+<I>it_value</I>
+
+에서 0까지 타이머 감소와 
+<I>it_interval</I>
+
+로 재설정한다. 0으로 설정된 타이머는 멈춘다.
+(<I>it_value</I>
+
+는 0이거나 타이머가 만표되었고
+<I>it_interval</I>
+
+는 0이다
+)
+<P>
+
+Both
+<I>tv_sec</I>
+
+와
+<I>tv_usec</I>
+
+는 모두 타이머의 지속기간 결정에 중요하다.
+<P>
+
+타이머는 시간이 요청되기 전엔 절대 만료되지 않을것이다. 그 대신 몇몇 짧은 
+만료기간은 시스템 타이머 해석(현재 10ms)에 의지한다. 만료기간에 시그널은
+생성될 것이고, 타이머는 새설정된다. 타이머가 프로세스가 실행중인 동안 만료된다
+면 시그널이 생성될때 즉시 전달될 것이다. 그렇지 않으면 시스템 로딩에 의지하는
+짧은 시간에의해 상쇄될 것이다.
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0이 반환된다. 실패시, -1이 반환되고, 
+<I>errno</I>
+
+는 적절히 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EFAULT</B>
+
+<DD>
+<I>value</I>
+
+나 
+<I>ovalue</I>
+
+가 유효한 포인터가 아니다.
+<DT><B>EINVAL</B>
+
+<DD>
+<B>ITIMER_REAL</B>,
+
+<B>ITIMER_VIRT</B>,
+
+or
+<B>ITIMER_PROF</B>.
+
+중의 어떤것도 아니다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, 4.4BSD (이것은 4.2BSD에서 처음 보였다).
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+gettimeofday">gettimeofday</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sigaction">sigaction</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+signal">signal</A></B>(2).
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>버그</H2>
+
+리눅스에서, 시그널의 생성과 전달은 별개이고, 각 시그널은 중요한 이벤트에 허용된다. 
+<B>ITIMER_REAL</B>
+
+가 이전 만료기간으로 부터 시그널이 전달되기 전에 만료될 것이다.
+이벤트같은 초 시그널은 잃게 될것이다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 29일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">버그</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

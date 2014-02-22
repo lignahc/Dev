@@ -1,0 +1,109 @@
+<HTML><HEAD><TITLE>Manpage of SULOGIN</TITLE>
+</HEAD><BODY>
+<H1>SULOGIN</H1>
+Section: Linux System Administrator's Manual (8)<BR>Updated: 15 May 1996<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+sulogin -- Single-user login
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>sulogin</B>
+
+[<B> -t timeout </B>]
+
+[<B> tty-device </B>]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<I>sulogin</I>
+
+명령은 <I><A HREF="http://localhost/cgi-bin/man/man2html?5+inittab">inittab</A>(5)</I> 파일에서 지정한 단일 사용자 모드로 
+시스템이 작동되기 시작할 때 <B><A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A>(8)</B>에 의해 호출 된다.
+또한  bootmonitor(예, LILO)에서 <B>-b</B> 옵션이 주워져, 
+<B>Init</B>가 실행 될 때도 호출 된다.
+<P>
+
+이 때 로그인 프롬프트는 다음과 같이 나타난다.
+<DL COMPACT>
+<DT><DD>
+Give root password for system maintenance
+<BR>
+
+(or type Control-D for normal startup):
+</DL>
+<P>
+
+<I>sulogin</I>은 현재 터미날에 연결하거나,
+명령행의 옵션으로 지정한 특정 터미날 장치로 연결한다.
+(전형적으로 <B>/dev/console</B>).
+<P>
+
+단일 사용자 쉘에서 사용자가 로그아웃하거나, 프롬프트 상에서 
+Ctrl-d가 입력되면, 시스템은 초기 runlevel로 부팅 작업을 한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>ENVIRONMENT VARIABLES</H2>
+
+<I>sulogin</I>은 사용할 쉘을 지정하기 위해 <B>SUSHELL</B>이나, 
+<B>sushell</B> 환경 변수 값을 찾는다. 
+이 값이 지정되어 있지 않으면, /etc/passwd 파일에서 지정한 
+사용자 쉘을 사용하고, 이 값도 지정되어 있지 않으면, 
+<B>/bin/sh</B>을 사용한다.
+<P>
+
+이 명령은 init에서 <B>-b</B> 옵션과 함께 매우 유용하게 쓰인다. 
+단일 사용자 모드, 파일 시스템 읽기/쓰기 허용, 사용자 쉘은 
+&quot;failsafe&quot;로 접속하고자 한다면, LILO 프롬프트에서 다음과 같이 
+사용하면 된다.
+<P>
+
+boot: linux -b rw sushell=/sbin/sash
+<A NAME="lbAF">&nbsp;</A>
+<H2>FILES</H2>
+
+<I>sulogin</I> 명령은 로그인 과정에서 다음 파일을 찾아, 
+root의 비밀번호를 조사한다. 
+<P>
+
+/etc/passwd,
+<BR>
+
+/etc/shadow (있다면)
+<P>
+
+이때, 이 비밀번호 필드가 손상되었거나, 없거나, 
+복구 불가능한 상태라면, 비밀번호를 물어보는 프롬프트가 없이 
+바로 로그인 된다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Miquel van Smoorenburg &lt;<A HREF="mailto:miquels@cistron.nl">miquels@cistron.nl</A>&gt;
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+init">init</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?4+inittab">inittab</A>(4).
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">ENVIRONMENT VARIABLES</A><DD>
+<DT><A HREF="#lbAF">FILES</A><DD>
+<DT><A HREF="#lbAG">AUTHOR</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

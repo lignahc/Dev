@@ -1,0 +1,173 @@
+<HTML><HEAD><TITLE>Manpage of LISTEN</TITLE>
+</HEAD><BODY>
+<H1>LISTEN</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1993년 6월 23일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+listen - 소켓에서 연결들을 기다린다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</B>
+
+<P>
+<B>int listen(int </B><I>s</I><B>, int </B><I>backlog</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+연결을 받아들이기 위해, 소켓은 우선 들어오는 연결들을 받아들이기 위한
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2)을
+
+만들고, 들어오는 연결들에 대한 큐 제한 값을 
+<B>listen</B>으로
+
+명시하고, 그리고 연결들을 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+accept">accept</A></B>(2)으로
+
+받아들인다.
+<B>listen</B>
+
+함수는 
+<B>SOCK_STREAM</B>
+
+이나
+<B>SOCK_SEQPACKET</B>
+
+타입의 소켓들에만 적용된다.
+<P>
+
+<I>backlog</I>
+
+인자는 아직 미결인 연결들에 대한 큐의 늘어날 수 있는 최대 길이를 정의한다.
+큐에 도착한 연결 요청들이 꽉 찬다면 클라이언트는 
+<B>ECONNREFUSED</B>
+
+를 가리키는 에러를 받거나, 만일 하위 프로토콜이 재전송을 지원한다면,
+요청은 재시도가 성공되도록 하기 위해 무시된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>주의</H2>
+
+TCP 소켓에서
+<I>backlog </I>
+
+인자의 행위는 Linux 2.2에서 바뀌었다.
+현재는 완결이 안된 연결 요청에 대한 큐 길이 대신에 accept가 되길
+기다리는 연결이
+<I>완전히</I>
+
+연결된 소켓들의 큐 길이를 지정한다
+완결이 안된 소켓들에 대한 큐의 최대 길이는
+<B>tcp_max_syn_backlog</B>
+
+sysctl을 사용하여 설정할 수 있다.
+syncookies가 활성화되어 있을 때는, 논리적인 최대 길이는 없게 되며
+이 sysctl 설정은 무시된다. 더 많은 정보를 위해서
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+tcp">tcp</A></B>(7)를
+
+참고하라.
+<A NAME="lbAF">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0이 리턴된다. 에러시, -1이 리턴되며 
+<I>errno</I>
+
+는 적당한 값으로 설정된다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EADDRINUSE</B>
+
+<DD>
+다른 소켓이 이미 같은 포트를 listen하고 있다.
+<DT><B>EBADF</B>
+
+<DD>
+인자
+<I>s</I>
+
+가 유효한 디스크립터가 아니다.
+<DT><B>ENOTSOCK</B>
+
+<DD>
+인자
+<I>s</I>
+
+가 소켓이 아니다.
+<DT><B>EOPNOTSUPP</B>
+
+<DD>
+소켓이 
+<B>listen </B>
+
+작동을 지원하는 타입이 아니다.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+단일 Unix, 4.4BSD, POSIX 1003.1g 초안
+<B>listen</B>
+
+시스템 함수는 4.2BSD에서 처음 나타났다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>버그</H2>
+
+만일 소켓이 
+<B>AF_INET</B>타입이고
+
+<I>backlog</I>
+
+인자가
+상수
+<B>SOMAXCONN </B>
+
+보다 크다면(Linux 2.0 &amp; 2.2에서 128), 그것은 예고없이
+<B>SOMAXCONN</B>으로
+
+짤려진다.
+BSD(몇몇 BSD-기반 시스템)는 backlog를 5로 제한했으므로 호환성을 염두에 둔 
+응용 프로그램에서는 이 값에 의존하지 마라.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+accept">accept</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+connect">connect</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2)
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>역자</H2>
+
+이승식 &lt;<A HREF="mailto:zican@freechal.com">zican@freechal.com</A>&gt;, 2002년 6월 5일
+<BR>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 7월 2일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">주의</A><DD>
+<DT><A HREF="#lbAF">반환값</A><DD>
+<DT><A HREF="#lbAG">에러</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">버그</A><DD>
+<DT><A HREF="#lbAJ">관련 항목</A><DD>
+<DT><A HREF="#lbAK">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

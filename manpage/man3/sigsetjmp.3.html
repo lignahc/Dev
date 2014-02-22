@@ -1,0 +1,85 @@
+<HTML><HEAD><TITLE>Manpage of SETJMP</TITLE>
+</HEAD><BODY>
+<H1>SETJMP</H1>
+Section: 라이브러리 함수들 (3)<BR>Updated: 1997년 3월 2일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+setjmp, sigsetjmp - 비-지역 탈출(goto)을 위해 스택 문맥(stack context)을 저장한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+
+<B>#include &lt;<A HREF="file:/usr/include/setjmp.h">setjmp.h</A>&gt;</B>
+
+<P>
+<PRE>
+<B>int setjmp(jmp_buf </B><I>env</I><B>);</B>
+<B>int sigsetjmp(sigjmp_buf </B><I>env</I><B>, int </B><I>savesigs</I><B>);</B>
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>setjmp()</B>와 <B>longjmp()</B>는 프로그램의 하위-레벨 루틴에서 만나는 에러와
+인터럽트를 처리 할때 유용하다. 
+<B>setjmp()</B>는 나중에 <B>longjmp()</B> 함수가 사용할수 있도록 하기 위해 <I>env</I>에
+스택 문맥/환경변수를 저장한다. 
+<B>setjmp()</B>를 호출한 함수가 반환되었다면, 스택 문맥은 무효하게 된다.
+
+<B>sigsetjmp()</B>는 <B>setjmp()</B> 함수와 비슷하다.
+만일 <I>savesigs</I>가 0이 아니라면, 봉쇄된 신호 집합들은 <I>env</I>에 저장되고 
+만일 <B>siglongjmp()</B>가 <I>env</I>과 함께 나중에 작동된다면, 복구된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>setjmp()</B> 와 <B>sigsetjmp()</B> 는 직접 반환된다면 0이 리턴된다.
+그리고, 저장된 문맥을 사용하는 <B>longjmp()</B>에서 반환된다면 0이 아닌 값으로 리턴된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+POSIX, ISO 9899
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+POSIX는 <B>setjmp</B>가 신호 문맥을 저장하는지에 대해 명확히 하지 않는다.
+(SYSV에서는, 그렇지 않다. DBD4.3에서는 위와 같으며, 여기에는 그렇지 않은 함수 <B>_setjmp</B>가 있다.)
+만일 여러분이 신호 마스크를 저장하길 원한다면, <B>sigsetjmp</B>를 사용해라.
+
+<B>setjmp()</B>와 <B>sigsetjmp</B>는 프로그램을 이해하고 유지하는데 어렵게 만든다.
+선택할수 있는 것이 있다면, 그것을 사용해야 한다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+longjmp">longjmp</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+siglongjmp">siglongjmp</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 1월 10일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

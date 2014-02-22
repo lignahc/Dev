@@ -1,0 +1,1902 @@
+<HTML><HEAD><TITLE>Manpage of XTERM</TITLE>
+</HEAD><BODY>
+<H1>XTERM</H1>
+Section: User Commands  (1)<BR>Updated: Release 6<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+xterm - X 용 터미날 에뮬레이터
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>xterm</B>
+
+[-<I>툴킷옵션</I> ...] [-<I>옵션</I> ...]
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>xterm</I> 풀그림은 X 윈도우 시스템을 위한 터미날 에뮬레이터이다.
+이것은 윈도우 시스템을 바로 사용할 수 없는 풀그림들을 위해, 
+DEC VT102나 Tektronix 4014 호환 터미날을 제공한다.
+underlying operating system(?)이 터미날 크기변경 기능을 지원한다면
+(예를 들어, 4.3bsd 시스템을 바탕으로 개발된 시스템에서의 SIGWINCH 시그날),
+<I>xterm</I>은 창 크기가 바뀔 때 마다, 그 창에서 실행중인 풀그림을 알리기위해
+편의를 제공한다.
+<P>
+
+VT102와 Tektronix 4014 터미날은 각각 자신의 창을 가지고 있어,
+하나의 창에서 텍스트 편집을 하고, 다른 창에서 그래픽 형식으로
+동시에 볼 수 있다. 
+창의 적당한 가로 세로 비율을 유지하려면, 
+Tektronix 그래픽은 그 창에 채워질 4014의 가로 세로 비율 만큼의 가장 큰 
+상자로 제한될 것이다. 
+이 상자는 창의 좌측 상단에 있다.
+<P>
+
+두 창을 동시에 볼 수는 있지만, 글쇠판 입력과 출력을 위한 창은 
+그들 중 하나만이 활상화 된다. 
+활성화 된 창이란 커서가 있는 창을 말한다.
+활성화 된 창을 바꾸는 방법은 ctrl글쇠를 누르고 
+다람쥐 중간 단추를 누르면 VT102 창에서는 &quot;VT Options&quot; 차림표가,
+4014 창에서는 &quot;Tek Options&quot; 차림표가 나타나는데, 
+여기서 활성화된 창을 바꾼다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>EMULATIONS</H2>
+
+VT102 에뮬레이션은 거의 완벽하지만, 
+부드러운 스크롤 기능, VT52 모드, 
+두배 넓거나, 두배 큰 문자 셋이 아닌 문자들의 깜빡임 속성들은 
+지원하지 않는다. 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+Termcap">Termcap</A></I>(5)
+
+파일에서 <B>xterm</B>이 사용하는 부분은 
+``xterm,'' ``vt102,'' ``vt100'' and ``ansi,''이며,
+자동으로 ``TERM'' 환경변수와 ``TERMCAP'' 환경 변수를 사용해 
+적당한 터미날값을 찾는다.
+<P>
+
+<I>xterm</I>의 특별한 기능들 중 대부분은 풀그림 실행중에, 
+ctrl글쇠를 누른 상태에서 다람쥐 가운데 단추를 눌러 보여지는 차림표 
+항목에서 바꿀 수 있다. 
+(자세한 이야기는 
+<I>Xterm Control Sequences</I>
+
+문서를 참조한다.)
+<P>
+
+Tektronix 4014 에뮬레이션 또한 좋은 편이다.
+여기서는 12비트 그래픽 주소 처리와 창 크기 변경 기능도 지원한다.
+또한 네가지 다른 글꼴 크기와 다섯가지 다른 줄 형태를 지원하다.
+쓰기 금지 기능이나, 백그라운드 실행모드(defacused mode)도 지원한다.
+Tektronix 텍스트와 그래픽 명령들은 내부적으로 <I>xterm</I>에 의해서
+기록되고, &quot;Tek Options&quot; 차림표 항목의 <I>COPY</I> 명령으로 
+파일로 쓰여질 수 있다. 
+파일의 이름은 
+``<B>COPY</B><I>yy</I><B>-</B><I>MM</I><B>-</B><I>dd</I><B>.</B><I>hh</I><B>:</B><I>mm</I><B>:</B><I>ss</I>''
+이런 형태를 가 되며, 
+<I>yy</I>,
+
+<I>MM</I>,
+
+<I>dd</I>,
+
+<I>hh</I>,
+
+<I>mm</I>,
+
+<I>ss</I>
+
+에는 COPY 명령이 수행될 당시 시스템의 시간이 기록된다.
+그 파일의 위치는 <I>xterm</I>을 시작한 그 경로안에 있게 된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>OTHER FEATURES</H2>
+
+<I>xterm</I>은 현재 창이 활성화 되어 있을 경우에는 자동으로 
+커서에 있는 문자가 역상이되고 비활성화 상태에는 다시 보통 
+문자로 바뀐다.
+<P>
+
+VT102 모드에서는, 궁극적인 스크린 버퍼에서 메뉴가 호출되거나, 
+다시 원상복귀한다. 궁극적인 스크린 버퍼란, 현재 창의 디스플레이
+영역 만큼의 크기를 가진 버퍼를 말한다. 
+메뉴가 호출되면, 현제 스크린은 저정되고, 궁극적인 스크린으로 
+바뀐다. 
+일반적인 문서 편집기인 <I>vi</I> (1)를 사용할 때, 문서 편집을 위한 화면 
+전환을 하도록 하고, <I>vi</I> (1)가 종료되었을 때, 화면을 복귀하도록 
+처리하는 부분은 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?5+termcap">termcap</A></I>(5)
+
+파일 안에 있다.
+<P>
+
+VT102 모드나, Tektronix 모드에서, 창의 이름을 바꾸는 
+기능도 제공하고 있다. 자세한 이야기는 
+<I>Xterm Control Sequences</I>
+
+문서를 참조한다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<I>xterm</I>에서는 표준 X 툴킷 명령행 옵션과 함께 다음 옵션들을 
+사용할 수 있다. 
+(만약, 아래 옵션에서 
+`<B>-</B>'
+
+대신에, 
+`<B>+</B>'
+
+옵션이 사용되면, 그것은 초기값을 반대로 함을 의미한다.)
+<DL COMPACT>
+<DT><B>-help</B>
+
+<DD>
+<I>xterm</I>에서 사용할 수 있는 옵션들과 그것에 대한 설명을 보여주고 
+마친다.
+<DT><B>-132</B>
+
+<DD>
+일반적으로 80칸과 132칸을 전환하는 VT102 DECCOLM 기능을 전환한다. 
+이 옵션은 DECCOLM 기능을 인식하며, 창 크기는 적당하게 조절된다.
+<DT><B>-ah</B>
+
+<DD>
+항상 커서가 위치한 곳의 글자를 역상 시킨다. 
+이렇게 하면, 창이 활성화 상태건 비활성화 상태건 상관없이 
+항상 커서가 있는 곳은 역상된다.
+<DT><B>+ah</B>
+
+<DD>
+이 옵션은 창이 활성화 되었을 때면 커서가 위치한 곳의 글자를
+역상 시킨다.
+<DT><B>-b</B><I> number</I>
+
+<DD>
+창의 테두리 두께를 지정한 &quot;숫자&quot;의 픽셀만큼으로 지정한다.
+초기값은 2이다.
+<DT><B>-cb</B>
+
+<DD>
+<I>vt100</I> 리소스 <B>cutToBeginningOfLine</B>의 값을 FALSE로 지정한다.
+<DT><B>+cb</B>
+
+<DD>
+<I>vt100</I> 리소스 <B>cutToBeginningOfLine</B>의 값을 TRUE로 지정한다.
+<DT><B>-cc </B><I>characterclassrange</I>:<I>value</I>[,...]
+
+<DD>
+This sets classes indicated by the given ranges for using in selecting by
+words.  
+아래
+<B>CHARACTER CLASSES </B>
+
+부분을 참조한다.
+<DT><B>-cn</B>
+
+<DD>
+line-mode 선택에서 새 줄이 잘려지지 않게 지정한다.
+<DT><B>+cn</B>
+
+<DD>
+line-mode 선택에서 새 줄이 짤려지게 지정한다.
+<DT><B>-cr</B><I> color</I>
+
+<DD>
+텍스트 커서의 색깔을 지정한다. 초기값은 텍스트의 전경색(글자색)이다.
+<DT><B>-cu</B>
+
+<DD>
+옛 버전의 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?3x+curses">curses</A></I>(3x)
+
+함수를 사용하는 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?1+more">more</A></I>(1)
+
+에서 한 줄의 길이가 창의 가로 길이와 똑같을 경우와, 
+첫칸에 탭 문자이 있을 경우 그 라인들을 제대로 못하는 벌레가 
+있는데, 이런 문제가 발생할 경우 이 옵션을 사용한다. 
+<DT><B>+cu</B>
+
+<DD>
+이 옵션은 그냥 
+
+벌레에 대해서 무시한다.
+<DT><B>-e</B><I> program </I>[ <I>arguments </I>... ]<I></I>
+
+<DD>
+이 옵션은 <I>xterm</I>이 실행될 때 <I>xterm</I>에서 실행될 풀그림을
+지정한다. 이러면, 바로 지정한 풀그림이 실행되고, 그 풀그림을 
+끝내면 <I>xterm</I>도 끝나게 된다. 
+또한 <I>-n</I>이나, <I>-T</I> 옵션을 사용해서, 
+창의 이름을 따로 지정할 수도 있다. 
+<B>이 옵션(-e)은 받드시 명령행의 가장 마지막에 와야한다.</B>
+<DT><B>-fb</B><I> font</I>
+
+<DD>
+이 옵션은 <I>xterm</I>에서 사용할 굵은 글자의 글꼴을 지정한다.
+이 글꼴은 보통 글자 글꼴의 세로, 가로 길이가 같아야한다. 
+만약, 보통 글꼴이나, 굵은 글꼴 중 하나만을 지정하면, 
+지정된 그 글꼴은 보통 글자 글꼴로 지정되고, 굵은 글자는 
+그 글꼴을 확대해서 사용한다. 
+초기값은 굵은 글자 글꼴을 따로 지정하지 않고, 
+보통 글자 글꼴을 확대해서 사용한다. 
+<DT><B>-im</B>
+
+<DD>
+<B>useInsertMode</B> 리소스 on
+<DT><B>+im</B>
+
+<DD>
+<B>useInsertMode</B> 리소스 off
+<DT><B>-j</B>
+
+<DD>
+이 옵션은 <I>xterm</I>이 점프 스크롤을 할 수 있게 한다. 
+보통, 텍스트는 한번에 한 줄씩 스크롤 된다; 이 옵션은 
+<I>xterm</I>에서 한번에 여러 줄을 스크롤할 수 있게 한다. 
+이것은 많은 양의 문서를 읽을 때, 해당 부분으로 건더 뛰기 할 때, 
+보다 빠르게 작동하기 위해서 사용한다.
+또한 이 기능은 &quot;VT Options&quot; 차림표에서 실행중에도 직접 제어 할 수 있다.
+<DT><B>+j</B>
+
+<DD>
+점프 스크롤 기능을 사용하지 않는다.
+<DT><B>-ls</B>
+
+<DD>
+이 옵션은 <I>xterm</I>이 로그인 쉘로써 사용되게 한다. 
+이 말은 로그인 할 때에 실행되는 .login, .profile 같은 초기화 
+파일들을 함께 실행한다는 것을 의미한다.
+<DT><B>+ls</B>
+
+<DD>
+이 옵션은 로그인 쉘로 사용하지 않고 단지 하위 쉘로 사용할 때 사용된다.
+(초기값)
+<DT><B>-mb</B>
+
+<DD>
+이 옵션은 커서가 줄의 오른쪽 끝에 오게 되면 벨 소리를 나게한다. 
+&quot;VT Options&quot; 차림표에서 이옵션은 제어 할 수 있다.
+<DT><B>+mb</B>
+
+<DD>
+이 옵션은 윗 기능을 불가 상태로 한다(초기값).
+<DT><B>-mc milliseconds</B>
+
+<DD>
+다람쥐의 두번 연속 찍기 인식 최대 시간을 지정한다.
+<DT><B>-ms</B><I> color</I>
+
+<DD>
+다람쥐 커서의 색깔을 지정한다. 초기값은 전경색(글자색)이다.
+<DT><B>-nb</B><I> number</I>
+
+<DD>
+커서가 줄의 오른쪽 끝에 왔을 때, 소리를 낼 문자의 숫자를 지정한다. 
+<I>-mb</I> 옵션이 지정된 경우, 여기서 지정한 문자를 표준 출력으로 
+보낸다. 초기값은 10(bell)이다.
+<DT><B>-rw</B>
+
+<DD>
+reverse-wraparound(?)를 사용 가능 상태로 지시한다. 
+이것은 커서가 어떤 줄의 첫 칸에 있을 때, 이때, 
+왼쪽으로 이동하거나, 그 왼쪽 글자를 삭제하는 명령이 있을 경우, 
+그 윗줄의 맨 끝을 대상으로 이루워지게 한다. 
+이 옵션은 명령행에서 아주 긴 명령조합을 편집하는데 유용하게 사용된다. 
+이 옵션은 &quot;VT Option&quot; 차림표에서도 지정할 수 있다. 
+<DT><B>+rw</B>
+
+<DD>
+reverse-wraparound 기능 사용을 금지 한다.
+<DT><B>-aw</B>
+
+<DD>
+이 옵션은 자동 줄바꿈 기능 사용을 허용한다. 
+한 문장의 길이가 화면의 최대 가로길이보다 클 경우, 
+단어 별로 잘려 나머지는 다음 줄에 표시하게 한다. 
+<DT><B>+aw</B>
+
+<DD>
+이 옵션은 자동 줄바꿈 기능 사용을 금지 한다.
+<DT><B>-s</B>
+
+<DD>
+이옵션은 스크롤을 비동기적으로(asynchronously)으로 하게 한다. 
+이 말은 화면이 스크롤 되는 동안 계속해서 갱신되지 않게 한다.
+이 옵션은 네트워킹에서 사용할 때 유용하게 쓰인다. 
+즉, 전송속도가 늦을 경우에 전형적으로 쓰인다.
+<DT><B>+s</B>
+
+<DD>
+윗 옵션의 반대 기능으로 스크롤을 동기적으로 하게 한다.
+<DT><B>-sb</B>
+
+<DD>
+창 한편에 스크롤 막대를 보인다. 
+지나간 화면은 메모리에 저장되고, 스크롤 막대로 지나간 화면을 볼 수 있다.
+이 옵션은 ``VT Options'' 차림표에서 바꿀 수 있다.
+<DT><B>+sb</B>
+
+<DD>
+스크롤 막대를 보이지 않게 한다.
+<DT><B>-sf</B>
+
+<DD>
+이 옵션은 기능글쇠(Function key)를 위해, Sun 기능글쇠 escape code 가 
+만들어지도록 한다.
+<DT><B>+sf</B>
+
+<DD>
+이 옵션은 기능글쇠(Function key)를 위해, 표준 기능글쇠 escape code 가
+만들어지도록 한다.
+<DT><B>-si</B>
+
+<DD>
+이 옵션은 자동 스크롤 기능을 금지 시킨다.
+화면이 맨 밑에서 글이 나타나더라도 스크롤 되지 않는다.
+이 옵션은 &quot;VT Options&quot; 차림표에서도 지정할 수 있다.
+<DT><B>+si</B>
+
+<DD>
+이 옵션은 자동 스크롤 기능 사용을 허용한다.
+<DT><B>-sk</B>
+
+<DD>
+이 옵션은 스크롤 막대를 사용해 지나간 글을 볼 때, 
+글쇠가 눌려지면, 자동으로 현재 화면으로 돌아오게 한다.
+<DT><B>+sk</B>
+
+<DD>
+이 옵션은 스크롤 막대를 사용해 지나간 글을 볼 때, 
+글쇠가 눌려져도 화면 이동을 하지 않는다.
+<DT><B>-sl</B><I> number</I>
+
+<DD>
+스크롤할 때 지나간 화면의 기억량을 줄 수로 지정한다.
+초기값은 64줄이다.
+<DT><B>-t</B>
+
+<DD>
+이 옵션은 <I>xterm</I> 시작 시, VT102 모드로 시작하는 것이 아니라, 
+Tektronix 모드로 시작하도록 한다.
+물론 다람쥐 가운데 단추와 Ctrl 글쇠를 함께 눌러 만들어지는 
+차림표에서 이 두 모드의 전환이 가능하다. 
+<DT><B>+t</B>
+
+<DD>
+이 옵션은 <I>xterm</I> 시작 시, VT102 모드로 시작하도록 한다.
+<DT><B>-tm</B><I> string</I>
+
+<DD>
+이 옵션은 <I>string</I>인 터미날 설정 키워드를 사용해 터미날 환경을 
+지정한다. 이 옵션은 <B>stty</B> 명령과 비슷한 역활을 한다.
+사용할 수 있는 키워드는 intr, quit, erase, kill, eof,
+eol, swtch, start, stop, brk, susp, dsusp, rprnt, flush, weras, lnext
+이다. 제어 문자는 ^글자와 함께 지정된다(예, ^c, ^u). ^?는 
+delete를 지시하게 될 것이다. 
+<DT><B>-tn</B><I> 이름</I>
+
+<DD>
+이 옵션은 환경 변수 TERM 값을 <I>이름</I>으로 바꾼다. 
+즉 터미날 형태를 <I>이름</I>으로 지정한 터미날 형태로 바꾼다. 
+이 <I>이름</I>은 반드시 <I><A HREF="http://localhost/cgi-bin/man/man2html?5+termcap">termcap</A>(5)</I> 파일안에 
+<I>li#</I> 와 <I>co#</I> 항목에서 정의되어 있는 것이여야 한다.
+<DT><B>-ut</B>
+
+<DD>
+이 옵션은 시스템 기록 파일인 <I>/etc/utmp</I> 파일의 기록을 생각하게 한다.
+<DT><B>+ut</B>
+
+<DD>
+이 옵션은 시스템 기록 파일인 <I>/etc/utmp</I> 파일의 기록을 하게 한다.
+<DT><B>-vb</B>
+
+<DD>
+Ctrl-G 문자인 벨 소리를 나게 한다. 
+즉, ^G 출력 있을 경우 이것을 스피커 소리로 나게 한다.
+<DT><B>+vb</B>
+
+<DD>
+벨 소리를 나지 않게 한다.
+<DT><B>-wf</B>
+
+<DD>
+이 옵션은 서브프로세스를 시작하기 전에 첫번째로 창이 map되기를(창의
+크기와 위치를 정하고 메모리를 할당하는 작업) 
+기다린다. 그래서, 초기의 터미날 환경과 환경 변수들이 바뀌어진다. 
+이 옵션은 <B>xterm</B>에서 실행되는 풀그림들이 그 바뀐 터미날의 
+크기에 대해서 반응하도록 한다.
+<DT><B>+wf</B>
+
+<DD>
+서브프로세스를 시작하기 전에 <B>xterm</B>은 기다리지 않는다.
+<DT><B>-C</B>
+
+<DD>
+이 옵션은 이 창이 콘솔 출력을 받도록 한다. 
+이 옵션은 모든 시스템에서 지원되는 것은 아니다. 
+콘솔 출력을 얻으려면, 먼저 사용자가 콘솔 장치의(/dev/console) 소유주여야하며,
+그 장치가 쓰기 권한이 부여되어 있어야한다. 콘솔 화면의 
+<B>xdm</B> 상태에서 <B>xterm</B>을 실행킨다면,
+먼저 세션 startup을 실행해야하고, 콘솔 장치의 파일 권한과 소유주 관계를 
+다시 정의하는 부분이 있어야한다.
+<DT><B>-S</B><I>ccn</I>
+
+<DD>
+이 옵션에서 사용되는 앞의 두 글자는 문자형으로 slave 모드에서 
+사용되는 의사터미날(pseudoterminal)의 이름을 뜻하고, 
+마지막에 오는 한 글자는 숫자형으로 상속받는 파일 기술자(descriptor)의
+번호를 뜻한다. 즉 이옵션의 인자 형식은 ``%c%c%d''이다.
+이 옵션은 <B>xterm</B>이 존재하는 풀그림을 위해 입출력 채널로서 
+사용되는 것을 허락하고, 가끔, 특정 풀그림 안에서 사용할 수 있게 한다.
+</DL>
+<P>
+
+다음의 명령행 인자들은 옛버전의 호환을 위해서 제공하고 있다. 
+만일 최신 버전의 X Toolkit에서는 이런 옵션을 지원하지 않을 수도 있다.
+<DL COMPACT>
+<DT><B>%</B><I>geom</I>
+
+<DD>
+Tektronix 창의 크기와 위치 지정.
+``<I>*tekGeometry</I>'' 리소스로도 지정이 가능하다.
+<DT><B>#</B><I>geom</I>
+
+<DD>
+아이콘 창의 크기와 위치 지정.
+``<I>*iconGeometry</I>'' 리소스로도 지정이 가능하다.
+<DT><B>-T</B><I> string</I>
+
+<DD>
+윈도우 관리자에서 실행될 경우 창 제목을 <I>string</I>으로 지정한다. 
+이 옵션은 <B>-title</B> 옵션과 같은 기능을 한다.
+<DT><B>-n</B><I> string</I>
+
+<DD>
+윈도우 관리자로 <B>xterm</B>을 실행시켜, 아이콘화 했을 경우, 
+그 아이콘의 이름으로 나타날 것을 <I>string</I>으로 지정한다.
+``<I>*iconName</I>'' 리소스로도 이 문자열을 지정할 수 있다.
+이 옵션은 아래에서 설명할 <B>-name</B> 툴킷 옵션과는 다르다는 것을 
+주의. 초기값은 풀그림의 이름을 아이콘 이름으로 사용한다.
+<DT><B>-r</B>
+
+<DD>
+글자색과 배경색을 바꾼다(역상시킨다). 이 옵션은 <B>-rv</B> 옵션과 같은 기능을
+한다.
+<DT><B>-w</B><I> number</I>
+
+<DD>
+창의 테두리 폭을 <I>number</I> 픽셀로 지정한다. 
+이 옵션은 <B>-borderwidth</B>나 <B>-bw</B> 옵션과 같은 기능을 한다.
+(참고: 윈도우 관리자를 사용할 경우에는 이 옵션은 무시된다 - 옮긴이 말)
+</DL>
+<P>
+
+다음은 <I>xterm</I>에서 사용되는 일반적인 X 툴킷 옵션들이다:
+<DL COMPACT>
+<DT><B>-bg </B><I>color</I>
+
+<DD>
+배경색을 <I>color</I>로 지정. 초기값은 ``white''
+<DT><B>-bd </B><I>color</I>
+
+<DD>
+창 테두리 색을 <I>color</I>로 지정. 초기값은 ``black.''
+<DT><B>-bw </B><I>number</I>
+
+<DD>
+창 테두리 넓이를 <I>number</I> 픽셀로 지정. 
+<DT><B>-fg </B><I>color</I>
+
+<DD>
+글자색을 <I>color</I>로 지정. 초기값은 ``black.''
+<DT><B>-fn </B><I>font</I>
+
+<DD>
+사용할 글꼴을 <I>font</I>로 지정. 초기값은 <I>fixed</I>.
+<DT><B>-name </B><I>name</I>
+
+<DD>
+실행 파일 이름 대신 사용할 이름을 <I>name</I>으로 지정.
+<I>name</I>에는 ``.'' 또는 ``*'' 문자를 사용할 수 없다.
+<DT><B>-title </B><I>string</I>
+
+<DD>
+윈도우 관리자에서 실행될 때 보여질 창 제목을 <I>string</I>으로 지정.
+초기값은 실행파일 이름이다. 즉 <B>-e</B> 옵션 다음에 사용될 실행파일 이름이나,
+이 옵션을 사용하지 않으면, 이 풀그림의 실행때 사용한 실행파일이름이다.
+<DT><B>-rv</B>
+
+<DD>
+전경색(글자색)과 배경색을 바꾼다.
+<DT><B>-geometry </B><I>geometry</I>
+
+<DD>
+VT102 창 크기와 위치를 <I>geometry</I>로 지정.
+자세한 사항은 <I><A HREF="http://localhost/cgi-bin/man/man2html?1+X">X</A>(1)</I> 매뉴얼 참조.
+<DT><B>-display </B><I>display</I>
+
+<DD>
+연결한 X 서버를 <I>display</I>로 지정. 자세한 사항은 <I><A HREF="http://localhost/cgi-bin/man/man2html?1+X">X</A>(1)</I> 매뉴얼 참조.
+<DT><B>-xrm </B><I>resourcestring</I>
+
+<DD>
+사용할 리소스를 <I>resourcestring</I>으로 지정.
+<DT><B>-iconic</B>
+
+<DD>
+윈도우 관리자에서 실행될 경우 아이콘 형식으로 실행되게 한다.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>리소스</H2>
+
+대부분의 기본 X 툴킷 리소스를 다음과 같이 지원한다:
+
+<DL COMPACT>
+<DT><B>iconGeometry (</B>class<B> IconGeometry)</B>
+
+<DD>
+풀그림이 아이콘형태로 실행될 때의 그 크기와 위치.
+이값은 모든 윈도우 관리자에서 필요한 것은 아니다.
+<DT><B>iconName (</B>class<B> IconName)</B>
+
+<DD>
+아이콘 이름 지정. 초기값은 풀그림 이름.
+<DT><B>termName (</B>class<B> TermName)</B>
+
+<DD>
+환경변수 TERM 값을 지정한다.
+<DT><B>title (</B>class<B> Title)</B>
+
+<DD>
+이 풀그림이 윈도우 관리자에 의해서 실행될 때 그 창 제목을 지정한다.
+<DT><B>ttyModes (</B>class<B> TtyModes)</B>
+
+<DD>
+명령행 옵션 <B>-tm</B> 기능을 한다. 
+자세한 이야기는 이 옵션 설명을 참조한다.
+<DT><B>useInsertMode (</B>class<B> UseInsertMode)</B>
+
+<DD>
+TERMCAP 환경 변수 값을 강제로 바꾸어 insert 모드를 사용한다.
+이것은 시스템 termcap이 손상되었을 때 유용하게 쓰인다. 
+초기값은 ``false.''
+<DT><B>utmpInhibit (</B>class<B> UtmpInhibit)</B>
+
+<DD>
+<I>/etc/utmp</I> 파일에 현재 사용을 기록할 것인지를 지정한다.
+<DT><B>sunFunctionKeys (</B>class<B> SunFunctionKeys)</B>
+
+<DD>
+표준 escape 처리 대신에 Sun Function Key escape 코드값을 
+사용할 것인지를 지정한다.
+
+<DT><B>waitForMap (</B>class<B> WaitForMap)</B>
+
+<DD>
+하위프로세스를 시작하기 전에 창의 map을 초기화하기 위해 기다릴 것인지를 
+지정한다. 초기값은 ``false.''
+
+<P>
+</DL>
+<P>
+
+다음 리소스들은 <I>vt100</I> 위젯 (<I>VT100</I> 클래스)에서 사용된다. 
+
+<DL COMPACT>
+<DT><B>allowSendEvents (</B>class<B> AllowSendEvents)</B>
+
+<DD>
+글쇠가 눌려지는 것이나 다람쥐 단추가 눌려지는 여러 이벤트들이 
+(X 프로토콜 SendEvent 조사를 사용함으로 생성됨) 외부에 알릴 것인지를 
+지정한다. 초기값은 ``false.'' 이것은 자체적으로 해결한다는 뜻이다. 
+이 값은 ``true''로 지정된다면, 심각한 보안상의 위험을 초래할 수도 있다.
+<P>
+<DT><B>alwaysHighlight (</B>class<B> AlwaysHighlight)</B>
+
+<DD>
+커서가 있는 곳을 항상 밝게 보여줄 것인지를 지정한다. 
+초기값으로는 <B>xterm</B> 창이 활성화 되거나 입력가능상태일때만, 
+커서가 밝게 나타난다.
+<DT><B>appcursorDefault (</B>class<B> AppcursorDefault)</B>
+
+<DD>
+이 값이 ``true''면, 커서 키가 원래, 풀그림 모드안에 있게 된다. 
+초기값은 ``false.''
+<DT><B>appkeypadDefault (</B>class<B> AppkeypadDefault)</B>
+
+<DD>
+이 값이 ``true''면, keypad key가 원래, 풀그림 모드안에 
+있게 된다. 초기값은 ``false.''
+<DT><B>autoWrap (</B>class<B> AutoWrap)</B>
+
+<DD>
+자동 줄바꿈 기능 지정. 초기값은 &quot;true&quot;
+<DT><B>bellSuppressTime (</B>class<B> BellSuppressTime)</B>
+
+<DD>
+벨 소리가 나기 시작한후 몇초 뒤에 다시 벨 소리를 나게 할 것인가를 
+지정한다. 단위는 밀리초. 이 말은 연속해서 벨 소리가 날 때, 
+그 간격을 말한다. 이런 값이 지정되는 이유는 앞의 벨 소리가 
+미치 나기도 전에 다음 벨 소리가 나고, 또 그다음...
+이런 식으로 해서 벨 소리를 제대로 듣지 못하는 것을 방지하기 
+위해서다.
+<DT><B>boldFont (</B>class<B> BoldFont)</B>
+
+<DD>
+글자 속성이 굵은 문자인 경우 그것을 보여줄 글꼴 지정.
+<DT><B>c132 (</B>class<B> C132)</B>
+
+<DD>
+VT102 DECCOLM escape 처리를 지원할 것인지를 지정한다.
+초기값은 ``false.''
+<DT><B>cutNewline (</B>class<B> CutNewline)</B>
+
+<DD>
+false면, 화면을 초과하는 줄일을 보일 때, 줄나눔을 하지 않는다. 
+true면, 줄나눔을 한다.
+초기값은 ``true.''
+<DT><B>cutToBeginningOfLine (</B>class<B> CutToBeginningOfLine)</B>
+
+<DD>
+다람쥐 단추를 세번 연속해서 누를 경우, 그 전체를 선택, 복사할 것인지를 
+지정. false면, 현재 커서가 있는 단어부터 그줄 끝까지만 선택된다.
+초기값은 ``true.''
+<DT><B>charClass (</B>class<B> CharClass)</B>
+
+<DD>
+[<I>low</I>-]<I>high</I>:<I>value</I> 형식으로 지정되는 문자 클래스의 
+쉼표(,)로 나열된 목록을 지정한다. 자세한 이야기는 아래의 
+<B>CHARACTER CLASSES</B> 부분을 참조한다.
+<DT><B>curses (</B>class<B> Curses)</B>
+
+<DD>
+<B>more (1)</B>
+
+안의 벌레를 무시할 것인지 말 것인지를 지정한다. 
+<B>more (1)</B>
+
+벌레에 대한 자세한 사항은 <B>-cu</B> 옵션에서 다루고 있다.
+초기값은 ``false.''
+<DT><B>background (</B>class<B> Background)</B>
+
+<DD>
+창 배경색 지정. 초기값은 ``white.''
+<DT><B>foreground (</B>class<B> Foreground)</B>
+
+<DD>
+글자색(전경색) 지정. 초기값은 ``black.''
+<DT><B>cursorColor (</B>class<B> Foreground)</B>
+
+<DD>
+텍스트 커서의 색깔 지정. 초기값은 ``black.''
+<DT><B>eightBitInput (</B>class<B> EightBitInput</B>)
+
+<DD>
+true면, 글쇠판으로부터 입력되는 메타문자들을 단일문자(1바이트),
+8비트로 그대로 처리하고, 
+false면, 메타문자를 ESC 문자를 앞세운 2바이트문자로 처리한다.
+초기값은 ``true.''
+<DT><B>eightBitOutput (</B>class<B> EightBitOutput</B>)
+
+<DD>
+8비트 문자 출력 허용 여부를 지정한다. 
+초기값은 ``true.''
+<DT><B>font (</B>class<B> Font)</B>
+
+<DD>
+보통 글꼴 지정. 초기값은 ``fixed.''
+<DT><B>font1 (</B>class<B> Font1)</B>
+
+<DD>
+첫번째 다른 글꼴 지정.
+<DT><B>font2 (</B>class<B> Font2)</B>
+
+<DD>
+두번째 다른 글꼴 지정
+<DT><B>font3 (</B>class<B> Font3)</B>
+
+<DD>
+세번째 다른 글꼴 지정
+<DT><B>font4 (</B>class<B> Font4)</B>
+
+<DD>
+네번째 다른 글꼴 지정
+<DT><B>font5 (</B>class<B> Font5)</B>
+
+<DD>
+다섯번째 다른 글꼴 지정
+<DT><B>font6 (</B>class<B> Font6)</B>
+
+<DD>
+여섯번째 다른 글꼴 지정
+<DT><B>geometry (</B>class<B> Geometry)</B>
+
+<DD>
+VT102 창의 위치와 크기를 지정.
+<DT><B>hpLowerleftBugCompat (</B>class<B> HpLowerleftBugCompat)</B>
+
+<DD>
+이 값이 ``true''면,
+HP의 <I>xdb</I> 벌레인 termcap 관련 문제에서 termcap의 
+지정값을 무시고, 아래 왼쪽으로 이동하기 위해 항상 ESC F를 보낸다.
+초기값은 ``false.''
+<DT><B>internalBorder (</B>class<B> BorderWidth)</B>
+
+<DD>
+글자들과 창 테두리 사이의 간격을 픽셀값으로 지정. 초기값은 2
+<DT><B>jumpScroll (</B>class<B> JumpScroll)</B>
+
+<DD>
+점프 스크롤을 할 것인지를 지정한다. 초기값은 ``true.''
+자세한 이야기는 <B>-j</B> 옵션 설명을 참조한다.
+<DT><B>loginShell (</B>class<B> LoginShell)</B>
+
+<DD>
+로그인 쉘로 실행하게 한다.
+초기값은 ``false.''
+<DT><B>marginBell (</B>class<B> MarginBell)</B>
+
+<DD>
+창의 오른쪽 경계에 오면 벨 소리를 낼 것인지 지정한다.
+초기값은 ``false.''
+<DT><B>multiClickTime (</B>class<B> MultiClickTime)</B>
+
+<DD>
+두번 연속해서 찍기(multi-click) 이벤트로 인식하게 하는 최대 시간값 지정.
+초기값은 250 밀리초.
+<DT><B>multiScroll (</B>class<B> MultiScroll)</B>
+
+<DD>
+비동기적으로(asynchronously) 스크롤 할 것인지를 지정한다.
+초기값은 ``false.''
+<DT><B>nMarginBell (</B>class<B> Column)</B>
+
+<DD>
+벨 소리를 낼 수 있을 때, 벨 소리를 나게할 오른쪽 경계 칸 
+숫자를 지정한다.
+<DT><B>pointerColor (</B>class<B> Foreground)</B>
+
+<DD>
+창이 활성화 될 때의 전경색(글자색)을 지정한다. 
+초기값은 ``XtDefaultForeground.''
+<DT><B>pointerColorBackground (</B>class<B> Background)</B>
+
+<DD>
+창이 활성화 될 때의 배경색을 지정한다. 
+초기값은 ``XtDefaultBackground.''
+<DT><B>pointerShape (</B>class<B> Cursor)</B>
+
+<DD>
+창이 활성화 될 때의 이름. 초기값은 ``xterm.''
+<DT><B>resizeGravity (</B>class<B> ResizeGravity)</B>
+
+<DD>
+이것은 창 크기가 바뀌었을 때, 창 안에 있는 내용이 
+어떻게 다시 보여질 것인가에 대해서 지정한다. 
+사용되는 값은 <B>NorthWest</B>, <B>SouthWest</B> (초기값)인데, 
+<B>NorthWest</B> 인 경우는 창이 줄어들 경우 윗줄이 가려지고, 
+창이 크질 경우 빈줄이 아래에 추가 된다. 
+<B>SouthWest</B> 인 경우는 창이 줄어들 경우 아랫줄이 가려지고, 
+창이 크질 경우 윗줄의 내용이 더 보여진다.
+<DT><B>reverseVideo (</B>class<B> ReverseVideo)</B>
+
+<DD>
+역상시킬 것인지를 지정한다. 초기값은 ``false.''
+<DT><B>reverseWrap (</B>class<B> ReverseWrap)</B>
+
+<DD>
+reverse-wraparound 기능을 사용할 것인지를 지정한다. 
+초기값은 ``false.''
+<DT><B>saveLines (</B>class<B> SaveLines)</B>
+
+<DD>
+스크롤 최대 저장 줄 수. 초기값은 64줄.
+<DT><B>scrollBar (</B>class<B> ScrollBar)</B>
+
+<DD>
+스크롤막대를 보일 것인지 지정. 초기값은 ``false.''
+<DT><B>scrollTtyOutput (</B>class<B> ScrollCond)</B>
+
+<DD>
+지나간 화면을 보는 중에 화면 출력이 있으면, 
+현재 작업 화면으로 돌아올 것인지를 지정한다.
+초기값은 ``true.''
+<DT><B>scrollKey (</B>class<B> ScrollCond)</B>
+
+<DD>
+지나간 화면을 보는 중에 입력이 있으면, 자동으로
+현재 작업 화면으로 돌아올 것인지를 지정한다. 
+초기값은 ``false.''
+<DT><B>scrollLines (</B>class<B> ScrollLines)</B>
+
+<DD>
+<I>scroll-forw</I>, <I>scroll-back</I> 액션으로 스크롤 되는 
+줄 수. 초기값은 1줄.
+<DT><B>signalInhibit (</B>class<B> SignalInhibit)</B>
+
+<DD>
+시그날 금지. ``Main Options'' 차림표에서 이값을 바꿀 수 있다. 
+초기값은 ``false.''
+<DT><B>tekGeometry (</B>class<B> Geometry)</B>
+
+<DD>
+Tektronix 창의 크기와 위치 지정.
+<DT><B>tekInhibit (</B>class<B> TekInhibit)</B>
+
+<DD>
+true면 Tektronix 모드 접근을 금지한다.
+초기값은 ``false.''
+<DT><B>tekSmall (</B>class<B> TekSmall)</B>
+
+<DD>
+true 면,
+Tektronix 모드 창이 그 크기와 위치가 지정되지 않았다면, 
+가장 작은 크기로 보여지게 한다. 이것은 <B>xterm</B>을 작게 
+보이고자 할 때 유용하게 쓰인다. 초기값은 ``false.''
+<DT><B>tekStartup (</B>class<B> TekStartup)</B>
+
+<DD>
+<I>xterm</I>을 Tektronix 모드로 시작할 것인지 지정. 초기값은 ``false.''
+<DT><B>titeInhibit (</B>class<B> TiteInhibit)</B>
+
+<DD>
+TERMCAP 값에 의해 <I>ti</I>, <I>te</I> 문자열이 사용되면, 이것을 
+없앨 것인지를 지정한다.  
+<DT><B>translations (</B>class<B> Translations)</B>
+
+<DD>
+글쇠와 다람쥐 단추 지정 리소스. 자세한 사항은 아래, 
+<B>ACTIONS</B> 부분을 참조한다.
+<DT><B>visualBell (</B>class<B> VisualBell)</B>
+
+<DD>
+벨 소리 대신 화면 깜빡임을 사용할 것인지를 지정한다. 
+초기값은 ``false.''
+<P>
+</DL>
+<P>
+
+다음 리소스들은 <I>tek4014</I> 위젯에서 사용된다.
+
+<DL COMPACT>
+<DT><B>width (</B>class<B> Width)</B>
+
+<DD>
+Tektronix 창의 가로 길이를 픽셀값으로 지정.
+<DT><B>height (</B>class<B> Height)</B>
+
+<DD>
+Tektronix 창의 세로 길이를 픽셀값으로 지정.
+<DT><B>fontLarge (</B>class<B> Font)</B>
+
+<DD>
+Tektronix 창의 큰 글꼴 지정
+<DT><B>font2 (</B>class<B> Font)</B>
+
+<DD>
+두번째 글꼴 지정
+<DT><B>font3 (</B>class<B> Font)</B>
+
+<DD>
+세번째 글골 지정
+<DT><B>fontSmall (</B>class<B> Font)</B>
+
+<DD>
+작은 글꼴 지정.
+<DT><B>initialFont (</B>class<B> InitialFont)</B>
+
+<DD>
+초기값으로 사용될 글꼴 지정. 초기값은 ``large.''
+이 값은 <I>set-tek-text</I> 액션으로 바꿀 수 있다.
+<DT><B>ginTerminator (</B>class<B> GinTerminator)</B>
+
+<DD>
+이 리소스는 GIN 보고나, 상태 보고를 할 때 사용할 
+문자를 지정하는데, 사용할 수 있는 값은 ``none,'' ``CRonly,'' ``CR&amp;EOT'' 
+이다. none은 마침 문자 없음, CRonly는 CR만 보냄, CR&amp;EOT는 CR과 EOT 함께 
+보냄을 의미한다. 초기값은 ``none.''
+
+<P>
+</DL>
+<P>
+
+다음에 오는 리소스들은 <B>xterm</B> 창에서 Ctrl 글쇠를 누르고 
+다람쥐 단추를 눌렀을 때 나타나는 각종 차림표 항목들과 관련된 것들이다. 
+자세한 이야기는 Athena <B>SimpleMenu</B> 위젯에서 다루고 있다. 
+<P>
+
+<I>mainMenu</I> 부분:
+
+<DL COMPACT>
+<DT><B>securekbd (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>secure()</B> 액션 호출.
+<DT><B>allowsends (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>allow-send-events(toggle)</B> 액션 호출.
+<DT><B>redraw (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>redraw()</B> 액션 호출.
+<DT><B>line1 (</B>class<B> SmeLine)</B>
+
+<DD>
+줄 첨가.
+<DT><B>suspend (</B>class<B> SmeBSB)</B>
+
+<DD>
+job 제어를 지원하는 시스템에서 사용할 수 있는 
+<B>send-signal(tstp)</B> 액션 호출.
+<DT><B>continue (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>send-signal(cont)</B> 액션 호출.
+<DT><B>interrupt (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>send-signal(int)</B> 액션 호출.
+<DT><B>hangup (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>send-signal(hup)</B> 액션 호출.
+<DT><B>terminate (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>send-signal(term)</B> 액션 호출.
+<DT><B>kill (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>send-signal(kill)</B> 액션 호출.
+<DT><B>line2 (</B>class<B> SmeLine)</B>
+
+<DD>
+줄 첨가.
+<DT><B>quit (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>quit()</B> 액션 호출.
+
+<P>
+</DL>
+<P>
+
+<I>vtMenu</I> 부분:
+
+<DL COMPACT>
+<DT><B>scrollbar (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-scrollbar(toggle)</B> 액션 호출.
+<DT><B>jumpscroll (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-jumpscroll(toggle)</B> 액션 호출.
+<DT><B>reversevideo (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-reverse-video(toggle)</B> 액션 호출.
+<DT><B>autowrap (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-autowrap(toggle)</B> 액션 호출.
+<DT><B>reversewrap (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-reversewrap(toggle)</B> 액션 호출.
+<DT><B>autolinefeed (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-autolinefeed(toggle)</B> 액션 호출.
+<DT><B>appcursor (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-appcursor(toggle)</B> 액션 호출.
+<DT><B>appkeypad (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-appkeypad(toggle)</B> 액션 호출.
+<DT><B>scrollkey (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-scroll-on-key(toggle)</B> 액션 호출.
+<DT><B>scrollttyoutput (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-scroll-on-tty-output(toggle)</B> 액션 호출.
+<DT><B>allow132 (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-allow132(toggle)</B> 액션 호출.
+<DT><B>cursesemul (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-cursesemul(toggle)</B> 액션 호출.
+<DT><B>visualbell (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-visualbell(toggle)</B> 액션 호출.
+<DT><B>marginbell (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-marginbell(toggle)</B> 액션 호출.
+<DT><B>altscreen (</B>class<B> SmeBSB)</B>
+
+<DD>
+이 부분은 현재 사용불가 상태이다.
+<DT><B>line1 (</B>class<B> SmeLine)</B>
+
+<DD>
+줄 삽입.
+<DT><B>softreset (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>soft-reset()</B> 액션 호출.
+<DT><B>hardreset (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>hard-reset()</B> 액션 호출.
+<DT><B>clearsavedlines (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>clear-saved-lines()</B> 액션 호출.
+<DT><B>line2 (</B>class<B> SmeLine)</B>
+
+<DD>
+줄 삽입.
+<DT><B>tekshow (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-visibility(tek,toggle)</B> 액션 호출.
+<DT><B>tekmode (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-terminal-type(tek)</B> 액션 호출.
+<DT><B>vthide (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-visibility(vt,off)</B> 액션 호출.
+
+<P>
+</DL>
+<P>
+
+<I>fontMenu</I> 부분:
+
+<DL COMPACT>
+<DT><B>fontdefault (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-vt-font(d)</B> 액션 호출.
+<DT><B>font1 (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+set-vt-font">set-vt-font</A>(1)</B> 액션 호출.
+<DT><B>font2 (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+set-vt-font">set-vt-font</A>(2)</B> 액션 호출.
+<DT><B>font3 (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+set-vt-font">set-vt-font</A>(3)</B> 액션 호출.
+<DT><B>font4 (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+set-vt-font">set-vt-font</A>(4)</B> 액션 호출.
+<DT><B>font5 (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+set-vt-font">set-vt-font</A>(5)</B> 액션 호출.
+<DT><B>font6 (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?6+set-vt-font">set-vt-font</A>(6)</B> 액션 호출.
+<DT><B>fontescape (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-vt-font(e)</B> 액션 호출.
+<DT><B>fontsel (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-vt-font(s)</B> 액션 호출.
+
+<P>
+</DL>
+<P>
+
+<I>tekMenu</I> 부분:
+
+<DL COMPACT>
+<DT><B>tektextlarge (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?l+set-tek-text">set-tek-text</A>(l)</B> 액션 호출.
+<DT><B>tektext2 (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+set-tek-text">set-tek-text</A>(2)</B> 액션 호출.
+<DT><B>tektext3 (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+set-tek-text">set-tek-text</A>(3)</B> 액션 호출.
+<DT><B>tektextsmall (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-tek-text(s)</B> 액션 호출.
+<DT><B>line1 (</B>class<B> SmeLine)</B>
+
+<DD>
+줄 삽입.
+<DT><B>tekpage (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>tek-page()</B> 액션 호출.
+<DT><B>tekreset (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>tek-reset()</B> 액션 호출.
+<DT><B>tekcopy (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>tek-copy()</B> 액션 호출.
+<DT><B>line2 (</B>class<B> SmeLine)</B>
+
+<DD>
+줄 삽입.
+<DT><B>vtshow (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-visibility(vt,toggle)</B> 액션 호출.
+<DT><B>vtmode (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-terminal-type(vt)</B> 액션 호출.
+<DT><B>tekhide (</B>class<B> SmeBSB)</B>
+
+<DD>
+<B>set-visibility(tek,toggle)</B> 액션 호출.
+
+<P>
+</DL>
+<P>
+
+Athena Scrollbar 위젯을 위한 유용한 리소스들:
+
+<DL COMPACT>
+<DT><B>thickness (</B>class<B> Thickness)</B>
+
+<DD>
+스크롤 막대의 가로 길이 픽셀값 지정.
+<DT><B>background (</B>class<B> Background)</B>
+
+<DD>
+스크롤 막대의 배경색 지정.
+<DT><B>foreground (</B>class<B> Foreground)</B>
+
+<DD>
+스크롤 막대의 전경색 지정. Xaw일 경우는 이 전경색과 배경색이 
+서로 섞겨서 스크롤 막대의 색이 된다.
+
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>다람쥐 사용법</H2>
+
+<P>
+
+<B>xterm</B>의 VT102 창에서는 그 창에 보여지는 내용들(글자들)을 
+선택하고, 복사해서 다른 창에 붙히기를 할 수 있다.
+<P>
+
+선택 기능은 다람쥐를 사용할 때 글쇠 조합을 하지 않고 사용할 때나, 
+``shift'' 글쇠를 사용할 때 호출된다.
+이런 각 글쇠나 다람쥐 단추의 그 기능별 지정은 리소스 데이터베이스를 
+통해 바꿀 수 있다. 자세한 이야기는 <B>ACTIONS</B> 부분에서 하고 있다.
+<P>
+
+다람쥐 왼쪽 단추는 텍스트를 cut 버퍼로 저장하는데 사용된다. 
+영역의 선택은 다람쥐 왼쪽 단추를 눌러 끌어 놓기를 하면된다. 
+이렇게 하면, 끌려진 부분은 역상으로 보여지며, 그 부분이 버퍼에 저장된다. 
+왼쪽 단추 두번 연속해서 누르면, 한 단어가 선택, 복사되고, 
+세번 연속해서 누르면 다람쥐 커서가 있는 그줄 전체가 선택, 복사된다.
+연속 누름인지 판단하는 것은 그 연속해서 누르는 시간에 의해서 
+정해진다. 이런 부분에 대한 자세한 이야기는 <B>X (3)</B> 매뉴얼 페이지를 
+참조한다. 이렇게 선택되어 역상으로 보여지는 부분은 다른 선택 영역이 
+지정되기 전까지 그대로 유지된다.
+<P>
+
+다람쥐 가운데 단추는 선택 영역의 내용을 입력 부분에서 그대로 
+복사한다. 즉, 마치 직접 사용자가 그 내용을 입력한것 처럼 할 수 있다.
+<P>
+
+다람쥐 오른쪽 단추는 현재 영역을 확장하는데 사용된다. 
+눈에 보이지는 않지만, 다람쥐 왼쪽 단추가 처음 한번 눌려진 장소가 
+선택 영역의 시작점이 된다. 그리고, 다람쥐 오른쪽 단추가 눌려지는 
+장소가 선택 영역의 마지막 점이 된다. 
+즉, 이미 선택 영역이 있다면, 그 선택영역의 확장이나 축소하는데, 
+다람쥐 오른쪽 단추를 사용할 수 있다. 
+<P>
+
+이런 선택, 복사, 붙히기 기능은 텍스트 기반으로 하는 각종 다른 풀그림에서도
+사용되어 질 수 있다. 굳이 같은 창이 아니어도 된다. 즉, 한쪽 창에서의 
+출력 글과를 다람쥐로 사용해서 선택 복사한 후, 그것을 다른 쪽 창에서 
+편집기를 열어, 그곳에 붙힐 수 있다. 
+이때 줄 바꿈 문자(일반적으로 Enter)도 그대로 복사, 붙히기가 된다. 
+이말은 한 명령이 텍스트에 보여질 때, 줄 바꿈 문자로 끝나게 된다면, 
+그 줄바꿈 문자까지 복사를 해서 쉘 프롬프트 상에서 붙히기를 하면, 
+그대로 실행될 수 있다는 이야기다. 
+<P>
+
+그러면, 하나의 팁으로 이미 스크롤 되어 화면에 보여지지 않는 내용부터 
+현재까지의 내용을 모두 복사해서 텍스트 파일로 저장하는 방법을 구현해 보자.
+<P>
+
+먼저 스크롤 막대를 다람쥐로 눌러 스크롤 영역의 시작점으로 간뒤, 
+그 부분의 첫줄 컷칸에 다람쥐 왼쪽 단추를 한번만 누른다. 
+<P>
+
+다음 스크롤 막대를 움직여 다시 현재 화면으로 돌아온 후, 
+다람쥐 오른쪽 단추를 한번만 누르면, 
+스크롤 전제 영역이 선택된다. (이때 주의할 점은 
+왼쪽 단추를 한번 누른 후 다시 다른 곳에서 왼쪽 다르면 그 선택
+영역의 시작점이 바뀌어 버린다.)
+<P>
+
+다음 편집기를 열어서 그곳에서 다람쥐 가운데 단추를 누르면, 
+스크롤의 전체 영역이 편집기에 나타난다. 
+<P>
+
+Tektronix 창에서는 VT102 창과 달리, 이 선택, 복사, 붙히기 기능을 
+제공하지 않는다. 
+이것은 Tektronix GIN 모드를 허락하고, 이 모드에서는 
+다람쥐 커서가 화살표로 보여진다. 
+이 창에서는 다람쥐의 단추가 각각 `l', `m', `r' 문자로 처리되고, 
+`shift'를 누르고 단추를 누르면, 각각 대문자로 처리된다. 
+그런데, 일반 글쇠와 다람쥐 단추 누름으로 생성되는 문자들의 구분은 
+최상위 비트로 판단한다. 하지만, Tektronix 터미날 모드에서는 
+사용될 수 없기에 이런 기능을 제공하지 못한다. 
+자세한 이야기는 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?4+tty">tty</A></I>(4)
+
+매뉴얼을 참조한다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>차림표</H2>
+
+<P>
+
+<B>Xterm</B>에서는 
+<I>mainMenu</I>,
+
+<I>vtMenu</I>,
+
+<I>fontMenu</I>,
+
+<I>tekMenu</I>
+
+이름을 가진 네개의 차림표를 제공하고 있다. 
+각 차림표는 Ctrl 글쇠와 각 다람쥐 단추를 함께 누름으로 호출된다.
+대부분의 항목들은 <B>xterm</B>의 환경들을 전환(On/Off)하는 기능을 하고 
+있으며, <I>mainMenu</I>의 항목목들은 VT102, Tektronix 창 모두에서 
+사용된다.
+The
+<B>Secure Keyboard</B>
+
+모드는 보안이 보장되지 않는 환경에서 비밀번호나, 기타 비밀이 보장되어야
+하는 내용을 입력할 때 사용된다. 자세한 이야기는 아래 
+<B>보안</B>
+
+부분을 참조.
+<B>Allow SendEvents </B>
+
+모드는 <B>xterm</B>에서 발생하는 각종 이벤트들을 외부에 알릴 것인지를 지정한다.
+다음에 나는 
+<B>Continue</B>,
+
+<B>Suspend</B>,
+
+<B>Interrupt</B>,
+
+<B>Hangup</B>,
+
+<B>Terminate</B>,
+
+<B>Kill</B>
+
+항목들은 각각 SIGCONT, SIGTSTP, SIGINT, SIGHUP, SIGTERM, SIGKILL 
+시그날을 <B>xterm</B>을 상위 프로세스 그룹으로한 각각의 하위 프로세스들에게
+보낸다.
+<B>Continue(SIGCONT)</B>
+
+기능은 프로세스 보류기능인 Ctrl-Z 가 눌려져 현재 보류되고 있는 
+프로세스를 다시 진행하는데 유용하게 쓰인다.
+<P>
+
+<I>vtMenu</I>
+
+차림표에서는 VT102 에뮬래이션에 대한 각종 기능들을 제어할 수 있다.
+이 차림표는 Ctrl 글쇠를 누르고 다람쥐 가운데 단추를 누름으로 호출된다.
+이 차림표에 있는 각종 기능들은 <B>xterm</B>에서 실행되는 각 풀그림들에 
+따라 자주 바뀌어야 하는 하는 기능들을 제공하고 있다. 
+가령, 어떤 풀그림에서는 역상(reverse) 일때가 보다 보기 좋고, 
+어떤 풀그림에서는 보통일 때가 보기 좋을 때가 있다. 이럴 때, 
+<B>xterm</B> 실행 도중에 언제든지 이 값을 바꿀 수 있도록 여기서 제공하고 
+있다.
+<P>
+
+<I>fontMenu</I> 차림표에서는 VT102 창에서 사용할 글꼴을 바꿀 수 있다.
+이 차림표는 Ctrl 글쇠를 누르고 다람쥐 오른쪽 단추를 누름으로 호출 된다.
+<P>
+
+<I>tekMenu</I>
+
+차림표에서는 Tektronix 에뮬래이션에서 사용할 수 있는 각종 기능들을 
+제어할 수 있다. 이 차림표는 Ctrl 글쇠를 누르고 Tektronix 창에서 
+다람쥐 가운데 단추를 누름으로 호출된다.
+차림표 안의 
+<B>PAGE</B>
+
+항목은 화면을 깨끗이 지우는데 사용된다.
+<A NAME="lbAK">&nbsp;</A>
+<H2>보안</H2>
+
+<P>
+
+X 시스템에서는 보안문제에 대해서 개념이 약간 다르다.
+<I>xdm</I>으로 돌아가는 대부분의 서버는 권한 부여에 대해서 
+``magic cookie''라는 것을 사용하는데, 이것은, 
+많은 사람들을 위한 각각의 보안 차별화를 부여할 수 있다. 
+만약에 서버의 접근을 제어하기 위한  host-based mechanism(?) 만을 
+사용한다면(<I><A HREF="http://localhost/cgi-bin/man/man2html?1+xhost">xhost</A>(1)</I> 매뉴얼 참조), 그리고, 현재 사용자도 
+현재 호스트에 접근이 가능하고, 다른 사용자도 같은 호스트에서 
+클라이언트를 실행시킬 수 있는 권한이 있다면, 다른 사용자가, 
+현재 자신이 X 프로토콜로 보내는 신호를 훔쳐볼 수 있게 된다. 
+이런 상태에서 비밀번호나, 아니면, 보안상의 문제가 있는 내용을 
+입력해야 할 경우에, xterm에서는 이런 문제를 자체적으로 해결해서, 
+다른 사용자가 자신의 글쇠입력을 훔쳐보지 못하게 할 수 있다.
+<P>
+
+<B>xterm</B> 차림표에는 (위의 <B>차림표</B> 참조) <B>Secure Keyboard</B>
+항목이 있는데, 이것이 사용가능 상태가 되어 있으면, 
+글쇠 입력의 내용은 GrabKeyboard protocol 조사를 사용해서, 
+자체적으로 모든 것을 해결한다. 
+한 풀그림을 실행한 상태에서 비밀번호를 물어본다든지, 아니면, 
+보안상의 내용을 입력해야 할 경우에, <B>Secure Keyboard</B> 항목을 선택하고, 
+그 내용을 입력하고, 다시 <B>Secure Keyboard</B> 항목을 선택해서 
+이 기능을 사용불가 상태로 만들어 놓아야한다. 
+만약 이 기능을 계속 사용가능 상태로 해 놓고, 사용하게 된다면, 
+X 서버와 통신을 하지 않는 상태가 되기 때문에, 제대로 동작되지 않을 
+경우가 발생하기 한다. 
+이 기능이 사용가능 상태가 되면, 화면은 역상이 된다(전경색과 배경색이 바뀜).
+만약에 역상으로 되지 않는다면, 
+일단 이 기능이 제대로 작동되지 않는다고 의심할 필요가 있다.
+이런 경우에는 창을 아이콘으로 만든 후 다시 원래대로 해서 
+실행해 보기 바란다.
+<P>
+
+<B>Secure Keyboard</B> 모드는 xterm이 아이콘화 되었을 경우에는 
+자동으로 사용불가 상태가 된다. 또한 다시 원래 창 크기로 바뀌면, 
+지정한 대로 그 값이 지정된다. (이것은 xterm에서도 어쩔 수 없는 
+X 프로토콜의 기능이기 때문이다) 
+<A NAME="lbAL">&nbsp;</A>
+<H2>CHARACTER CLASSES</H2>
+
+다람쥐 왼쪽 단추를 연속해서 두번 찍으면, 초기값으로, 
+하나의 단어가 선택된다. - 이 말은 공백문자나, 구두점같은 것이 
+없는 상태의 연속하는 문자열만을 선택한다는 뜻이다. 
+그런데, 사용자마다 이 두번찍기로 해서 선택하고자 하는 것이 
+다를 것이다. 예를 들어, 파일이름에서 이런 공백문자나, 구두점같은 
+것이 있을 경우, 어떤 사람은 그 파일 전체 이름의 일부분만, 
+선택되기를 원하고, 또 어떤 사람은 파일 전체가 선택되기를 원할 
+것이다. 바로 이런 것을 지정하는 것이 <I>charClass</I>
+리소스이다. 
+<P>
+
+이 리소스의 값은 <I>range</I>:<I>value</I> 형식으로, 쉼표를 
+구분해서 여러개 지정할 수 있다. 
+<I>range</I>에는 하나의 숫자나, 시작숫자-끝숫자 형식이 올 수있으며, 
+여기서 사용될 수 있는 숫자는 ASCII 코드값과 관련이 있다. (아래 테이블 참조)
+<I>value</I>에는 하나의 숫자가 사용되는데, 
+이것은 <I>range</I>에서 지정한 문자들과 함께 처리될 문자를 지정한다.
+(일반적으로 알파벳만을 지정한다.)
+<P>
+
+초기값으로 지정된 테이블은 다음과 같다.
+<P>
+
+
+<PRE>
+static int charClass[128] = {
+/* NUL  SOH  STX  ETX  EOT  ENQ  ACK  BEL */
+    32,   1,   1,   1,   1,   1,   1,   1,
+/*  BS   HT   NL   VT   NP   CR   SO   SI */
+     1,  32,   1,   1,   1,   1,   1,   1,
+/* DLE  DC1  DC2  DC3  DC4  NAK  SYN  ETB */
+     1,   1,   1,   1,   1,   1,   1,   1,
+/* CAN   EM  SUB  ESC   FS   GS   RS   US */
+     1,   1,   1,   1,   1,   1,   1,   1,
+/*  SP    !    &quot;    #    $    %    &amp;    ' */
+    32,  33,  34,  35,  36,  37,  38,  39,
+/*   (    )    *    +    ,    -    .    / */
+    40,  41,  42,  43,  44,  45,  46,  47,
+/*   0    1    2    3    4    5    6    7 */
+    48,  48,  48,  48,  48,  48,  48,  48,
+/*   8    9    :    ;    &lt;    =    &gt;    ? */
+    48,  48,  58,  59,  60,  61,  62,  63,
+/*   @    A    B    C    D    E    F    G */
+    64,  48,  48,  48,  48,  48,  48,  48,
+/*   H    I    J    K    L    M    N    O */
+    48,  48,  48,  48,  48,  48,  48,  48,
+/*   P    Q    R    S    T    U    V    W */ 
+    48,  48,  48,  48,  48,  48,  48,  48,
+/*   X    Y    Z    [    \    ]    ^    _ */
+    48,  48,  48,  91,  92,  93,  94,  48,
+/*   `    a    b    c    d    e    f    g */
+    96,  48,  48,  48,  48,  48,  48,  48,
+/*   h    i    j    k    l    m    n    o */
+    48,  48,  48,  48,  48,  48,  48,  48,
+/*   p    q    r    s    t    u    v    w */
+    48,  48,  48,  48,  48,  48,  48,  48,
+/*   x    y    z    {    |    }    ~  DEL */
+    48,  48,  48, 123, 124, 125, 126,   1};
+</PRE>
+
+
+
+<P>
+예를 들어, ``33:48,37:48,45-47:48,64:48'' 이런 값이 지정된다면, 
+문자(알파벳)와 함께, !, %, -, ., /, @ 기호들도 함께 
+선택된다. 이것은 파일이름이나, e-mail 주소 같은 것을 
+선택하는데 유용하다. (참고로, 아쉽게도 한글 코드에 대한 지정이 
+없다. 한글에서도 이런 두번찍기 기능이 제대로 작동되려면, 
+소스를 수정하던지, 아니면, 로케일 문제에 대한 근본적인 
+해결책이 있어야 할 것 같다 - 옮긴이 말)
+<A NAME="lbAM">&nbsp;</A>
+<H2>ACTIONS</H2>
+
+액션이라는 <B>xterm</B> 안에서 일어나는 각종 반응들에 대한 것을 설명한다. 
+이 액션의 글쇠지정을 바꿈으로 단출글쇠나 다람쥐 단추를 바꿀 수 있으며, 
+자신만의 고유한 <B>xterm</B>을 꾸밀 수도 있다. 
+다음에 나오는 액션들은 <I>vt100</I>, <I>tek4014</I>, <B>변환</B> 리소스에서
+사용되어 진다:
+<DL COMPACT>
+<DT><B>bell([</B><I>percent</I>])
+
+<DD>
+벨 소리를 냄(^G 문자를 출력한다)
+<DT><B>ignore()</B>
+
+<DD>
+이벤트를 무시하지만, escape 처리의 특별 포인터 위치를 검사한다.
+<DT><B>insert()</B>
+
+<DD>
+문자나, 글쇠가 눌려져 조합되는 문자열을 삽입.
+<DT><B>insert-seven-bit()</B>
+
+<DD>
+<B>insert()</B>와 같은 역활을 하지만 7bit 문자로 처리.
+<DT><B>insert-eight-bit()</B>
+
+<DD>
+8bit 문자로 삽입. 이 액션은 <B>eightBitInput</B> 리소스값에 따라,
+다르게 동작할 수도 있다.
+<DT><B>insert-selection(</B><I>sourcename</I> [, ...])
+
+<DD>
+지정한 cutbuffer의 내용을 삽입.
+선택영역으로 사용할 영역은 주로 <I>PRIMARY</I>, <I>SECONDARY</I>, <I>CLIPBOARD</I>
+값이 사용되고, cutbuffer의 이름은 주로 <I>CUT_BUFFER0</I>에서 
+<I>CUT_BUFFER7</I> 값을 가진다.
+<DT><B>keymap(</B><I>name</I>)
+
+<DD>
+글쇠지정. <I>name</I> 값이 <I>None</I>이면, 초기값으로 되돌림.
+<DT><B>popup-menu(</B><I>menuname</I>)
+
+<DD>
+차림표 호출. <I>menuname</I>에 사용할 수 있는 값은,
+<I>mainMenu</I>, <I>vtMenu</I>, <I>fontMenu</I>, <I>tekMenu</I>.
+<DT><B>secure()</B>
+
+<DD>
+mainMenu에서 지정한는 <I>Secure Keyboard</I> 모드를 토클한다.
+<DT><B>select-start()</B>
+
+<DD>
+현재 포인터를 선택영역의 시작으로 지정.
+<DT><B>select-extend()</B>
+
+<DD>
+선택영역 확장. 이 액션은 다람쥐가 움직이고 있을 때 가능하다.
+<DT><B>select-end(</B><I>destname</I> [, ...])
+
+<DD>
+현재 포인터를 선택영역의 끝으로 지정. 그리고 선택 영역을 
+<I>destname</I>으로 cut 버퍼에 저장한다.
+<DT><B>select-cursor-start()</B>
+
+<DD>
+<B>select-start</B>와 비슷하나, 여기서는 텍스트 커서가 있는 곳을 
+시작으로 한다.
+<DT><B>select-cursor-end(</B><I>destname</I> [, ...])
+
+<DD>
+<B>select-start</B>와 비슷하나, 여기서는 텍스트 커서가 있는 곳을
+선택의 끝으로 하고, <I>destname</I>으로 cut 버퍼에 저장한다.
+<DT><B>set-vt-font(</B><I>d/1/2/3/4/5/6/e/s</I> [,<I>normalfont</I> [, <I>boldfont</I>]])
+
+<DD>
+VT102 창에서 사용할 글꼴 지정.
+첫번째 인자는 글꼴 번호. D, 또는 d는 초기값.
+1-6이 지정되면, 리소스에서 지정된 각각의 글꼴을 이용한다. 
+E 또는 e는 보통 글씨의 글꼴과 굵은 글씨의 글꼴을 직접 지정해 준다. 
+S 또는 s는 <I><A HREF="http://localhost/cgi-bin/man/man2html?1+xfontsel">xfontsel</A>(1)</I>과 같은 직접 글꼴 고르기 풀그림을 
+실행시켜 글꼴을 고른다.
+<DT><B>start-extend()</B>
+
+<DD>
+<B>select-start</B> 액션과 비슷하나, 그 시작점을 현재 
+포인터 위치로 확장한다.
+<DT><B>start-cursor-extend()</B>
+
+<DD>
+<B>select-start</B> 액션과 비슷하나, 그 시작점을 현재
+텍스트 커서가 있는 위치로 확장한다.
+<DT><B>string(</B><I>문자열</I>)
+
+<DD>
+<I>문자열</I>을 삽입한다. 문자열 사이 공백문자가 있다면, 
+따움표로 묶어준다. 문자열이 ``0x'' 글자로 시작한다면, 
+그것은 16진수로 처리된다.
+<DT><B>scroll-back(</B><I>count</I> [,<I>units</I>])
+
+<DD>
+화면을 <I>count</I> 단위만큼 스크롤 한다. 
+<I>units</I> 인자가 그 단위인데, 여기서 사용할 수 있는 값은, 
+<I>page</I>, 또는 <I>halfpage</I>, <I>pixel</I>, <I>line</I> 이다. 
+<DT><B>scroll-forw(</B><I>count</I> [,<I>units</I>])
+
+<DD>
+<B>scroll-back</B> 액션과 같은 기능을 하나, 그 방향이 반대이다. 
+<B>scroll-back</B> 액션은 이전(위, 뒤)으로 스크롤하며, 
+<B>scroll-forw</B> 액션은 다음(아래, 앞)으로 스크롤 한다.
+<DT><B>allow-send-events(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>allowSendEvents</B> 리소스 값을 토클시킴.
+<DT><B>redraw()</B>
+
+<DD>
+<I>mainMenu</I> 안의 <I>redraw</I> 항목이 호출 될 때 실행할 화면 갱신.
+<DT><B>send-signal(</B><I>signame</I>)
+
+<DD>
+시그날 보내기. <I>signame</I> 값으로 사용될 수 있는 것은.
+<B>suspend</B>,
+
+<B>continue</B>,
+
+<B>interrupt</B>,
+
+<B>hangup</B>,
+
+<B>terminate</B>,
+
+<B>kill</B>
+
+이다. 
+<DT><B>quit()</B>
+
+<DD>
+SIGHUP 시그날을 보내서 하위 풀그림을 종료시킨다. 
+<DT><B>set-scrollbar(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>scrollbar</B> 리소스 값을 지정하거나 전환한다. 
+<DT><B>set-jumpscroll(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>jumpscroll</B> 리소스 값을 지정하거나 전환한다.
+<DT><B>set-reverse-video(</B><I>on/off/toggle</I>)
+
+<DD>
+<I>reverseVideo</I> 리소스 값을 지정하거나 전환한다.
+<DT><B>set-autowrap(</B><I>on/off/toggle</I>)
+
+<DD>
+자동 줄 바꿈 기능을 지정하거나 전환한다.
+<DT><B>set-reversewrap(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>reverseWrap</B> 리소스 값을 지정하거나 전환한다.
+<DT><B>set-autolinefeed(</B><I>on/off/toggle</I>)
+
+<DD>
+자동으로 linefeed 문자를 삽입하는 기능을 지정하거나 전환한다.
+<DT><B>set-appcursor(</B><I>on/off/toggle</I>)
+
+<DD>
+Application Cursor Key mode 값을 지정하거나 전환한다.
+<DT><B>set-appkeypad(</B><I>on/off/toggle</I>)
+
+<DD>
+Application Keypad mode 값을 지정하거나 전환한다.
+<DT><B>set-scroll-on-key(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>scrollKey</B> 리소스 값을 지정하거나 전환한다.
+<DT><B>set-scroll-on-tty-output(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>scrollTtyOutput</B> 리소스 값을 지정하거나 전환한다.
+<DT><B>set-allow132(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>c132</B> 리소스 값을 지정하거나 전환한다.
+<DT><B>set-cursesemul(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>curses</B> 리소스 값을 지정하거나 전환한다.
+<DT><B>set-visual-bell(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>visualBell</B> 리소스 값을 지정하거나 전환한다.
+<DT><B>set-marginbell(</B><I>on/off/toggle</I>)
+
+<DD>
+<B>marginBell</B> 리소스 값을 지정하거나 전환한다.
+<DT><B>set-altscreen(</B><I>on/off/toggle</I>)
+
+<DD>
+지난 화면과 현재 화면 사이를 전환한다.
+<DT><B>soft-reset()</B>
+
+<DD>
+스크롤 영역을 재 설정한다. 이 기능은 <I>vtMenu</I>의 <B>softreset</B>
+항목에서도 호출될 수 있다.
+<DT><B>hard-reset()</B>
+
+<DD>
+스크롤 영역, 탭, 창크기, 커서 글쇠를 재설정하고, 화면을 모두 지운다. 
+이 기능은 <I>vtMenu</I>의 <B>hardreset</B> 항목에서도 호출될 수 있다.
+<DT><B>clear-saved-lines()</B>
+
+<DD>
+<B>hard-reset()</B> 액션과 같은 기능을 하지만, 스크롤 영역에 남아 
+내용까지 모두 지워버린다. 이 기능은 <I>vtMenu</I>의 <B>clearsavedlines</B> 
+항목에서도 호출될 수 있다.
+<DT><B>set-terminal-type(</B><I>type</I>)
+
+<DD>
+터미날 형태를 지정하는 것으로 <I>type</I> 값에는 
+<I>vt</I> 또는 <I>tek</I> 값이 사용된다. 
+이 기능은 <I>vtMenu</I>의 <B>tekmode</B> 항목이나, 
+<I>tekMenu</I>의 <B>vtmode</B> 항목에서 호출된다.
+<DT><B>set-visibility(</B><I>vt/tek</I>,<I>on/off/toggle</I>)
+
+<DD>
+<I>vt</I> 또는 <I>tek</I> 창을 보일 것인지를 지정한다. 
+<I>vtMenu</I>의 <B>tekshow</B>, <B>vthide</B> 항목과 
+<I>tekMenu</I>의 <B>vtshow</B>, <B>tekhide</B> 항목에서 호출된다.
+<DT><B>set-tek-text(</B><I>large/2/3/small</I>)
+
+<DD>
+Tektronix 창에서 사용할 글꼴을 지정한다. 이것은 
+<B>tektextlarge</B>, <B>tektext2</B>, <B>tektext3</B> 리소스 값들을 
+각각 바꾼다. 이 액션은 Tektronix 창만을 대상으로 하고 있다.
+<DT><B>tek-page()</B>
+
+<DD>
+Tektronix 창 화면을 모두 지운다. 이 기능은 
+<I>tekMenu</I>의 <B>tekpage</B> 항목에서도 호출 될 수 있다.
+<DT><B>tek-reset()</B>
+
+<DD>
+Tektronix 창을 재설정한다.
+<DT><B>tek-copy()</B>
+
+<DD>
+현재 창에 나타난 내용을 현재 경로에서 COPY라는 이름으로 시작하는 
+파일로 저장한다. (위의 <B>EMULATIONS</B> 부분 참조)
+<DT><B>visual-bell()</B>
+
+<DD>
+창 화면을 반짝인다. 이것은 벨 소리를 나게하는 것 대신에, 
+화면을 깜박거리게 한다.
+</DL>
+<P>
+
+Tektronix 창에서는 다음의 액션을 사용할 수 있다:
+<DL COMPACT>
+<DT><B>gin-press(</B><I>l/L/m/M/r/R</I>)
+
+<DD>
+그래픽 입력 코드를 보낸다.
+</DL>
+<P>
+
+VT102 창에서의 글쇠지정 초기값은 다음과 같다:
+<P>
+
+
+
+
+
+<PRE>
+ Shift &lt;KeyPress&gt; Prior: scroll-back(1,halfpage) \n\
+  Shift &lt;KeyPress&gt; Next: scroll-forw(1,halfpage) \n\
+Shift &lt;KeyPress&gt; Select: select-cursor-start() \
+                         select-cursor-end(PRIMARY, CUT_BUFFER0) \n\
+Shift &lt;KeyPress&gt; Insert: insert-selection(PRIMARY, CUT_BUFFER0) \n\
+        ~Meta&lt;KeyPress&gt;: insert-seven-bit() \n\
+         Meta&lt;KeyPress&gt;: insert-eight-bit() \n\
+       !Ctrl &lt;Btn1Down&gt;: popup-menu(mainMenu) \n\
+  !Lock Ctrl &lt;Btn1Down&gt;: popup-menu(mainMenu) \n\
+       ~Meta &lt;Btn1Down&gt;: select-start() \n\
+     ~Meta &lt;Btn1Motion&gt;: select-extend() \n\
+       !Ctrl &lt;Btn2Down&gt;: popup-menu(vtMenu) \n\
+  !Lock Ctrl &lt;Btn2Down&gt;: popup-menu(vtMenu) \n\
+ ~Ctrl ~Meta &lt;Btn2Down&gt;: ignore() \n\
+   ~Ctrl ~Meta &lt;Btn2Up&gt;: insert-selection(PRIMARY, CUT_BUFFER0) \n\
+       !Ctrl &lt;Btn3Down&gt;: popup-menu(fontMenu) \n\
+  !Lock Ctrl &lt;Btn3Down&gt;: popup-menu(fontMenu) \n\
+ ~Ctrl ~Meta &lt;Btn3Down&gt;: start-extend() \n\
+     ~Meta &lt;Btn3Motion&gt;: select-extend() \n\
+                &lt;BtnUp&gt;: select-end(PRIMARY, CUT_BUFFER0) \n\
+              &lt;BtnDown&gt;: bell(0)
+</PRE>
+
+
+<P>
+
+<P>
+
+Tektronix 창에서의 글쇠지정 초기값은 다음과 같다:
+<P>
+
+
+
+
+
+<PRE>
+      ~Meta&lt;KeyPress&gt;:   insert-seven-bit() \n\
+       Meta&lt;KeyPress&gt;:   insert-eight-bit() \n\
+     !Ctrl &lt;Btn1Down&gt;:   popup-menu(mainMenu) \n\
+!Lock Ctrl &lt;Btn1Down&gt;:   popup-menu(mainMenu) \n\
+     !Ctrl &lt;Btn2Down&gt;:   popup-menu(tekMenu) \n\
+!Lock Ctrl &lt;Btn2Down&gt;:   popup-menu(tekMenu) \n\
+Shift ~Meta&lt;Btn1Down&gt;:   gin-press(L) \n\
+      ~Meta&lt;Btn1Down&gt;:   <A HREF="http://localhost/cgi-bin/man/man2html?l+gin-press">gin-press</A>(l) \n\
+Shift ~Meta&lt;Btn2Down&gt;:   gin-press(M) \n\
+      ~Meta&lt;Btn2Down&gt;:   gin-press(m) \n\
+Shift ~Meta&lt;Btn3Down&gt;:   gin-press(R) \n\
+      ~Meta&lt;Btn3Down&gt;:   gin-press(r)
+</PRE>
+
+
+<P>
+
+<P>
+
+다음은 <B>keymap()</B> 기능의 사용법과 상용구(commonly-typed works)
+지정에 대한 예제이다:
+<P>
+
+<PRE>
+
+*VT100.Translations: #override &lt;Key&gt;F13: keymap(dbx)
+*VT100.dbxKeymap.translations: \
+     &lt;Key&gt;F14: keymap(None) \n\
+     &lt;Key&gt;F17: string(&quot;next&quot;) string(0x0d) \n\
+     &lt;Key&gt;F18: string(&quot;step&quot;) string(0x0d) \n\
+     &lt;Key&gt;F19: string(&quot;continue&quot;) string(0x0d) \n\
+     &lt;Key&gt;F20: string(&quot;print &quot;) insert-selection(PRIMARY, CUT_BUFFER0)
+</PRE>
+
+
+<P>
+
+<A NAME="lbAN">&nbsp;</A>
+<H2>환경변수</H2>
+
+<I>Xterm</I>에서는 창의 모양에 대한 &quot;TERM&quot;, &quot;TERMCAP&quot; 환경 변수를 
+제공하고, 
+창을 어디서 사용할 것인가에 대한 &quot;DISPLAY&quot; 변수를 제공하고, 
+<I>xterm </I>
+
+창의 ID를 위해서 &quot;WINDOWID&quot; 변수를 제공한다.
+<A NAME="lbAO">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+resize">resize</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+X">X</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?4+pty">pty</A>(4), <A HREF="http://localhost/cgi-bin/man/man2html?4+tty">tty</A>(4)
+<BR>
+
+<I>Xterm Control Sequences</I>
+<A NAME="lbAP">&nbsp;</A>
+<H2>벌레</H2>
+
+<P>
+
+Large pastes 기능은 어떤 시스템에서는 작동되지 않는다. 
+이것은 <I>xterm</I>의 버그가 아니라, 그 시스템의 pseudo 터미날 드라이버
+벌레이다. <I>xterm</I>은 pty그 그 처리할 수 있는 데이타 처리 속도만큼만
+large pastes를 pty에 공급한다. 이때, 어떤 pty 드라이버는 그 자료를 
+성공적으로 기록했는지에 대한 충분한 정보를 리턴하지 못한다.
+<P>
+
+많은 옵션은 <I>xterm</I>이 실행된 후에는 다시 지정되지 못한다.
+<P>
+
+사용할 수 있는 글꼴은 fixed-width, character-cell 형태의 글꼴 뿐이다.
+<P>
+
+이 풀그림은 아직 고칠점이 많다. 
+각 함수(섹션, 루틴)들이 보다 세분화 되어야하며, 여러가지 터미날들을
+위젯 수준으로 지원해야할 것이다. 가장 이상적인 형태는 여러 터미날 
+흉네내기를 위젯 수준으로 하나의 리소스 지정으로 그 터미날을 구현
+할 수 있도록 하는 것일 것이다.
+<P>
+
+Tek 복사 파일 이름 지정을 하는 대화상자가 필요하다.
+<A NAME="lbAQ">&nbsp;</A>
+<H2>만든이</H2>
+
+아랫 사람들 외에도 많은 사람들이 이 풀그림 제작에 참가했다:
+<P>
+Loretta Guarino Reid (DEC-UEG-WSL), 
+Joel McCormack (DEC-UEG-WSL), Terry Weissman (DEC-UEG-WSL),
+Edward Moy (Berkeley), Ralph R. Swick (MIT-Athena),
+Mark Vandevoorde (MIT-Athena), Bob McNamara (DEC-MAD),
+Jim Gettys (MIT-Athena), Bob Scheifler (MIT X Consortium), Doug Mink (SAO),
+Steve Pitschke (Stellar), Ron Newman (MIT-Athena), Jim Fulton (MIT X 
+Consortium), Dave Serisky (HP), Jonathan Kamens (MIT-Athena)
+<A NAME="lbAR">&nbsp;</A>
+<H2>한텀 이야기</H2>
+
+<B>hanterm</B>도 <B>xterm</B>을 기반으로 만들어졌기에, 거의 모든 옵션과 
+리소스와 액션을 그대로 사용할 수 있다. 단지 차이점이라면, 
+<P>
+
+Tektronix 창 기능이 없다는 것과,
+<BR>
+
+한글 폰트를 위한 <B>-hfn</B> 옵션과 <B>hangulFont</B> 리소스가 추가되었고,
+<BR>
+
+한글 자판을 위한 <B>hangulKeyboard</B> 리소스가 추가되었다. 이 리소스의 인자는 
+<B>2</B>(두벌식)또는 <B>3</B>(세벌식)이다.
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">EMULATIONS</A><DD>
+<DT><A HREF="#lbAF">OTHER FEATURES</A><DD>
+<DT><A HREF="#lbAG">OPTIONS</A><DD>
+<DT><A HREF="#lbAH">리소스</A><DD>
+<DT><A HREF="#lbAI">다람쥐 사용법</A><DD>
+<DT><A HREF="#lbAJ">차림표</A><DD>
+<DT><A HREF="#lbAK">보안</A><DD>
+<DT><A HREF="#lbAL">CHARACTER CLASSES</A><DD>
+<DT><A HREF="#lbAM">ACTIONS</A><DD>
+<DT><A HREF="#lbAN">환경변수</A><DD>
+<DT><A HREF="#lbAO">관련 항목</A><DD>
+<DT><A HREF="#lbAP">벌레</A><DD>
+<DT><A HREF="#lbAQ">만든이</A><DD>
+<DT><A HREF="#lbAR">한텀 이야기</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

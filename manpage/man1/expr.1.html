@@ -1,0 +1,189 @@
+<HTML><HEAD><TITLE>Manpage of EXPR</TITLE>
+</HEAD><BODY>
+<H1>EXPR</H1>
+Section: Misc. Reference Manual Pages (1L)<BR>Updated: GNU 쉘 유틸리티<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+expr - 표현식 평가
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>expr</B>
+
+표현식...
+<BR>
+
+<B>expr</B>
+
+{--help,--version}
+<BR>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이 맨페이지는 GNU 버전의
+<B>expr</B>
+
+을 다룬다.
+<B>expr</B>
+
+표현식을 평가하고 그 결과값을 표준출력에 쓴다.
+표현식의 각 표시는 별도의 인수로 주어져야 한다. 연산수(Operand)는 숫자 또는
+문자열이다. 문자열은 쉘로부터 보호하기 위하여 인용부호로 둘러싸기(quote)가 
+필요할 모르지만 <B>expr</B> 에서는 그렇지 않다.
+<B>expr</B>
+
+는 연산행위에 따라 연산수 위치에 있는 것을 정수 또는 문자열로 강제 변환한다.
+<P>
+
+연산자는 다음과 같다(우선 순위 증가순에 따라 나열):
+<DL COMPACT>
+<DT><I>|</I><DD>
+첫번째 인수가 널 또는 0이 아니라면 첫번째 인수를 내주고 그렇지 않으면 두번째
+인수를 내준다. `or' 연산에 해당한다.
+<DT><I>&amp;</I><DD>
+첫번째 인수가 널 또는 0이 아니라면 첫번째 인수를 내주고 그렇지 않으면
+0을 내준다.
+<DT><I>&lt;</I>&nbsp; <I>&lt;=</I>&nbsp; <I>=</I>&nbsp; <I>==</I>&nbsp; <I>!=</I>&nbsp; <I>&gt;=</I>&nbsp; <I>&gt;</I><DD>
+주어진 인수를 비교하여 맞으면 1, 틀리면 0 을 반환한다.
+(<I>==</I> 은 <I>=</I>와 같다.)
+<B>expr</B> 은 양쪽 인수를 숫자로 변환하여 수치 비교를 한다;
+한 쪽 변수라도 숫자 변환에 실패하면 사전식 비교를 수행한다.
+<DT><I>+</I>&nbsp; <I>-</I><DD>
+수치 연산을 수행한다. 두 인수는 수치로 변환된다;
+실패할 경우 에러가 발생한다.
+<DT><I>*</I>&nbsp; <I>/</I>&nbsp; <I>%</I><DD>
+수치 연산을 수행한다( `%'은 C 언어에서처럼 나머지 연산이다).
+두 인수는 숫자로 변환된다; 실패할 경우 에러가 발생한다.
+<DT><I>:</I><DD>
+패턴 비교를 수행한다. 인수는 문자열로 변환되고 두번째 인수는 정규식으로
+간주된다. 그리고 맨앞에 암묵적으로 `^' 을 추가한다.
+첫번째 인수는 바로 이 정규식에 따라 비교된다.
+비교가 성공하고 문자열의 일부가 `\(' 와 `\)'로 둘러싸여 있다면,
+이 둘러싸인 부분이 <I>:</I> 표현식의 값이 된다. 아니면 비교에 성공한 문자의
+갯수를 정수로 반환한다. 비교가 실패하면 <I>:</I> 연산자는 `\('와 `\)' 가
+사용된 경우에는 널을 아니면 0 을 반환한다.
+`\(' 와 `\)' 의 쌍은 단 한 번만 사용할 수 있다.
+<DT>추가로 다음 예약어를 사용할 수 있다:<DD>
+<DT><B>match</B><I> 문자열 정규식</I>
+
+<DD>
+패턴 비교를 할 수 있는 또 다른 방법이다. ``<I>문자열</I> <B>:</B> <I>정규식</I>''
+와 같다.
+<DT><B>substr</B><I> 문자열 위치 길이</I>
+
+<DD>
+<I>문자열</I> 중에서 <I>위치</I>로부터 최대 <I>길이</I>만큼의 문자열을 뽑아서
+반환해준다. 만약 <I>위치</I> 또는 <I>길이</I>가 음수이거나 숫자가 아닐 때는
+널 문자열을 반환한다.
+<DT><B>index</B><I> 문자열 문자-클래스</I>
+
+<DD>
+<I>문자열</I>에서 <I>문자-클래스</I>가 처음으로 나타나는 위치를 반환한다.
+<I>문자-클래스의 어떤 문자도 문자열</I>에서 찾을 수 없는 경우 0 이
+반환된다.
+<DT><B>length</B><I> 문자열</I>
+
+<DD>
+<I>문자열</I>의 길이를 반환한다.
+</DL>
+<P>
+
+괄호치기는 그룹묶기에 사용된다. 예약어는 문자열로 사용할 수 없다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+GNU
+<B>expr</B>
+
+이 단 하나의 인수로 실행되면 다음 옵션이 인식된다:
+<DL COMPACT>
+<DT><I>--help</I>
+
+<DD>
+표준출력으로 사용법을 출력하고 정상적으로 종료한다.
+<DT><I>--version</I>
+
+<DD>
+표준출력으로 버전정보를 출력하고 정상적으로 종료한다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>예</H2>
+
+<P>
+
+쉘 변수에 1 을 더하기
+<I>a</I>:
+
+<DL COMPACT>
+<DT><DD>
+a=`expr $a + 1`
+</DL>
+<P>
+
+다음은 변수 안에 저장된 화일명에서 디렉토리 이름부분을 출력하는 예이다.
+<I>a</I>
+
+(
+<I>a</I>
+
+라는 값은 `/'를 포함할 필요없다):
+<DL COMPACT>
+<DT><DD>
+expr $a : '.*/\(.*\)' '|' $a
+</DL>
+<P>
+
+따옴표 처리한(quoted) 쉘의 메타문자를 주목하기 바란다.
+<P>
+
+<B>expr</B>
+
+은 다음과 같은 종료 상태를 반환한다:
+<P>
+
+0 표현식이 널이거나 0이 아닐 때
+<BR>
+
+1 표현식이 널이거나 0일 때
+<BR>
+
+2 잘못된 표현식
+<A NAME="lbAG">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+<DT><A HREF="#lbAF">예</A><DD>
+<DT><A HREF="#lbAG">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

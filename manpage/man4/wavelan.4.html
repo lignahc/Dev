@@ -1,0 +1,219 @@
+<HTML><HEAD><TITLE>Manpage of WAVELAN</TITLE>
+</HEAD><BODY>
+<H1>WAVELAN</H1>
+Section: Devices and Network Interfaces (4)<BR>Updated: 10/22/96<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+wavelan - AT&amp;T GIS WaveLAN ISA 장치 드라이브
+
+
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>insmod wavelan_cs.o [io=</B><I>B,B..</I><B>] [ irq=</B><I>I,I..</I><B>] [name=</B><I>N,N..</I><B>]</B>
+
+
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>wavelan</I>
+
+NCR / AT&amp;T / Lucent를 위한 는 저수준 디바이스 드라이버이다. 
+<B>WaveLAN ISA 그리고 디지털 (DEC)</B>
+
+
+<B>RoamAbout DS</B>
+
+무선 이더넷 이댑터. 이 드라이버는 모듈로서 사용할 수 있거나, 커널내에 컴파일되어 있을 수도 있다. 
+이 드라이버는 4까지 형식의 다중 카드를 지원하고, 인식되는 각 카드에 대해, 디바이스 이름이 완전히 지정되어 있지 않으면, 
+다음 사용가능한 이더넷 디바이스를 할당한다. 디바이스 이름은 카드에 의해 종종 사용되는 
+MAC 주소, NWID와 함께 커널 로그 파일에 보고될 것이다. 
+
+
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>PARAMETERS</H2>
+
+This section apply to the module form (parameters passed on the
+이 섹션은 모듈 양식(.BR insmod (8)명령행에 전달된 매개 변수들)에 적용된다. 만일 드라이버가 커널내에 포함되어 있으면,
+커널 명령행에 .I ether=IRQ,IO,NAME 구문을 사용한다. 
+<DL COMPACT>
+<DT><B>io</B>
+
+<DD>
+wavelan 카드들을 검색할 기반 주소 목록을 명시하라.(카드상의 딥(dip) 스위치로 설정) 
+만일 어떤 io 주소도 지정하지 못했다면, 드라이버는 다른 하드웨어와 
+충돌을 일으킬 수 있는 주소 0x390와 0x3E0를 스캔할 것이다. 
+<DT><B>irq</B>
+
+<DD>
+wavelan 카드가 사용해야할 irq의 목록을 지정한다.(값은 앞으로 사용할 수 있도록 저장 영역에 저장된다.)
+
+<DT><B>name</B>
+
+<DD>
+
+
+Set the list of name to be used for each wavelan cards device (name
+used by
+wavelan 카드 디바이스에 대해 사용되는 이름의 목록을 명시한다. 
+(.BR ifconfig (8)에 의해 사용되는 이름)
+
+
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>무선 확장자(WIRELESS EXTENSIONS)</H2>
+
+
+무선 확장자를 조작하려면 iwconfig (8)을 사용하라. 
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H3>NWID (또는 도메인)</H3>
+
+네트워크 ID를 
+[<I>0에서</I>.IR<I>FFFF</I>]로<I>설정하거나,</I>이를<I>비활성화(.RI</I>[<I>off</I>])시킨다.<I></I>
+
+NWID는 카드 영속 저장 영역내에 저장되기 때문에, NWID는 드라이버의 시동에 있어 재사용이 될 것이다. 
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H3>주파수 및 채널</H3>
+
+2.4GHz 2.00 하드웨어에 대해, 여러분은 10개의 정의되거나, 그 값에 의해 직접적으로 정의된 채널(.RI 2.412, 
+<I>2.422, 2.425, 2.4305, 2.432, 2.442, 2.452, 2.460, 2.462</I>
+
+혹은 .IR 2.484)을 중 하나를 지정함으로서 주파수를 설정할 수 있다.    
+주파수는 즉시 영속적으로 변경된다. 
+주파수 사용가능성은 규칙에 달려있다. 
+
+드라이버에서 MAC 주소들의 목록을 설정하고, 각 주소에 대한 링크의 마지막 특성을 얻는다.
+(.BR iwspy (8)를 참조하라.).
+
+/proc/net/wireless 부분
+<A NAME="lbAI">&nbsp;</A>
+<H3>/proc/net/wireless</H3>
+
+<I>위상은 모뎀에 의해 보고된 상태이다. </I>
+
+
+링크의 질은 공기의 변조의 질을 보고한다.(직접 순차 전개 스펙트럼 [최대 = 16]) 
+<I>레벨</I>
+
+과
+<I>Noise</I>
+
+는 시그널 레벨과 노이즈 레벨을 문의한다. [최대 = 64].
+
+<I>숨긴채 버려진 패킷과 .I 보통으로 버려진 패킷 카운터는 구현되지 않는다. </I>
+
+
+
+
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>PRIVATE IOCTL</H2>
+
+여러분은 사적 ioctls를 조작하기 위해 .BR iwpriv (8)를 사용할 수 있다. 
+to manipulate private ioctls.
+&nbsp;
+임계부분(threshold)
+<A NAME="lbAK">&nbsp;</A>
+<H3>질과 레벨의 임계값(Quality and Level threshold)</H3>
+
+은 모뎀에 의해 사용되는 질 및 레벨 임계값을 정의하도록 한다.
+
+<A NAME="lbAL">&nbsp;</A>
+<H3>막대 그래프(Histogram)</H3>
+
+
+이 기능은 수많은 시그널 레벨 간격을 설정하고, 정의된 간격에 수신된 패킷의 숫자를 
+센다. 이 분산은 시그널 레벨의 표준편차와 중심값을 계산하는데 사용될 수 있다. 
+
+
+
+<A NAME="lbAM">&nbsp;</A>
+<H2>SPECIFIC NOTES</H2>
+
+이 드라이버는 일부 .B non NCR/ATT&amp;T/Lucent Wavelan 카드들을 감지하는데 실패할 것이다. 
+만일 당신의 경우라면, 여러분은 소스 코드를 살펴봄으로서, 감지 루틴을 카드에 추가시킬 것인가에 
+대해서 알아보아야 한다. 
+<P>
+
+일부 언급된 특성들은 선택적이다. 여러분은 이들을 드라이버 헤더내의 플래그들을 
+변경시키거나 재컴파일을 함으로서 활성화를 할 수 없도록 할 수 있다. 
+
+
+
+<A NAME="lbAN">&nbsp;</A>
+<H2>저자</H2>
+
+Bruce Janson - <A HREF="mailto:bruce@cs.usyd.edu.au">bruce@cs.usyd.edu.au</A>
+<BR>
+
+Jean Tourrilhes - <A HREF="mailto:jt@hplb.hpl.hp.com">jt@hplb.hpl.hp.com</A>
+<BR>
+
+(+ others - see source code for details)
+
+
+
+<A NAME="lbAO">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+wavelan_cs">wavelan_cs</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ifconfig">ifconfig</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+insmod">insmod</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+iwconfig">iwconfig</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+iwspy">iwspy</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+iwpriv">iwpriv</A></B>(8).
+
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">PARAMETERS</A><DD>
+<DT><A HREF="#lbAF">무선 확장자(WIRELESS EXTENSIONS)</A><DD>
+<DL>
+<DT><A HREF="#lbAG">NWID (또는 도메인)</A><DD>
+<DT><A HREF="#lbAH">주파수 및 채널</A><DD>
+<DT><A HREF="#lbAI">/proc/net/wireless</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">PRIVATE IOCTL</A><DD>
+<DL>
+<DT><A HREF="#lbAK">질과 레벨의 임계값(Quality and Level threshold)</A><DD>
+<DT><A HREF="#lbAL">막대 그래프(Histogram)</A><DD>
+</DL>
+<DT><A HREF="#lbAM">SPECIFIC NOTES</A><DD>
+<DT><A HREF="#lbAN">저자</A><DD>
+<DT><A HREF="#lbAO">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

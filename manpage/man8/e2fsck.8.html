@@ -1,0 +1,311 @@
+<HTML><HEAD><TITLE>Manpage of E2FSCK</TITLE>
+</HEAD><BODY>
+<H1>E2FSCK</H1>
+Section: Maintenance Commands (8)<BR>Updated: 1996년 5월<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+e2fsck - 리눅스 개정판 확장 화일 시스템을 점검
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>e2fsck</B>
+
+[
+<B>-pacnyrdfvtFV</B>
+
+]
+[
+<B>-b</B>
+
+<I>수퍼블럭</I>
+
+]
+[
+<B>-B</B>
+
+<I>블럭 크기</I>
+
+]
+[
+<B>-l|-L</B>
+
+<I>배드 블럭 목록 화일</I>
+
+]
+<I>장치명</I>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>e2fsck</B>
+
+는 리눅스 개정판 확장 화일 시스템을 점검할 때 사용한다.
+<DL COMPACT>
+<DT><I>장치명</I>
+
+<DD>
+은 예를 들어 /dev/hdXX 와 같이 어떤 장치에 해당하는 특수 화일명이다.
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><I>-a </I>
+
+<DD>
+이 옵션은
+<I>-p</I>
+
+옵션과 마찬가지이다. 단지 하위 호환성을 갖기 위해서 제공될 뿐이다.
+<I>-p </I>
+
+옵션을 쓰길 바란다.
+<DT><I>-b 수퍼블럭</I>
+
+<DD>
+정상적인 수퍼블럭을 사용하지 않고 
+<I>수퍼블럭</I>
+
+으로 지정한 다른 수퍼블럭을 사용하도록 한다.
+<DT><I>-B 블럭크기</I>
+
+<DD>
+정상적인 경우 e2fsck 는 적절한 블럭 크기를 알아내기 위하여 다양한 블럭크기의
+위치에서 수퍼블럭을 검색해본다. 하지만 어떤 경우 이러한 자동 검색이 제대로
+이뤄지지 않을 수 있다. 이 옵션은 e2fsck 로 하여금 특정 블럭크기에서만
+수퍼블럭을 찾도록 강제한다. 수퍼블럭을 찾을 수 없는 경우 심각한 오류를
+발생하고 중지한다.
+<DT><I>-c</I>
+
+<DD>
+e2fsck로 하여금
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+badblocks">badblocks</A></B>(8)
+
+을 실행하여 화일 시스템 상의 배드 블럭을 찾아내고 배드블럭 아이노드에
+추가함으로써 표시를 해둔다.
+<DT><I>-d</I>
+
+<DD>
+디버깅 정보를 출력한다.( 여러분이 
+<B>e2fsck</B>
+
+을 디버깅하는 것이 아니라면 의미없다.
+)
+<DT><I>-f</I>
+
+<DD>
+화일 시스템에 이상이 없다 하더라도 점검을 하도록 강제한다.
+<DT><I>-F</I>
+
+<DD>
+시작하기 전에 화일 시스템 장의 버퍼에 캐쉬된 내용을 플러쉬한다.
+e2fsck 를 정기적으로 돌릴 때만 필요하다.
+<DT><I>-l 화일명</I>
+
+<DD>
+<I>화일명</I>
+
+에 기록되어 있는 배드 블럭 목록을 배드 블럭 목록에 추가한다.
+<DT><I>-L 화일명</I>
+
+<DD>
+배드 블럭 목록을
+<I>화일명</I>
+
+으로 지정한 화일에 있는 내용으로 설정한다.
+( 이 옵션은
+화일에 명시된 블럭이 배드 블럭 목록에 추가되기 전에 배드 블럭 목록을
+지운다는 것을 제외하고는
+<I>-l</I>
+
+옵션과 동일하다.)
+<DT><I>-n</I>
+
+<DD>
+화일 시스템을 읽기 전용으로 열고 모든 질문에 ``no''라고 답하도록 한다.
+<B>e2fsck</B>
+
+를 비대화형(non-interactive)으로 실행할 수 있게 해준다.
+(주의: 만약
+<I>-c</I>,
+
+<I>-l</I>,
+
+또는
+<I>-L</I>
+
+옵션을 같이 사용한다면 화일 시스템은 읽기-쓰기로 열리며 배드 블럭 목록이
+갱신될 수 있도록 해준다. 하지만 화일 시스템에 다른 변화는 일어나지 않는다.)
+<DT><I>-p</I>
+
+<DD>
+질문함이 없이 자동적으로 오류를 수정하도록 한다.
+<DT><I>-r</I>
+
+<DD>
+아무런 작용도 하지 않는다. 호환성을 위해 제공될 뿐이다.
+<DT><I>-t</I>
+
+<DD>
+<B>e2fsck</B>
+
+에 대한 타이밍 통계를 출력한다.
+만약 옵션이 두 번 사용되면 추가 정보를 출력한다.
+
+
+<DT><I>-v</I>
+
+<DD>
+자세한 출력 모드.
+<DT><I>-V</I>
+
+<DD>
+버전을 출력하고 종료한다.
+<DT><I>-y</I>
+
+<DD>
+모든 질문에 ``yes''라고 답하도록 한다.
+<B>e2fsck</B>
+
+를 비대화형으로 사용할 때 사용된다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>종료 코드</H2>
+
+<B>e2fsck</B>
+
+의 종료 코드는 다음 값의 합계로 나타난다:
+<BR>
+
+	0	-&nbsp;에러 없음
+<BR>
+
+	1	-&nbsp;화일 시스템 에러 고쳐짐
+<BR>
+
+	2	-&nbsp;화일 시스템 에러는 고쳐졌으나 마운트되어 있었다면
+<BR>
+
+		&nbsp;&nbsp;리부팅이 필요하다.
+<BR>
+
+	4	-&nbsp;화일 시스템 에러를 고치지 않고 그대로 둠
+<BR>
+
+	8	-&nbsp;실행 에러
+<BR>
+
+	16	-&nbsp;사용법 또는 문법 에러
+<BR>
+
+	128	-&nbsp;공유 라이브러리 에러
+<BR>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>버그</H2>
+
+거의 모든 소프트웨어는 버그를 갖기 마련이다. 
+<B>e2fsck</B>
+
+이 화일 시스템과 충돌하거나 고치지 못할 때는 저자에게 연락 바란다.
+<P>
+
+버그 보고할 때는 충분한 정보를 포함하여 해주기 바란다.
+<B>e2fsck</B>
+
+를 실행한 과정을 모두 제시하여 어떤 에러 메세지가 있었는지 볼 수 있게
+해달라. 만약 그 과정을 저장해둘 수 있도록 화일 시스템이 쓰기 가능상태라면
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+script">script</A></B>(1)
+
+프로그램을 사용하여 
+
+의 출력을 화일로 저장하라.
+<P>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+dumpe2fs">dumpe2fs</A></B>(8)
+
+의 출력 결과를 보내주는 것도 좋다.
+만약 특정 아이노드들에 의해
+<B>e2fsck </B>
+
+에 문제가 발생했다면
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+debugfs">debugfs</A></B>(8)
+
+명령을 수행하고
+해당 아이노드에 대하여
+<I>stat</I>
+
+명령을 수행한 결과를 보여달라.
+만약 해당 아이노드가 디렉토리라면
+debugfs
+의
+<I>dump</I>
+
+명령을 사용하여 디렉토리 아이노드의 내용을 뽑아볼 수 있다. 일단
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+uuencode">uuencode</A></B>(1)
+
+한 후 그것을 저자에게 보내달라.
+<P>
+
+<B>e2fsck</B>
+
+이 실행될 때 보여주는 버전 문자열을 꼭 모두 보여주어 여러분이 어떤 버전를
+실행했는지 알게 해달라.
+<A NAME="lbAH">&nbsp;</A>
+<H2>저자</H2>
+
+현 버전의
+<B>e2fsck</B>
+
+은 Theodore Ts'o &lt;<A HREF="mailto:tytso@mit.edu">tytso@mit.edu</A>&gt;에 의해 만들어졌다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>참고</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mke2fs">mke2fs</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+tune2fs">tune2fs</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+dumpe2fs">dumpe2fs</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+debugfs">debugfs</A></B>(8)
+
+<P>
+<A NAME="lbAJ">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">종료 코드</A><DD>
+<DT><A HREF="#lbAG">버그</A><DD>
+<DT><A HREF="#lbAH">저자</A><DD>
+<DT><A HREF="#lbAI">참고</A><DD>
+<DT><A HREF="#lbAJ">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

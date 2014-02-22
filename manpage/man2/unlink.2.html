@@ -1,0 +1,181 @@
+<HTML><HEAD><TITLE>Manpage of UNLINK</TITLE>
+</HEAD><BODY>
+<H1>UNLINK</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1997년 8월 21일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+unlink - 이름 그리고 가능하면 참조하는 파일도 지운다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>int unlink(const char *</B><I>pathname</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>unlink</B>
+
+는 파일 시스템에서 이름을 지운다. 만일 그 이름이 파일에 대한 최근 연결이고
+어떤 프로세스도 열려진 파일을 가지고 있지 않다면 파일은 지워지며 파일이 사용한
+공간은 다시 사용가능하게 된다.
+<P>
+만일 이름이 파일에 대한 최근 연결이지만 어떤 프로세스가 여전이 열려진 파일을 
+가지고 있다면 파일을 참조하는 최근 파일 기술자가 닫혀질때까지 파일은 존재한 체로
+남아 있게 된다.
+<P>
+만일 이름이 상징 연결을 가리킨다면 연결은 제거된다.
+<P>
+만일 이름이 소켓, fifo 또는 장치를 가리킨다면 이것에 대한 이름은 제거되지만 
+열려진 객체를 가지고 있는 프로세스들은 그것을 계속 사용한다.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0이 리턴된다. 에러시, -1이 리턴되며 
+<I>errno</I>
+
+는 적당한 값으로 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EACCES</B>
+
+<DD>
+<I>pathname</I>
+
+을 포함하는 디렉토리에 대한 쓰기 접근이 프로세스의 유효 uid에게 허가 되지
+않았거나, 
+<I>pathname</I>에
+
+있는 디렉토리중 하나가 검색(실행) 허가권을 허가하지 않는다.
+<DT><B>EPERM</B> or <B>EACCES</B>
+
+<DD>
+<I>pathname</I>
+
+을 포함하는 디렉토리가 sticky-bit
+(<B>S_ISVTX</B>)<B>가</B>
+
+설정되어 있고 프로세스의 유효 uid가 삭제할수가 있는 파일의 uid나 파일을
+포함하는 디렉토리의 uid가 아니다.
+<DT><B>EPERM</B>
+
+<DD>
+파일
+<I>pathname</I>
+
+가 디렉토리이다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>pathname</I>
+
+가 접근할수 있는 주소 공간외를 가리키고 있다.
+<DT><B>ENAMETOOLONG</B>
+
+<DD>
+<I>pathname</I>이<I> 너무 길다.</I>
+
+<DT><B>ENOENT</B>
+
+<DD>
+<I>pathname</I>
+
+에 있는 디렉토리 요소가 존재하지 않거나 붙어다니는 상징 연결이다.
+<DT><B>ENOTDIR</B>
+
+<DD>
+<I>pathname</I>
+
+에서 디렉토리로써 사용된 요소가 사실은 디렉토리가 아니다.
+<DT><B>EISDIR</B>
+
+<DD>
+<I>pathname</I>
+
+가 디렉토리를 가리킨다.
+<DT><B>ENOMEM</B>
+
+<DD>
+이용할수 있는 커널 메모리가 충분하지 않다.
+<DT><B>EROFS</B>
+
+<DD>
+<I>pathname</I>
+
+가 읽기-전용 파일 시스템에 있는 파일을 가리킨다.
+<DT><B>ELOOP</B>
+
+<DD>
+너무 많은 상징연결을 
+<I>pathname</I>
+
+번역시 만났다.
+<DT><B>EIO</B>
+
+<DD>
+I/O 에러가 발생했다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID, POSIX, X/OPEN, 4.3BSD.  SVr4 는 추가적으로 
+EBUSY, EINTR, EMULTIHOP, ETXTBUSY, ENOLINK 에러 조건들을 문서화했다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>버그</H2>
+
+NFS 기반에서 돌아가는 프로토콜에서 불운한 사태는 여전히 사용되고 있는 파일들이 
+값자기 지워질수 있다는 점이다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+link">link</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+rename">rename</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+rmdir">rmdir</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+mknod">mknod</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+mkfifo">mkfifo</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+remove">remove</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+rm">rm</A></B>(1)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 8월 5일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">버그</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

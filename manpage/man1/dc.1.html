@@ -1,0 +1,534 @@
+<HTML><HEAD><TITLE>Manpage of DC</TITLE>
+</HEAD><BODY>
+<H1>DC</H1>
+Section: User Commands  (1)<BR>Updated: 07 Apr 1994<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dc - an arbitrary precision calculator
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+dc
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+
+<I>Dc</I> is a reverse-polish desk calculator which supports
+unlimited precision arithmetic.
+It also allows you to define and call macros.
+Normally <I>dc</I> reads from the standard input;
+if any command arguments are given to it, they are filenames,
+and <I>dc</I> reads and executes the contents of the files before reading
+from standard input.
+All normal output is to standard output;
+all error output is to standard error.
+<P>
+
+A reverse-polish calculator stores numbers on a stack.
+Entering a number pushes it on the stack.
+Arithmetic operations pop arguments off the stack and push the results.
+<P>
+
+To enter a number in
+<I>dc</I>,
+
+type the digits with an optional decimal point.
+Exponential notation is not supported.
+To enter a negative number,
+begin the number with ``_''.
+``-'' cannot be used for this,
+as it is a binary operator for subtraction instead.
+To enter two numbers in succession,
+separate them with spaces or newlines.
+These have no meaning as commands.
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Printing Commands</H2>
+
+<DL COMPACT>
+<DT><B>p</B>
+
+<DD>
+Prints the value on the top of the stack,
+without altering the stack.
+A newline is printed after the value.
+<DT><B>P</B>
+
+<DD>
+Prints the value on the top of the stack, popping it off,
+and does not print a newline after.
+<DT><B>f</B>
+
+<DD>
+Prints the entire contents of the stack
+
+without altering anything.
+This is a good command to use if you are lost or want
+to figure out what the effect of some command has been.
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>Arithmetic</H2>
+
+<DL COMPACT>
+<DT><B>+</B>
+
+<DD>
+Pops two values off the stack, adds them,
+and pushes the result.
+The precision of the result is determined only
+by the values of the arguments,
+and is enough to be exact.
+<DT><B>-</B>
+
+<DD>
+Pops two values,
+subtracts the first one popped from the second one popped,
+and pushes the result.
+<DT><B>*</B>
+
+<DD>
+Pops two values, multiplies them, and pushes the result.
+The number of fraction digits in the result is controlled
+by the current precision value (see below) and does not
+depend on the values being multiplied.
+<DT><B>/</B>
+
+<DD>
+Pops two values,
+divides the second one popped from the first one popped,
+and pushes the result.
+The number of fraction digits is specified by the precision value.
+<DT><B>%</B>
+
+<DD>
+Pops two values,
+computes the remainder of the division that the
+<B>/</B>
+
+command would do,
+and pushes that.
+The division is done with as many fraction digits
+as the precision value specifies,
+and the remainder is also computed with that many fraction digits.
+<DT><B>^</B>
+
+<DD>
+Pops two values and exponentiates,
+using the first value popped as the exponent
+and the second popped as the base.
+The fraction part of the exponent is ignored.
+The precision value specifies the number of fraction
+digits in the result.
+<DT><B>v</B>
+
+<DD>
+Pops one value,
+computes its square root,
+and pushes that.
+The precision value specifies the number of fraction digits in the result.
+</DL>
+<P>
+
+Most arithmetic operations are affected by the ``precision value'',
+which you can set with the
+<B>k</B>
+
+command.
+The default precision value is zero,
+which means that all arithmetic except for
+addition and subtraction produces integer results.
+<P>
+
+The remainder operation
+<B>%</B>
+
+requires some explanation:
+applied to arguments ``a'' and ``b'' it produces ``a - (b * (a / b))'',
+where ``a / b'' is computed in the current precision.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Stack Control</H2>
+
+<DL COMPACT>
+<DT><B>c</B>
+
+<DD>
+Clears the stack, rendering it empty.
+<DT><B>d</B>
+
+<DD>
+Duplicates the value on the top of the stack,
+pushing another copy of it.
+Thus, ``4d*p'' computes 4 squared and prints it.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>Registers</H2>
+
+<P>
+
+<I>Dc</I> provides 256 memory registers,
+each named by a single character.
+You can store a number or a string in a register and retrieve it later.
+<DL COMPACT>
+<DT><B>s</B><I>r</I>
+
+<DD>
+Pop the value off the top of the stack and store
+it into register
+<I>r</I>.
+
+<DT><B>l</B><I>r</I>
+
+<DD>
+Copy the value in register
+<I>r</I>
+
+and push it onto the stack.
+This does not alter the contents of
+<I>r</I>.
+
+</DL>
+<P>
+
+Each register also contains its own stack.
+The current register value is the top of the register's stack.
+<DL COMPACT>
+<DT><B>S</B><I>r</I>
+
+<DD>
+Pop the value off the top of the (main) stack and
+push it onto the stack of register
+<I>r</I>.
+
+The previous value of the register becomes inaccessible.
+<DT><B>L</B><I>r</I>
+
+<DD>
+Pop the value off the top of register
+<I>r</I>'s
+
+stack and push it onto the main stack.
+The previous value
+in register
+<I>r</I>'s
+
+stack, if any,
+is now accessible via the
+<B>l</B><I>r</I>
+
+command.
+
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>Parameters</H2>
+
+<P>
+
+<I>Dc</I> has three parameters that control its operation:
+the precision, the input radix, and the output radix.
+The precision specifies the number
+of fraction digits to keep in the result of most arithmetic operations.
+The input radix controls the interpretation of numbers typed in;
+all numbers typed in use this radix.
+The output radix is used for printing numbers.
+<P>
+
+The input and output radices are separate parameters;
+you can make them unequal,
+which can be useful or confusing.
+The input radix must be between 2 and 36 inclusive.
+The output radix must be at least 2.
+The precision must be zero or greater.
+The precision is always measured in decimal digits,
+regardless of the current input or output radix.
+<DL COMPACT>
+<DT><B>i</B>
+
+<DD>
+Pops the value off the top of the stack
+and uses it to set the input radix.
+<DT><B>o</B>
+
+<DD>
+Pops the value off the top of the stack
+and uses it to set the output radix.
+<DT><B>k</B>
+
+<DD>
+Pops the value off the top of the stack
+and uses it to set the precision.
+<DT><B>I</B>
+
+<DD>
+Pushes the current input radix on the stack.
+<DT><B>O</B>
+
+<DD>
+Pushes the current output radix on the stack.
+<DT><B>K</B>
+
+<DD>
+Pushes the current precision on the stack.
+</DL>
+<A NAME="lbAJ">&nbsp;</A>
+<H2>Strings</H2>
+
+<P>
+
+<I>Dc</I> can operate on strings as well as on numbers.
+The only things you can do with strings are
+print them and execute them as macros
+(which means that the contents of the string are processed as
+<I>dc</I> commands).
+All registers and the stack can hold strings,
+and <I>dc</I> always knows whether any given object is a string or a number.
+Some commands such as arithmetic operations demand numbers
+as arguments and print errors if given strings.
+Other commands can accept either a number or a string;
+for example, the
+<B>p</B>
+
+command can accept either and prints the object
+according to its type.
+<DL COMPACT>
+<DT><B>[</B><I>characters</I><B>]</B>
+
+<DD>
+Makes a string containing
+<I>characters</I>
+
+(contained between balanced
+<B>[</B>
+
+and
+<B>]</B>
+
+characters),
+and pushes it on the stack.
+For example,
+<B>[foo]P</B>
+
+prints the characters
+<B>foo</B>
+
+(with no newline).
+<DT><B>x</B>
+
+<DD>
+Pops a value off the stack and executes it as a macro.
+Normally it should be a string;
+if it is a number,
+it is simply pushed back onto the stack.
+For example,
+<B>[1p]x</B>
+
+executes the macro
+<B>1p</B>
+
+which pushes
+<B>1</B>
+
+on the stack and prints
+<B>1</B>
+
+on a separate line.
+</DL>
+<P>
+
+Macros are most often stored in registers;
+<B>[1p]sa</B>
+
+stores a macro to print
+<B>1</B>
+
+into register
+<B>a</B>,
+
+and
+<B>lax</B>
+
+invokes this macro.
+<DL COMPACT>
+<DT><B>&gt;</B><I>r</I>
+
+<DD>
+Pops two values off the stack and compares them
+assuming they are numbers,
+executing the contents of register
+<I>r</I>
+
+as a macro if the original top-of-stack
+is greater.
+Thus,
+<B>1 2&gt;a</B>
+
+will invoke register
+<B>a</B>'s
+
+contents and
+<B>2 1&gt;a</B>
+
+will not.
+<DT><B>&lt;</B><I>r</I>
+
+<DD>
+Similar but invokes the macro if the original top-of-stack is less.
+<DT><B>=</B><I>r</I>
+
+<DD>
+Similar but invokes the macro if the two numbers popped are equal.
+
+<DT><B>?</B>
+
+<DD>
+Reads a line from the terminal and executes it.
+This command allows a macro to request input from the user.
+<DT><B>q</B>
+
+<DD>
+exits from a macro and also from the macro which invoked it.
+If called from the top level,
+or from a macro which was called directly from the top level,
+the
+<B>q</B>
+
+command will cause <I>dc</I> to exit.
+<DT><B>Q</B>
+
+<DD>
+Pops a value off the stack and uses it as a count
+of levels of macro execution to be exited.
+Thus,
+<B>3Q</B>
+
+exits three levels.
+The
+<B>Q</B>
+
+command will never cause <I>dc</I> to exit.
+</DL>
+<A NAME="lbAK">&nbsp;</A>
+<H2>Status Inquiry</H2>
+
+<DL COMPACT>
+<DT><B>Z</B>
+
+<DD>
+Pops a value off the stack,
+calculates the number of digits it has
+(or number of characters, if it is a string)
+and pushes that number.
+<DT><B>X</B>
+
+<DD>
+Pops a value off the stack,
+calculates the number of fraction digits it has,
+and pushes that number.
+For a string,
+the value pushed is
+
+0.
+<DT><B>z</B>
+
+<DD>
+Pushes the current stack depth;
+the number of objects on the stack before the execution of the
+<B>z</B>
+
+command.
+</DL>
+<A NAME="lbAL">&nbsp;</A>
+<H2>Miscellaneous</H2>
+
+<DL COMPACT>
+<DT><B>!</B>
+
+<DD>
+Will run the rest of the line as a system command.
+<DT><B>#</B>
+
+<DD>
+Will interpret the rest of the line as a comment.
+<DT><B>:</B><I>r</I>
+
+<DD>
+Will pop the top two values off of the stack.
+The old second-to-top value will be stored in the array
+<I>r</I>,
+
+indexed by the old top-of-stack value.
+<DT><B>;</B><I>r</I>
+
+<DD>
+Pops the top-of-stack and uses it as an index into
+the array
+<I>r</I>.
+
+The selected value is then pushed onto the stack.
+</DL>
+<A NAME="lbAM">&nbsp;</A>
+<H2>NOTES</H2>
+
+<P>
+
+The array operations
+<B>:</B>
+
+and
+<B>;</B>
+
+are usually only used by traditional implementations of
+<I>bc</I>.
+
+(The GNU 
+<I>bc</I>
+
+is self contained and does not need <I>dc</I> to run.)
+The comment operator
+<B>#</B>
+
+is a new command not found in traditional implementations of
+<I>dc</I>.
+
+<A NAME="lbAN">&nbsp;</A>
+<H2>BUGS</H2>
+
+<P>
+
+Email bug reports to
+<B><A HREF="mailto:bug-gnu-utils@prep.ai.mit.edu">bug-gnu-utils@prep.ai.mit.edu</A></B>.
+
+Be sure to include the word ``dc'' somewhere in the ``Subject:'' field.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">Printing Commands</A><DD>
+<DT><A HREF="#lbAF">Arithmetic</A><DD>
+<DT><A HREF="#lbAG">Stack Control</A><DD>
+<DT><A HREF="#lbAH">Registers</A><DD>
+<DT><A HREF="#lbAI">Parameters</A><DD>
+<DT><A HREF="#lbAJ">Strings</A><DD>
+<DT><A HREF="#lbAK">Status Inquiry</A><DD>
+<DT><A HREF="#lbAL">Miscellaneous</A><DD>
+<DT><A HREF="#lbAM">NOTES</A><DD>
+<DT><A HREF="#lbAN">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

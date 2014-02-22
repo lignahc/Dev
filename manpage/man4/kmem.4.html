@@ -1,0 +1,101 @@
+<HTML><HEAD><TITLE>Manpage of MEM</TITLE>
+</HEAD><BODY>
+<H1>MEM</H1>
+Section: 리눅스 프로그래머 메뉴얼 (4)<BR>Updated: 1992년 11월 21일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+mem, kmem, port - 시스템메모리, 커널메모리와 시스템포트.
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>Mem</B>은 컴퓨터 메인메모리의 이미지인 문자장치 파일이며,
+시스템검사에 쓰인다.
+<P>
+
+mem의 바이트주소는 물리적인 메모리주소로 해석된다.
+<P>
+
+검사와 패칭은 read-only나 write-only비트가 주어졌을때, 예기치
+못한 결과를 낳을 수 있다.
+<P>
+
+<B>Mem</B>은 다음에 의해 생성된다:
+<DL COMPACT><DT><DD>
+<P>
+mknod -m 660 /dev/mem c 1 1
+<BR>
+
+chown root:mem /dev/mem
+<P>
+</DL>
+
+<P>
+
+kmem파일은 물리적 메모리보다는 커널 가상메모리가 액세스되는 것을
+제외하고는 mem파일과 같다.
+<P>
+
+kmem은 다음에 의해 생성된다:
+<DL COMPACT><DT><DD>
+<P>
+mknod -m 640 /dev/kmem c 1 2
+<BR>
+
+chown root:mem /dev/kmem
+<P>
+</DL>
+
+<P>
+
+<B>Port</B>는 IO포트가 액세스되는 걸 제외하고는
+mem과 같다.
+<P>
+
+<B>Port</B>은 다음에 의해 생성된다:
+<DL COMPACT><DT><DD>
+<P>
+mknod -m 660 /dev/port c 1 4
+<BR>
+
+chown root:mem /dev/port
+<P>
+</DL>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>파일</H2>
+
+/dev/mem
+<BR>
+
+/dev/kmem
+<BR>
+
+/dev/port
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mknod">mknod</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+chown">chown</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+ioperm">ioperm</A></B>(2)
+
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">파일</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,121 @@
+<HTML><HEAD><TITLE>Manpage of ftpservers</TITLE>
+</HEAD><BODY>
+<H1>ftpservers</H1>
+Section: File Formats (5)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ftpservers - ftpd 가상 호스트 설정을 정의하는 file
+<P>
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<P>
+ftpservers file은
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A>(8)</B>
+
+server가 사용하던 가상호스트 설정 파일을 지정하는데 사용되어 진다.
+가상 호스트 지원을 가능하게 compile했을때, wu-ftpd는 각 virtual
+domain에 대한 설정 파일을 분리해서 사용이 가능하게 되어 있다.
+<P>
+현재, 설정 파일들은 분리되어진 가상 domain 디렉토리에 위치해 있다.
+설정 파일에서 사용되어 지는 directory 경로와 IP address는 ftpservers
+file에 나열이 된다. 실제 설정 파일들은 해당 디렉토리 안에 아래의
+이름을 가진 파일들을 포함하고 있어야 한다:
+<P>
+
+<P>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;ftpaccess&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;가상&nbsp;doamin&nbsp;접근&nbsp;파일
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;ftpusers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;접근을&nbsp;거부할&nbsp;계정들을&nbsp;설정
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;ftpgroups&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;SITE&nbsp;GROUP&nbsp;and&nbsp;SITE&nbsp;GPASS&nbsp;지원
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;ftphosts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;가상&nbsp;도메인에&nbsp;접근&nbsp;가능한&nbsp;대역을&nbsp;설정
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;ftpconversions&nbsp;-&nbsp;가상&nbsp;도메인에서&nbsp;사용&nbsp;가능한&nbsp;전환&nbsp;명령을을&nbsp;최적화
+<P>
+각 가상 domain directory에 모든 설정 파일들을 가지고 있을 필요는 없다.
+만약 주 도메인의 설정을 그대로 사용하려 한다면, ftpconversions
+file 같은 것들을 예를 든다면, 가상 도메인 directory에 구태여 이 파일을
+넣을 필요는 없다는 것이다. 이렇게 가상 도메인 directory에 포함되어
+있지 않은 설정파일들은 주 도메인의 설정 파일을 불러들이게 된다.
+<BR>&nbsp;
+<B>주의!!!: </B>
+
+가상 도메인 directory에 들어가는 파일들은 위의 list와 정확하게
+match되어져야 한다. 만약 이름에 오타가 있을 경우에는 해당 파일을
+찾지 못하게 되며 주 도메인 설정 파일로 대체를 하게 된다.
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>ftpservers file 형식</H2>
+
+<P>
+각 entry에는 2개의 field가 존재한다.
+<P>
+<B>ipaddr/hostname   directory-containing-configuration-files</B>
+
+<P>
+예제:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;10.196.145.10&nbsp;&nbsp;&nbsp;&nbsp;/etc/ftpd/ftpaccess.somedomain/
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;10.196.145.200&nbsp;&nbsp;&nbsp;/etc/ftpd/ftpaccess.someotherdomain/
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;some.domain&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTERNAL
+<P>
+ftp client가 server로 접속을 할때, ftpd는 ftpservers file에서 발견한
+ftp client가 접속을 할 ip address를 매치시키려 한다.
+<P>
+매치가 되는 것을 발견을 하면, 해당 도메인에 대한 디렉토리 경로와
+설정 파일들을 반환하게 된다. ftpd는 이 디렉토리에 들어 있는 설정
+파일들을 사용하게 된다.
+<P>
+설정 파일에 match되는 것이 없거나, directory 경로가 정의가 잘못
+되어 있을 경우, 설정 파일의 기본 경로를 사용하게 된다.
+위의 예제중 INTERNAL의 사용은 주 도메인의 설정 파일을 사용하도록
+하게 한다.
+<P>
+가상 도메인을 지정할때 실제 IP address와 hostname 모두 설정이
+가능하다. 다만 hostname으로 지정할 경우 DNS lookup이 필요하고
+또한 DNS 버그와도 관련이 되어 질수 있으므로 왠만하면 ip address로
+지정을 하는 것을 권장한다.
+<P>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;10.196.145.20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/etc/ftpd/config/faqs.org/
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="ftp://ftp.some.domain">ftp.some.domain</A>&nbsp;&nbsp;&nbsp;/etc/ftpd/config/faqs.org/
+<P>
+주석처리시에는 # 표시를 사용하며, 중복 주석 라인과 공백 라인은
+무시되어 진다.
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A>(8)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpaccess">ftpaccess</A>(5)</B>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ftplog">ftplog</A>(5)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ftpconversions">ftpconversions</A>(5)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ftphosts">ftphosts</A>(5)</B>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>역자</H2>
+
+김정균 &lt;<A HREF="mailto:admin@oops.org">admin@oops.org</A>&gt; 2000년 7월 23일
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">ftpservers file 형식</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+<DT><A HREF="#lbAF">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

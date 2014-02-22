@@ -1,0 +1,209 @@
+<HTML><HEAD><TITLE>Manpage of INTRO</TITLE>
+</HEAD><BODY>
+<H1>INTRO</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1996년 5월 2일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+intro - 시스템 콜에 대한 소개
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+여기서는 리눅스 시스템 콜을 설명한다. 리눅스 2.0에 있는 164개의 시스템 콜의 
+목록은 <A HREF="http://localhost/cgi-bin/man/man2html?2+syscalls">syscalls</A>(2)를 보아라.
+<A NAME="lbAD">&nbsp;</A>
+<H3>직접 호출하기</H3>
+
+대부분의 경우, 시스템 콜을 직접 호출할 필요는 없지만, 당신에게 필요한 함수가
+표준 C 라이브러리에 구현되지 않는 경우도 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>사용법</H3>
+
+<B>#include &lt;<A HREF="file:/usr/include/linux/unistd.h">linux/unistd.h</A>&gt;</B>
+
+<P>
+_syscall 매크로
+<P>
+원하는 시스템 콜
+<P>
+<A NAME="lbAF">&nbsp;</A>
+<H3>설정</H3>
+
+시스템 콜에 대해 알아야 하는 중요한 사항은 프로토타입이다. 인자의 개수, 인자의
+타입과 함수 리턴 타입을 알 필요가 있다. 시스템으로의 실제적인 호출을 더 쉽게 
+해주는 6개의 매크로가 있다. 다음과 같은 형식이다:
+<P>
+<DL COMPACT><DT><DD>
+_syscall<I>X</I>(<I>type</I>,<I>name</I>,<I>type1</I>,<I>arg1</I>,<I>type2</I>,<I>arg2</I>,...)
+
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT>
+<I>X</I>는 0-5, 시스템 콜이 취하는 인자의 개수이다.
+<DD>system call
+<DT>
+<I>type</I>는 시스템 콜의 리턴 타입
+<DT>
+<I>name</I>는 시스템 콜의 이름
+<DT>
+<I>typeN</I>는 N번째 인자의 타입
+<DT>
+<I>argN</I>는 N번째 인자의 이름
+</DL>
+</DL>
+
+</DL>
+
+<P>
+이 매크로는 명시한 인자를 갖는 <I>name</I> 이름의 함수를 만든다. 소스 파일에
+_syscall()을 포함시키면, <I>name</I>으로 시스템 콜을 호출할 수 있다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>예제</H2>
+
+<PRE>
+
+#include &lt;<A HREF="file:/usr/include/stdio.h">stdio.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/linux/unistd.h">linux/unistd.h</A>&gt;       /* _syscallX 매크로/관련된 것 */
+#include &lt;<A HREF="file:/usr/include/linux/kernel.h">linux/kernel.h</A>&gt;       /* struct sysinfo */
+
+_syscall1(int, sysinfo, struct sysinfo *, info);
+
+/* 주의: nroff 소스에서 바로 복사를 한다면, printf 문에서 
+여분의 백슬레쉬(\)를 지워야한다. */
+
+<DD>int main(void)
+{
+        struct sysinfo s_info;
+        int error;
+
+        error = sysinfo(&amp;s_info);
+        printf(&quot;code error = %d\n&quot;, error);
+        printf(&quot;Uptime = %ds\nLoad: 1 min %d / 5 min %d / 15 min %d\n&quot;
+                &quot;RAM: total %d / free %d / shared %d\n&quot;
+                &quot;Memory in buffers = %d\nSwap: total %d / free %d\n&quot;
+                &quot;Number of processes = %d\n&quot;,
+                s_info.uptime, s_info.loads[0],
+                s_info.loads[1], s_info.loads[2],
+                s_info.totalram, s_info.freeram,
+                s_info.sharedram, s_info.bufferram,
+                s_info.totalswap, s_info.freeswap,
+                s_info.procs);
+        return(0);
+}
+</PRE>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>예제 출력</H2>
+
+<PRE>
+code error = 0
+uptime = 502034s
+Load: 1 min 13376 / 5 min 5504 / 15 min 1152
+RAM: total 15343616 / free 827392 / shared 8237056
+Memory in buffers = 5066752
+Swap: total 27881472 / free 24698880
+Number of processes = 40
+</PRE>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>주의</H2>
+
+_syscall() 매크로는 프로토타입을 만들지는 않는다. 특히 C++ 사용자라면,
+프로토타입은 생성해야만 할 것이다.
+<P>
+시스템 콜은 양수나 음수 에러 코드만을 리턴해야만 하지는 않는다. 어떻게 
+에러를 리턴하는지를 알려면 소스를 읽을 필요가 있다. 보통 음수는 표준 
+에러 코드이다. 즉, -<B>EPERM</B>. _syscall() 매크로는 <I>r</I>이 음수가
+아닐 때 <I>r</I>를 리턴하지만, <I>r</I>이 음수일 때 -<I>r</I>를 
+<I>errno</I>에
+
+설정하고 -1을 리턴한다. 에러 코드에 대해서는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+errno">errno</A></B>(3)을
+
+보아라.
+<P>
+<B>mmap</B>과
+
+같은 몇몇의 시스템 콜은 5개 이상의 인자를 갖는다. 이는 인자를 스택에 
+넣고 인자 블럭을 포인터를 넘기는 방법으로 처리된다.
+<P>
+시스템 콜을 정의할 때, 인자는 반드시 값이나 포인터(구조체 같은 집합형의 
+경우)로 넘겨져야만 한다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>호환</H2>
+
+시스템 콜이 어떤 유닉스 변형이나 표준과 호환이 되는지 나타내는 코드는
+다음과 같다:
+<DL COMPACT>
+<DT>SVr4<DD>
+시스템 V 릴리즈 4 유닉스 (System V Release 4 Unix), &quot;Programmer's Reference
+Manual: Operating System API (Intel processors)&quot; (Prentice-Hall
+1992, ISBN 0-13-951294-2)에 설명되있다.
+<DT>SVID<DD>
+시스템 V 인터페이스 정의 (System V Interface Definition), &quot;The System V Interface
+Definition, Fourth Edition&quot;에 설명되있고, 이는
+<A HREF="ftp://ftp.fpk.novell.com/pub/unix-standards/svid에">ftp://ftp.fpk.novell.com/pub/unix-standards/svid에</A> 포스트스크립트 
+파일로 있다.
+<DT>POSIX.1<DD>
+IEEE 1003.1-1990 part 1, 별칭 ISO/IEC 9945-1:1990s, 별칭 &quot;IEEE Portable
+Operating System Interface for Computing Environments&quot;,
+Donald Lewine의 &quot;POSIX Programmer's Guide&quot; (O'Reilly &amp; Associates,
+Inc., 1991, ISBN 0-937175-73-0)에 설명되있다.
+<DT>POSIX.1b<DD>
+IEEE Std 1003.1b-1993 (POSIX.1b standard)는 포터블 운영 체제를 위한 실시간
+인터페이스를 설명한다, 별칭 ISO/IEC 9945-1:1996,
+Biil O. Gallmeister의 &quot;Programming for the real world - POSIX.4&quot;
+(O'Reilly &amp; Associates, Inc. ISBN 1-56592-074-0)에 설명되있다.
+<DT>SUS, SUSv2<DD>
+단일 유닉스 명세 (Single Unix Specification).
+(X/Open과 The Open Group에서 만들었다. 
+<A HREF="http://www.UNIX-systems.org/version2/를">http://www.UNIX-systems.org/version2/를</A> 참조하라.)
+<DT>4.3BSD/4.4BSD<DD>
+버클리 유닉스의 4.3과 4.3 배포본. 4.4BSD는 4.3부터 호환성이 유지되었다.
+<DT>V7<DD>
+버전 7 (Version 7), 벨 연구소의 원조 유닉스.
+</DL>
+<A NAME="lbAK">&nbsp;</A>
+<H2>파일</H2>
+
+<I>/usr/include/linux/unistd.h</I>
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+errno">errno</A></B>(3)
+
+<A NAME="lbAM">&nbsp;</A>
+<H2>역자</H2>
+
+임종균 &lt;<A HREF="mailto:hermes44@secsm.org">hermes44@secsm.org</A>&gt;, 2000년 4월 19일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAD">직접 호출하기</A><DD>
+<DT><A HREF="#lbAE">사용법</A><DD>
+<DT><A HREF="#lbAF">설정</A><DD>
+</DL>
+<DT><A HREF="#lbAG">예제</A><DD>
+<DT><A HREF="#lbAH">예제 출력</A><DD>
+<DT><A HREF="#lbAI">주의</A><DD>
+<DT><A HREF="#lbAJ">호환</A><DD>
+<DT><A HREF="#lbAK">파일</A><DD>
+<DT><A HREF="#lbAL">관련 항목</A><DD>
+<DT><A HREF="#lbAM">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

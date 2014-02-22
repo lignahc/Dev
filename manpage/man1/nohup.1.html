@@ -1,0 +1,88 @@
+<HTML><HEAD><TITLE>Manpage of NOHUP</TITLE>
+</HEAD><BODY>
+<H1>NOHUP</H1>
+Section: Misc. Reference Manual Pages (1L)<BR>Updated: GNU 쉘 유틸리티<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+nohup - Hangup에 무관하게 명령을 수행하고 tty아닌 곳에 출력을 하도록 한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>nohup</B>
+
+명령 [인수...]
+<BR>
+
+<B>nohup</B>
+
+{--help,--version}
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+이 맨페이지는 GNU 버전의
+<B>nohup</B>
+
+을 다룬다.
+<B>nohup</B>
+
+은
+<I>명령</I>
+
+에 대하여 Hangup 신호를 무시한 채 수행하며 우선권을 5 만큼 증가시켜
+여러분이 로그아웃한 후에도 계속 백그라운드로 실행할 수 있도록 해준다.
+만약 표준출력이 tty 였다면 표준출력과 표준에러는 `nohup.out'이라는 화일에
+추가된다. 쓰기 작업이 불가능한 경우에는 `$HOME/nohup.out' 화일에 추가된다.
+그것도 불가능한 경우에는 실행이 되지 않는다.
+<P>
+
+If
+<B>nohup</B>
+
+은 `nohup.out' 또는 `$HOME/nohup.out' 화일을 생성하고 그룹/타인에게는 접근
+권한을 부여하지 않는다. 만약 존재한다면 기존의 허가권을 변화시키지는 않는다.
+<P>
+
+<B>nohup</B>
+
+은 실행한 명령을 자동으로 백그라운드로 보내지 않는다; 여러분은 명령행 뒤에
+`&amp;' 문자를 붙인다든지 하여 명시적으로 백그라운드로 보내주어야 한다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+GNU
+<B>nohup</B>
+
+이 단 하나의 인수를 가지고 실행되면 다음 옵션들이 인식된다:
+<DL COMPACT>
+<DT><I>--help</I>
+
+<DD>
+표준출력으로 사용법을 출력하고 정상적으로 종료한다.
+<DT><I>--version</I>
+
+<DD>
+표준출력으로 버전정보를 출력하고 정상적으로 종료한다.
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

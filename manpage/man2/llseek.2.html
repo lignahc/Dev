@@ -1,0 +1,119 @@
+<HTML><HEAD><TITLE>Manpage of LLSEEK</TITLE>
+</HEAD><BODY>
+<H1>LLSEEK</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1995년 6월 10일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+_llseek - 읽기/쓰기 파일 변위(offset)을 재배치한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>#include &lt;<A HREF="file:/usr/include/linux/unistd.h">linux/unistd.h</A>&gt;</B>
+
+<P>
+<B>_syscall5(int, _llseek, uint, fd, ulong, hi, ulong, lo, loff_t *, res, uint, wh);</B>
+
+<P>
+<B>int _llseek(unsigned int </B><I>fd</I><B>, unsigned long </B><I>offset_high</I><B>, unsigned long </B><I>offset_low</I><B>, loff_t * </B><I>result</I><B>, unsigned int </B><I>whence</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>_llseek</B>
+
+함수는 파일 시작 혹은 
+<I>whence</I>
+
+가 
+<B>SEEK_SET</B>,
+
+<B>SEEK_CUR</B>,
+
+<B>SEEK_END</B>,
+
+에 각각 영향을 받는
+파일의 끝부분과 관련된
+<I>(offset_high&lt;&lt;32) | offset_low</I>
+
+바이트에 파일 디스크립터
+<I>fd</I>
+
+의 변위(offset)를 재배치한다.
+인수 
+<I>result</I>
+
+에 결과 파일 위치를 반환한다.
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+성공시
+<B>_llseek</B>
+
+는 0을 반환한다. 그 외에는 -1을 반환하고
+<I>errno</I>
+
+는 에러를 지정하기 위해 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>ERRORS</H2>
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+<I>fd</I>
+
+는 파일열기 디스크립터가 아니다.
+<DT><B>EINVAL</B>
+
+<DD>
+<I>whence</I>
+
+는 유효하지 않다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>CONFORMING TO</H2>
+
+이 함수는 리눅스에서만 쓰이며, 다른 프로그램에서 쓰여서는 안된다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>BUGS</H2>
+
+ext2 파일시스템은 2GB이상의 파일은 지원하지 않는다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+lseek">lseek</A></B>(2)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 27일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAF">ERRORS</A><DD>
+<DT><A HREF="#lbAG">CONFORMING TO</A><DD>
+<DT><A HREF="#lbAH">BUGS</A><DD>
+<DT><A HREF="#lbAI">SEE ALSO</A><DD>
+<DT><A HREF="#lbAJ">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

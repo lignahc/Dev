@@ -1,0 +1,262 @@
+<HTML><HEAD><TITLE>Manpage of DATE</TITLE>
+</HEAD><BODY>
+<H1>DATE</H1>
+Section: Misc. Reference Manual Pages (1L)<BR>Updated: GNU 쉘 유틸리티<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+date - 시스템 시간과 날짜를 출력/설정한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>date</B>
+
+[-u] [-d datestr] [-s datestr] [--utc] [--universal]
+[--date=datestr] [--set=datestr] [--help] [--version]
+[+FORMAT] [MMDDhhmm[[CC]YY][.ss]]
+<A NAME="lbAD">&nbsp;</A>
+<H2>개요</H2>
+
+이 맨페이지는 GNU 버전의
+<B>date</B>
+
+를 설명한다.
+아무 인수없이 실행하면
+<B>date</B>
+
+는 현재 시간과 날짜(아래에서 설명할 `%c' 지시자의 형태대로)를 출력한다.
+`+'로 시작하는 옵션이 있으면 현재 시간과 날짜를 주어진 인수가 지시하는
+형식으로 출력한다. 이는 `strftime' 함수에 주어지는 형식 문자열과
+같은 형식이다. `%'로 시작하는 지시자(directive)를 제외하고 문자열에 포함된
+모든 문자가 그대로 출력된다.
+<P>
+
+지시자에는 다음과 같은 것들이 있다:
+<DL COMPACT>
+<DT>%<DD>
+% 문자 그 자체
+<DT>n<DD>
+줄바꿈
+<DT>t<DD>
+수평 탭
+</DL>
+<P>
+
+시간 필드:
+<DL COMPACT>
+<DT>%H<DD>
+시 (00..23)
+<DT>%I<DD>
+시 (01..12)
+<DT>%k<DD>
+시 ( 0..23)
+<DT>%l<DD>
+시 ( 1..12)
+<DT>%M<DD>
+분 (00..59)
+<DT>%p<DD>
+로케일의 AM 또는 PM
+<DT>%r<DD>
+시간, 12-시간제 (hh:mm:ss [AP]M)
+<DT>%s<DD>
+1970-01-01 00:00:00 UTC (비표준 확장기능)로 부터 경과된 초
+<DT>%S<DD>
+초 (00..61)
+<DT>%T<DD>
+시간, 24-시간 (hh:mm:ss)
+<DT>%X<DD>
+로케일에서 정의한 시간 표현(%H:%M:%S)
+<DT>%Z<DD>
+시간대 (에, EDT), 시간대를 결정할 수 없는 때는 아무 값도 출력하지 않는다.
+</DL>
+<P>
+
+날짜 필드:
+<DL COMPACT>
+<DT>%a<DD>
+로케일의 약식 요일 이름 (Sun..Sat)
+<DT>%A<DD>
+로케일의 완전한 요일 이름, 가변 길이 (Sunday..Saturday)
+<DT>%b<DD>
+로케일의 약식 월 이름 (Jan..Dec)
+<DT>%B<DD>
+로케일의 완전한 월 이름, 가변 길이 (January..December)
+<DT>%c<DD>
+로케일의 날짜와 시간 (Sat Nov 04 12:02:33 EST 1989)
+<DT>%d<DD>
+월 중 일 (01..31)
+<DT>%D<DD>
+날짜 (mm/dd/yy)
+<DT>%h<DD>
+%b 와 동일
+<DT>%j<DD>
+연 중 일 (001..366)
+<DT>%m<DD>
+월 (01..12)
+<DT>%U<DD>
+연 중 주 번호, 일요일을 주의 첫번째 날로 생각 (00..53)
+<DT>%w<DD>
+요일 번호 (0..6), 0 은 일요일
+<DT>%W<DD>
+연 중 주 번호, 월요일을 주의 첫번째 날로 생각 (00..53)
+<DT>%x<DD>
+로케일의 날짜 표현식 (mm/dd/yy)
+<DT>%y<DD>
+연 중 일의 마지막 두 숫자 (00..99)
+<DT>%Y<DD>
+연 (1970...)
+</DL>
+<P>
+
+기본적으로,
+<B>date</B>
+
+은 숫자 필드를 0 으로 채운다.
+GNU
+<B>date</B>
+
+는 다음과 같은 비표준 수치 변형자를 인식한다:
+<DL COMPACT>
+<DT>-<DD>
+(하이픈) 필드를 채우지 않는다.
+<DT>_<DD>
+(언더스코어) 필드를 공백으로 채운다.
+</DL>
+<P>
+
+`+'로 시작하지 않는 인수가 있다면,
+<B>date</B>
+
+는 시스템 시계를 주어진 시간과 날짜로 설정한다.
+인수는 모두 숫자로 구성되어 있으며 다음과 같은 의미를 지닌다:
+<DL COMPACT>
+<DT>MM<DD>
+월
+<DT>DD<DD>
+월 중 일
+<DT>hh<DD>
+시
+<DT>mm<DD>
+분
+<DT>CC<DD>
+연도의 처음 두 숫자 (선택적)
+<DT>YY<DD>
+연도의 나중 두 숫자 (선택적)
+<DT>ss<DD>
+초 (선택적)
+</DL>
+<P>
+
+오로지 수퍼유저만 시스템 시계를 변경할 수 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>옵션</H3>
+
+<DL COMPACT>
+<DT><I>-d datestr, --date datestr</I>
+
+<DD>
+<I>datestr</I>
+
+에서 지시한 대로 시간과 날짜를 출력한다.
+이 형태는 거의 모든 공통 형식을 사용할 수 있다.
+출력은 기본적인 출력 형식을 띠거나 `+' 로 시작하는 인수가 있을 때
+<B>date</B>
+
+는 인수에서 주어진 대로 출력한다.
+<DT><I>--help</I>
+
+<DD>
+표준출력으로 사용법을 출력하고 정상적으로 종료한다.
+<DT><I>-s datestr, --set datestr</I>
+
+<DD>
+시간과 날짜를
+<I>datestr</I>로<I>설정하며</I>그<I>형식은</I>거의<I>모든</I>공통<I>형식을</I>사용할<I>수</I>있다.
+
+월 이름, 시간대, `오전',`오후' 등을 포함할 수 있다.
+<DT><I>-u, --universal</I>
+
+<DD>
+시간과 날짜를 지역 시간이 아니라
+Coordinated Universal Time ( 그리니치 표준시 ) 형식으로
+출력하거나 설정한다.
+<DT><I>--version</I>
+
+<DD>
+표준출력으로 버전정보를 출력하고 정상적으로 종료한다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>예</H2>
+
+<P>
+
+이틀 전의 날짜를 출력하기 위해서는
+<DL COMPACT>
+<DT><DD>
+date --date '2 days ago'
+</DL>
+<P>
+
+3 개월하고 하루 지난 날짜를 출력하기 위해서는
+<DL COMPACT>
+<DT><DD>
+date --date '3 months 1 day'
+</DL>
+<P>
+
+올해 크리스마스 날짜를 출력하기 위해서는
+<DL COMPACT>
+<DT><DD>
+date --date '25 Dec' +%j
+</DL>
+<P>
+
+오늘 날짜를 완전한 월 이름, 월 중 일을 포함하는 형식으로 출력하기 위해서는
+<DL COMPACT>
+<DT><DD>
+date '+%B %d'
+</DL>
+<P>
+
+하지만 처음 9 일에 대하여 '%d'는 2 자리를 맞추기 위하여 0을 채우기 때문에
+예를 들어 `date -d 1-may '+%B %d'' 라고 하면
+`May 01' 라고 출력하므로 원하는 결과가 아닐 수도 있다.
+<P>
+
+한 자리 수 날짜에 대하여 앞에 0 이 안나타도록 하기 위해서는 비표준인
+`-' 변형자를 사용하여 채움을 막는다.
+<DL COMPACT>
+<DT><DD>
+date -d 1-may '+%B %-d'
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>번역</H2>
+
+이만용 &lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt; &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;
+<BR>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>) 2005년 1월 30일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">개요</A><DD>
+<DL>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+<DT><A HREF="#lbAF">예</A><DD>
+<DT><A HREF="#lbAG">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 03:56:03 GMT, January 31, 2005
+</BODY>
+</HTML>

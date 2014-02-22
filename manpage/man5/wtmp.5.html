@@ -1,0 +1,215 @@
+<HTML><HEAD><TITLE>Manpage of UTMP</TITLE>
+</HEAD><BODY>
+<H1>UTMP</H1>
+Section: 파일 포맷 (5)<BR>Updated: 1997년 7월 2일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+utmp, wtmp - 로그인 레코드.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+#include &lt;<A HREF="file:/usr/include/utmp.h">utmp.h</A>&gt;
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>utmp</B>
+
+파일은 현재 누가 시스템을 사용하고 있는지에 대한 정보를 알려준다. 
+모든 프로그램이 utmp 로그를 사용하는 것은 아니기 때문에, 현재 더 많은 사용자가 있을 수 있다.
+<P>
+
+<B>Warning:</B> <B>utmp</B> 는 쓰기가 가능하지 않아야 한다. 왜냐하면 많은 프로그램 들이 (어리석게도) 이것의 완전하리라 생각하기 때문이다. <B>utmp</B> 를 쓰기가능 상태로 두면, 가짜 시스템 로그파일이 생길 수도 있고, 시스템 파일이 변경 될 수도 있다.
+<P>
+
+이 파일은 안에 포함된 파일에 선언된 구조에 따른 엔트리의 시퀀스이다.
+(이것은 여러 정의 중 하나임을 명심하자; 자세한 것은 libc의 버전에 따라 다르다.):
+<DL COMPACT><DT><DD>
+<PRE>
+
+
+#define BOOT_TIME             2
+#define NEW_TIME              3
+#define OLD_TIME              4
+#define INIT_PROCESS          5
+#define LOGIN_PROCESS         6
+#define USER_PROCESS          7
+#define DEAD_PROCESS          8
+#define ACCOUNTING            9
+
+#define UT_LINESIZE           12
+#define UT_NAMESIZE           32
+#define UT_HOSTSIZE           256
+
+struct exit_status {
+  short int e_termination;    /* process termination status.  */
+  short int e_exit;           /* process exit status.  */
+};
+
+struct utmp {
+  short ut_type;              /* type of login */
+  pid_t ut_pid;               /* pid of login process */
+  char ut_line[UT_LINESIZE];  /* device name of tty - &quot;/dev/&quot; */
+  char ut_id[4];              /* init id or abbrev. ttyname */
+  char ut_user[UT_NAMESIZE];  /* user name */
+  char ut_host[UT_HOSTSIZE];  /* hostname for remote login */
+  struct exit_status ut_exit; /* The exit status of a process
+                                 marked as DEAD_PROCESS. */
+  long ut_session;            /* session ID, used for windowing*/
+  struct timeval ut_tv;       /* time entry was made.  */
+  int32_t ut_addr_v6[4];      /* IP address of remote host.  */
+  char pad[20];               /* Reserved for future use.  */
+};
+
+/* Backwards compatibility hacks.  */
+#define ut_name ut_user
+#ifndef _NO_UT_TIME
+#define ut_time ut_tv.tv_sec
+#endif
+#define ut_xtime ut_tv.tv_sec
+#define ut_addr ut_addr_v6[0]
+
+</PRE>
+
+</DL>
+
+이 구조는 사용자의 터미널, 사용자의 로그인명, 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+time">time</A></B>(2)
+
+의 형태로 나타낸 로그인 시간에 관련된 특수 파일의 이름을 출력한다.
+영역의 크기보다 작다면 문자열 영역은 <B>'\0'</B>로 끝난다.
+<P>
+
+첫번째 엔트리는 항상 <I><A HREF="http://localhost/cgi-bin/man/man2html?5+inittab">inittab</A></I>(5)를 실행하는 <I><A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A></I>(8)로 인한 결과를 생성한다.
+엔트리가 실행되기 전에, <I><A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A></I>(8)는 <B>ut_type</B>를 <B>DEAD_PROCESS</B>로 설정하고, <B>ut_type</B>는 <B>DEAD_PROCESS</B>나 <B>RUN_LVL</B>가 아니고, PID <B>ut_pid</B>로 실행하는 것이 없는 각각의 기록을 위해,<B>ut_user</B>, <B>ut_host</B>, <B>ut_time</B>을 null 바이트로 지움으로써 utmp를 지운다. 
+필요한 <B>ut_id</B> 에 빈 기록을 찾을 수 없다면, init는 새로운 것을 만든다.
+이것은 inittab, <B>ut_pid</B>, <B>ut_time</B>로부터 <B>ut_id</B>을 현제 값으로, <B>ut_type</B>을 <B>INIT_PROCESS</B>로 설정한다.
+<P>
+
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+getty">getty</A></I>(8)는 pid로 엔트리를 찾고, <B>ut_type</B>를 <B>LOGIN_PROCESS</B>로 바꾸고, <B>ut_time</B>을 바꾸고, <B>ut_line</B>을 설정하고, 접속을 기다린다.
+믿을 수 있음이 증명된 후에, <I><A HREF="http://localhost/cgi-bin/man/man2html?8+login">login</A></I>(8)은 <B>ut_type</B>을 <B>USER_PROCESS</B>로 바꾸고, <B>ut_time</B>을 바꾸고, <B>ut_host</B>와 <B>ut_addr</B>을 설정한다
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+getty">getty</A></I>(8)와 <I><A HREF="http://localhost/cgi-bin/man/man2html?8+login">login</A></I>(8)에 따라, 기록은 적당한 <B>ut_pid</B> 대신, <B>ut_line</B>으로 발견된다.
+
+<P>
+
+
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A></I>(8)는 프로세스가 종료된 것을 발견하면, utmp 항목을  <B>ut_pid</B> 옆에 
+위치시키고, <B>ut_type</B>를 READ_PROCESS으로 설정하며, <B>ut_user</B>, 
+<B>ut_host</B> 그리고 <B>ut_time</B>를  null 바이트로 소거한다.  
+
+<I><A HREF="http://localhost/cgi-bin/man/man2html?1+xterm">xterm</A></I>(1)와 다른 터미널 에뮬레이터는 <B>USER_PROCESS</B> 기록을 만들고, 
+<B>/dev/ttyp</B><I>%c</I>의 마지막 두문자를 사용하거나,   <B>/dev/pts/</B><I>%d</I>에 
+대한 <B>p</B><I>%d</I>를 사용함으로서, <B>ut_id</B>를 생성시킨다. 만일 이들이 이 ID에 대한
+<BR>&nbsp;<B>DEAD_PROCESS</B>를&nbsp;발견한다면,&nbsp;그들은&nbsp;이를&nbsp;재사용할&nbsp;것이고,&nbsp;그렇지&nbsp;않으면,&nbsp;새로운&nbsp;엔트리를
+만든다. 만일 발견할 수 있다면, 그 아이디를 <B>DEAD_PROCESS</B>로서 표기하고, 이들은 또한   
+<B>ut_line</B>, <B>ut_time</B>, <B>ut_user</B> 그리고 <B>ut_host</B>로 null 처리한다.
+
+<P>
+
+할당된 터미널이 없으면, <I><A HREF="http://localhost/cgi-bin/man/man2html?8+xdm">xdm</A></I>(8)는 utmp 기록을 만들어서는 안된다. 이를 하나 만들도록 허용하는 것은 
+다음과 같은 문제들의 원인이 된다. 핑거(finger), /dev/machine.dom을 시작할 수 없다. 그러나, 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+ftpd">ftpd</A></I>(8)가 하는 것처럼  wtmp 엔트리를 만들어야 한다. 
+<P>
+
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+telnetd">telnetd</A></I>(8)은 <B>LOGIN_PROCESS</B> 엔트리를 설정하고, <I><A HREF="http://localhost/cgi-bin/man/man2html?8+login">login</A></I>(8) 나머지 부분은 
+보통과 같이 남겨둔다. 텔넷 세션이 끝난후, <I><A HREF="http://localhost/cgi-bin/man/man2html?8+telnetd">telnetd</A></I>(8)는 utmp는 설명한 방식으로 소거한다. 
+
+<B>wtmp</B> 파일은 모든 로그인과 로그아웃을 기록한다. 이 파일의 포맷은 널 사용자 이름이
+관련된 터미널에서 로그아웃을 가리키는 것을 제외하고는 거의 <B>utmp</B>과 비슷하다. 더욱이,
+사용자 이름 <B>&quot;shutdown&quot;</B> 혹은 <B>&quot;reboot&quot;</B>을 지닌 터미널 이름 <B>&quot;~&quot;</B>은 시스템
+<BR>&nbsp;셧다운&nbsp;혹은&nbsp;리부트를&nbsp;가리키고,&nbsp;&nbsp;터미널&nbsp;이름쌍&nbsp;<B>&quot;|&quot;</B>/<B>&quot;}&quot;</B>은&nbsp;&nbsp;<I><A HREF="http://localhost/cgi-bin/man/man2html?1+date">date</A></I>(1)이&nbsp;이를&nbsp;
+변경시킬 때, 오래된/새로운 시스템을 로그로 기록한다.   <B>wtmp</B>은 <I><A HREF="http://localhost/cgi-bin/man/man2html?1+login">login</A></I>(1), 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?1+init">init</A></I>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+WfIgetty">WfIgetty</A>(1)의 일부 버전에 의해 유지된다.  이러한 프로그램들중 하나도 파일을 
+만들지 못하므로, 만일 삭제되면, 기록 유지는 되지 않는다. 
+<A NAME="lbAE">&nbsp;</A>
+<H2>파일</H2>
+
+/var/run/utmp
+<BR>
+
+/var/log/wtmp
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+
+리눅스 utmp 엔트리는 v7/BSD 이나 SYSV도 따르지 않는다. 이들은 앞의 두가지의 혼합이다. 
+v7/BSD는 더적은 필드를 갖고 있으며, 가장 중요한 것은 죽은 엔트리나 로그인 엔트리를 보여주도록 
+하는  v7/BSD 유사 프로그램들이 부족하다는데 있다. 더우기, 세션에 슬롯을 할당할 설정파일이 없다. 
+<B>ut_id</B> 필드가 없기 때문에, BSD는 역시 그러하다. 
+
+리눅스에서, <B>ut_id</B> 필드 기록은 일단 설정되면 절대 변경되지 않는다. 즉, 일단 설정 되면, 
+설정 파일이 필요없이, 그 슬롯을 남겨둔다.  <B>ut_id</B> 를 소거하면, 붕괴된 utmp 
+엔트리들과 잠재적인 보안 구멍들을 초래할 수 있는 상태를 만든다. 위에 언급했던 필드들을 null 바이트로
+채움으로서 소거하는 것은 SYSV에서는 요구되지 않지만, 많은 프로그램들이 실행되도록 허용한다. 리눅스는
+행의 내용에 있어, BSD 전통을 사용한다.  
+
+<P>
+
+SYSV는 이들을 표시하기 위해 오직 유형 필드를 사용하고, 행 필드내에 
+ <B>&quot;new time&quot;</B>와 같은 정보성 메시지들을 기록한다. <B>UT_UNKNOWN</B>는 
+리눅스에서만 볼 수 있는 것 같다.  
+<P>
+
+이 파일을삭제함으로서 utmp 로깅이 보이는 다양한 다른 시스템들과는 달리, utmp는 리눅스 상에서 
+항상 존재한다. 만일 여러분이 <I><A HREF="http://localhost/cgi-bin/man/man2html?1+who">who</A></I>(1)의 기능을 정지시키면, utmp 영역이 읽혀지지 않도록 해야 한다.  
+<P>
+
+libc5에서 utmp 구조체는 libc6내에서 변경되었다는 것을 참조하라. 이 때문에, 이전의 
+libc5 구조체를 사용하는 바이너리들은 .IR /var/run/utmp 과 /var/log/wtmp를 붕괴시킨다.
+
+데비안 시스템들은 새로운 utmp 포맷을 사용하는 패치된 libc5를 포함한다.  libc5에서 직접 액세스되기 때문에,
+utmp에 있어 문제는 여전히 존재한다.  
+<A NAME="lbAG">&nbsp;</A>
+<H2>RESTRICTIONS</H2>
+
+파일 포맷은 머신에 의존적이기 때문에, 이것이 생성되는 머신의 아키텍쳐에서만 처리되도록 하는 것이 좋다. 
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>버그</H2>
+
+이 맨 페이지는 libc5에 기반하며, 현재와 다르게 동작할 수도 있다. 
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ac">ac</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+date">date</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getutent">getutent</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+last">last</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+login">login</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+updwtmp">updwtmp</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+who">who</A></B>(1)
+
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">파일</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">RESTRICTIONS</A><DD>
+<DT><A HREF="#lbAH">버그</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

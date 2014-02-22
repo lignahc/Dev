@@ -1,0 +1,62 @@
+<HTML><HEAD><TITLE>Manpage of TTYS</TITLE>
+</HEAD><BODY>
+<H1>TTYS</H1>
+Section: Linux Programmer's Manual (4)<BR>Updated: 19 December 1992<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ttys - 시리얼 터미날 라인들
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>ttyS[0-3]</B>은 시리얼 문자 터미널 행들에 대한 문자 디바이스이다. 
+<P>
+
+문자 디바이스들은 일반적으로 다음에 의해 만들어진다.
+<DL COMPACT><DT><DD>
+<P>
+mknod -m 660 /dev/ttyS0 c 4 64 # base address 0x03f8
+<BR>
+
+mknod -m 660 /dev/ttyS1 c 4 65 # base address 0x02f8
+<BR>
+
+mknod -m 660 /dev/ttyS2 c 4 66 # base address 0x03e8
+<BR>
+
+mknod -m 660 /dev/ttyS3 c 4 67 # base address 0x02e8
+<BR>
+
+chown root:tty /dev/ttyS[0-3]
+<P>
+</DL>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>파일</H2>
+
+/dev/ttyS[0-3]
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mknod">mknod</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+chown">chown</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+getty">getty</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?4+tty">tty</A></B>(4)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">파일</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

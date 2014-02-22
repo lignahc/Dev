@@ -1,0 +1,92 @@
+<HTML><HEAD><TITLE>Manpage of READDIR</TITLE>
+</HEAD><BODY>
+<H1>READDIR</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1996년 4월 22일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+readdir - 디렉토리를 읽다
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+
+<B>#include &lt;<A HREF="file:/usr/include/dirent.h">dirent.h</A>&gt;</B>
+
+<B>struct dirent *readdir(DIR *</B><I>dir</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>readdir()</B> 함수는 <I>dir</I>이 가리키는 디렉토리 기술자의 다음 디렉토리
+항목을 나타내는 dirent 구조체를 반환한다. 파일 끝에 도달하거나 에러가 발생하면
+NULL을 반환한다.
+<P>
+
+<B>readdir()</B>에 의해 반환되는 데이터는 같은 디렉토리 스트림에 대한 다음의
+<B>readdir()</B> 호출에 의해 덮어 쓰여진다.
+<P>
+
+POSIX에 따르면,
+<I>dirent</I>
+
+구조체는 지정되지 않은 크기의
+<I>char d_name[]</I>
+
+필드를 포함한다. 최대 길이는 종료 NULL 문자를 제외하고 <B>NAME_MAX</B>이다.
+다른 필드를 사용하는 것은 프로그램의 이식성을 떨어트릴 것이다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>readdir()</B> 함수는 dirent 구조체의 포인터를, 또는 에러가 발생하거나 파일
+끝에 도달하면 NULL을 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+무효한 디렉토리 스트림 기술자 <I>dir</I>
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+SVID 3, POSIX, BSD 4.3
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+read">read</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+opendir">opendir</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+closedir">closedir</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+rewinddir">rewinddir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+seekdir">seekdir</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+telldir">telldir</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+scandir">scandir</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+임종균 &lt;<A HREF="mailto:hermes44@secsm.org">hermes44@secsm.org</A>&gt;, 2001년 6월 28일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,535 @@
+<HTML><HEAD><TITLE>Manpage of TAR</TITLE>
+</HEAD><BODY>
+<H1>TAR</H1>
+Section: User Commands  (1)<BR>Updated: 22 September 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+tar - GNU 버전 tar 저장 도우미
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>tar</B>
+
+[
+<B>-</B>
+
+]
+<B>A --catenate --concatenate | c --create | d --diff --compare | r --append | t --list | u --update | x -extract --get</B>
+
+[
+<B>--atime-preserve</B>
+
+]
+[
+<B>-b, --block-size N</B>
+
+]
+[
+<B>-B, --read-full-blocks</B>
+
+]
+[
+<B>-C, --directory DIR</B>
+
+]
+[
+<B>--checkpoint</B>
+
+]
+[
+<B>-f, --file [HOSTNAME:]F</B>
+
+]
+[
+<B>--force-local</B>
+
+]
+[
+<B>-F, --info-script F --new-volume-script F</B>
+
+]
+[
+<B>-G, --incremental</B>
+
+]
+[
+<B>-g, --listed-incremental F</B>
+
+]
+[
+<B>-h, --dereference</B>
+
+]
+[
+<B>-i, --ignore-zeros</B>
+
+]
+[
+<B>-j, --bzip2</B>
+
+]
+[
+<B>--ignore-failed-read</B>
+
+]
+[
+<B>-k, --keep-old-files</B>
+
+]
+[
+<B>-K, --starting-file F</B>
+
+]
+[
+<B>-l, --one-file-system</B>
+
+]
+[
+<B>-L, --tape-length N</B>
+
+]
+[
+<B>-m, --modification-time</B>
+
+]
+[
+<B>-M, --multi-volume</B>
+
+]
+[
+<B>-N, --after-date DATE, --newer DATE</B>
+
+]
+[
+<B>-o, --old-archive, --portability</B>
+
+]
+[
+<B>-O, --to-stdout</B>
+
+]
+[
+<B>-p, --same-permissions, --preserve-permissions</B>
+
+]
+[
+<B>-P, --absolute-names</B>
+
+]
+[
+<B>--preserve</B>
+
+]
+[
+<B>-R, --record-number</B>
+
+]
+[
+<B>--remove-files</B>
+
+]
+[
+<B>-s, --same-order, --preserve-order</B>
+
+]
+[
+<B>--same-owner</B>
+
+]
+[
+<B>--numeric-owner</B>
+
+]
+[
+<B>-S, --sparse</B>
+
+]
+[
+<B>-T, --files-from F</B>
+
+]
+[
+<B>--null</B>
+
+]
+[
+<B>--totals</B>
+
+]
+[
+<B>-v, --verbose</B>
+
+]
+[
+<B>-V, --label NAME</B>
+
+]
+[
+<B>--version</B>
+
+]
+[
+<B>-w, --interactive, --confirmation</B>
+
+]
+[
+<B>-W, --verify</B>
+
+]
+[
+<B>--exclude=FILE</B>
+
+]
+[
+<B>-X, --exclude-from FILE</B>
+
+]
+[
+<B>-Z, --compress, --uncompress</B>
+
+]
+[
+<B>-z, --gzip, --ungzip</B>
+
+]
+[
+<B>--use-compress-program PROG</B>
+
+]
+[
+<B>--block-compress</B>
+
+]
+[
+<B>--rsh-command=CMD</B>
+
+]
+[
+<B>-[0-7][lmh]</B>
+
+]
+<DL COMPACT>
+<DT><I>filename1 [ filename2, ... filenameN ]</I>
+
+<DD>
+<DT><I>directory1 [ directory2, ...directoryN ]</I>
+
+<DD>
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<P>
+
+이 설명서는
+<I>tarfile</I>
+
+이라고 알려진 저장 파일을 묶거나
+풀 수 있도록 만들어 진 GNU 버전
+<B>tar</B>
+
+저장 프로그램에 대한 설명이다.
+<I>tarfile</I>
+
+은 테이프 드라이브에 저장할 수도 있고,
+<I>tarfile</I>
+
+을 일반적인 보통 파일로 쓸 수도 있다.
+<B>tar</B>
+
+의 첫번째 인수로는 반드시 
+<B>Acdrtux</B>
+
+중 하나의 옵션이 들어가야 하고,
+다른 선택적인 기능이 덧붙여진다.
+<B>tar</B>
+
+의 마지막 인수로는 압축될 파일이나 디렉토리의 이름이 오게 된다.
+디렉토리 이름이 사용될 경우 언제나 하위 디렉토리가 함께 저장된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>예제</H2>
+
+<DL COMPACT>
+<DT><B>tar -xvvf foo.tar</B>
+
+<DD>
+foo.tar 파일을 푼다.
+<DT><B>tar -xvvzf foo.tar.gz</B>
+
+<DD>
+gzip으로 압축된 foo.tar.gz 파일을 푼다.
+<DT><B>tar -cvvf foo.tar foo/</B>
+
+<DD>
+foo 디렉토리에 있는 내용물을 foo.tar 파일로 묶는다.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>기능 옵션</H2>
+
+<DL COMPACT>
+<DT><B>반드시 아래 옵션들 중 하나가 들어가야 한다.</B>
+
+<DD>
+<DT><B>-A, --catenate, --concatenate</B>
+
+<DD>
+저장 파일에 tar 파일을 추가한다.
+<DT><B>-c, --create</B>
+
+<DD>
+새 저장 파일을 만든다.
+<DT><B>-d, --diff, --compare</B>
+
+<DD>
+저장 파일 혹은 파일 시스템 간의 다른 점을 찾는다.
+<DT><B>--delete</B>
+
+<DD>
+저장 파일에서 지운다. (자기 테이프에는 쓰면 안됨!)
+<DT><B>-r, --append</B>
+
+<DD>
+저장 파일의 끝에 파일을 덧붙인다.
+<DT><B>-t, --list</B>
+
+<DD>
+저장 파일의 내용 목록을 보여준다.
+<DT><B>-u, --update</B>
+
+<DD>
+저장 파일에 저장된 사본보다 새로운 파일만을 덧붙인다.
+<DT><B>-x, --extract, --get</B>
+
+<DD>
+저장된 것에서 풀어낸다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>부가적인 옵션</H2>
+
+<DL COMPACT>
+<DT><B>--atime-preserve</B>
+
+<DD>
+덤프된 파일의 접근 시간을 바꾸지 않는다.
+<DT><B>-b, --block-size N</B>
+
+<DD>
+블럭 크기를 N x 512 바이트로 정한다. (기본값 N = 20)
+<DT><B>-B, --read-full-blocks</B>
+
+<DD>
+읽은 만큼 블럭을 재지정한다. (4.2BSD 파이프를 읽기 위함)
+<DT><B>-C, --directory DIR</B>
+
+<DD>
+DIR 디렉토리로 바꾸고 작업을 한다.
+<DT><B>--checkpoint</B>
+
+<DD>
+저장 파일을 읽는 동안 디렉토리 이름을 출력한다.
+<DT><B>-f, --file [HOSTNAME:]F</B>
+
+<DD>
+저장 파일 혹은 장치 파일 F에 저장한다. (기본 &quot;-&quot;, 표준입/출력을 나타낸다.)
+<DT><B>--force-local</B>
+
+<DD>
+colon 문자가 있더라도 저장 파일을 지역 파일로 처리한다.
+<DT><B>-F, --info-script F --new-volume-script F</B>
+
+<DD>
+run script at end of each tape (implies -M)
+테이프의 끝에 도달하면 스크립트를 실행한다. (-M 이 포함된다.)
+<DT><B>-G, --incremental</B>
+
+<DD>
+이전 GNU 형식으로 incremental 백업을 만들거나 목록을 보거나 풀어낸다.
+<DT><B>-g, --listed-incremental F</B>
+
+<DD>
+새로운 GNU 형식으로 incremental 백업을 만들거나 목록을 보거나 풀어낸다.
+<DT><B>-h, --dereference</B>
+
+<DD>
+심볼릭 링크를 묶지 않는다. 그것이 가리키는 파일을 묶는다.
+<DT><B>-i, --ignore-zeros</B>
+
+<DD>
+크기가 0인 것은 무시한다. (보통 EOF를 의미한다.)
+<DT><B>-j, --bzip2</B>
+
+<DD>
+bzip2 필터를 사용하여 .bz2 파일을 푼다.
+<DT><B>--ignore-failed-read</B>
+
+<DD>
+읽을 수 없는 파일이 있더라도 종료 코드 0을 출력하지 않는다.
+<DT><B>-k, --keep-old-files</B>
+
+<DD>
+기존에 있는 파일을 유지한다. 파일이 있으면 덮어쓰지 않는다.
+<DT><B>-K, --starting-file F</B>
+
+<DD>
+저장 파일에 있는 파일 F에서부터 시작한다.
+<DT><B>-l, --one-file-system</B>
+
+<DD>
+저장 파일을 만들 때 로컬 파일 시스템 안의 놓는다.
+<DT><B>-L, --tape-length N</B>
+
+<DD>
+N * 1024 바이트를 쓴 다음 테이프를 바꾼다.
+<DT><B>-m, --modification-time</B>
+
+<DD>
+파일의 변경 시간 정보를 유지하지 않는다.
+<DT><B>-M, --multi-volume</B>
+
+<DD>
+여러 개로 나눠진 저장 파일로 만들거나 목록을 보거나 풀어낸다.
+<DT><B>-N, --after-date DATE, --newer DATE</B>
+
+<DD>
+주어진 DATE 보다 새로운 파일만 저장한다.
+<DT><B>-o, --old-archive, --portability</B>
+
+<DD>
+ANSI 형식 대신 V7 형식으로 저장한다.
+<DT><B>-O, --to-stdout</B>
+
+<DD>
+표준 출력으로 파일들을 풀어낸다.
+<DT><B>-p, --same-permissions, --preserve-permissions</B>
+
+<DD>
+모든 퍼미션 정보를 유지한다.
+<DT><B>-P, --absolute-paths</B>
+
+<DD>
+파일 이름의 맨 앞 `/' 문자를 버리지 않는다.
+<DT><B>--preserve</B>
+
+<DD>
+-p 옵션과 -s 옵션을 함께 사용한 것과 같다.
+<DT><B>-R, --record-number</B>
+
+<DD>
+저장 파일의 레코드 번호를 각각의 메시지로 보여준다.
+<DT><B>--remove-files</B>
+
+<DD>
+파일을 저장 파일에 덧붙인 다음 파일을 지운다.
+<DT><B>-s, --same-order, --preserve-order</B>
+
+<DD>
+저장 파일 목록과 똑같은 순서로 풀어낸다.
+<DT><B>--same-owner</B>
+
+<DD>
+같은 사용자 소유권으로 파일들을 풀어낸다.
+<DT><B>--numeric-owner</B>
+
+<DD>
+user/group 이름으로 항상 숫자를 사용한다.
+<DT><B>-S, --sparse</B>
+
+<DD>
+듬성한 파일을 효율적으로 다룬다.
+<DT><B>-T, --files-from F</B>
+
+<DD>
+파일 F에서 목록을 읽어 추출하거나 만든다.
+<DT><B>--null</B>
+
+<DD>
+-T reads null-terminated names, disable -C
+-C를 비활성화하고, -T로 읽을 때 null로 끝나는 이름을 읽는다.
+<DT><B>--totals</B>
+
+<DD>
+--create로 만들어진 바이트 총합을 출력한다.
+<DT><B>-v, --verbose</B>
+
+<DD>
+처리중인 파일을 자세하게 보여준다.
+<DT><B>-V, --label NAME</B>
+
+<DD>
+저장 파일의 볼륨 이름을 NAME으로 한다.
+<DT><B>--version</B>
+
+<DD>
+tar 프로그램의 버전 정보를 출력한다.
+<DT><B>-w, --interactive, --confirmation</B>
+
+<DD>
+각각을 처리할 때 마다 물어본다.
+<DT><B>-W, --verify</B>
+
+<DD>
+attempt to verify the archive after writing it
+저장 파일을 쓴 후에 저장 파일을 점검한다.
+<DT><B>--exclude=FILE</B>
+
+<DD>
+FILE을 제외한다.
+<DT><B>-X, --exclude-from FILE</B>
+
+<DD>
+FILE 목록에 있는 것을 제외한다.
+<DT><B>-Z, --compress, --uncompress</B>
+
+<DD>
+compress로 압축하거나 푼다.
+<DT><B>-z, --gzip, --ungzip</B>
+
+<DD>
+gzip으로 압축하거나 푼다.
+<DT><B>--use-compress-program PROG</B>
+
+<DD>
+PROG로 저장 파일을 다시 처리한다. (PROG은 반드시 -d를 처리해야 한다.)
+<DT><B>--block-compress</B>
+
+<DD>
+테이프에 저장할 때 압축 프로그램의 출력을 막는다.
+<DT><B>--rsh-command=CMD</B>
+
+<DD>
+`rsh' 대신 원격 COMMAND를 사용한다. 이 옵션은 표준 `rsh' 대신
+원격 장치에 접근할 수 있는 다른 것(예를 들어, Kerberized `rsh')을
+사용하는 사람들을 위해 필요하다.
+<DT><B>-[0-7][lmh]</B>
+
+<DD>
+드라이브와 밀도를 지정한다.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>번역</H2>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>), 2004년 3월 9일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">예제</A><DD>
+<DT><A HREF="#lbAF">기능 옵션</A><DD>
+<DT><A HREF="#lbAG">부가적인 옵션</A><DD>
+<DT><A HREF="#lbAH">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

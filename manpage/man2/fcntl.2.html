@@ -1,0 +1,464 @@
+<HTML><HEAD><TITLE>Manpage of FCNTL</TITLE>
+</HEAD><BODY>
+<H1>FCNTL</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: 12 July 1999<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+fcntl - 파일 기술자(file descriptor) 조작
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+<B>#include &lt;<A HREF="file:/usr/include/fcntl.h">fcntl.h</A>&gt;</B>
+
+<B>int fcntl(int </B><I>fd</I><B>, int </B><I>cmd</I><B>);</B>
+<B>int fcntl(int </B><I>fd</I><B>, int </B><I>cmd</I><B>, long </B><I>arg</I><B>);</B>
+<B>int fcntl(int </B><I>fd</I><B>, int </B><I>cmd</I><B>, struct flock * </B><I>lock</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>fcntl</B>
+
+<I>fd</I>에서
+
+다양한 연산들 중 하나를 수행한다. 문제 중 연산은
+<I>cmd</I>에
+
+의해 결정된다:
+<DL COMPACT>
+<DT><B>F_DUPFD</B>
+
+<DD>
+<I>arg</I>보다
+
+크거나 동일한 가장 낮은 숫자가 지명된 사용가능한 파일 기술자를 찾고, 그것이
+<I>fd</I>의
+
+복사본이 되도록 하라. 이는 엄밀하게 지정된 기술자를 사용하는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+dup2">dup2</A></B>(2)와는
+
+다르다.
+<P>
+오래된 그리고 새로운 기술자들은 교대적으로 사용될 수 있다. 이들은 잠금(lock), 파일 위치
+포인터 그리고 플래그를 공유한다. 예를 들면, 기술자들중 하나에서 파일 위치가
+<B>lseek</B>를
+
+사용해서 수정되면, 위치는 또한 다른 것에 대해 변경될 수 있다.
+<P>
+두 기술자들은 close-on-exec  플래그를 공유하지 않는다. 그러나 복제본의 close-on-exec
+플래그는 실행중에는 종료되지 않는 off 상태가 된다.
+<P>
+성공하면, 새로운 기술자는 리턴된다.
+<DT><B>F_GETFD</B>
+
+<DD>
+close-on-exec를 읽는다. 만일
+<B>FD_CLOEXEC</B>
+
+비트가 0이면, 파일은
+<B>exec</B>를
+
+통해 열린 상태로 남겨지고, 그렇지 않으면, 닫힌다.
+<DT><B>F_SETFD</B>
+
+<DD>
+close-on-exec 플래그를
+<I>arg</I>의
+
+<B>FD_CLOEXEC</B>
+
+비트에 의해 지정된 값으로 설정한다.
+<DT><B>F_GETFL</B>
+
+<DD>
+기술자의 플래그를 읽는다. (모든 플래그(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></B>(2)에
+
+의해 설정된)들은 리턴된다.)
+<DT><B>F_SETFL</B>
+
+<DD>
+<I>arg</I>
+
+에 의해 지정된 값을 기술자의 플래그로 설정한다. 오직
+<B>O_APPEND</B>, <B>O_NONBLOCK</B> 그리고 <B>O_ASYNC</B>
+
+이 설정될 수 있다. 다른 플래그들은 영향을 받지 않는다.
+<P>
+플래그들은
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+dup">dup</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2)
+
+로 만들어진 동일한 파일 기술자의 복사본들 사이에 공유된다.
+<P>
+플래그 및 그들의 의미는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></B>(2)에
+
+설명되어 있다.
+
+<B>F_GETLK</B>, <B>F_SETLK</B> 그리고 <B>F_SETLKW</B>
+
+들은 임의의 파일 잠금을 관리하는데 사용된다.
+세번째 인수
+<I>lock</I>은
+
+구조체 flock(이 호출에 의해 겹쳐써질 수 있는)에 대한 포인터이다.
+<DT><B>F_GETLK</B>
+
+<DD>
+잠금을 얻을 수 없도록 제어하는 flock 구조로 리턴하거나, 다른 장애가 없다면,
+<BR>&nbsp;잠금의
+<B>l_type</B>
+
+필드를
+<B>F_UNLCK</B>으로
+
+설정한다.
+<DT><B>F_SETLK</B>
+
+<DD>
+<B>l_type</B>이
+
+<B>F_RDLCK</B>
+
+혹은
+<B>F_WRLCK</B>일
+
+때, 잠금이 설정된거나,
+<B>l_type</B>이
+
+<B>F_UNLCK</B>일
+
+때, 잠금은 소거된다.
+다른 누군가에 의해 잠금(lock)이 이루어지면, 이 호출은 -1을 리턴하고,
+<I>errno</I>를
+
+<B>EACCES</B>
+
+혹은
+<B>EAGAIN</B>로
+
+설정한다.
+<DT><B>F_SETLKW</B>
+
+<DD>
+<B>F_SETLK</B>과
+
+같지만, 에러를 리턴하는 대신에, 잠금이 풀려지기를 기다린다. 만일
+<B>fcntl</B>이
+
+기다리고 있을 때, 시그널이 잡히면,
+이는 인터럽트되고, 시그널 처리기가 리턴된 후에, 즉시 리턴값 -1과
+<I>errno</I>가
+
+<B>EINTR</B>로
+
+설정되어 리턴된다.
+
+<B>F_GETOWN</B>, <B>F_SETOWN</B>, <B>F_GETSIG</B> 그리고 <B>F_SETSIG</B>
+
+입출력(I/O) 유용성 시그널을 관리하는데 사용된다.
+<DT><B>F_GETOWN</B>
+
+<DD>
+파일 기술자
+<I>fd</I>상에서
+
+이벤트들에 대한 SIGIO 그리고 SIGURG 시그널들을
+수신하는 프로세스 ID 또는 프로세스 그룹을 얻는다.
+<P>
+<DT><B>F_SETOWN</B>
+
+<DD>
+파일 기술자
+<I>fd</I>상에서
+
+이벤트들에 대한 SIGIO 그리고 SIGURG 시그널들을
+수신하는 프로세스 ID 또는 프로세스 그룹을 설정한다.
+프로세스 그룹들은 음수값을 사용하여 지정된다.
+(<B>F_SETSIG</B>
+
+은 SIGIO 대신에 다른 시그널을 명시하는데 사용될 수 있다.
+
+만일 파일 기술자에서
+이 플래그에
+<I><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></I>(2)
+
+호출을 제공하거나,
+<B>fcntl</B>의
+
+<B>F_SETFL</B>
+
+명령을 사용하여
+<B>O_ASYNC</B>
+
+상태 플래그를 설정하려면,
+입력 또는 출력이 그 파일 기술자에서 가능하게 될때마다,
+SIGIO 시그널이 전송된다.
+<P>
+시그널을 수신할 프로세스 혹은 프로세스 그룹은
+<B>fcntl</B>
+
+함수에 대한
+<B>F_SETOWN</B>
+
+명령을 사용함으로서 선택될 수 있다.
+만일 파일 기술자가 소켓이면, 이는 또한 대여폭을 벗어난 데이터가 그 소켓에 도착할때
+전달되는 SIGURG 시그널의 수신자를 선택한다.  (SIGURG는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2)는
+
+소켓을 &quot;예외적인 조건&quot;으로 보고하는 어떤 상황에서든 전송된다.
+만일 파일 기술자가 터미널 장치와 일치한다면, SIGIO 시그널들은 터미널의
+포그라운드 프로세스 그룹에 전송된다.
+<DT><B>F_GETSIG</B>
+
+<DD>
+입력 또는 출력이 가능해질 때, 시그널이 전송되도록 한다. 제로 값은 SIGIO가 전송되었다는
+것을 의미한다. 다른 값(SIGIO을 포함)은 대신 보내진 시그널이다. 이런 경우, SA_SIGINFO가
+설치되어 있으면, 시그널 처리기에 대한 추가적인 정보가 사용가능하다.
+<DT><B>F_SETSIG</B>
+
+<DD>
+입력 또는 출력이 가능해질때, 시그널이 전송되도록 설정한다. 제로 값은 디폴트 SGSIO 시그널을
+전송하는 것을 의미한다. 다른 값(SIGIO을 포함)은 대신 보내진 시그널이다. 이런 경우, SA_SIGINFO가
+설치되어 있으면, 시그널 처리기에 대한 추가적인 정보가 사용가능하다.
+<P>
+제로가 아닌 값으로 F_SETSIG을 사용하고, 시그널 처리기에 대한 SA_SIGINFO를
+설정(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sigaction">sigaction</A></B>(2)
+
+참조할 것)함으로서,
+입출력(I/O 이벤트에 대한) 기타 정보가
+<I>siginfo_t</I>
+
+내의 처리기로 전달된다.
+<I>si_code</I>
+
+필드는 소스가 SI_SIGIO라는 것을 가리키고,
+<I>si_fd</I>
+
+필드는 파일 기술자와 이벤트를 관련시킨다. 그렇지 않으면, 어떤 파일 기술자들이
+계류중인가에 대한 지시가 없고, 여러분은 입출력(I/O)에 사용가능한 파일 기술자들이
+어떤 것인지를 결정하기 위해 유용한 메커니즘(
+(<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+poll">poll</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+read">read</A></B>(2)
+
+<B>O_NONBLOCK</B>
+
+)을 사용해야 한다.
+<P>
+POSIX.1b 실시간 시그널(값 &gt;= SIGRTMIN)을 선택함으로서, 다중 입출력 이벤트들은 동일한
+시그널 넘버들을 사용하여 대기행렬(큐)에 넣을 수 있다. (큐는 보통 사용가능한 메모리에 의존적이다.)
+위와 같이 시그널 처리기에 대해 SA_SIGINFO가 설정되면, 기타 정보가 사용가능하다.
+</DL>
+<P>
+
+이러한 메커니즘을 사용하면, 프로그램은 대부분의 시간을
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2)
+
+혹은
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+poll">poll</A></B>(2)을
+
+사용함 없이, 비동기적 입출력(I/O)을 구현할 수 있다.
+<P>
+
+<B>O_ASYNC</B>,
+
+<B>F_GETOWN</B>,
+
+<B>F_SETOWN</B>
+
+의 사용은 BSD 및 리눅스에 특정적이다.
+<B>F_GETSIG</B>
+
+와
+<B>F_SETSIG는</B>
+
+리눅스에만 특정적이다.   POSIX는 비슷한 것들을 이루는데 비동기적 입출력과
+<I>aio_sigevent</I>
+
+구조를 이용한다. 이러한 것들은 또한 리눅스에서 GNU C 라이브러리(Glibc)의 부분으로서
+사용할 수 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공적인 호출에 대하여, 리턴 값은 연산에 의존적이다.
+<DL COMPACT>
+<DT><B>F_DUPFD</B>
+
+<DD>
+새로운 기술자
+<DT><B>F_GETFD</B>
+
+<DD>
+플래그의 값
+<DT><B>F_GETFL</B>
+
+<DD>
+플래그의 값
+<DT><B>F_GETOWN</B>
+
+<DD>
+기술자 소유자의 값
+<DT><B>F_GETSIG</B>
+
+<DD>
+읽기 또는 쓰기가 가능해졌을때 전송된 시그널의 값이나, 전통적인  SIGIO 행위에 대한 zero.
+<DT>다른 모든 명령어<DD>
+Zero.
+</DL>
+<P>
+
+에러면, -1이 리턴되고,
+<I>errno</I>는
+
+적절하게 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EACCES</B>
+
+<DD>
+연산은 다른 프로세스에 의한 잠김에 의해 금지된다.
+<DT><B>EAGAIN</B>
+
+<DD>
+파일이 다른 프로세스에 의해 메모리 매핑이되었기 때문에, 연산은 방해받는다.
+<DT><B>EBADF</B>
+
+<DD>
+<I>fd</I>는
+
+열린 파일 기술자가 아니다.
+<DT><B>EDEADLK</B>
+
+<DD>
+지정된
+<B>F_SETLKW</B>
+
+명령은 Deadlock을 초래할 것이라는 것이 감지되었다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>lock</I>은
+
+여러분이 접근할 수 있는 주소 공간의 바깥에 있다.
+<DT><B>EINTR</B>
+
+<DD>
+<B>F_SETLKW</B>에
+
+대하여, 명령은 시그널에 의해 인터럽트되었다.
+<B>F_GETLK</B>과 <B>F_SETLK</B>에
+
+대하여, 명령은 잠김이 체크되거나, 이루어지기 전에 시그널에 의해 인터럽트되었다.
+원격 파일을 잠그는(NFS 잠금) 것은 보통 로컬에서 발생한다.
+<DT><B>EINVAL</B>
+
+<DD>
+<B>F_DUPFD</B>에
+
+대하여,
+<I>arg</I>은
+
+음수 값이거나, 허용된 최대값보다는 크다.
+<B>F_SETSIG</B>에
+
+대하여,
+<I>arg</I>은
+
+허용될 수 있는 시그널 넘버가 아니다.
+<DT><B>EMFILE</B>
+
+<DD>
+<B>F_DUPFD</B>에
+
+대하여, 프로세스는 이미 파일 기술자들의 최대 넘버가 열리도록 한다.
+<DT><B>ENOLCK</B>
+
+<DD>
+너무나 많은 시그먼트 잠금이 열렸고, 잠금 테이블은 꽉찼거나, 원격 잠금 프로토콜이
+실패하였다. (NFS를 통해 잠그기)
+<DT><B>EPERM</B>
+
+<DD>
+추가 속성이 지정되도록 하는 파일에서
+<B>O_APPEND</B>
+
+플래그를 소거하고자 함
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+<B>dup2</B>에
+
+의해 리턴된 에러들은
+<B>F_DUPFD</B>에
+
+의해 리턴된 에러들과는 다르다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID, POSIX, X/OPEN, BSD 4.3.  오직 F_DUPFD,
+F_GETFD, F_SETFD, F_GETFL, F_SETFL, F_GETLK, F_SETLK 그리고 F_SETLKW의 연산들만이
+POSIX.1내에 명시되어 있다.  F_GETOWN 과 F_SETOWN 들은 SVr4에서 지원되지 않는 BSDism이다.
+<BR>&nbsp;F_GETSIG&nbsp;과&nbsp;F_SETSIG는&nbsp;리눅스에&nbsp;특정적이다.&nbsp;F_GETFL/F_SETFL용&nbsp;플래그들은
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></B>(2)에
+
+의해 지원되는 플래그들이고, 시스템에 따라 다르다.
+O_APPEND, O_NONBLOCK, O_RDONLY, 그리고 O_RDWR은  POSIX.1내에 명시되어 있다.
+SVr4은 여기에서 문서화하지 않은 몇개의 다른 옵션들과 플래그를 지원한다.
+<P>
+<P>
+
+SVr4는 추가적인 EIO, ENOLINK 그리고 EOVERFLOW 에러 조건들에 대한 문서화를 한다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+dup2">dup2</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+flock">flock</A></B>(2)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>번역</H2>
+
+ASPLINUX &lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt; 2000년 7월 29일
+<BR>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>) 2005년 2월 17일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:02:33 GMT, February 17, 2005
+</BODY>
+</HTML>

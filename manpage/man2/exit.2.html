@@ -1,0 +1,105 @@
+<HTML><HEAD><TITLE>Manpage of _EXIT</TITLE>
+</HEAD><BODY>
+<H1>_EXIT</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1993년 7월 21일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+_exit - 현재 프로세스를 종료시킨다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<P>
+<B>void _exit(int </B><I>status</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>_exit</B>는
+
+호출한 프로세스를 즉시 종료시킨다. 이 프로세스의 모든 오픈 파일 디스크립터가
+닫힌다; 이 프로세스의 모든 자식 프로세스 부모는 1번 프로세스 init으로 
+바뀌고, 이 프로세스의 부모에게 
+<B>SIGCHLD </B>
+
+시그널이 전해진다.
+<P>
+<I>status</I>는
+
+프로세스의 종료 상태값으로 부모 프로세스에게 반환된다. 이는 
+<B>wait</B>
+
+계열의 함수를 호출하여 알아낼 수 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>_exit</B>는
+
+결코 리턴하지 않는다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID, POSIX, X/OPEN, BSD 4.3
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+<B>_exit</B>는
+
+ANSI C
+<B>atexit</B>함수로
+
+등록한 어떤 함수도 호출하지 않고, 표준 입출력 버퍼를 비우지 않는다.
+이런 것들을 하기 위해서는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+exit">exit</A></B>(3)을
+
+사용하라.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+exit">exit</A></B>(3).
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fork">fork</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+execve">execve</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+waitpid">waitpid</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+wait4">wait4</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+kill">kill</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+wait">wait</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+exit">exit</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+임종균 &lt;<A HREF="mailto:hermes44@secsm.org">hermes44@secsm.org</A>&gt;, 2000년 4월 14일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:00 GMT, March 25, 2004
+</BODY>
+</HTML>

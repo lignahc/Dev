@@ -1,0 +1,151 @@
+<HTML><HEAD><TITLE>Manpage of MV</TITLE>
+</HEAD><BODY>
+<H1>MV</H1>
+Section: User Commands  (1)<BR>Updated: GNU File Utilities<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+mv - 파일 옮기기
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>mv</B>
+
+[options] source dest
+<BR>
+
+<B>mv</B>
+
+[options] source... directory
+<BR>
+
+Options:
+<BR>
+
+[-bfiuv] [-S backup-suffix] [-V {numbered,existing,simple}]
+[--backup] [--force] [--interactive] [--update] [--verbose]
+[--suffix=backup-suffix] [--version-control={numbered,existing,simple}]
+[--help] [--version]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+이 문서는 더이상 최신 정보를 담고 있지않다. 그래서, 
+몇몇 틀릴 경우도 있고, 부족한 경우도 있을 것이다. 
+완전한 매뉴얼을 원하면, Texinfo 문서를 참조하기 바란다.
+<P>
+
+이 매뉴얼 페이지는 
+<B>mv</B>
+
+명령의 GNU 버전에 대한 것이다.
+마지막 인자로 경로 이름이 사용되면, 
+원본 파일을 그 경로로 이름 똑같게 이동시킨다.
+반면, 마지막 인자가 파일이름이면, 그 이름으로 바꾼다.
+마지막 인자가 경로 이름이 아니거나, 원본과 대상이 파일 이름이 
+아닌 경우는 오류 메시지를 보인다.
+<B>mv</B>
+
+명령은 파일 시스템에 접근이 가능할 때만 사용될 수 있다. 
+(일반 사용자는 DOS 파티션의 파일 시스템과 자신의 홈 경로 외에는 
+읽기 접근을 뺀 나머지는 불가능하다. 이런데, 바로 이런 파일 
+시스템으로 파일을 옮기고자 한다면, mv 명령은 오류 메시지를 낸다.)
+
+만약에 파일 모드가 읽기 전용이고, 표준 입력이 tty이고, 
+<I>-f</I>나 <I>--force</I> 옵션이 지정되지 않으면, 
+<B>mv</B>
+
+명령은 사용자에게 지정한 파일을 정말 지울것인지 물어본다. 
+이때, `y'나 `Y'를 입력해 주어야지만 그 파일을 옮긴다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>OPTIONS</H3>
+
+<DL COMPACT>
+<DT><I>-b, --backup</I>
+
+<DD>
+대상 파일이 이미 있어, 지워지는 것을 대비해 백업 파일을 만든다.
+<DT><I>-f, --force</I>
+
+<DD>
+대상 파일이 이미 있어도 사용자에게 어떻게 처리할지를 묻지 않는다.
+<DT><I>-i, --interactive</I>
+
+<DD>
+대상 파일이 이미 있어, 사용자에게 어떻게 처리할지를 물어 본다.
+이때, `y'나 `Y'를 입력해 주어야지만 그 파일을 옮긴다.
+(초기값)
+<DT><I>-u, --update</I>
+
+<DD>
+대상 파일이 이미 있는데, 그 파일의 최근 변경시간(modification time)이
+원본 파일보다 최근의 것이면 파일을 옮기지 않는다.
+<DT><I>-v, --verbose</I>
+
+<DD>
+파일 옮기는 과정을 자세하게 보여준다.
+<DT><I>--help</I>
+
+<DD>
+도움말을 보여주고 마친다.
+<DT><I>--version</I>
+
+<DD>
+버전 정보를 보여주고 마친다.
+<DT><I>-S, --suffix backup-suffix</I>
+
+<DD>
+만약에 이동 대상이 이미 있어, 백업을 해야할 경우에
+그 백업 파일에서 사용할 파일 이름의 꼬리 문자를 지정한다. 
+이것은 이미 지정되어 있는
+<B>SIMPLE_BACKUP_SUFFIX</B>
+
+환경 변수를 무시하게 된다. 
+만약 이 환경변수도 지정되어 있지 않고, 이 옵션도 사용하지 
+않는다면, 초기값으로 Emacs과 같이 `~' 문자를 사용한다.
+<DT><I>-V, --version-control {numbered,existing,simple}</I>
+
+<DD>
+백업하는 방법을 지정하는데, 
+이 옵션은 이미 지정되어 있는
+<B>VERSION_CONTROL</B>
+
+환경 변수를 무시한다. 
+만약 이 환경 변수도 지정되어 있지 않고, 이 옵션도 사용하지
+않는다면, 초기값으로 `existing'을 사용한다. 
+여기서 사용하는 백업방법은 GNU Emacs의 `version-control' 값과 같다.
+아래와 같이 보다 짧은 지시어들도 사용될 수 있다. 
+여기서 사용될 수 있는 백업 방법은 아래와 같다.
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT>`t' 또는 `numbered'<DD>
+항상 숫자 있는 백업본을 만든다.
+<DT>`nil' or `existing'<DD>
+대상 파일이 이미 있을 경우에만 백업본을 만든다.
+<DT>`never' or `simple'<DD>
+간단한 백업을 만듬.
+<P>
+<P>
+</DL>
+</DL>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DL>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+</DL>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,75 @@
+<HTML><HEAD><TITLE>Manpage of SEEKDIR</TITLE>
+</HEAD><BODY>
+<H1>SEEKDIR</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 3월 31일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+seekdir - 디렉토리 스트림에서 다음 readdir() 호출의 위치를 설정한다
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/dirent.h">dirent.h</A>&gt;</B>
+
+<B>void seekdir(DIR *</B><I>dir</I><B>, off_t </B><I>offset</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>seekdir()</B> 함수는 다음 <B>readdir()</B> 호출이 시작할 디렉토리 스트림의
+위치를 설정한다. <B>seekdir()</B>는 <B>telldir()</B>에서 반환된 offset 값을
+사용해야만 한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+<B>seekdir</B> 함수는 어떤 값도 반환하지 않는다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+BSD 4.3
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+lseek">lseek</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+opendir">opendir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+readdir">readdir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+closedir">closedir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+rewinddir">rewinddir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+telldir">telldir</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+scandir">scandir</A></B>(3)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+임종균 &lt;<A HREF="mailto:hermes44@secsm.org">hermes44@secsm.org</A>&gt;, 2001년 6월 28일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

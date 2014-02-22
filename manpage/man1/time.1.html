@@ -1,0 +1,433 @@
+<HTML><HEAD><TITLE>Manpage of TIME</TITLE>
+</HEAD><BODY>
+<H1>TIME</H1>
+Section:  (1)<BR>Updated: 2000-12-11<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+time - 프로그램을 실행하고 사용한 시스템 자원을 보여준다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>문법</H2>
+
+<B>time [</B><I>options</I><B>] </B><I>command</I><B> [</B><I>arguments...</I><B>] </B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>time</B>
+
+명령은 특정 프로그램
+<I>command</I>
+
+를 주어진 인자로 실행시킨다.
+<I>command</I>
+
+가 종료되었을 때,
+<B>time</B>
+
+은 이 프로그램이 실행되는 동안의 타이밍 통계를 표준 출력으로 보여준다.
+이 통계에는 (i) 프로그램의 호출에서 종료까지의 경과된 실제 시간,
+(ii) 사용자 CPU 시간(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+times">times</A></B>(2)
+
+에서 반환되는 &quot;struct tms&quot;의 
+<I>tms_utime</I>
+
+과
+<I>tms_cutime</I>
+
+값의 합), 그리고 (iii) 시스템 CPU 시간(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+times">times</A></B>(2)
+
+에서 반환되는 &quot;struct tms&quot;의 
+<I>tms_stime</I>
+
+과
+<I>tms_cstime</I>
+
+값의 합)이 포함된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-p</B>
+
+<DD>
+POSIX 로케일인 경우, 다음과 같은 전통적인 형식을 사용한다.
+<BR>
+
+
+&quot;real %f\nuser %f\nsys %f\n&quot;
+
+<BR>
+
+(초 단위로 표시한다.)
+
+
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>환경</H2>
+
+환경 변수 LANG, LC_ALL, LC_CTYPE, LC_MESSAGES, LC_NUMERIC,
+NLSPATH, PATH가 사용된다. PATH는
+<I>command</I>
+
+를 찾기 위해 사용된다.
+다른 변수는 출력 텍스트와 형식화에 사용된다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>종료 상태</H2>
+
+<I>command</I>
+
+가 실행되었다면, 종료 상태는
+<I>command</I>
+
+의 종료 상태가 된다.
+만약 종료 상태가 127 이라면,
+<I>command</I>
+
+를 찾지 못한 경우이고,
+126 이라면
+<I>command</I>
+
+를 찾기는 했지만 실행하지 못한 경우이다.
+그리고, 오류가 발생했을 때는 어떤 0이 아닌 값(1-125)이 된다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+times">times</A></B>(2)
+
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>GNU 버전</H2>
+
+아래 설명은
+<B>time</B>
+
+의 GNU 1.7 버전의 대한 것이다.
+이 유틸리티의 이름을 무시하고, GNU에서는 이것을 사용된 시간 뿐만 아니라, 
+메모리, I/O 그리고 IPC 호출 등과 같은 다른 유용한 정보들을
+출력하도록 만들었다.
+출력은 -f 옵션을 통해 설정될 수 있는 형식 문자열 혹은 TIME 환경 변수를
+사용해서 형식화된다.
+<P>
+
+기본 형식 문자열은
+<BR>
+
+
+%Uuser %Ssystem %Eelapsed %PCPU (%Xtext+%Ddata %Mmax)k
+<BR>
+
+%Iinputs+%Ooutputs (%Fmajor+%Rminor)pagefaults %Wswaps
+<BR>
+
+
+이다.
+<P>
+
+-p 옵션이 주어지면, 간단한(portable) 출력 형식
+<BR>
+
+
+real %e
+<BR>
+
+user %U
+<BR>
+
+sys %S
+<BR>
+
+
+이 사용된다.
+<A NAME="lbAJ">&nbsp;</A>
+<H3>The format string</H3>
+
+출력 형식은 printf와 같은 형태로 변환된다.
+보통 문자들은 그대로 복사되며, 탭, 개행문자, 그리고 백슬래쉬는
+\t, \n, \\를 이용하여 에스케이프된다.
+퍼센트 기호는 %%으로 표현되고, %는 변환 기호로 인식된다.
+<B>time</B>
+
+프로그램은 마지막에 항상 개행 문자를 추가한다.
+변환 기호는 다음과 같다.
+여기에 나온 변환 기호들은
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+tcsh">tcsh</A></B>(1)
+
+에서 지원되는 것들이다.
+<P>
+
+<B>Time</B>
+
+<DL COMPACT>
+<DT><B>%E</B>
+
+<DD>
+경과된 실제 시간 ([시간:]분:초 단위)
+<DT><B>%e</B>
+
+<DD>
+(tcsh가 아닌 경우) 경과된 실제 시간 (초 단위).
+<DT><B>%S</B>
+
+<DD>
+커널 모드에서 프로세스가 사용한 CPU-second.
+<DT><B>%U</B>
+
+<DD>
+사용자 모드에서 프로세스가 사용한 CPU-second.
+<DT><B>%P</B>
+
+<DD>
+이 작업이 사용한 CPU의 퍼센트, (%U + %S) / %E 으로 계산한다.
+</DL>
+<P>
+
+<B>Memory</B>
+
+<DL COMPACT>
+<DT><B>%M</B>
+
+<DD>
+프로세스 실행 시간 동안 최대 고유 설정 크기. (Kbyte 단위)
+<DT><B>%t</B>
+
+<DD>
+(tcsh가 아닌 경우) 프로세스의 평균 고유 설정 크기. (Kbyte 단위)
+<DT><B>%K</B>
+
+<DD>
+프로세스의 평균 총 메모리 사용량. (데이터 + 스택 + 텍스트) (Kbyte 단위)
+<DT><B>%D</B>
+
+<DD>
+프로세스의 공유하지 않는 데이터 영역의 평균 크기. (Kbyte 단위)
+<DT><B>%p</B>
+
+<DD>
+(tcsh가 아닌 경우) 프로세스의 공유하지 않는 스택 공간의 평균 크기. (Kbyte 단위)
+<DT><B>%X</B>
+
+<DD>
+프로세스의 공유하는 텍스트 공간의 평균 크기. (Kbyte 단위)
+<DT><B>%Z</B>
+
+<DD>
+(tcsh가 아닌 경우) 시스템의 페이지 크기. (바이트 단위)
+이것은 시스템에 따라 일정하며, 다른 시스템들에서는 다를 수 있다.
+<DT><B>%F</B>
+
+<DD>
+프로세스가 실행된 동안 발생한 중대한 페이지 오류의 횟수.
+이 오류들은 페이지가 디스크로부터 읽어들여져야하는 경우에 발생한 오류이다.
+<DT><B>%R</B>
+
+<DD>
+중대하지 않은, 혹은 복구할 수 있는 페이지 오류의 횟수.
+이 오류들은 유효하지 않은 하지만 아직까지 다른 가상 페이지에 의해
+사용이 요구되지 않은 페이지에 대한 오류들이다.
+따라서, 페이지의 데이터는 아직까지도 유효하지만 시스템 테이블은
+반드시 갱신되어야 한다.
+<DT><B>%W</B>
+
+<DD>
+메인 메모리에서 프로세스가 스왑된 횟수.
+<DT><B>%c</B>
+
+<DD>
+부득이하게 프로세스가 context-switched된 횟수.
+(이것은 시간 슬라이스가 만료되었기 때문이다.)
+<DT><B>%w</B>
+
+<DD>
+인스턴스가 입출력 작업을 마치는 것을 기다리는 동안 발생하는,
+부득이하게 프로세스가 context-switched된 횟수.
+</DL>
+<P>
+
+<B>I/O</B>
+
+<DL COMPACT>
+<DT><B>%I</B>
+
+<DD>
+프로세스에 의해 발생한 파일 시스템 입력의 횟수.
+<DT><B>%O</B>
+
+<DD>
+프로세스에 의해 발생한 파일 시스템 출력의 횟수.
+<DT><B>%r</B>
+
+<DD>
+프로세스가 받은 소켓 메시지의 개수.
+<DT><B>%s</B>
+
+<DD>
+프로세스가 보낸 소켓 메시지의 개수.
+<DT><B>%k</B>
+
+<DD>
+프로세스에게 전달된 시그널의 개수.
+<DT><B>%C</B>
+
+<DD>
+(tcsh가 아닌 경우) time에서 실행된 명령의 이름과 명령행 인자.
+<DT><B>%x</B>
+
+<DD>
+(tcsh가 아닌 경우) 명령의 종료 상태.
+</DL>
+<A NAME="lbAK">&nbsp;</A>
+<H2>GNU 옵션</H2>
+
+<DL COMPACT>
+<DT><B>-f </B><I>FORMAT</I><B>, --format=</B><I>FORMAT</I>
+
+<DD>
+출력 형식을 설정한다. 환경 변수 TIME에서 설정된 형식을 겹쳐쓴다.
+<DT><B>-p, --portability</B>
+
+<DD>
+간략한 출력 형식을 사용한다.
+<DT><B>-o </B><I>FILE</I><B>, --output=</B><I>FILE</I>
+
+<DD>
+결과를 stderr로 보내지 않고, 설정한 파일에 덮어 쓴다.
+<DT><B>-a, --append</B>
+
+<DD>
+(-o 옵션과 함께 사용된다.) 파일을 덮어쓰지 않고, 추가한다.
+<DT><B>-v, --verbose</B>
+
+<DD>
+프로그램에서 알 수 있는 모든 상세한 정보를 출력한다.
+</DL>
+<A NAME="lbAL">&nbsp;</A>
+<H2>GNU 표준 옵션</H2>
+
+<DL COMPACT>
+<DT><B>--help</B>
+
+<DD>
+표준 출력에 사용법을 출력하고 종료한다.
+<DT><B>-V, --version</B>
+
+<DD>
+표준 출력에 버전 정보를 출력하고 종료한다.
+<DT><B>--</B>
+
+<DD>
+옵션 목록을 끝낸다.
+</DL>
+<A NAME="lbAM">&nbsp;</A>
+<H2>BUGS</H2>
+
+모든 자원이 유닉스의 모든 버전에서 측정되는 것은 아니다.
+따라서 어떤 값은 0으로 보고될 수 있다.
+여기에 보인 대부분의 정보들은 4.2 혹은 4.3BSD에서 제공되는 것들이다.
+<P>
+
+GNU time 버전 1.7은 아직까지 로케일화가 되지 않았다.
+따라서, POSIX 요구 조건을 구현되지 않았다.
+<P>
+
+환경 변수 TIME의 선택은 나쁜 선택이었다.
+이것은 autoconf나 make와 같은 시스템에서 사용하는 유틸리티의
+이름으로 겹쳐써지는 환경 변수이다.
+
+
+
+
+
+<P>
+
+추가하는 대신 -o 옵션으로 덮어쓴다는 것은 별로 좋아보이지 않는다.
+(이것은 -a 옵션이 기본 옵션으로 되어야 할 것이다.)
+<P>
+
+GNU
+<B>time</B>
+
+에 대한 제안이나 버그 리포트는 
+<BR>
+
+<I><A HREF="mailto:bug-utils@prep.ai.mit.edu">bug-utils@prep.ai.mit.edu</A></I>
+
+<BR>
+
+으로 메일을 보내주기 바란다.
+이때, 사용하고 있는
+<B>time</B>
+
+의 버전과 사용하는 운영체제, 그리고 C 컴파일러을 명시해주기 바란다.
+버전 정보는
+<BR>
+
+<I>time --version</I>
+
+<BR>
+
+을 실행함으로서 알 수 있다.
+<A NAME="lbAN">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+tcsh">tcsh</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+times">times</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+wait3">wait3</A></B>(2)
+
+<A NAME="lbAO">&nbsp;</A>
+<H2>저자</H2>
+
+<DL COMPACT>
+<DT><DT>David Keppel<DD>
+<DD>
+Original version
+<DT>David MacKenzie<DD>
+POSIXization, autoconfiscation, GNU getoptization,
+documentation, other bug fixes and improvements.
+<DT>Arne Henrik Juul<DD>
+Helped with portability
+<DT>Francois Pinard<DD>
+Helped with portability
+</DL>
+<A NAME="lbAP">&nbsp;</A>
+<H2>역자</H2>
+
+윤현호 &lt;<A HREF="mailto:hhyoon@kldp.org">hhyoon@kldp.org</A>&gt;, 2002년 7월 26일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">문법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">환경</A><DD>
+<DT><A HREF="#lbAG">종료 상태</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">GNU 버전</A><DD>
+<DL>
+<DT><A HREF="#lbAJ">The format string</A><DD>
+</DL>
+<DT><A HREF="#lbAK">GNU 옵션</A><DD>
+<DT><A HREF="#lbAL">GNU 표준 옵션</A><DD>
+<DT><A HREF="#lbAM">BUGS</A><DD>
+<DT><A HREF="#lbAN">관련 항목</A><DD>
+<DT><A HREF="#lbAO">저자</A><DD>
+<DT><A HREF="#lbAP">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:57 GMT, March 25, 2004
+</BODY>
+</HTML>

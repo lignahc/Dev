@@ -1,0 +1,77 @@
+<HTML><HEAD><TITLE>Manpage of ALLOCA</TITLE>
+</HEAD><BODY>
+<H1>ALLOCA</H1>
+Section: Linux Programmer's Manual (3)<BR>Updated: 29 November 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+alloca - 메모리 할당
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/stdlib.h">stdlib.h</A>&gt;</B>
+
+<P>
+<B>void *alloca( size_t </B><I>size</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2></H2>
+
+<B>alloca</B>
+
+함수는 스텍 프레임의
+<I>크기</I>
+
+를 할당한다. 이 일시적인 공간은
+반환될때 자동적으로 없어진다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>변환 값</H2>
+
+<B>alloca</B>
+
+함수는 할당된 공간의 시작점의 포인터 값을 출력한다. 
+할당에 실패하면
+<B>NULL</B>
+
+포인터를 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+<B>alloca</B>
+
+함수는 32v, pwb, pwb.2, 3bsd과, 4bsd에서 보인다.
+이것에 대한 mam page는 BSD 4.3에 있다..
+<A NAME="lbAG">&nbsp;</A>
+<H2>버그</H2>
+
+<B>alloca</B>
+
+함수는 기계에 따라 다르다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 사항</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+brk">brk</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+pagesize">pagesize</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+calloc">calloc</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+malloc">malloc</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+realloc">realloc</A></B>(3)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD"></A><DD>
+<DT><A HREF="#lbAE">변환 값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">버그</A><DD>
+<DT><A HREF="#lbAH">관련 사항</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

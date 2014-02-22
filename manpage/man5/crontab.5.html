@@ -1,0 +1,248 @@
+<HTML><HEAD><TITLE>Manpage of CRONTAB</TITLE>
+</HEAD><BODY>
+<H1>CRONTAB</H1>
+Section: File Formats (5)<BR>Updated: 24 January 1994<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+crontab - cron 처리를 위한 테이블 파일
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<I>crontab</I>
+
+파일에 담길 내용을 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+cron">cron</A></I>(8)
+
+데몬에 의해 실행될 특정 내용인데, 그 일반적인 형식은,
+``이 명령을 이날 이시간에 실행하라'' 식이다.
+각 사용자는 자신의 crontab 파일을 사용할 수 있으며, 
+crontab 파일에서 지정한 명령은 자신의 프로세스로 실행된다. 
+일반적으로 uucp, news 같은 것을 이 crontab 파일에 지정하며, 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?1+su">su</A></I>(1)
+
+명령으로 사용자를 바꾸었으나, 이전 사용자의 프로세스로 실행
+하고자 할때 주로 사용된다.
+<P>
+
+빈 줄, 공문자나, 탭문자로 시작하는 줄, 줄 첫칸에 `#' 문자가 있는 
+줄은 모두 무시된다.
+또한 cron 명령이 지정되어 있는 줄 안에서는 주석을 사용할 수 없다. 
+또한, 환경변수 설정하는 곳에는 이 주석문을 사용할 수 없다.
+<P>
+
+cron 데몬에서 처리될 각 줄은 환경변수가 지정되어 있는 줄이나,
+cron 명령이 지정되어 있는 줄이다.
+환경변수를 지정하는 형식은 다음과 같다.
+<P>
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;value
+<P>
+
+`=' 문자 사이에 있는 공백문자는 선택적이다. 
+<I>name</I>
+
+의 값으로 지정되는 
+<I>value</I>
+
+에는 공백문자가 없어야한다.
+<I>value</I>
+
+값에 공백문자가 있을 경우에는 따움표(작은 따움표나, 큰 따움표, 짝이 
+맞아야함)로 지정한다.
+<P>
+
+여러 환경 변수들은 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+cron">cron</A></I>(8)
+
+데몬에 의해 자동으로 지정된다.
+SHELL 값은 /bin/sh, LOGNAME과 HOME 
+값은 /etc/passwd 파일에서 그 crontab 파일 소유주의 것을 취한다. 
+HOME 값과 SHELL 값은 crontab 파일에서 새롭게 지정될 수도 있지만,
+LOGNAME 값은 바꿀 수 없다.
+<P>
+
+(참고: LOGNAME 변수는 BSD 시스템에는 USER 라는 이름으로 사용된다.
+이때는 USER 변수에 그 값이 지정된다.)
+<P>
+
+LOGNAME, HOME, SHELL 변수 값들은,
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+cron">cron</A></I>(8)
+
+데몬에 의해서, crontab에서 지정한 한 명령의 실행 결과를 
+MAILTO 명령을 사용할 때, 사용된다. 
+MAILTO 명령이 지정되면(즉, 비어있어 않으면), 
+이 변수 값들을 이용해서, 그 사용자에게 편지를 보낼 것이며, 
+MAILTO 명령이 지정되어 있지 않으면(MAILTO=&quot;&quot;), 
+편지를 보내지 않는다. 
+한편, 윗 변수들을 따로 지정하지 않았다면, 그 crontab 파일의 
+소유주에게 편지가 보내진다. 
+이 기능은 편지를 보내는 풀그림으로 /usr/lib/sendmail 대신에, 
+/bin/mail 명령을 사용할 경우에 유용한데, 
+/bin/mail 명령은 aliasing(편지 받는이의 주소를 별칭으로 사용하는 기능) 
+하지 않고, uucp 명령은 일반적으로 그 편지를 읽지 않기때문이다.
+(무슨 말인지.. ^^)
+<P>
+
+cron 명령의 형식은 V7 표준과 비슷하다.
+각 줄은 다섯개의 시간과 날짜 필드, 
+다음에, 사용자 이름(시스템 crontab 파일일 경우), 
+다음에, 실행될 명령이런 형식이다.
+지정한 명령은 
+데몬에 의해, 지정한 날짜, 시간에 실행된다.(아래 설명 참조)
+<I><A HREF="http://localhost/cgi-bin/man/man2html?8+cron">cron</A></I>(8)
+
+데몬은 매 분단위로 그 시간을 확인한다.
+시간과 날짜 필드는 다음 값이 사용된다.
+<DL COMPACT>
+<DT><DD>
+
+
+필드 <TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>사용할 수 있는 값<BR>
+<BR>
+
+-----<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>-----------------<BR>
+<BR>
+
+분<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>0-59<BR>
+<BR>
+
+시<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>0-23<BR>
+<BR>
+
+날짜<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>0-31<BR>
+<BR>
+
+달<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>0-12 (아래 참조, 달 이름을 사용 가능)<BR>
+<BR>
+
+요일<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>0-7 (0 또는 7: 일요일 , 요일이름을 사용 가능)<BR>
+<BR>
+
+</DL>
+<P>
+
+한 필드에 `*' 문자가 올 수 있는데, 이것은 
+그 단위 전체를 말한다. (예를 들어, 날짜 부분에 `*' 문자가 오면 `매일'을 
+뜻한다)
+<P>
+
+숫자의 범위가 사용될 수 있다. 
+범위는 하이픈(`-') 문자로 지정하며, 앞에 숫자가 뒷 숫자보다 
+작아야한다. 예를 들어, 시간 필드에 ``8-11'' 이 오면, 
+8, 9, 10, 11시를 뜻한다. 
+<P>
+
+또한 이 값들은 나열될 수 있으며, 그 구분은 쉼표(`,')로 한다. 
+예: ``1,2,5,9'', ``0-4,8-12''.
+<P>
+
+값의 범위를 지정할 때, 특정 단위로 건너 뛸 수 있는데, 
+이것은 그 범위 다음에 ``/&lt;숫자&gt;'' 형식으로 덧붙혀 준다. 
+예를 들어, 시간 필드에 ``0-23/2'' 값이 사용되면, 
+이것은 두시간 마다, 즉 ``0,2,4,6,8,10,12,14,16,18,20,22''
+시를 뜻한다. 또한 ``매 두시간 마다''라는 뜻으로, 
+``*/2'' 이런식으로 사용될 수 있다.
+<P>
+
+``달''과 ``요일'' 필드에는 그 달의 이름과, 요일의 이름이 사용될 수 
+있다. 이 이름의 앞에서부터 세글자 정도만 구별되면 된다.
+이 이름을 사용할 때는 범위가 지정될 수 없다.
+<P>
+
+여섯번째 필드(줄의 마지막)에는 실행시킬 명령이 온다. 
+그 명령이 실행될 때 줄을 나누는 것은 `%' 문자로 하며, 
+즉, 이것은 쉘에 의해서 다른 명령이 실행됨을 의미한다. 
+(`%' 문자 앞에 있는 것이 하나의 쉘 명령이며, 
+뒤에 있는 것이 또다른 하나의 쉘 명령임을 뜻한다.)
+또한 한 명령인데, 부득이하게 줄을 나누워야 할 경우에는 
+백슬래쉬(\) 문자를 사용한다.
+<P>
+
+참고: 
+날짜와 요일의 지정에서 중복되는 경우는, 그것이 모두 
+포함된다. 
+예를 들어,
+<BR>
+
+``30 4 1,15 * 5''
+이것은 매달 1일, 15일날 4시 30분에 실행되면서, 또한 매주 금요일날도 
+함께 실행됨을 의미한다.
+<A NAME="lbAD">&nbsp;</A>
+<H2>crontab 파일 예제</H2>
+
+<PRE>
+
+# 명령어를 실행 쉘 지정
+SHELL=/bin/sh
+# 편지를 받을 사용자 지정
+MAILTO=paul
+#
+# 매일 00시 05분에 특정작업을 하는 경우
+5 0 * * *       $HOME/bin/daily.job &gt;&gt; $HOME/tmp/out 2&gt;&amp;1
+# 매달 1일 오후 2시 15분에
+15 14 1 * *     $HOME/bin/monthly
+# 월요일부터 금요일 까지 매일 오후 10시에.
+0 22 * * 1-5   mail -s &quot;It's 10pm&quot; joe%Joe,%%Where are your kids?%
+23 0-23/2 * * * echo &quot;이것은 매일 0, 2, 4, ... 시 23분에 보여집니다.&quot;
+5 4 * * sun     echo &quot;이것은 매 일요일 오전 4시 5분에 보여집니다.&quot;
+</PRE>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?8+cron">cron</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?1+crontab">crontab</A>(1)
+<A NAME="lbAF">&nbsp;</A>
+<H2>확장</H2>
+
+요일을 지정할 때, 0, 7 숫자 둘다, 일요일을 뜻한다. 
+이것은 BSD, ATT 에서 다르게 적용되기에 사용되었음.
+<P>
+
+값 나열을 하는 방식, &quot;1-3,7-9&quot; 형식의 값은 
+ATT, BSD cron에서 바르게 동작하지 않음 - 여기서는 
+&quot;1-3&quot;, 또는 &quot;7,8,9&quot; 값만 적용됨.
+<P>
+
+건너뜀 기능 사용 가능, &quot;1-9/2&quot; = &quot;1,3,5,7,9&quot;.
+<P>
+
+달 이름과 요일 이름을 사용 가능.
+<P>
+
+환경 변수 지정 가능. 
+BSD, ATT에서는 /etc/rc에 바탕으로 한 하위 프로세스에서만 
+지정이 가능함.
+<P>
+
+편지 보기 기능 가능(BSD에서는 이런 기능 없음),
+또한 다른 특정 사용자에게 편지를 보낼 수 있음(SysV에서는 이런 기능 없음), 
+또한 편지 기능 보내기 사용하지 않을 수도 있음(SysV에서는 이런 기능 없음).
+<A NAME="lbAG">&nbsp;</A>
+<H2>만든이</H2>
+
+<PRE>
+Paul Vixie &lt;<A HREF="mailto:paul@vix.com">paul@vix.com</A>&gt;
+
+</PRE>
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">crontab 파일 예제</A><DD>
+<DT><A HREF="#lbAE">관련항목</A><DD>
+<DT><A HREF="#lbAF">확장</A><DD>
+<DT><A HREF="#lbAG">만든이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

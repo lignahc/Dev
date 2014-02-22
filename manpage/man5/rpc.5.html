@@ -1,0 +1,107 @@
+<HTML><HEAD><TITLE>Manpage of RPC</TITLE>
+</HEAD><BODY>
+<H1>RPC</H1>
+Section: File Formats (5)<BR>Updated: 1985년 11월 26일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+rpc - rpc 프로그램 번호 데이타베이스
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>/etc/rpc</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>rpc</I>
+
+파일은 rpc프로그램 번호기록 장소로 사용될 수 있는 사용자들의 이름을 포함한다.
+각 행은 다음 정보를 갖는다:
+<DL COMPACT>
+<DT>
+<DD>rpc 프로그램을 위한 서버명.
+<BR>
+
+
+<DT>
+<DD>rpc프로그램 번호
+<BR>
+
+
+<DT>
+앨리어스
+</DL>
+<P>
+
+항목(items)은 공백이나 탭문자의 번호에 의해 분리된다.
+<DD>A ``#'' indicates the beginning of a comment; characters up to the end of
+the line are not interpreted by routines which search the file.
+<P>
+
+선 RPC소스 배포본가운데 <I>/etc/rpc</I>파일의 예가 밑에 있다.
+<PRE>
+
+#
+portmapper          100000    portmap sunrpc
+rstatd              100001    rstat rstat_svc rup perfmeter
+rusersd             100002    rusers
+nfs                 100003    nfsprog
+ypserv              100004    ypprog
+mountd              100005    mount showmount
+ypbind              100007
+walld               100008    rwall shutdown
+yppasswdd           100009    yppasswd
+etherstatd          100010    etherstat
+rquotad             100011    rquotaprog quota rquota
+sprayd              100012    spray
+3270_mapper         100013
+rje_mapper          100014
+selection_svc       100015    selnsvc
+database_svc        100016
+rexd                100017    rex
+alis                100018
+sched               100019
+llockmgr            100020
+nlockmgr            100021
+x25.inr             100022
+statmon             100023
+status              100024
+bootparam           100026
+ypupdated           100028    ypupdate
+keyserv             100029    keyserver
+tfsd                100037 
+nsed                100038
+nsemntd             100039
+</PRE>
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>파일</H2>
+
+/etc/rpc
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?3N+getrpcent">getrpcent</A>(3N)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">파일</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

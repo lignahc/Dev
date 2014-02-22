@@ -1,0 +1,74 @@
+<HTML><HEAD><TITLE>Manpage of MB_CUR_MAX</TITLE>
+</HEAD><BODY>
+<H1>MB_CUR_MAX</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1999년 7월 4일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+MB_CUR_MAX - 현재 사용 중인 로케일에서 멀티바이트 문자의 최대 길이
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/stdlib.h">stdlib.h</A>&gt;</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>MB_CUR_MAX</B>
+
+매크로는 현재 사용 중인 로케일에서 한 문자를 표현하기 위해 필요한
+바이트 수를 정의한다. 이 상수의 값은 사용 중인 로케일에 따라 달라지기
+때문에 컴파일 시간에 결정되지 않는다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환 값</H2>
+
+1 이상이고 MB_LEN_MAX 보다 작은 정수 값이다. 여기에서 말하는 1이란
+전통적인 8비트 문자(char)를 말한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+ANSI C, POSIX.1
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+MB_LEN_MAX">MB_LEN_MAX</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+mblen">mblen</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+mbtowc">mbtowc</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+mbstowcs">mbstowcs</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+wctomb">wctomb</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+wcstombs">wcstombs</A></B>(3)
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+류정욱 &lt;<A HREF="mailto:compiler@kldp.org">compiler@kldp.org</A>&gt;, 2000년 4월 19일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환 값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

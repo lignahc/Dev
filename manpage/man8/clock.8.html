@@ -1,0 +1,177 @@
+<HTML><HEAD><TITLE>Manpage of CLOCK</TITLE>
+</HEAD><BODY>
+<H1>CLOCK</H1>
+Section: Linux Programmer's Manual (8)<BR>Updated: 24 December 1992<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+clock - CMOS 시간을 조절한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>/sbin/clock [ -u ] -r</B>
+
+<BR>
+
+<B>/sbin/clock [ -u ] -w</B>
+
+<BR>
+
+<B>/sbin/clock [ -u ] -s</B>
+
+<BR>
+
+<B>/sbin/clock [ -u ] -a</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>clock</B>
+
+명령은 다양한 방법으로 CMOS의 시간값(시계)을 조절한다. 
+이 명령을 CMOS의 시간값을 읽거나 쓰거나, 커널과 연결해서 시스템 시간을 
+조절하는데 사용된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-u</B>
+
+<DD>
+CMOS clock이 Universal Time으로 지정되게 한다.
+<DT><B>-r</B>
+
+<DD>
+CMOS clock을 읽어 표준 출력으로 그 결과값을 보여준다.
+<DT><B>-w</B>
+
+<DD>
+시스템 시간값을 읽어 CMOS clock에 쓴다.
+<DT><B>-s</B>
+
+<DD>
+CMOS clock을 읽어 시스템 시간을 지정한다.
+<DT><B>-a</B>
+
+<DD>
+CMOS clock을 읽어 시스템 시간을 지정하고, 시스템 오류에 대비한 수정된 
+시간을 적용하고, 다시 그 값을 CMOS clock에 쓴다.
+<P>
+이 옵션은 clock 바꾸는 방법을 
+<I>/etc/adjtime</I>
+
+파일에서 읽어 사용한다.
+이 파일에는 세가지 숫자가 지정되어 있다.
+<DL COMPACT><DT><DD>
+첫번째 숫자는 하루의 총 초(second). 예를 들어, 매일 
+원래의 시간보다 5초씩 빠르게 clock이 움직이면, 이 첫번째 숫자는 
+-5.0으로 적혀져 있을 것이다.
+<P>
+
+두번째 숫자는 
+<B>clock</B>
+
+명령이 1970년 1월 1일 이후로 마직막으로 사용된 날짜 사이의 총 날짜수이다.
+<P>
+
+세번째 숫자는 마지막 적용에서 사용한 초의 남겨진 부분이다.
+<P>
+
+처음 리눅스 시스템을 사용할 때, 시간설정을 위해 일반적으로 
+다음과 같은 작업을 한다:
+<DL COMPACT>
+<DT>a)<DD>
+파일 내용이 '0.0 0 0.0'만 있는 한줄짜리
+<I>/etc/adjtime</I>
+
+파일을 만든다.
+<DT>b)<DD>
+<I>clock -au</I>
+
+또는 
+<I>clock -a</I>,
+
+명령으로 CMOS가 Universal Time을 사용할지, Local Time을 사용할지를 
+지정한다. 이것은 초를 갱신한다.
+<DT>c)<DD>
+<I>date</I>
+
+명령을 이용하여, 시스템 시간을 지정한다.
+<DT>d)<DD>
+<I>clock -wu</I>
+
+또는
+<I>clock -w</I>
+
+명령을 사용하여, CMOS 시간을 갱신한다.
+<DT>e)<DD>
+<I>/etc/adjtime</I>
+
+파일안의 첫번째 숫자를 적당하게 수정한다.
+<DT>f)<DD>
+<I>clock -au</I>
+
+또는
+<I>clock -a</I>
+
+명령을 
+<I>/etc/rc.local</I>
+
+파일에 추가하거나,
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+cron">cron</A></B>(8)
+
+데몬에서 사용하도록 한다.
+</DL>
+</DL>
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 파일</H2>
+
+<I>/etc/adjtime</I>
+
+<BR>
+
+<I>/etc/rc.local</I>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>만든이</H2>
+
+<DL COMPACT>
+<DT><B>V1.0</B>
+
+<DD>
+Charles Hedrick, <A HREF="mailto:hedrick@cs.rutgers.edu">hedrick@cs.rutgers.edu</A>, Apr 1992
+<DT><B>V1.1</B>
+
+<DD>
+Rob Hooft, <A HREF="mailto:hooft@chem.ruu.nl">hooft@chem.ruu.nl</A>, Nov 1992 clock 지정 수정
+<DT><B>V1.2 </B>
+
+<DD>
+Harald Koenig, <A HREF="mailto:koenig@nova.tat.physik.uni-tuebingen.de">koenig@nova.tat.physik.uni-tuebingen.de</A> 팻치,
+Rob Hooft, <A HREF="mailto:hooft@EMBL-Heidelberg.DE">hooft@EMBL-Heidelberg.DE</A>, Oct 1993 적용
+<P>
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">관련 파일</A><DD>
+<DT><A HREF="#lbAG">만든이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

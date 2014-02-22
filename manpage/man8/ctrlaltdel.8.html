@@ -1,0 +1,86 @@
+<HTML><HEAD><TITLE>Manpage of CTRLALTDEL</TITLE>
+</HEAD><BODY>
+<H1>CTRLALTDEL</H1>
+Section: Linux Programmer's Manual (8)<BR>Updated: 25 October 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ctrlaltdel - Ctrl-Alt-Del 글쇠의 처리를 지정한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>ctrlaltdel hard</B> | <B>soft</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>linux/kernel/sys.c</I>
+
+소스의 검사 내용에 따라 이 풀그림은 다음 두가지 처리를 지정할 수 있다:
+<BR>
+
+<I>hard</I>
+
+리셋. 이것은 <B><A HREF="http://localhost/cgi-bin/man/man2html?2+sync">sync</A>(2)</B> 함수를 호출하지 않고, 기타 다른 선처리를 
+하지 않고 바로 리부팅을 실시한다. 
+<BR>
+
+<I>soft</I>
+
+리셋. 이것은 
+<B>init</B>
+
+프로세스로 SIGINT (interrupt) 시그날을 보낸다.
+이 옵션이 사용하려면, 먼저 
+<B>init (8)</B>
+
+풀그림이 먼저 Ctrl+Alt+Delete 글쇠의 입력을 처리할 할 수 있는 
+기능을 지원해야 한다. 리눅스에서 사용하는  
+<B>init (8)</B>
+
+풀그림에는 여러가지 종류가 있다. 먼저 그 관련 문서를 살펴 보아, 
+이 기능을 지원하는지 알아 보아야한다.  
+<B>ctrlaltdel</B>
+
+명령은 일반적으로 
+<I>/etc/rc.local</I>
+
+파일에서 사용된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 파일</H2>
+
+<I>/etc/rc.local</I>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+simpleinit">simpleinit</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A></B>(8)
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>만든이</H2>
+
+Peter Orbaek (<A HREF="mailto:poe@daimi.aau.dk">poe@daimi.aau.dk</A>)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">관련 파일</A><DD>
+<DT><A HREF="#lbAF">관련 항목</A><DD>
+<DT><A HREF="#lbAG">만든이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

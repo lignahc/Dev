@@ -1,0 +1,197 @@
+<HTML><HEAD><TITLE>Manpage of YACC</TITLE>
+</HEAD><BODY>
+<H1>YACC</H1>
+Section: User Commands  (1)<BR>Updated: July&nbsp;15,&nbsp;1990<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+Yacc - an <A HREF="http://localhost/cgi-bin/man/man2html?1+LALR">LALR</A>(1) 파서 생성기
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>yacc [ -dlrtv ] [ -b</B>
+
+<I>file_prefix</I>
+
+<B>] [ -p</B>
+
+<I>symbol_prefix</I>
+
+<B>]</B>
+
+<I>filename</I>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>Yacc</I>
+
+은 파일의 문법 명세 사항을 읽어 이것을 위한 <A HREF="http://localhost/cgi-bin/man/man2html?1+LR">LR</A>(1) 파서를 생성한다.
+파서는 <A HREF="http://localhost/cgi-bin/man/man2html?1+LALR">LALR</A>(1) 파싱 테이블 집합과 C 프로그래밍 언어로 
+작성된 구동 루틴을 포함한다.
+<I>Yacc</I>
+
+은 일반적으로 파서 테이블과 구동 루틴을 
+<I>y.tab.c</I>
+
+파일에 쓴다.
+<P>
+
+다음은 유용한 옵션들이다:
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>-b </B><I>file_prefix</I><DD>
+<B>-b</B>
+
+옵션은 
+출력 파일 이름의 접두사를
+<I>file_prefix</I>
+
+에 의해 표시된 문자열로 변경한다.
+기본 접두사는 문자
+<I>y</I>
+
+이다.
+<DT><B>-d</B>
+
+<DD>
+<B>-d</B> 옵션은
+<I>y.tab.h</I>
+
+헤더 파일을 작성한다.
+<DT><B>-l</B>
+
+<DD>
+<B>-l</B>
+
+옵션이 명시되지 않으면, 
+<I>yacc</I>
+
+은 생성되는 코드에 #line 지시를 삽입 한다.
+#line 지시는 C 컴파일러가 생성된 코드의 에러를 사용자의 원본 코드에
+연관시키도록 한다.
+만약  <B>-l</B> 옵션이 명시되었다면, 
+<I>yacc</I>
+
+은 #line 지시를 삽입하지 않는다.
+#line 지시는 사용자에 의해 유지된다.
+<DT><B>-p </B><I>symbol_prefix</I><DD>
+The
+<B>-p</B>
+
+옵션은 
+yacc에 의해 생성된 심볼을
+<I>symbol_prefix</I>
+
+에 정해진 문자열로 접두사를 변경한다.
+<I>symbol_prefix.</I>
+
+기본 접두사는 문자열
+<I>yy</I>
+
+이다. 
+<DT><B>-r</B>
+
+<DD>
+The
+<B>-r</B>
+
+옵션에 의해
+<I>yacc</I>
+
+는 코드와 테이블을 위해 각각의 파일들을 생성한다. 
+코드 파일의 이름은 
+<I>y.code.c,</I>
+
+테이블 파일의 이름은 
+<I>y.tab.c</I>
+
+이다.
+<DT><B>-t</B>
+
+<DD>
+<B>-t</B>
+
+옵션은 
+<I>yacc</I>
+
+에 의해 생성된 프리프로세서의 지시를 변경해서,
+디버깅 구문이 컴파일된 코드에 합쳐지게 할 것이다.
+<DT><B>-v</B>
+
+<DD>
+<B>-v</B>
+
+옵션은 생성된 파서의 사람이 읽을 수 있는 설명을
+<I>y.output</I>
+
+파일에 쓰도록 한다.
+</DL>
+</DL>
+
+<P>
+
+만약 TMPDIR 환경변수가 설정되어 있다면, TMPDIR에 의해 표시된 문자열은
+임시 파일 생성 디렉토리의 이름으로 사용될 것이다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>파일</H2>
+
+<I>y.code.c</I>
+
+<BR>
+
+<I>y.tab.c</I>
+
+<BR>
+
+<I>y.tab.h</I>
+
+<BR>
+
+<I>y.output</I>
+
+<BR>
+
+<I>/tmp/yacc.aXXXXXX</I>
+
+<BR>
+
+<I>/tmp/yacc.tXXXXXX</I>
+
+<BR>
+
+<I>/tmp/yacc.uXXXXXX</I>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>진단</H2>
+
+만약 결코 줄어들지 않는 규칙이 있다면, 그런 규칙의 번호를 표준 
+에러로 보고한다.
+만약 어떤 <A HREF="http://localhost/cgi-bin/man/man2html?1+LALR">LALR</A>(1) 충돌이 있다면, 충돌 번호를 표준 에러로 보고한다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>역자</H2>
+
+배성훈 &lt;<A HREF="mailto:plodder@kldp.org">plodder@kldp.org</A>&gt;, 2000년 4월 19일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">파일</A><DD>
+<DT><A HREF="#lbAF">진단</A><DD>
+<DT><A HREF="#lbAG">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:58 GMT, March 25, 2004
+</BODY>
+</HTML>

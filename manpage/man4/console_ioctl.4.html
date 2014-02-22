@@ -1,0 +1,518 @@
+<HTML><HEAD><TITLE>Manpage of CONSOLE_IOCTLS</TITLE>
+</HEAD><BODY>
+<H1>CONSOLE_IOCTLS</H1>
+Section: 리눅스 프로그래머 메뉴얼 (4)<BR>Updated: 1995년 11월 18일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+console ioctl - 콘솔 터미널과 가상 터미널을 위해 입출력제어를 한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>WARNING: 다음 정보를 사용하는것은 무의미 하다.
+
+WARNING: 입출력제어에 관한 내용은 문서화 되지 않아 공지없이 바뀌기 쉽다.
+POSIX함수를 사용한다.
+
+<DL COMPACT>
+<DT>KDGETLED</B><DD>
+<I>argp</I>
+LEDs의 상태를 얻는다. <I>argp</I>는 long int를 가리킨다. <I>argp</I>의 
+저수준의 세개비트는 아래와 같은 LEDs의 상태로 설정된다:
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;LED_CAP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x04&nbsp;&nbsp;&nbsp;caps&nbsp;lock&nbsp;led
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;LEC_NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x02&nbsp;&nbsp;&nbsp;num&nbsp;lock&nbsp;led
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;LED_SCR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x01&nbsp;&nbsp;&nbsp;scroll&nbsp;lock&nbsp;led
+
+<DT><B>KDSETLED</B><DD>
+LEDs설정. LEDs는 argp의 세 비트보다 낮게 설정된다. 그러나, 비트를 높게 설정
+한다면 LEDs는 표준으로 전환된다: caps lock,num lock, scroll lock 키보드기능의
+디스플레이 상태.
+</DL>
+<P>
+
+버전 1.1.54이전의 LEDs는 단지 일치하는 키보드 플래그의 상태를 반영한다.
+그리고 KDGTLED/KDSTLED는 또한 키보드 플래그를 바꾼다. 버전1.1.54부터 
+LEDs는 상황에 따라 디스클레이를 조절한다. 그러나 기본값에 의해 leds는
+키보드플래그를 디스플레이한다. 다음 두개의 입출력제어는 키보드플래그
+에 액세스하는데 사용된다.
+
+<DL COMPACT>
+<DT><B>KDGKBLED</B><DD>
+capsLock, NumLock,ScrollLock와 같은 키보드 플래그를 취한다.
+<I>argp</I>는 플래그상태를 설정하는 char를 가리킨다.
+저수준 지정 비트(mask 0x7)는 현재 플래그 상태를 취하고,
+나머지는 기본 플래그 상태를 취한다.
+
+<DT><B>KDSKBLED</B><DD>
+CapsLock, NumLock, ScrollLock같은 키보드플래그를 설정한다.
+<I>argp</I>는 원하는 플래그 상태를 갖는다.
+저수준 지정 비트는 현재 플래그 상태를 취하고,
+나머지는 기본 플래그 상태를 취한다.
+
+<DT><B>KDGKBTYPE</B><DD>
+키보드 타입을 취한다. 이것은 0x02로 정의되는 KB_101값을 반환한다.
+
+<DT><B>KDADDIO</B><DD>
+유효한 입출력 포트를 추가한다. ioperm(arg,1,1)과 같다.
+
+<DT><B>KDDELIO</B><DD>
+유효한 입출력 포트를 삭제한다. ioperm(arg,1,0)과 같다.
+
+<DT><B>KDENABIO</B><DD>
+비디오보드로 입출력이 가능하다. ioperm(0x3b4, 0x3df-0x3b4+1,1)과 같다.
+
+<DT><B>KDDISABIO</B><DD>
+비디오보드로 입출력이 불가능하다. ioperm(0x3b4, 0x3df-0x3b4+1,0)과 같다.
+
+<DT><B>KDSETMODE</B><DD>
+텍스트/그래픽 모드를 설정한다. <I>argp</I>는 다음중 하나다:
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;KD_TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x00
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;KD_GRAPHICS&nbsp;&nbsp;&nbsp;0x01
+
+<DT><B>KDGETMODE</B><DD>
+텍스트/그래픽 모드를 취한다. <I>argp</I>는 위의 값중 하나를 설정하는 long
+을 가리킨다.
+
+<DT><B>KDMKTONE</B><DD>
+특정 길이의 톤(tone)생성한다.
+<I>argp</I>의 낮은 16비트는 시간사이클의 기간을 열거하고,
+높은 16비트는 msec에 기간을 준다.
+기간이 0이면, 소리는 즉시 꺼진다. 제어력 즉시 반환된다.
+
+<DT><B>KIOCSOUND</B><DD>
+사운드 생성을 시작하거나 멈춘다. <I>argp</I>의 낮은 16비트는 시간사이클의 기간
+을 열거한다.(즉, <I>argp</I> = 1193180/frequency)
+<I>argp</I> = 0은 소리를 끈다. 같은 경우로, 제어력은 즉시 반환된다.
+
+<DT><B>GIO_CMAP</B><DD>
+커널로부터 현재 기본 컬러맵을 얻는다. <I>argp</I>는 48-바이트 배열을 가
+리킨다.(버전 1.3.3부터)
+
+<DT><B>PIO_CMAP</B><DD>
+기본 텍스트모드 컬러맵을 바꾼다. <I>argp</I>는 16비트컬러를 위한 빨강,녹색,
+파랑색값을 포함하는 48-바이트 배열을 가리킨다: 0 is off, and 255 is full intensity.
+기본색은 검정, 암적색(dark red), 암녹색(dark green), 갈색, 암청색(dark blue),
+밝은 빨강, 밝은 녹색, 노랑, 밝은 파랑, 밝은 자주, 밝은 청록색, 흰색이다.
+
+<DT><B>GIO_FONT</B><DD>
+확장된 256-문자 폰트를 취한다. <I>argp</I>는 8192바이트 배열을 가리킨다.
+현재 로드된 폰트가 512-문자 폰트이거나 콘솔이 텍스트 모드가 아니라면 
+<B>EINVAR</B>코드와 함께 작동하지 않는다.
+
+<DT><B>GIO_FONTX</B><DD>
+화면폰트와 관련정보를 얻는다. <I>argp</I>는 consolefontdisc을 가리킨다.
+(<B>PIO_FONTX</B> 참조). 호출시 <I>charcount</I>필드는 문자중 가장큰 수치
+로 설정되어야 한다. 반환시, <I>charcount</I>와 <I>charheight</I>는 
+현재 로드된 폰트를 위한 관련 데이타로 채워져야 한다. 그리고 
+<I>chardata</I>배열은 <I>charcount</I>의 초기값이 지시하는 충분한
+공간이 있다면 폰트데이타를 포함한다. 그렇지 않으면 버퍼는 그대로 있고,
+<I>errno</I>는 <B>ENOMEM</B>를 설정한다.(버전 1.3.1부터)
+
+<DT><B>PIO_FONT</B><DD>
+화면 폰트를 256-문자로 설정한다. EGA/VGA문자생성기로부터 폰트를 로드한다.
+<I>argp</I>는 문자마다 32바이트인 8192맵을 가리킨다. 단지 그런것들 중 첫
+<I>N</I>는 8x<I>N</I>폰트를 위해 사용된다(0 &lt; <I>N</I> &lt;= 32).
+이 호출은 또한 유니코드를 쓸모 없게 한다.
+
+<DT><B>PIO_FONTX</B><DD>
+스크린 폰트와 관련정보를 설정한다. <I>argp</I>는 
+<PRE>
+ consolefontdesc {
+        u_short <I>charcount</I>;      /* characters in font (256 or 512) */
+        u_short <I>charheight</I>;     /* scan lines per character (1-32) */
+        char *<I>chardata</I>;         /* font data in expanded form */
+};
+</PRE>
+
+를 가리킨다.
+필요하다면, 화면크기는 적절하게 재조정될 것이고, <B>SIGWINCH</B>는 적절한 프로세
+스를 보낸다. 이 호출은 또한 유니코드를 쓸모 없게 한다.
+
+<DT><B>PIO_FONTRESET</B><DD>
+폰트, 크기, 유니코드를 재설정한다.
+<I>argp</I>는 사용되지 않지만, 리눅스의 차후버전의 호환을 위해
+<B>NULL</B>는 설정되어야 한다.
+
+<DT><B>GIO_SCRNMAP</B><DD>
+커널로부터 화면 맵핑을 얻는다. <I>argp</I>는 E_TABSZ의 범위를 가리킨다.
+그것은 각 문자 디스플레에 사용되는 폰트 위치와 함께 로드된다. 이 호출
+은 로드된 폰트가 256문자 이상이면 쓸모없는 정보를 반환할 것이다.
+
+<DT><B>PIO_SCRNMAP</B><DD>
+콘솔 화면 심볼의 맵바이트인 커널의 ``user definable``을 로드한다.
+<I>argp</I>는 size E_TABSZ의 공간에 포인트한다.
+
+<DT><B>PIO_UNISCRNMAP</B><DD>
+유니코드의 맵바이트인 커널의 ``user definable``을 로드한다. ?
+
+<DT><B>GIO_UNIMAP</B><DD>
+커널로부터 Unicode-to-font를 구한다.
+<I>argp</I>는
+
+<PRE>
+struct unimapdesc {
+        u_short <I>entry_ct</I>;
+        struct unipair *<I>entries</I>;
+};
+</PRE>
+
+
+where <I>entries</I> points to an array of
+
+<PRE>
+struct unipair {
+        u_short <I>unicode</I>;
+        u_short <I>fontpos</I>;
+};
+</PRE>
+
+를 가리킨다.
+(Since 1.1.92.)
+
+<DT><B>PIO_UNIMAPCLR</B><DD>
+hash 알고리즘을 참조해 테이블을 소거한다.
+<I>argp</I>는
+
+<PRE>
+struct unimapinit {
+        u_short <I>advised_hashsize</I>;  /* 0 if no opinion */
+        u_short <I>advised_hashstep</I>;  /* 0 if no opinion */
+        u_short <I>advised_hashlevel</I>; /* 0 if no opinion */
+};
+</PRE>
+
+를 가리킨다.
+(버전1.1.92부터.)
+
+<DT><B>KDGKBMODE</B><DD>
+현재 키보드 모드를 구한다. FiARGPFp는 다음중 하나로 설정된 long을 포인트한다.
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;K_RAW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x00&nbsp;&nbsp;&nbsp;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;K_XLATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x01&nbsp;&nbsp;&nbsp;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;K_MEDIUMRAW&nbsp;&nbsp;&nbsp;0x02&nbsp;&nbsp;&nbsp;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;K_UNICODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x03
+
+<DT><B>KDSKBMODE</B><DD>
+현재 키보드 모드를 설정한다.
+<I>argp</I>는 위의 값중 하나와 같은 long이다.
+
+<DT><B>KDGKBMETA</B><DD>
+메타키 운용모드를 구한다. <I>argp</I>는 다음중 하나를 설정하는 long을 포인트한다.
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;K_METABIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x03&nbsp;&nbsp;&nbsp;set&nbsp;high&nbsp;order&nbsp;bit&nbsp;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;K_ESCPREFIX&nbsp;&nbsp;&nbsp;0x04&nbsp;&nbsp;&nbsp;escape&nbsp;prefix
+
+<DT><B>KDSKBMETA</B><DD>
+메타키 운용모드를 설정한다.
+<I>argp</I>는 위의 값중 하나와 같은 long이다.
+
+<DT><B>KDGKBSENT</B><DD>
+함수키구문을 얻는다.
+<I>argp</I>는
+
+<PRE>
+struct kbsentry {
+    u_char <I>kb_func</I>;
+    u_char <I>kb_string</I>[512];
+};
+</PRE>
+
+를 가리킨다.
+<I>kb_string</I>는 <I>kb_func</I>함수키 활성코드와 일치하는 구문을 설정한다.
+
+<DT><B>KDSKBSENT</B><DD>
+함수키 문자내용(entry)을 설정한다.
+<I>argp</I>는 구조체 kbsentry를 가리킨다.
+
+<DT><B>KDGETKEYCODE</B><DD>
+커널 키코드 테이블 내용을 읽는다.(키코드로 코드를 스캔한다.
+<I>argp</I>는
+
+<PRE>
+struct kbkeycode { unsigned int <I>scancode</I>, <I>keycode</I>; };
+</PRE>
+
+를 가리킨다.
+<I>keycode</I>는 주어진 <I>scancode</I>와 일치하게 설정한다.
+(89 &lt;= <I>scancode</I> &lt;= 255 only.  
+For 1 &lt;= <I>scancode</I> &lt;= 88, <I>keycode</I>==<I>scancode</I>.)
+(버전1.1.63부터.)
+
+<DT><B>KDSETKEYCODE</B><DD>
+커널 키코드테이블 기재사항을 기록한다. <I>argp</I>는 구조체 키코드를 포인트한다.
+(버전1.1.63 부터.)
+
+<DT><B>KDSIGACCEPT</B><DD>
+호출한 프로세스들은 적당한 키조합이 프레스에 의해 생성될때, 프로세스에 의해
+시그널 <I>argp</I>를 받아들인다. 
+(1 &lt;= <I>argp</I> &lt;= NSIG).  
+(See spawn_console() in linux/drivers/char/keyboard.c.)
+
+<DT><B>VT_OPENQRY</B><DD>
+유효한 첫 콘솔을 반환한다.
+<I>argp</I>는 vt(1 &lt;= <I>*argp</I> &lt;= MAX_NR_CONSOLES)의 번호를 설정한 정수를 포인트한다.
+
+<DT><B>VT_GETMODE</B><DD>
+활성화된 vt모드를 구한다. <I>argp</I>는
+
+<PRE>
+struct vt_mode {
+    char <I>mode</I>;     /* vt mode */
+    char <I>waitv</I>;    /* if set, hang on writes if not active */
+    short <I>relsig</I>;  /* signal to raise on release req */
+    short <I>acqsig</I>;  /* signal to raise on acquisition */
+    short <I>frsig</I>;   /* unused (set to 0) */
+};
+</PRE>
+
+를 포인트한다.
+
+<I>mode</I>는 다음 값중 하나를 설정한다.
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;VT_AUTO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자동&nbsp;vt&nbsp;스위칭
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;VT_PROCESS&nbsp;&nbsp;&nbsp;&nbsp;프로세스&nbsp;제어&nbsp;스위칭
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;VT_ACKACQ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;acknowledge&nbsp;switch&nbsp;
+
+<DT><B>VT_SETMODE</B><DD>
+활성화된 vt의 모드를 설정한다. <I>argp</I>는 구조체 vt_mode를 포인트한다.
+
+<DT><B>VT_GETSTATE</B><DD>
+전역 vt상태 정보를 구한다. <I>argp</I>는
+
+<PRE>
+struct vt_stat {
+    ushort <I>v_active</I>;  /* active vt */
+    ushort <I>v_signal</I>;  /* signal to send */
+    ushort <I>v_state</I>;   /* vt bitmask */
+};
+</PRE>
+
+를 포인트한다.
+
+<DT><B>VT_RELDISP</B><DD>
+디스플레이를 릴리즈한다.
+
+<DT><B>VT_ACTIVATE</B><DD>
+vt <I>argp</I>를 전환한다(1 &lt;= <I>argp</I> &lt;= MAX_NR_CONSOLES).
+
+<DT><B>VT_WAITACTIVE</B><DD>
+vt <I>argp</I>가 활성화될때까지 기다린다.
+
+<DT><B>VT_DISALLOCATE</B><DD>
+vt <I>argp</I>와 일치하는 메모리를 Deallocate the memory associated with vt <I>argp</I>.
+(Since 1.1.54.)
+
+<DT><B>VT_RESIZE</B><DD>
+화면크기의 커널이해(kernel's idea)를 설정한다.
+<I>argp</I>는
+<PRE>
+struct vt_sizes {
+    ushort <I>v_rows</I>;       /* # rows */
+    ushort <I>v_cols</I>;       /* # columns */
+    ushort <I>v_scrollsize</I>; /* no longer used */
+};
+</PRE>
+
+로 포인트한다.
+
+이것으로 비디오모드를 바꿀수 없다는것을 주지한다.
+<A HREF="http://localhost/cgi-bin/man/man2html?8+resizecons">resizecons</A>(8) 참조한다.  (버전1.1.54부터.) 
+
+<DT><B>VT_RESIZEX</B><DD>
+다양한 화면매개변수의 커널이해(kernel's idea)를 설정한다.
+<I>argp</I>
+
+<PRE>
+struct vt_consize {
+        ushort <I>v_rows</I>;          /* 열(줄)번호 */
+        ushort <I>v_cols</I>;          /* 행번호 */
+        ushort <I>v_vlin</I>;          /* 화면상의 픽셀열 번호 */
+        ushort <I>v_clin</I>;          /* 문자별 픽셀열 번호 */
+        ushort <I>v_vcol</I>;          /* 화면상의 픽셀행 번호 */
+        ushort <I>v_ccol</I>;          /* 문자별 픽셀행 번호 */
+};
+</PRE>
+
+를 포인트한다.
+
+모든 매개변수는 0으로 설정될런지 모른다. 그러나 복수의 매개변수가 설정된다면
+일관되어야만 한다. 이것으로 비디오모드를 바꿀수 없다는 것을 주지한다.
+<A HREF="http://localhost/cgi-bin/man/man2html?8+resizecons">resizecons</A>(8)를 참조한다.  (버전1.3.3부터.)
+
+</DL>
+<P>
+
+다음의 입출력제어들은 <I>argp</I>에 의해 구조체포인트 첫번째 바이트에 의존한다.
+이것들은 오로지 수퍼유저나 현재 tty의 소유자만이 가능하다.
+<DL COMPACT>
+<DT><B>TIOCLINUX, subcode=0</B><DD>
+화면을 덤프한다. 버전 1.1.92에는 없는 옵션이다.
+
+<DT><B>TIOCLINUX, subcode=1</B><DD>
+처리정보를 얻는다. 1.1.92에는 없다.
+
+<DT><B>TIOCLINUX, subcode=3</B><DD>
+선택한 것을 붙인다.
+선택된 버퍼의 문자는 <I>fd</I>에 기록된다.
+
+<DT><B>TIOCLINUX, subcode=4</B><DD>
+화면을 채운다.
+
+<DT><B>TIOCLINUX, subcode=6</B><DD>
+<I>argp</I>는 커널변수 <I>shift_state</I>의 값을 설정하는 char을 포인트한다.
+(버전1.1.32부터.)
+
+<DT><B>TIOCLINUX, subcode=7</B><DD>
+<I>argp</I>는 커널변수 <I>report_mouse</I>의 값을 설정하는 char을 포인트한다.
+(버전1.1.33부터.)
+
+<DT><B>TIOCLINUX, subcode=8</B><DD>
+화면 너비와 높이, 커서 위치, 그리고 모든 문자-속성쌍을 덤프한다.
+(커널 버전1.1.67 에서1.1.91까지만 쓸 수 있다.
+커널 1.1.92 이후 버전에서는 대신 /dev/vcsa*에서 읽을 수있다.)
+
+<DT><B>TIOCLINUX, subcode=9</B><DD>
+화면 너비와 높이, 커서 위치, 그리고 모든 문자-속성쌍을 재저장한다.
+(커널 버전1.1.67 에서1.1.91까지만 쓸 수 있다.
+커널 1.1.92 이후 버전에서는 대신 /dev/vcsa*에서 읽을 수있다.)  
+
+<DT><B>TIOCLINUX, subcode=10</B><DD>
+신세대모니터의 강력한 저장기능을 다룬다.
+VESA 화면공백모드는 <I>argp</I>[1]를 설정한다. 그것은 화면공백을 다룬다.
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;<I>0</I>:&nbsp;화면공백은&nbsp;불가능하다.
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;<I>1</I>:&nbsp;현재&nbsp;비디오아답터
+
+레지스터 설정이 저장된후 제어기는 수직동기화펄스 전환(turn off)을 프로그램한다.
+이것은 모니터를 &quot;standby&quot;모드로 한다. 모니터가 타이머 오프모드가 있다면 그것은
+결국 자신을 꺼버린다.
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;<I>2</I>:&nbsp;현재&nbsp;
+
+설정이 저장된후, 수직,수평 동기와 펄스는 꺼진다. 이것은 모니터를 &quot;off&quot;모드로 둔다. 모니터에 타이머 OFF모드가 없거나, 모니터를 즉시 끄고 싶다면 이 옵션을 선택한다.
+(<I>Caution:</I>는 결국 모니터에 손상을 입힌다.)  
+
+(Since 1.1.76.)
+
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>반환값</H2>
+
+에러시 -1을 반환하고, <I>errno</I>는 설정된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>에러</H2>
+
+<I>errno</I>는 아래의 값을 가진다:
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+파일 디스크립터는 유효치않다.
+<DT>
+<DD>
+ENOTTY
+파일 디스크립터는 문자 장치와 일치하지 않거나, 요청을 거부했다.
+<DT><B>EINVAL</B>
+
+<DD>
+파일
+파일 디스크립터나 <I>argp</I>는 유효치 않다.
+<DT><B>EPERM</B>
+
+<DD>
+권한 위반.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>경고</H2>
+
+이 맨페이지(Man page)는 리눅스 콘솔 입출력에 관한 문서가 아니다.
+이 맨페이지는 소스를 보고싶어하는 사용자의 호기심에 대안으로 제공되는 것이다.
+입출력제어는 문서화되지 않았다. 따라서 경고없이 내용이 바뀔 수 있다는것을
+주지하기 바란다. 
+
+입출력제어는 커널과 잘알려진 프로그램(fdisk, hdparm, setserisl,tunelp,
+loadkeys, selection, setfont, etc..) 사이의 통신을 위해 자주 소개되고,
+입출력제어는 프로그램의 요구에 따라 변화할 것이다.
+
+입출력제어를 사용하는 프로그램은 다른 버전의 유닉스에 포팅할 수 없다.
+그리고 이후 버전에서는 사라질 수도 있다.
+
+POSIX함수들을 사용한다.
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+kbd_mode">kbd_mode</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+loadkeys">loadkeys</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+dumpkeys">dumpkeys</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mknod">mknod</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+setleds">setleds</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+setmetamode">setmetamode</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+ioperm">ioperm</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+termios">termios</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+execve">execve</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fcntl">fcntl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+console">console</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+console_codes">console_codes</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+mt">mt</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+sd">sd</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+tty">tty</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+ttys">ttys</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+vcs">vcs</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?4+vcsa">vcsa</A></B>(4),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+charsets">charsets</A></B>(7),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mapscrn">mapscrn</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+setfont">setfont</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+resizecons">resizecons</A></B>(8),
+
+<I>/usr/include/linux/kd.h</I>,
+
+<I>/usr/include/linux/vt.h</I>
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">반환값</A><DD>
+<DT><A HREF="#lbAE">에러</A><DD>
+<DT><A HREF="#lbAF">경고</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

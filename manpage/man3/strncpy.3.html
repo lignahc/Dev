@@ -1,0 +1,93 @@
+<HTML><HEAD><TITLE>Manpage of STRCPY</TITLE>
+</HEAD><BODY>
+<H1>STRCPY</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1993년 4월 11일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+strcpy, strncpy - 문자열 복사하기.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;</B>
+
+<B>char *strcpy(char *</B><I>dest</I><B>, const char *</B><I>src</I><B>);</B>
+
+<B>char *strncpy(char *</B><I>dest</I><B>, const char *</B><I>src</I><B>, size_t </B><I>n</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>strcpy()</B> 함수는 <I>src</I>(`\0' 문자를 포함)가 가리키는 문자열을  
+<I>dest</I>가 가리키는 배열에 복사한다.
+문자열을 겹쳐지지 않으며 목적지 문자열 <I>dest</I>는 복사 받을 정도로 
+충분히 커야 한다.
+<P>
+<P>
+
+<B>strncpy()</B> 함수는 <I>src</I>의 <I>n</I>바이트만을 복사한다는 것을
+제외하고 비슷하다. 만일 <I>src</I>의 처음 <I>n</I> 바이트중 null이 없다면,
+결과는 null-종료가 안될수 있다.
+<P>
+
+<I>src</I>
+
+의 길이가 
+<I>n</I>보다
+
+작은 경우, 
+<I>dest</I>
+
+의 나머지는 null로 패드된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+<B>strcpy()</B>와 <B>strncpy()</B> 함수는 목적지 문자열 <I>dest</I>에 대한
+포인터를 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>BUGS</H2>
+
+<B>strcpy()</B>의 목적지 문자열이 충분히 크지 않다면(즉, 프로그래머가 
+어리석거나 게으르다면, 복사하기 전에 크기를 검사하지 않을 것이다), 
+어떠한 일이 발생할수 있다.
+고정된 길이의 문자열 오버 플로우는 즐겨 쓰여지는 크래커 기술이다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>CONFORMING TO</H2>
+
+SVID 3, POSIX, BSD 4.3, ISO 9899
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+bcopy">bcopy</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memccpy">memccpy</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memcpy">memcpy</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memmove">memmove</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 2월 20일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAF">BUGS</A><DD>
+<DT><A HREF="#lbAG">CONFORMING TO</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

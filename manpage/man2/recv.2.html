@@ -1,0 +1,489 @@
+<HTML><HEAD><TITLE>Manpage of RECV</TITLE>
+</HEAD><BODY>
+<H1>RECV</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 2002-12-31<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+recv, recvfrom, recvmsg - 소켓으로부터 메세지를 받는다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</B>
+
+<P>
+<B>int recv(int </B><I>s</I><B>, void *</B><I>buf</I><B>, size_t </B><I>len</I><B>, int </B><I>flags</I><B>);</B>
+
+<P>
+<B>int recvfrom(int </B><I>s</I><B>, void *</B><I>buf</I><B>, size_t </B><I>len</I><B>,</B>
+
+<B>int </B><I>flags</I><B>, struct sockaddr *</B><I>from</I><B>, socklen_t *</B><I>fromlen</I><B>);</B>
+
+<P>
+<B>int recvmsg(int </B><I>s</I><B>, struct msghdr *</B><I>msg</I><B>, int </B><I>flags</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>recvfrom</B>
+
+그리고
+<B>recvmsg</B>는
+
+연결 지향형이든 아니든 소켓에서 메세지를 받기 위해 사용된다. 그리고 소켓에 있는 데이터를 받기 위해 사용된다.
+<P>
+
+만일
+<I>from</I>이
+
+NULL이 아니고 소켓이 연결 지향형이 아니라면, 메세지의 본래 주소가 채워진다.
+인자
+<I>fromlen</I>은
+
+값-결과 변수이며
+<I>from</I>과
+
+관련된 버퍼의 크기로 초기화되며, 반환시 저장되는 주소의 실제 크기를 가리키는
+값으로 수정된다.
+<P>
+
+<B>recv</B>
+
+호출은 보통
+<I>연결</I>된
+
+소켓에서만 사용된다.
+(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+connect">connect</A></B>(2)를
+
+참조하라)
+그리고
+<I>from</I>
+
+인자를 가진
+<B>recvfrom</B>과
+
+동일하다.
+<P>
+
+소켓에 메시지가 없다면, 메시지를 받는 호출은 메시지가 들어올때까지 기다리게되며,
+만약 소켓이 넌블럭킹(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fcntl">fcntl</A></B>(2)
+
+참조)이었다면 결과값은 -1이 되고 errno를 
+<B>EAGAIN</B>으로
+
+설정한다.
+일반적으로 메시지를 받는 호출들은 요구된 양을 모두 채우며 기다리기 보다는 채워진 양을 리턴한다.
+<P>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2)
+
+나
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+poll">poll</A></B>(2)
+
+호출은 데이터가 더 도착하였는지를 결정하기 위해 사용된다.
+<P>
+
+받는 함수들을 위한
+<I>flags</I>
+
+인자는 다음 값들 중 하나 이상의
+<I>OR</I>로
+
+구성된다.:
+<DL COMPACT>
+<DT><B>MSG_OOB</B>
+
+<DD>
+이 플래그는 일반적 데이터 스트림에서 받지 않는 out-of-band 데이터를 요구한다.
+몇몇 프로토콜은 보통 데이터 큐의 머리에 급한 데이터를 놓는다. 그리고 이
+플래그는 그런 프로토콜에서는 사용될 수 없다.
+<DT><B>MSG_PEEK</B>
+
+<DD>
+이 플래그는 큐에서 데이터를 제거하지 않고 받는 큐의 시작에서부터 데이터를
+반환하는 받기 작동을 하도록 한다.
+그래서, 연속적인 받기 호출은 같은 데이터를 반환한다.
+<DT><B>MSG_WAITALL</B>
+
+<DD>
+이 플래그는 요구한 양이 다 찰 때까지 작동을 블럭킹하도록 요구한다.
+그러나, 만일 신호가 발생하거나, 오류나 단절이 발생하거나, 혹은
+받은 데이터가 전에 반환된 데이터와 다른 타입이라면
+요구한 것보다 적은 데이터라도 반환한다.
+
+
+
+
+
+<DT><B>MSG_TRUNC</B>
+
+<DD>
+전달된 버퍼의 길이보다 길더라도 패킷의 실제 길이를 반환한다.
+패킷 소켓에서만 유효하다.
+<DT><B>MSG_ERRQUEUE</B>
+
+<DD>
+이 플래그는 소켓 오류 큐에 저장된 오류들을 받도록 한다.
+오류는 프로토콜(IPv4
+<B>IP_RECVERR</B>를
+
+위한)에 의존하는 형식을 갖는 보조 메시지로 전달된다.
+사용자는 충분한 크기의 버퍼를 제공해야 한다. 좀더 자세한 정보는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+cmsg">cmsg</A></B>(3)과
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+ip">ip</A></B>(7)을
+
+참고하라.
+<P>
+오류를 발생시킨 원래 패킷의 유효 데이터(payload)는
+<B>msg_iovec</B>를
+
+통해 보통 데이터로 전달된다.
+오류를 발생시킨 데이터그램의 원래 도착 주소는
+<B>msg_name</B>을
+
+통해 제공된다.
+<DT><DD>
+로컬 오류에 대해서는 아무런 주소도 전달되지 않는다.
+(이것은
+<B>cmsghdr</B>의
+
+멤버인
+<I>cmsg_len</I>으로
+
+확인할 수 있다.)
+오류가 발생하면,
+<B>MSG_ERRQUEUE</B>가
+
+<B>msghdr</B>에
+
+설정된다.
+하나의 에러가 전달된 후,
+계류 중인 소켓 오류는 다음 저장된 오류를 기반으로 다시 만들어진다.
+그리고, 이것은 다음 소켓 연산으로 전달될 것이다.
+오류는
+<B>sock_extended_err</B>
+
+구조체로 제공된다.
+<DT><DD>
+<DL COMPACT><DT><DD>
+
+<PRE>
+
+#define SO_EE_ORIGIN_NONE       0
+#define SO_EE_ORIGIN_LOCAL      1
+#define SO_EE_ORIGIN_ICMP       2
+#define SO_EE_ORIGIN_ICMP6      3
+
+struct sock_extended_err
+{
+    u_int32_t       ee_errno;   /* error number */
+    u_int8_t        ee_origin;  /* where the error originated */
+    u_int8_t        ee_type;    /* type */
+    u_int8_t        ee_code;    /* code */
+    u_int8_t        ee_pad;
+    u_int32_t       ee_info;    /* additional information */
+    u_int32_t       ee_data;    /* other data */
+    /* More data may follow */
+};
+
+struct sockaddr *SO_EE_OFFENDER(struct sock_extended_err *);
+
+</PRE>
+
+</DL>
+
+<DT><DD>
+<B>ee_errno</B>는
+
+저장된 오류의 오류 번호를 포함한다.
+<B>ee_origin</B>는
+
+오류가 시작됐던 본래 코드이다.
+다른 필드들은 프로토콜에 의존한다. 매크로
+<B>SOCK_EE_OFFENDER</B>는
+
+보조 메세지에 주어진 포인터에서 오류가 발생한 네트웍 객체의 주소에
+대한 포인터를 반환한다.
+만일 이 주소가 알려지지 않았다면,
+<B>sockaddr</B>의
+
+멤버인
+<I>sa_family</I>는
+
+<B>AF_UNSPEC</B>를
+
+포함하며
+<B>sockaddr</B>의
+
+다른 필드들은 정의되지 않는다.
+오류를 야기한 패킷은 보통 데이터처럼 전달된다.
+<DT><DD>
+로컬 오류들을 위해, 어떤 주소도 전달되지 않는다. (
+이것은
+<B>cmsghdr</B>의
+
+멤버인
+<I>cmsg_len</I>로
+
+확인할 수 있다.)
+오류를 받기 위해,
+<B>MSG_ERRQUEUE</B>가
+
+<B>msghdr</B>에
+
+설정된다.
+<P>
+오류가 전달된 후, 미결인 채로 남아 있던 소켓 오류들은 다음 저장된 오류에 기반하여
+다시 만들어지고 다음 소켓 작동시 전달된다.
+</DL>
+<P>
+
+<B>recvmsg</B>는
+
+제공된 파라미터들의 수를 최소화하기 위해
+<I>msghdr</I>
+
+구조체를 사용한다.
+이 구조체는
+<I>&lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</I>에
+
+정의된 것처럼 다음과 같은 형태를 가지고 있다.
+<DL COMPACT>
+<DT><DD>
+<DL COMPACT><DT><DD>
+<PRE>
+
+struct msghdr {
+    void         * msg_name;     /* optional address */
+    socklen_t    msg_namelen;    /* size of address */
+    struct iovec * msg_iov;      /* scatter/gather array */
+    size_t       msg_iovlen;     /* # elements in msg_iov */
+    void         * msg_control;  /* ancillary data, see below */
+    socklen_t    msg_controllen; /* ancillary data buffer len */
+    int          msg_flags;      /* flags on received message */
+};
+
+</PRE>
+
+</DL>
+
+</DL>
+<P>
+
+<I>msg_name</I>과
+
+<I>msg_namelen</I>은
+
+소켓이 연결되지 않았으면 목적지 주소를 나타낸다.
+<I>msg_name</I>은
+
+어떤 이름도 원하지 않거나 필요하지 않다면 null 포인터로써 주어진다.
+<I>msg_iov</I>와
+
+<I>msg_iovlen</I>
+
+필드는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+readv">readv</A></B>(2)처럼
+
+scatter-gather 위치를 가리킨다.
+<I>msg_controllen</I>의
+
+길이를 가지고 있는
+<I>msg_control</I>는
+
+메세지나 기타 보조 데이터와 관련된 다른 프로토콜 제어를 위한 버퍼를 가리킨다.
+<B>recvmsg</B>가
+
+호출될 때,
+<I>msg_controllen</I>는
+
+<I>msg_control</I>에서
+
+이용할 수 있는 버퍼의 길이를 포함해야 한다.
+연속적인 호출에 대한 반환시 연속된 제어 메세지들의 길이를 포함해야 한다.
+<P>
+<P>
+
+메세지의 형태는 아래와 같은 형식을 갖는다.
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+
+struct cmsghdr {
+    socklen_t   cmsg_len;   /* data byte count, including hdr */
+    int         cmsg_level; /* originating protocol */
+    int         cmsg_type;  /* protocol-specific type */
+/* followed by
+    u_char      cmsg_data[]; */
+};
+
+</PRE>
+
+</DL>
+
+<P>
+
+보조 데이터는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+cmsg">cmsg</A></B>(3)에서
+
+정의된 매크로에 의해서만 접근되어야 한다.
+<P>
+
+예를 들어, 리눅스는 이 보조 데이터를 IP 옵션이나 Unix 소켓에서 파일 기술자들처럼
+확장된 오류들을 전달하기 위해 사용한다.
+<P>
+
+<I>msg_flags</I>
+
+필드는 받은 메세지에 따라 반환할 때 설정된다.
+<B>MSG_EOR</B>는
+
+end-of-record를 나타낸다. 반환된 데이터가 레코드의 끝이다. (일반적으로
+<B>SOCK_SEQPACKET</B>
+
+형식의 소켓일 때 사용된다.)
+<B>MSG_TRUNC</B>는
+
+데이터그램의 끝 부분을 버렸다는 것을 나타낸다. 왜냐하면 데이터그램이
+제공되는 버퍼보다 크기 때문이다.
+<P>
+<B>MSG_CTRUNC</B>는
+
+몇몇 제어 데이터들을 보조 데이터를 위한 버퍼 공간이 부족하기 때문에 버렸다는
+것을 나타낸다.
+<B>MSG_OOB</B>는
+
+급하거나 out-of-band 데이터를 받았다는 것을 가리키기 위해 반환된다.
+<B>MSG_ERRQUEUE</B>는
+
+어떤 데이터도 받지 않았지만 소켓 오류 큐에서 오류가 확장되었다는 것을
+나타낸다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+이들 호출은 받은 바이트들의 수를 반환한다. 오류가 발생하면 -1을 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>오류</H2>
+
+이것들은 소켓 층에서 발생하는 몇몇 표준 오류이다. 추가적인 오류들은 프로토콜
+모듈들 아래에서 발생되고 반환된다; 해당 메뉴얼 페이지들을 참조하라.
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+인자
+<I>s</I>가
+
+유효한 기술자가 아니다.
+<DT><B>ENOTCONN</B>
+
+<DD>
+소켓은 연결 지향형 프로토콜이지만 연결되지 않았다. (
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+connect">connect</A></B>(2)와
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+accept">accept</A></B>(2)를
+
+참조하라.)
+<DT><B>ENOTSOCK</B>
+
+<DD>
+인자
+<I>s</I>가
+
+소켓을 가리키지 않는다.
+<DT><B>EAGAIN</B>
+
+<DD>
+소켓이 non-blocking이고 받는 작동은 블럭킹되어 있거나 받는 타임아웃이 설정되어
+있고 데이터를 받기 전에 타임아웃이 끝났다.
+<DT><B>EINTR</B>
+
+<DD>
+받기가 데이터를 이용하기 전에 전달된 신호에 의해 인터럽트 되었다.
+<DT><B>EFAULT</B>
+
+<DD>
+받는 버퍼 포인터가 프로세스 주소 공간 이외를 가리키고 있다.
+<DT><B>EINVAL</B>
+
+<DD>
+무효한 인자가 전달되었다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+4.4BSD (이 함수는 4.2BSD에서 처음 나타났다.)
+<A NAME="lbAH">&nbsp;</A>
+<H2>주의</H2>
+
+위에 주어진 원형은 glibc 이후이다.
+Single Unix Specification은 `ssize_t' 타입의 반환값을 가지는 것 외에 같다.
+(반면에 BSD 4.* 그리고 libc4, libc5는 모두 `int' 이다.)
+<I>flags</I>
+
+인자는 BSD 4.* 에서 `int' 이지만, libc4와 libc5는 `unsigned int' 이다.
+<I>len</I>
+
+인자는 BSD 4.*에서 `int' 이지만, libc4와 libc5는 'size_t' 이다.
+<I>fromlen</I>
+
+인자는 BSD 4.*, libc4, libc5에서 `int *' 이다.
+현재 `socklen_t *'는 POSIX에 의해 만들어졌다.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+accept">accept</A></B>(2)를
+
+참조하라.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+fcntl">fcntl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+read">read</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+select">select</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+getsockopt">getsockopt</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+cmsg">cmsg</A></B>(3)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>번역</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt; 2000년 12월 11일
+<BR>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>) 2004년 3월 25일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">오류</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">주의</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 01:22:18 GMT, March 26, 2004
+</BODY>
+</HTML>

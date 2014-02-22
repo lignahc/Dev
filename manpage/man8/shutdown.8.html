@@ -1,0 +1,220 @@
+<HTML><HEAD><TITLE>Manpage of SHUTDOWN</TITLE>
+</HEAD><BODY>
+<H1>SHUTDOWN</H1>
+Section: Linux System Administrator's Manual (8)<BR>Updated: May 31, 1996<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+shutdown - 시스템 종료하기
+
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>/sbin/shutdown</B>
+
+[<B>-t</B>
+
+<I>sec</I>]
+
+[<B>-rkhncf</B>]
+
+<I>time</I>
+
+[<I>warning-message</I>]
+
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>Shutdown</B>
+
+명령은 보안차원에서 시스템을 끌 때 사용하는 명령이다. 
+현재 접속중인 모든 사용자는 시스템이 종료된다는 소식을 
+받게되고 <I><A HREF="http://localhost/cgi-bin/man/man2html?1+login">login</A>(1)</I> 작업이 중지된다. 
+이 풀그림은 즉시 시스템을 종료할 수도 있고, 특정 시간에 
+종료 할 수도 있다. 
+모든 프로세스는 시그날 <FONT SIZE="-2">SIGTERM</FONT>에 의해서 시스템이 종료된다는 
+소식을 접하게 된다. <I><A HREF="http://localhost/cgi-bin/man/man2html?1+vi">vi</A>(1)</I>와 같은 풀그림은 편집중인 파일을 
+저장 할 수 있게 시간을 부여해 주며, mail과 news 같은 풀그림은 
+기타 나머지 처리를 할 수 있게 한다. <B>Shutdown</B>은 
+<B>init</B> 프로세서의 시스날 처리에 의해서 수행되며, 
+<I>runlevel</I> 바꾸기를 요청한다. <I>Runlevel 0</I>은 시스템 종료에(halt),
+<I>runlevel 6</I>은 시스템 리부팅에, <I>runlevel 1</I>은 단일 사용자 모드에 
+사용된다. <I>runlevel 1</I>은 <B>shutdown</B> <I>-h</I> 또는 <I>-r</I> 
+옵션 없이 사용될 때 실행되는 초기값이다.
+시스템 halt나 reboot에 대한 처리부분은 <I>/etc/inittab</I> 파일 안에 
+있는 <I>runlevels</I> 부분을 참조한다.
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+
+<DL COMPACT>
+<DT><B>-t</B> <I>sec</I><DD>
+다른 <I>runlevel</I>로 바뀌기 전에 경고를 보내는 프로세스와 kill 시스날
+사이의 기다리는 시간은 <I>sec</I> 로 지정한다.
+
+
+<DT><B>-k</B><DD>
+실질적으로 shutdown을 하는게 아니라, 단지 모든 사용자에게 경고 메시지만을
+보낸다.
+
+
+<DT><B>-r</B><DD>
+shutdown 후 리부팅.
+
+
+<DT><B>-h</B><DD>
+shutdown 후 시스템 종료.
+
+
+<DT><B>-n</B><DD>
+[주의] shutdown을 하기 위해서 init를 호출하지 않고, 
+자체적으로 shutdown한다. 이 옵션은 시스템 제어 불가능 상태일 때, 
+사용되며, 그 결과에 대해서는 기대했던 것과 다르게 나타날 수도 있다.
+
+
+<DT><B>-f</B><DD>
+`빠른' 리부트.
+
+
+<DT><B>-c</B><DD>
+이미 shutdown 중이 것을 취소한다. 
+이 옵션을 사용할 때는 <B>time</B> 인자값을 사용할 수 없다.
+하지만, 명령행에서 설명하는 메시지를 사용해 모든 사용자에게 
+전달 할 수는 있다.
+
+
+<DT><I>time</I><DD>
+shutdown 할 시간
+
+
+<DT><I>warning-message</I><DD>
+모든 사용자에게 보낼 메시지
+
+</DL>
+<P>
+
+<I>time</I>에 지정할 값은 여러가지 방식을 사용할 수 있다. 
+첫째, 절대적인 시간 형식 <I>hh:mm</I>으로 지정할 수 있다. 
+<I>hh</I>에는 시간(1,2 같은 숫자), <I>mm</I>에는 분(두자리 숫자)이 온다.
+둘째, 현재 시간부터 셧다운을 시작할 시간 사이의 상대적인 시간. 
+<B>+</B><I>m</I> 형식으로 사용되는데, <I>m</I> 분 만큼 기다리게 된다.
+바로 <B>now</B>는 <B>+0</B>의 다른 표현인 것이다.
+<P>
+
+<B>-f</B> 옵션은 `빠른 리부트'에서 사용된다. 이 명령은 시스템이 
+리부팅될 때, 시스템에 의해서 검사되는 <B>/fastboot</B> 라는 참조 
+파일만을 만든다. 다음 부팅 될 때, rc 파일에서 이 파일을 검사 할 수 
+있고, 정당한 방법으로 시스템이 셧다운 되었을 때 <I><A HREF="http://localhost/cgi-bin/man/man2html?1+fsck">fsck</A>(1)</I> 명령을 
+실행하지 않게 결정할 수도 있다. 그 다음, boot 프로세스는 <B>/fastboot</B>
+파일을 지울 것이다.
+<P>
+
+<B>-n</B> 옵션을 사용하면, init를 호출하지 않고, 스스로 모든 
+실행중인 프로세스를 닫는다. <B>shutdown</B>은 
+<I>/etc/rc.d/rc.halt fast</I> 형식으로 스크립트를 실행할 것이다. 
+이것은 또한 <I>rc.0</I>, <I>rc.6</I> 파일의 검사도한다. 
+만약 이 스크립트가 없거나 실행할 수 없는 상태라면, 
+<I>quota</I>, <I>accounting</I>을 끄고, 
+<I>swapping</I> 해제, 모든 파일 시스템을 <I>unmount</I> 한다.
+
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>Access Control</H2>
+
+<B>CTRL-ALT-DEL</B> 글쇠가 눌려지면 <B><A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A></B>(8)에 의해서 
+<B>Shutdown</B>은 실행된다. 이 글쇠에 대한 기능의 지정은 
+<I>/etc/inittab</I> 파일에서 하고 있다. 
+이것은 콘솔 키보드에 물리적인 접근이 가능한 모든 사람들은 
+시스템을 리부팅 할 수 있다는 것을 의미한다. 
+이것을 방지하게 하려면, 
+<B>shutdown</B>은 가상 콘솔 중 하나에 로그인한 사람이 시스템을 
+종료할 수 있는 권한이 있는지를 검사할 수 있다. 
+<B>shutdown</B>이 <B>init</B>에 의해서 호출되면, 
+먼저 <I>/etc/shutdown.allow</I> 파일이 있는지 확인을 하고, 
+그 파일안에 있는 목록과 <I>/var/run/utmp</I> 파일을 바탕으로 
+가상 콘솔에 로그인한 사람의 이름과 비교를 한다. 
+그래서 일치하면 셧다운이 일어나고, 그렇지 않으면 다음 메시지를 보인다.
+<P>
+<PRE>
+<B>shutdown: no authorized users logged in</B>
+</PRE>
+
+<P>
+<I>/etc/shutdown.allow</I> 파일은 한줄에 한 사용자의 이름만 있으면 된다.
+빈줄과 주석문(#로 시작한 글)도 사용할 수 있다. 
+현재 이 파일의 최대 등록 인원은 32명이다. 
+<A NAME="lbAG">&nbsp;</A>
+<H2>FILES</H2>
+
+<PRE>
+/fastboot
+/etc/inittab
+/etc/rc.d/rc.halt
+/etc/rc.d/rc.reboot
+/etc/shutdown.allow
+</PRE>
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>BUGS</H2>
+
+실질적인 버그는 아직 발견되지 않았지만, 
+대부분의 사용자는 <I>time</I> 값 지정을 잊어버리고는 
+<B>shutdown</B>에서 보여주는 메시지를 오류 메시지로 착각한다. 
+이 값이 지정되지 않으면, runlevel 1을 수행한다는 것을 
+잊지 말기 바란다. 그리고 이 값은 90%가 <B>now</B>를 사용할 것이다.
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Miquel van Smoorenburg, <A HREF="mailto:miquels@cistron.nl">miquels@cistron.nl</A>
+
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?8+fsck">fsck</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?1+init">init</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?8+halt">halt</A>(8), <A HREF="http://localhost/cgi-bin/man/man2html?8+reboot">reboot</A>(8)
+
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">Access Control</A><DD>
+<DT><A HREF="#lbAG">FILES</A><DD>
+<DT><A HREF="#lbAH">BUGS</A><DD>
+<DT><A HREF="#lbAI">AUTHOR</A><DD>
+<DT><A HREF="#lbAJ">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

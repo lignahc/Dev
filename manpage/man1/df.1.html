@@ -1,0 +1,144 @@
+<HTML><HEAD><TITLE>Manpage of DF</TITLE>
+</HEAD><BODY>
+<H1>DF</H1>
+Section: User Commands  (1)<BR>Updated: GNU File Utilities<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+df - 디스크의 남은 공간을 보여준다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>df</B>
+
+[-aikPv] [-t fstype] [-x fstype] [--all] [--inodes]
+[--type=fstype] [--exclude-type=fstype] [--kilobytes]
+[--portability] [--print-type] [--help] [--version] [filename...]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+이 문서는 더이상 최신 정보를 담고 있지않다.  그래서,  몇몇
+틀릴  경우도  있고,  부족한  경우도  있을  것이다.  완전한
+매뉴얼을 원하면, Texinfo 문서를 참조하기 바란다.
+<P>
+
+이 매뉴얼 페이지는
+<B>df</B>
+
+명령의 GNU  버전에  대한  것이다.
+<B>df</B>
+
+명령은 지정한 <I>filename</I>이 있는 파일 시스템의 사용가능한 
+디스크 공간 정보를 보여준다.
+아무런 <I>filename</I> 인자가 없으면, 현재 시스템에서 
+사용하는 모든 파일 시스템의 사용가능한 디스크 공간 정보를 보여준다.
+나타나는 숫자들의 기본 단위는 1KB이다. 물론이 단위는 
+<B>POSIXLY_CORRECT</B>
+
+환경 변수의 설정으로 512Byte로 바꿀 수 있다.
+<P>
+
+만일 <I>filename</I> 인자로 디스크 장치 이름이 절대경로 형식으로 
+(예, /dev/hda1) 주어지면, 그 해당 디스크의 사용가능한 디스크 공간을 
+보여준다. 이 버전에서는 마운트(<A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A>(8))되지 않은 파일 시스템에 대해서는
+그 공간 정보를 보여지 못한다. 이런 이유는 각각의 파일 시스템 구조에 
+대한 정보들을 확실하게 알아야하는데, 마운트 되지 않은 상태에서는 
+이런 정보들을 알기가 거의 불가능하기 때문이다.
+<A NAME="lbAE">&nbsp;</A>
+<H3>OPTIONS</H3>
+
+<DL COMPACT>
+<DT><I>-a, --all</I>
+
+<DD>
+파일 시스템의 크기가 0인 것도 모두 보여준다. 초기값은 제외 시킨다.
+이런 파일 시스템은 전형적으로 자동 마운트관련, 특별 구성,
+pseudo-filesystems이다. 어떤 시스템에서는 ``ignore'', 또는 
+``auto'' 형태의 파일 시스템이 초기값으로 생략되는 경우가 있다. 
+이때 이옵션을 사용한다.
+<DT><I>-i, --inodes</I>
+
+<DD>
+블럭 사용 정보 대신에 inode 사용정보를 보여준다. 
+inode란 특별한 종류의 디스크 블럭인데, 
+이것은 파일이름, 소유주, 권한, 시간 정보, 디스크에서의 위치등에 
+대한 정보를 담고 있다. 
+<DT><I>-k, --kilobytes</I>
+
+<DD>
+보여주는 숫자들의 단위를 512 바이트 블럭 단위 대신 1KB 단위로 보여준다.
+이 옵션은
+<B>POSIXLY_CORRECT</B>
+
+환경 변수를 무시한다.
+<DT><I>-P, --portability</I>
+
+<DD>
+POSIX에서 사용되는 형태로 보여준다. 
+이 옵션은 한 줄에 하나의 파일 시스템 정보만 보여주다는 것을 제외하고는 
+기본 출력 양식과 같다. 한 마운트 장치는 그 줄에 포함되지 않는다.
+이 말은 만약 마운트 장치 이름이 20 문자 이상이면,(원격 마운트 
+파일 시스템일 경우는 그렇다) 줄이 나뉘어 지는데, 이런 경우는 생략되거나
+축약된다.
+<DT><I>-T, --print-type</I>
+
+<DD>
+각 파일시스템의 형태를 보여준다. 
+특정 파일시스템의 정보만을 원할 경우에는 --type= 또는 
+--exclude-type= 옵션을 사용한다.
+<DT><I>-t, --type=fstype</I>
+
+<DD>
+<I>fstype</I>
+
+값을 가진 파일시스템만 보여준다.
+초기값은 모든 파일 시스템을 보여준다.
+<DT><I>-x, --exclude-type=fstype</I>
+
+<DD>
+<I>fstype</I>
+
+값을 가진 파일시스템만 빼고 나머지 모든 파일 시스템 정보를 보여준다.
+<DT><I>-v</I>
+
+<DD>
+무시: System V 용 <B>df</B>와 호환을 위해서 있는 옵션.
+<DT><I>--help</I>
+
+<DD>
+도움말을 보여주고 마친다.
+<DT><I>--version</I>
+
+<DD>
+버전 정보를 보여주고 마친다.
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DL>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+</DL>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

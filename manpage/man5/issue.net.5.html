@@ -1,0 +1,97 @@
+<HTML><HEAD><TITLE>Manpage of ISSUE.NET</TITLE>
+</HEAD><BODY>
+<H1>ISSUE.NET</H1>
+Section: 리눅스 프로그래머 매뉴얼 (5)<BR>Updated: 22 May 1994<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+issue.net - 텔넷 세션을 위한 시스템 식별 파일
+<A NAME="lbAC">&nbsp;</A>
+<H2>설명</H2>
+
+<B>/etc/issue.net</B> 파일은 텔넷 세션의 login 프롬프트 이전에 출력되어지며,
+메시지 혹은 시스템 식별 정보가 있는 텍스트 파일이다.
+이 파일은 여러개의
+<B>%</B><I>char</I>
+
+가 연속하여 포함되어 있을지도 모른다. 다음은 
+<B>telnetd</B>
+
+에서 지원하는 
+<B>%</B><I>char</I>
+
+이다:
+<DL COMPACT>
+<DT><B>%t</B>
+
+<DD>
+- 현재 tty를 보여준다.
+<DT><B>%h</B>
+
+<DD>
+- 시스템 노드명(FQDN)을 보여준다.
+<DT><B>%D</B>
+
+<DD>
+- NIS 도메인명을 보여준다.
+<DT><B>%d</B>
+
+<DD>
+- 현재 시간과 날짜를 보여준다.
+<DT><B>%s</B>
+
+<DD>
+- 운영체제의 이름을 보여준다.
+<DT><B>%m</B>
+
+<DD>
+- 기계(하드웨어) 유형을 보여준다.
+<DT><B>%r</B>
+
+<DD>
+- 운영체제 릴리즈를 보여준다.
+<DT><B>%v</B>
+
+<DD>
+- 운영체제 버전을 보여준다.
+<DT><B>%%</B>
+
+<DD>
+- '%' 문자를 표시한다.
+</DL>
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>파일</H2>
+
+/etc/issue.net
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+telnetd">telnetd</A></B>(8)
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>역자</H2>
+
+배성훈 &lt;<A HREF="mailto:plodder@kldp.org">plodder@kldp.org</A>&gt;, 2000년 5월 13일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">설명</A><DD>
+<DT><A HREF="#lbAD">파일</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+<DT><A HREF="#lbAF">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

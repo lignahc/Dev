@@ -1,0 +1,203 @@
+<HTML><HEAD><TITLE>Manpage of SYSTEM</TITLE>
+</HEAD><BODY>
+<H1>SYSTEM</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1998년 5월 11일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+system - shell 명령어 실행하기
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/stdlib.h">stdlib.h</A>&gt;</B>
+
+<B>int system (const char * </B><I>string</I><B>);</B>
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>system()</B>
+
+함수는
+<B>/bin/sh -c</B>
+
+<I>string</I>를
+
+호출하여 
+<I>string</I>
+
+에 지정된 명령어를 실행하며, 명령어가 끝난후 반환된다.
+명령어가 실행되는 동안,
+<B>SIGCHLD</B>
+
+는 블럭되며,
+<B>SIGINT</B>
+
+그리고
+<B>SIGQUIT</B>
+
+는 무시된다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+리턴된 값은 
+만일
+<B>/bin/sh</B>
+
+을 위한 
+<B>execve()</B>
+
+호출이 실패한다면, 리턴된 값은 127 이며, 다른 에러가 있다면 -1, 그렇지 않으면 명령어의
+리턴코드가 반환된다.
+<P>
+
+<I>string</I>
+
+값이 
+<B>NULL</B>이라면,
+
+<B>system()</B>
+
+은 shell을 이용할수 있다면 0 이 아닌 값을, 그렇지 않으면 0 값을 반환한다.
+<P>
+
+<B>system()</B>
+
+은 어떤 다른 자식의 wait 상태에 영향을 주지 않는다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>호환</H2>
+
+ANSI C, POSIX.2, BSD 4.3
+<A NAME="lbAG">&nbsp;</A>
+<H2>버그</H2>
+
+<P>
+
+libc 버전의
+<B>system()</B>
+
+이 인터럽트를 무시한다는 것은 매우 불행한 일이다.
+이것은 함수 후출시 루프에서 인터럽트할수 없게 되도록 프로그램을 만든다.
+이것은 그런 목적의 프로그램은 
+<B>system()</B>
+
+이 아닌 개인 버전의 함수를 사용해야 한다.(경고: 테스트된 코드가 아니다!)
+<BR>
+
+<PRE>
+
+int my_system (const char *command) {
+    int pid, status;
+
+    if (command == 0)
+        return 1;
+    pid = fork();
+    if (pid == -1)
+        return -1;
+    if (pid == 0) {
+        char *argv[4];
+        argv[0] = &quot;sh&quot;;
+        argv[1] = &quot;-c&quot;;
+        argv[2] = command;
+        argv[3] = 0;
+        execve(&quot;/bin/sh&quot;, argv, environ);
+        exit(127);
+    }
+    do {
+        if (waitpid(pid, &amp;status, 0) == -1) {
+            if (errno != EINTR)
+                return -1;
+        } else
+            return status;
+    } <A HREF="http://localhost/cgi-bin/man/man2html?1+while">while</A>(1);
+}
+</PRE>
+
+<P>
+
+suid 나 sgid 우선권이 있는 프로그램에서는
+<B>system()</B>
+
+을 사용하지 마라. 왜냐하면 몇몇 환경 변수들을 위한 이상한 값들이 시스템을 오작동시킬수
+있기 때문이다. 
+대신에
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+exec">exec</A></B>(3)
+
+계열의 함수를 사용해라. 그러나 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+execlp">execlp</A></B>(3)
+
+나
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+execvp">execvp</A></B>(3)은
+
+제외해라.
+사실
+<B>system()</B>
+
+함수는 
+<B>/bin/sh</B>
+
+이
+<B>bash</B>
+
+버전 2인 시스템에서 suid 나 sgid 우선권이 있는 프로그램에서는 잘 작동하지 않는다.
+왜냐하면 bash 2는 시작시 우선권을 없애기 때문이다.
+(Debian은 
+<B>sh</B>처럼
+
+구동시 이것을 하지 않는 수정된 bash를 사용한다.)
+<P>
+
+<B>/bin/sh</B>
+
+의 유용성 검사는 실제적으로는 행해지지 않는다; 항상 유효하다고 가정한다.
+ISO C는 검사를 지정하지만, POSIX.2는 리턴 값은 항상 0 이 아닌 값이어야 한다고 지정한다.
+왜냐하면 shell이 없는 시스템은 행해져서는 안되기 때문이다. 
+<P>
+
+반환 값 127은 shell 명령어에서 가능하다. 그러므로 이 반환 값은 
+<B>execve()</B>
+
+가 실패했다는것을 확실히 가리키지 않는다;
+확신을 위해
+<I>errno</I>
+
+를 검사해라.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+sh">sh</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+signal">signal</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+exec">exec</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 3월 12일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">호환</A><DD>
+<DT><A HREF="#lbAG">버그</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

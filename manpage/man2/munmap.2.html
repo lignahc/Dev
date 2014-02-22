@@ -1,0 +1,228 @@
+<HTML><HEAD><TITLE>Manpage of MMAP</TITLE>
+</HEAD><BODY>
+<H1>MMAP</H1>
+Section: 리눅스 프로그래머 매뉴얼 (2)<BR>Updated: 1996년 4월 12일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+mmap, munmap - 파일이나 장치를 메모리로 대응시키거나 대응을 푼다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/unistd.h">unistd.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/mman.h">sys/mman.h</A>&gt;</B>
+
+<P>
+<B>#ifdef _POSIX_MAPPED_FILES</B>
+
+<P>
+<B>void * mmap(void *</B><I>start</I><B>, size_t </B><I>length</I><B>, int </B><I>prot</I>
+
+<B>, int </B><I>flags</I><B>, int </B><I>fd</I><B>, off_t </B><I>offset</I><B>);</B>
+
+<P>
+<B>int munmap(void *</B><I>start</I><B>, size_t </B><I>length</I><B>);</B>
+
+<P>
+<B>#endif</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>mmap</B>
+
+함수는 
+<I>fd</I>로
+
+지정된 파일(또는 다른 객체)에서 
+<I>offset</I>을
+
+시작으로 
+<I>length</I>
+
+바이트만큼을 
+<I>start </I>
+
+주소로 대응시키도록 한다.
+이 주소는 단지 그 주소로 했으면 좋겠다는 정도이며, 보통 0으로 지정한다.
+<B>mmap</B>는
+
+지정된 영역이 대응된 실제 시작 위치를 반환한다. 
+<I>prot</I>
+
+인자는 원하는 메모리 보호 모드를 설정한다. 해당 비트는 다음과 같다. 
+<DL COMPACT>
+<DT><B>PROT_EXEC</B>
+
+<DD>
+페이지는 실행될 수 있다.
+<DT><B>PROT_READ</B>
+
+<DD>
+페이지는 읽을 수 있다.
+<DT><B>PROT_WRITE</B>
+
+<DD>
+페이지는 쓰여질 수 있다.
+<DT><B>PROT_NONE</B>
+
+<DD>
+페이지는 접근될 수 없다.
+</DL>
+<P>
+
+<I>flags</I>
+
+인자는 대응된 객체의 타입, 대응 옵션들, 대응된 페이지
+복사본에 대한 수정이 그 프로세스에만 보일 것인지 다른 참조하는 프로세스와 
+공유할 것인지를 설정한다.
+해당 비트들은 다음과 같다.
+<DL COMPACT>
+<DT><B>MAP_FIXED</B>
+
+<DD>
+지정된 주소 이외의 다른 주소를 선택하지 않는다.
+지정된 주소가 사용될 수 없다면, 
+<B>mmap</B>은
+
+실패할 것이다.
+만일 MAP_FIXED가 지정되면,
+<I>start</I>는
+
+페이지 크기의 배수이어야 한다. 이 옵션은 사용하지 않는 것이 좋다.
+<DT><B>MAP_SHARED</B>
+
+<DD>
+이 객체를 대응시키는 다른 모든 프로세스와 이 대응 영역을 공유한다.
+<DT><B>MAP_PRIVATE</B>
+
+<DD>
+개별적인 copy-on-write 대응을 만든다. (다른 프로세스와 대응 영역을 공유하지 않는다.)
+</DL>
+<P>
+
+MAP_SHARED나 MAP_PRIVATE 중 하나는 반드시 명시해야 한다. 
+<P>
+
+위 세 플래그는 POSIX.1b에 규정되어 있다.(공식적으로 POSIX.4)
+또한 리눅스에는 MAP_DENYWRITE, MAP_EXECUTABLE 그리고 MAP_ANON(YMOUS)도 
+있다.
+<P>
+<B>munmap</B>
+
+시스템 콜은 지정된 주소 공간에 대한 대응을 푼다. 범위내의 주소에 
+대한 참조 계수를 늘려서 유효하지 않는 메모리 참조로 만든다.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 
+<B>mmap</B>은
+
+대응된 영역의 포인터를 반환한다.
+에러시, MAP_FAILED(-1)이 리턴되며, 
+<I>errno</I>는
+
+적당한 값으로 설정된다.
+성공시, 
+<B>munmap</B>은
+
+0을 리턴하며, 실패시 -1이 리턴되며, 
+<I>errno</I>가
+
+설정된다 (보통 EINVAL이 설정된다).
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+<I>fd</I>가
+
+유효한 파일 기술자가 아니다 (그리고 MAP_ANONYMOUS가 설정되어
+있지 않다).
+<DT><B>EACCES</B>
+
+<DD>
+MAP_PRIVATE가 설정되었지만, 
+<I>fd</I>가
+
+읽을 수 있도록 열려있지 않다. 또는 MAP_SHARED와 
+PROT_WRITE가 설정되었지만,
+<I>fd</I>가
+
+쓸 수 있도록 열려있지 않다.
+<DT><B>EINVAL</B>
+
+<DD>
+<I>start</I>나
+
+<I>length</I>나
+
+<I>offset</I>가
+
+적당하지 않다 (즉, 너무 크거나 PAGESIZE 경계로 정렬되어 있지 않다).
+<DT><B>ETXTBUSY</B>
+
+<DD>
+MAP_DENYWRITE가 설정되었으나
+<I>fd</I>로
+
+지정된 객체가 쓰기 위해 열려있다.
+<DT><B>EAGAIN</B>
+
+<DD>
+파일이 잠겨있거나, 너무 많은 메모로가 잠겨있다.
+<DT><B>ENOMEM</B>
+
+<DD>
+사용할 수 있는 메모리가 없다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, POSIX.1b (formerly POSIX.4), 4.4BSD.  Svr4 문서에는 ENXIO와 
+ENODEV 에러 코드가 추가되있다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+getpagesize">getpagesize</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+msync">msync</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shm_open">shm_open</A></B>(2),
+
+B.O. Gallmeister, POSIX.4, O'Reilly, 페이지. 128-129와 389-391.
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2000년 5월 14일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

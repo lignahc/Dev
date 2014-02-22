@@ -1,0 +1,392 @@
+<HTML><HEAD><TITLE>Manpage of SEMCTL</TITLE>
+</HEAD><BODY>
+<H1>SEMCTL</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: November 1, 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+semctl - 세마포어 제어기.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+<B>#include &lt;<A HREF="file:/usr/include/sys/ipc.h">sys/ipc.h</A>&gt;</B>
+<B>#include &lt;<A HREF="file:/usr/include/sys/sem.h">sys/sem.h</A>&gt;</B>
+
+#if defined(__GNU_LIBRARY__) &amp;&amp; !defined(_SEM_SEMUN_UNDEFINED)
+/* union semun is defined by including &lt;<A HREF="file:/usr/include/sys/sem.h">sys/sem.h</A>&gt; */
+#else
+/* according to X/OPEN we have to define it ourselves */
+union semun {
+        int val;                    /* SETVAL을 위한값 */
+        struct semid_ds *buf;       /* IPC_STAT, IPC_SET을 위한 버퍼 */
+        unsigned short int *array;  /* GETALL, SETALL을 위한 배열 */
+        struct seminfo *__buf;      /* IPC_INFO을 위한 버퍼 */
+};
+#endif
+</PRE>
+
+<P>
+<B>int semctl (int </B><I>semid</I><B>,</B>
+
+<B>int </B><I>semnum</I><B>,</B>
+
+<B>int </B><I>cmd</I><B>,</B>
+
+<B>union semun </B><I>arg</I><B>)</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>semctl</B>
+
+함수는
+<I>semid</I>
+
+가 가리키는 세마포어 집합, 혹은 이 집합의
+<I>semnum</I>
+
+번째 세마포어(세마포어는 
+<B>0</B>
+
+번부터 시작한다.)에
+<I>cmd</I>
+
+가 지정하는 제어작용을 실행한다.
+<P>
+<P>
+
+<P>
+<I>cmd</I>
+
+가 갖는 값은 다음과 같다.
+<DL COMPACT>
+<DT><B>IPC_STAT</B>
+
+<DD>
+<I>arg</I><B>.buf</B><I></I>
+
+포인터가 가리키는 구조체에 세마포어 집합의 데이타 구조 정보를 복사한다.
+<I>semnum</I>
+
+인수는 무시된다.
+호출한 프로세스는 세마포어 설정에 읽기권한이 있어야한다.
+<P>
+<DT><B>IPC_RMID</B>
+
+<DD>
+세마포어 집합과 데이타 구조를 즉시 제거하고, 모든 대기중인 프로세스들을 재실행한다.
+호출한 프로세스의 유효 사용자ID는 수퍼유저나 세마포어 집합의 생성자 혹은 소유자중의 
+하나여야 한다.
+인수
+<I>semnum</I>
+
+는 무시된다.
+<DT><B>GETALL</B>
+
+<DD>
+집합의 모든 세마포어에 대한
+<B>semval</B>
+
+값을
+<I>arg</I><B>.array</B><I></I>.
+
+에 저장한다.
+변수 
+<I>semnum</I>
+
+는 무시된다. 호출한 프로세스는 세마포어설정에 읽기 권한이 있어야한다.
+<DT><B>GETNCNT</B>
+
+<DD>
+<I>semnum</I>
+
+번째 세마포어의 
+<B>semncnt</B>
+
+값을 반환한다. 이 값은 세마포어의
+<B>semval</B>
+
+값이 증가하기를 기다리고 있는
+프로세스의 수를 나타낸다. 호출한 프로세스는 세마포어 설정에 읽기 권한이 있어야한다.
+<DT><B>GETPID</B>
+
+<DD>
+세마포어 호출은
+<B>sempid</B>
+
+의 값을 반환한다. 이 값은
+가장 최근에 해당 세마포어에
+<B>semop</B>
+
+호출을 했던 프로세스의 pid를 나타낸다. 
+호출한 프로세스는 세마포어 설정에 읽기 권한이 있어야한다.
+<DT><B>GETVAL</B>
+
+<DD>
+집합의 
+<I>semnum</I>
+
+번째 세마포어에 대한
+<B>semval </B>
+
+의 값을 반환한다. 호출 프로세스는 세마포어 설정에 대한 읽기 접근에 있어 특별한 권한을 갖고 있어야 한다.
+<DT><B>GETZCNT</B>
+
+<DD>
+시스템 호출은 집합의 
+<I>semnum</I>
+
+번째 세마포어에 대한
+<B>semzcnt</B>
+
+의 값을 반환한다.이 값은 세마포어의
+<B>semval</B>
+
+값이 0이 되기를 기다리고 있는
+프로세스의 수를 나타낸다.
+호출 프로세스는 세마포어 설정에 대한 읽기 접근 권한들을 갖고 있어야 한다.
+<DT><B>SETALL</B>
+
+<DD>
+<I>arg</I><B>.array</B><I></I>
+
+인수 배열을 사용하여 집합의 모든 세마포어의
+<B>semval</B>
+
+값을 설정한다.
+집합과 관련된 
+<B>semid_ds </B>
+
+구조체의 
+<B>sem_ctime </B>
+
+멤버를 또한 업데이트한다.
+모든 프로세스에서 변경된 세마포어에 대해 Undo 엔트리들은 소거된다.
+대기열에서 유휴중인 프로세스들은 일부 
+<B>semval</B>
+
+이 0이 되거나, 증가하면, 다시 활성화된다.
+인수 
+<I>semnum</I>
+
+은 무시된다. 호출 프로세스는 세마포어 설정에 대한 변경 접근 권한을 갖고 있어야 한다.
+<DT><B>SETVAL</B>
+
+<DD>
+<B></B><I>arg</I><B>.val</B><I></I>
+
+
+
+값을 사용하여 집합의 
+<I>semnum</I>
+
+번째 세마포어의
+<B>semval</B>
+
+값을 설정한다.
+<B>semid_ds </B>
+
+구조의 
+<B>sem_ctime </B>
+
+멤버를 또한 업데이트시킨다.
+모든 프로세스에서 변경된 세마포어에 대해 Undo 엔트리들은 소거된다. 
+대기열에서 유휴중인 프로세스들은  
+<B>semval</B>
+
+이 0이 되거나, 증가하면, 다시 활성화된다.
+인수 
+<I>semnum</I>
+
+은 무시된다.
+호출 프로세스는 세마포어 설정에 대한 변경 접근 권한을 갖고 있어야 한다.
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+실패하면, 시스템 호출은 에러를 가리키는 
+<B>errno</B>
+
+와 함께 
+<B>-1</B>
+
+를 리턴한다.
+그렇지 않으면, 시스템 호출은 아래와 같이 
+<I>cmd</I>
+
+에 따라 음수값이 아닌 값을 리턴한다.
+<DL COMPACT>
+<DT><B>GETNCNT</B>
+
+<DD>
+<B>semncnt</B>
+
+의 값 .
+<DT><B>GETPID</B>
+
+<DD>
+<B>sempid</B>
+
+의 값 .
+<DT><B>GETVAL</B>
+
+<DD>
+<B>semval</B>
+
+의 값.
+<DT><B>GETZCNT</B>
+
+<DD>
+<B>semzcnt</B>
+
+의 값 .
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+실패 리턴에 대하여,
+<B>errno </B>
+
+는 다음의 값들중 하나로 설정될 것이다.:
+<DL COMPACT>
+<DT><B>EACCES</B>
+
+<DD>
+호출 프로세스는 
+<I>cmd</I>
+
+를 실행하는데 필요한 접근 권한을 갖고 있지 않는다.
+<DT><B>EFAULT</B>
+
+<DD>
+<I>arg</I><B>.buf</B>
+
+에 의해 가리키는 주소나 
+<I>arg</I><B>.array</B>
+
+는 접근이 불가능하다.
+<DT><B>EIDRM</B>
+
+<DD>
+세마포어 설정은 삭제되었다.
+<DT><B>EINVAL</B>
+
+<DD>
+<I>cmd</I>
+
+또는
+<I>semid</I>
+
+에 대한 부적절한 값.
+<DT><B>EPERM</B>
+
+<DD>
+인수 
+<I>cmd</I>
+
+가
+<B>IPC_SET</B>
+
+또는
+<B>IPC_RMID</B>
+
+값을 갖지만, 호출 프로세스 유효 사용자 ID는 명령을 실행시킬 수 있는 충분치 않은 특권들을 갖는다.
+<DT><B>ERANGE</B>
+
+<DD>
+인수
+<I>cmd</I>
+
+는
+<B>SETALL</B>
+
+또는
+<B>SETVAL를 갖고,</B>
+
+and the value to which
+<B>semval</B>
+
+가 0보다 적고 구현 값보다 더 크게 설정되어야 하는 값을 갖는다.
+<B>SEMVMX</B>.
+
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>주의</H2>
+
+<B>IPC_INFO</B>,
+
+<B>SEM_STAT</B>
+
+그리고
+<B>SEM_INFO</B>
+
+제어 호출들은 할당된 자원들에 정보를 제공하는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ipcs">ipcs</A></B>(8)
+
+프로그램에 의해 사용된다.
+<P>
+
+세마포어 설정에 대한 다음의 시스템 제한은 
+<B>semctl </B>
+
+호출에 영향을 미친다.
+<DL COMPACT>
+<DT><B>SEMVMX</B>
+
+<DD>
+<B>semval</B>
+
+에 대한 최대값은 구현에 의존적이다 (32767).
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, SVID.  SVr4는 에러 조건  EINVAL과 EOVERFLOW에 대한 문서를 작성한다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+ipc">ipc</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmget">shmget</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmat">shmat</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+shmdt">shmdt</A></B>(2)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>번역</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt; 2000년 7월 29일
+<BR>
+
+배성훈 &lt;<A HREF="mailto:plodder@kldp.org">plodder@kldp.org</A>&gt; 2000년 11월 18일
+<BR>
+
+한글 Manpage 프로젝트 (<A HREF="http://man.kldp.org">http://man.kldp.org</A>) 2005년 2월 14일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">주의</A><DD>
+<DT><A HREF="#lbAH">호환</A><DD>
+<DT><A HREF="#lbAI">관련 항목</A><DD>
+<DT><A HREF="#lbAJ">번역</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 05:17:55 GMT, February 14, 2005
+</BODY>
+</HTML>

@@ -1,0 +1,198 @@
+<HTML><HEAD><TITLE>Manpage of LN</TITLE>
+</HEAD><BODY>
+<H1>LN</H1>
+Section: User Commands  (1)<BR>Updated: GNU File Utilities<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+ln - 파일 링크
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>ln</B>
+
+[options] source [dest]
+<BR>
+
+<B>ln</B>
+
+[options] source... directory
+<BR>
+
+Options:
+<BR>
+
+[-bdfinsvF] [-S backup-suffix] [-V {numbered,existing,simple}]
+[--version-control={numbered,existing,simple}] [--backup] [--directory]
+[--force] [--interactive] [--no-dereference] [--symbolic] [--verbose]
+[--suffix=backup-suffix] [--help] [--version]
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>ln</B>는
+
+파일 간의 링크를 만든다. 기본적으로 하드 링크를 만들고,
+<B>-s</B>
+
+옵션을 쓰면, 심볼릭 (`소프트') 링크를 만든다.
+<P>
+
+유닉스의 `링크'에는 두가지 개념이 있으며, 이 둘은 보통 하드 링크와 소프트 링크라
+불린다. 하드 링크는 단지 파일이 가진 또하나의 이름일 뿐이다.
+(그리고 파일은 여러 개의 이름을 갖을 수 있다. 파일은 여러 이름들이 모두 지워질 때
+갈이 지워진다. 파일의 이름 수는
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ls">ls</A></B>(1)
+
+로 주어진다.
+`진짜' 이름 같은 것은 존재하지 않는다. 모든 파일명은 동일한 지위에 있다.
+꼭 그렇지는 않지만 보통은 모든 파일명은 데이터가 있는 파일 시스템에 같이
+있다. 
+
+
+<P>
+
+소프트 링크(심볼 링크)는 하드링크와는 완전히 다른 녀석이다. 소프트 링크는
+패스명을 갖고 있는 조그마한 파일이다. 따라서 소프트링크는 다른 파일시스템의
+(즉, 예를 들어 다른 컴퓨터에서 마운트된 NFS 시스템의) 파일을 가르키고 있을 
+수도 있으며, 심지어는 반드시 존재하는 파일을 가르키고 있다는 보장도 없다.
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+open">open</A></B>(2)
+
+이나
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+stat">stat</A></B>(2)
+
+시스템 호출로 억세스할 때에 운영체제 커널은 심볼링크로의 참조를 패스명이 가르키는
+파일로의 참조로 바꾼다.
+(하지만,
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+rm">rm</A></B>(1)
+
+과
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+unlink">unlink</A></B>(2)
+
+은 링크를 지우고, 링크가 가리키는 파일은 건드리지 않는다.
+그리고, 특수한 시스템 호출인
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+lstat">lstat</A></B>(2)
+
+과
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+readlink">readlink</A></B>(2)
+
+는 심볼링크의 상태와 링크가 가리키는 파일을 읽는다.
+또한 다른 여러 시스템 호출이 링크를 어떻게 다루는가는 운영체제에 따라
+다르기 때문에 확실히 말할 수 없다.)
+<P>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><I>-b, --backup</I>
+
+<DD>
+대상 파일이 이미 있으면, 그것을 백업한다.
+<DT><I>-d, -F, --directory</I>
+
+<DD>
+경로의 하드링크를 허용한다. 이것은 시스템관리자만 가능하다.
+<DT><I>-f, --force</I>
+
+<DD>
+대상 파일이 이미 있어도 그냥 지운다.
+<DT><I>-i, --interactive</I>
+
+<DD>
+대상 파일이 이미 있을 때 어떻게 할 것인지 사용자에게 물어본다.
+<DT><I>-n, --no-dereference</I>
+
+<DD>
+만약 링크할 원본이 심블릭 파일이면, ln 명령은  그
+심블릭  대상이  되는  파일을  링크한다. 이렇게 하지
+않고, 단지 그 심블릭 파일 자체를 심블릭 정보와 함께
+링크하고 할 때, 이 옵션을 사용한다.
+이 옵션은 --force 옵션과 함께 유용하게 쓰인다.
+<DT><I>-s, --symbolic</I>
+
+<DD>
+심블릭 링크.
+심블릭 링크를  지원하지  않는
+시스템에서  이 옵션을  사용할 경우에는 오류 메시지를
+보여준다.
+<DT><I>-v, --verbose</I>
+
+<DD>
+각 파일의 작업 상태를 자세히 보여준다.
+<DT><I>--help</I>
+
+<DD>
+도움말을 보여주고 마친다.
+<DT><I>--version</I>
+
+<DD>
+버전 정보를 보여주고 마친다.
+<DT><I>-S, --suffix backup-suffix</I>
+
+<DD>
+만약에 대상이 이미 있어, 백업을 해야할 경우에
+그 백업 파일에서 사용할 파일 이름의 꼬리 문자를
+지정한다. 이것은 이미 지정되어 있는
+SIMPLE_BACKUP_SUFFIX 환경 변수를 무시하게 된다. 만약
+이 환경변수도 지정되어 있지 않고, 이 옵션도
+사용하지 않는다면, 초기값으로 Emacs과 같이 `~'
+문자를 사용한다.
+<DT><I>-V, --version-control {numbered,existing,simple}</I>
+
+<DD>
+백업하는 방법을 지정하는데,
+이 옵션은 이미 지정되어 있는
+<B>VERSION_CONTROL</B>
+
+환경 변수를 무시한다.
+만약 이 환경 변수도 지정되어 있지 않고, 이 옵션도 사용하지
+않는다면, 초기값으로 `existing'을 사용한다.
+여기서 사용하는 백업방법은 GNU Emacs의 `version-control' 값과 같다.
+아래와 같이 보다 짧은 지시어들도 사용될 수 있다.
+여기서 사용될 수 있는 백업 방법은 아래와 같다.
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT>`t' 또는 `numbered'<DD>
+항상 번호 있는 백업본을 만든다.
+<DT>`nil' or `existing'<DD>
+대상 파일이 이미 있을 경우에만 백업본을 만든다.
+<DT>`never' or `simple'<DD>
+간단한 백업을 만듬.
+<P>
+</DL>
+</DL>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:34 GMT, February 17, 2005
+</BODY>
+</HTML>

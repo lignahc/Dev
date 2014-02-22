@@ -1,0 +1,257 @@
+<HTML><HEAD><TITLE>Manpage of DLOPEN</TITLE>
+</HEAD><BODY>
+<H1>DLOPEN</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1995년 5월 16일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+dlclose, dlerror, dlopen, dlsym - 동적 링크 로더에 대한 프로그래밍 인터페이스.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/dlfcn.h">dlfcn.h</A>&gt;</B>
+
+<P>
+<B>void *dlopen (const char *</B><I>filename</I><B>, int </B><I>flag</I><B>);</B>
+
+<BR>
+
+<B>const char *dlerror(void);</B>
+
+<BR>
+
+<B>void *dlsym(void *handle</B><I>, char *symbol</I><B>);</B>
+
+<BR>
+
+<B>int dlclose (void *handle</B><I>);</I>
+
+<P>
+특수 기호:
+<B>_init</B>, <B>_fini</B>. 
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>dlopen</B>은
+
+null로 끝나는 문자열인 파일 이름 
+<I>filename</I>으로부터
+
+동적 라이브러리를 읽어온다. 동적 라이브러리를 위해 정해지지 않은 &quot;handle&quot;을 리턴한다.
+만약
+<I>filename</I>
+
+이 상대경로 (&quot;/&quot; 로 시작하지 않는) 라면, 다음 위치에서 화일을 찾는다:
+<DL COMPACT><DT><DD>
+<P>
+
+사용자의 <B>LD_LIBRARY_PATH</B> 환경변수에 콜론(:)으로 구분되어 있는 디렉토리 리스트
+<P>
+
+/etc/ld.so.cache에 저장된 라이브러리 리스트
+<P>
+
+<I>/lib</I>가 뒤따르는, <I>/usr/lib</I>.
+</DL>
+
+<P>
+
+만약
+<I>filename</I>이
+
+NULL 포인터이면, 반환된 핸들은 메인 프로그램에 해당하는 것이다.
+<P>
+
+라이브러리에 있는 외부 참조는 이 라이브러리의 의존관계 목록에 있는 라이브러리와 전에  
+<B>RTLD_GLOBAL</B>
+
+플래그로 열린 다른 라이브러리를 사용하는 것으로 해결된다.
+만약 실행 파일이 &quot;-rdynamic&quot; 플래그로 연결되었다면, 실행 파일에 있는 전역 심볼은 동적으로 탑재된 라이브러리의 참조를 해결한다.
+<P>
+
+<I>flag</I>는
+
+반드시 
+<B>RTLD_LAZY</B>
+
+- 동적 라이브러리의 코드가 실행되어 정의되지 않은 심볼을 해결하는 것을 의미 - 또는 
+<B>RTLD_NOW</B>
+
+- 
+<B>dlopen</B>
+
+이 반환되기 전에 정의하지 않은 모든 심볼을 해결하는 것을 의미 - 이어야만 한다. 그리고 이 과정이 수행되지 않으면 실패할 것이다.
+추가적으로,
+<B>RTLD_GLOBAL</B>은
+
+라이브러리안에 정의된 외부 심볼이 뒤이은 라이브러리가 탑재되는 것이 가능하게 할 경우에 
+<I>flag</I>와
+
+OR 될 수 있다.
+<P>
+
+만약 라이브러리가 
+<B>_init</B>이라는
+
+루틴에 전달될 경우, 라이브러리에 있는 코드는 <B>dlopen</B>이 반환되기 전에 수행될 것이다.
+만약 같은 이름의 라이브러리가 
+<B>dlopen()</B>으로
+
+두 번 적재된다면 같은 파일 핸들을 리턴한다. dl 라이브러리는 동적 파일 핸들의 링크 수를 관리한다. 그래서 동적 라이브러리가 
+<B>dlopen</B>에
+
+의해 성공적으로 호출된 만큼 
+<B>dlclose</B>을
+
+호출할 때까지 할당한 것을 해제하지 않는다.
+<P>
+
+만약
+<B>dlopen</B>이
+
+어떤 이유에서라도 실패를 한다면 NULL을 반환한다.
+dl 루틴 (dlopen, dlsym, dlclose) 에 의해 발생한 가장 최근의 에러를 보기 위해서는
+<B>dlerror()</B>을
+
+호출해야 한다.
+<B>dlerror</B>은
+
+초기화 이후 또는 이 함수가 마지막으로 호출 (연속적으로 이 함수가 두번 호출되면 두번째 호출의 반환값은 항상 NULL이다.) 된 후 아무런 에러가 발생하지 않았다면 NULL을 반환한다. 
+<P>
+<B>dlsym</B>은
+
+dlopen에서 리턴된 동적 라이브러리의 핸들과 null로 끝나는 symbol 이름을 취하고 이 심볼의 적재된 주소를 반환한다. 만약 심볼을 찾지 못하면, NULL을 반환한다; 그러나
+<B>dlsym</B>에
+
+의해 발생한 에러를 정확히 알아보는 방법은
+<B>dlerror</B>에
+
+의한 결과값이 NULL이 아닌 경우 그 값을 검사하는 것이다.
+이렇게 하는 이유는 심볼의 값이 실제로 NULL이 되는 경우가 있기 때문이다.
+그리고
+<B>dlerror</B>이
+
+다시 호출될 때에는 NULL을 반환하기 때문에,
+필요하다면 
+<B>dlerror</B>의
+
+결과값를 저장해야만 한다.
+<P>
+
+<B>dlclose</B>은
+
+동적 라이브러리 핸들인
+<I>handle</I>에
+
+대한 참조계수를 하나 감소시킨다.
+만약 참조계수가 0이 되고 다른 어떤 적재된 라이브러리들이 적재를 취소하고자 하는 동적 라이브러리에 있는 심볼을 사용하지 않으면, 동적 라이브러리는 적재가 취소된다. 만약 동적 라이브러리가
+<B>_fini</B>라는
+
+루틴에 전달될 경우, 라이브러리의 적재가 취소되기 바로 전에 이 루틴이 호출될 것이다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>예제</H2>
+
+<B>math 라이브러리를 적재하고, 코사인 2.0을 출력한다:</B>
+
+<DL COMPACT><DT><DD>
+<PRE>
+#include &lt;<A HREF="file:/usr/include/dlfcn.h">dlfcn.h</A>&gt;
+
+int main(int argc, char **argv) {
+    void *handle = dlopen (&quot;/lib/libm.so&quot;, RTLD_LAZY);
+    double (*cosine)(double) = dlsym(handle, &quot;cos&quot;);
+    printf (&quot;%f\n&quot;, (*cosine)(2.0));
+    dlclose(handle);
+}
+</PRE>
+
+<P>
+
+만약 프로그램 이름이 &quot;foo.c&quot;라면 다음과 같은 명령어로 프로그램을 컴파일할 수 있다:
+<DL COMPACT><DT><DD>
+<P>
+
+gcc -rdynamic -o foo foo.c -ldl
+</DL>
+
+</DL>
+
+<P>
+
+<B>같은 방법으로 하자. 그러나 매단계마다 에러 체크를 하자:</B>
+
+<DL COMPACT><DT><DD>
+<PRE>
+#include &lt;<A HREF="file:/usr/include/stdio.h">stdio.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/dlfcn.h">dlfcn.h</A>&gt;
+
+int main(int argc, char **argv) {
+    void *handle;
+    double (*cosine)(double);
+    char *error;
+
+    handle = dlopen (&quot;/lib/libm.so&quot;, RTLD_LAZY);
+    if (!handle) {
+        fputs (dlerror(), stderr);
+        <A HREF="http://localhost/cgi-bin/man/man2html?1+exit">exit</A>(1);
+    }
+
+    cosine = dlsym(handle, &quot;cos&quot;);
+    if ((error = dlerror()) != NULL)  {
+        fprintf (stderr, &quot;%s, error);
+        <A HREF="http://localhost/cgi-bin/man/man2html?1+exit">exit</A>(1);
+    }
+
+    printf (&quot;%f\n&quot;, (*cosine)(2.0));
+    dlclose(handle);
+}
+</PRE>
+
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>감사</H2>
+
+dlopen 인터페이스 표준은 솔라리스에서 부터 시작되었다.
+리눅스의 dlopen에 대한 구현은 Mitch D'Souza, David Engel, Hongjiu Lu, Andreas Schwab와 그외 다수의 도움을 받아 Eric Youngdale이 하였다.
+이 매뉴얼 페이지는 Adam Richter가 작성하였다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ld">ld</A>(1)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ld.so">ld.so</A>(8)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ldconfig">ldconfig</A>(8)</B>,
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+ldd">ldd</A>(1)</B>,
+
+<B>ld.so.info</B>.
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>역자</H2>
+
+정동현 &lt;<A HREF="mailto:dhjung@serome.co.kr">dhjung@serome.co.kr</A>&gt;, 2000년 4월 22일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">예제</A><DD>
+<DT><A HREF="#lbAF">감사</A><DD>
+<DT><A HREF="#lbAG">관련 항목</A><DD>
+<DT><A HREF="#lbAH">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

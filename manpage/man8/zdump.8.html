@@ -1,0 +1,78 @@
+<HTML><HEAD><TITLE>Manpage of ZDUMP</TITLE>
+</HEAD><BODY>
+<H1>ZDUMP</H1>
+Section: Misc. Reference Manual Pages (8)<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+zdump - 시간대 time zone dumper
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>zdump</B>
+
+[
+<B>-v</B>
+
+] [
+<B>-c</B>
+
+cutoffyear ] [ zonename ... ]
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+Zdump는 명령행의 각 zonename의 시간을 출력한다.
+<P>
+
+다음과 같은 옵션이 쓰인다:
+<DL COMPACT>
+<DT><B>-v</B>
+
+<DD>
+For each
+<I>zonename</I>
+
+on the command line,
+print the time at the lowest possible time value,
+the time one day after the lowest possible time value,
+the times both one second before and exactly at
+each detected time discontinuity,
+the time at one day less than the highest possible time value,
+and the time at the highest possible time value,
+Each line ends with
+<B>isdst=1</B>
+
+if the given time is Daylight Saving Time or
+<B>isdst=0</B>
+
+otherwise.
+<DT><B>-c </B><I>cutoffyear</I>
+
+<DD>
+주어진 해의 출발근처에서 다양한 출력을 삭제한다.
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?3+newctime">newctime</A>(3), <A HREF="http://localhost/cgi-bin/man/man2html?5+tzfile">tzfile</A>(5), <A HREF="http://localhost/cgi-bin/man/man2html?8+zic">zic</A>(8)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

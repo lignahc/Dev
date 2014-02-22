@@ -1,0 +1,651 @@
+<HTML><HEAD><TITLE>Manpage of HDPARM</TITLE>
+</HEAD><BODY>
+<H1>HDPARM</H1>
+Section: Maintenance Commands (8)<BR>Updated: February 2000<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<P>
+<A NAME="lbAB">&nbsp;</A>
+<H2>¸íÄª</H2>
+
+hdparm - ÇÏµå µð½ºÅ©ÀÇ ¼³Á¤À» º¸¿©ÁÖ°Å³ª ¼³Á¤À» Á¶Á¤ÇÕ´Ï´Ù.
+<A NAME="lbAC">&nbsp;</A>
+<H2>°³¿ä</H2>
+
+<B>hdparm</B>
+
+[
+<B>-a</B>
+
+[sectcount]
+] [
+<B>-A</B>
+
+[0|1]
+] [
+<B>-c</B>
+
+[chipset_mode]
+] [
+<B>-C</B>
+
+] [
+<B>-d</B>
+
+[0|1]
+] [
+<B>-f</B>
+
+] [
+<B>-g</B>
+
+] [
+<B>-i</B>
+
+] [
+<B>-k</B>
+
+[0|1]
+] [
+<B>-K</B>
+
+[0|1]
+] [
+<B>-L</B>
+
+[0|1]
+] [
+<B>-m</B>
+
+[sectcount]
+] [
+<B>-p</B>
+
+[0|1|2|3|4|5]
+] [
+<B>-p</B>
+
+[sectcount]
+] [
+<B>-q</B>
+
+] [
+<B>-r</B>
+
+[0|1]
+] [
+<B>-S</B>
+
+[timeout]
+] [
+<B>-T</B>
+
+] [
+<B>-t</B>
+
+] [
+<B>-u</B>
+
+[0|1]
+] [
+<B>-v</B>
+
+] [
+<B>-W</B>
+
+[0|1]
+] [
+<B>-X</B>
+
+[xfermode]
+] [
+<B>-y</B>
+
+] [
+<B>-Y</B>
+
+] [
+<B>-Z</B>
+
+] [device] ..
+<A NAME="lbAD">&nbsp;</A>
+<H2>¼³¸í</H2>
+
+<B>hdparm</B>
+
+À¸·Î Linux IDE/ST-506 ÀåÄ¡ÀÇ ¿©·¯°¡Áö ÇÏµå µð½ºÅ© ioctls ¿É¼ÇÀ»
+Á¤ÇÒ¼ö ÀÖ½À´Ï´Ù. hdparm ´Â Linux Ä¿³Î 1.2.13 ¹öÁ¯ ÀÌ»ó¿¡¼­ »ç¿ëÇÒ¼ö
+ÀÖ½À´Ï´Ù. Ä¿³Î 1.2.13 ÀÌÀü ¹öÁ¯¿¡¼­´Â µ¿ÀÛÇÏÁö ¾Ê´Â ¿É¼ÇÀÌ ÀÖÀ»¼ö
+ÀÖ½À´Ï´Ù. ±×¸®°í ¿©·¯°¡Áö ¿É¼ÇµéÀÌ Ä¿³Î 2.0.10 ¹öÁ¯ ÀÌ»ó¿¡¼­ Æ÷ÇÔµÈ
+»õ·Î¿î (E)IDE ÀåÄ¡¿¡¼­¸¸ µ¿ÀÛÇÕ´Ï´Ù. ÀÌ ¿É¼ÇµéÀº Ä¿³Î 2.0.10 ÀÌÀü
+¹öÁ¯ÀÇ Çì´õÈ­ÀÏ·Î ÄÄÆÄÀÏµÈ hdparm À¸·Î´Â ¾µ ¼ö ¾ø½À´Ï´Ù.
+<A NAME="lbAE">&nbsp;</A>
+<H2>¿É¼Ç</H2>
+
+¾Æ¹«·± ¿É¼ÇÀÌ ÁÖ¾îÁöÁö ¾Ê´Â´Ù¸é,
+<I>-acdgkmnru</I>
+
+À¸·Î ½ÇÇàµË´Ï´Ù. (´Ü, ÁÖ¾îÁø ÀåÄ¡°¡ SCSI¹æ½ÄÀÌ³ª ¿À·¡µÈ XT¹æ½ÄÀÇ
+MFM/RLL, ÀÏ °æ¿ì °¢°¢
+<I>-gr</I>
+
+°ú
+<I>-adgr</I>
+
+ÀÌ ±âº» ¿É¼ÇÀ¸·Î ½ÇÇàµË´Ï´Ù).
+<DL COMPACT>
+<DT><I>-a</I>
+
+<DD>
+ÆÄÀÏ ½Ã½ºÅÛÀÇ ¹Ì¸® ÀÐ±â(read-ahead) ¼½ÅÍ ¼öÀÇ Á¤º¸¸¦ º¸¿©ÁÖ°Å³ª Á¤ÇÒ¼ö
+ÀÖ½À´Ï´Ù. ÀÌ ¿É¼ÇÀ¸·Î Å« È­ÀÏÀÌ ¿¬¼ÓµÇ´Â °æ¿ìÀÇ ¼º´ÉÀÌ Áõ´ëµÉ¼ö
+ÀÖÀ¸¸ç, ±×°ÍÀº ½ÇÇàÁßÀÎ ÀÛ¾÷ÀÌ ÇÊ¿äÇÏ°Ô µÇ´Â ¿¹»óÀÇ Ãß°¡ÀûÀÎ ºí·°À»
+¹Ì¸® °¡Á® ¿ÈÀ¸·Î½á ¼º´ÉÀ» Áõ´ë½ÃÅµ´Ï´Ù. Áö±ÝÀÇ Ä¿³Î ¹öÁ¯ (2.0.10)
+¿¡¼­´Â ±âº»ÀûÀ¸·Î 8 ¼½ÅÍ (4KB) ÀÔ´Ï´Ù. ÀÌ ¼öÄ¡´Â ¿©·¯°¡Áö ¿ëµµ·Î
+ÀûÇÕÇØ º¸ÀÔ´Ï´Ù¸¸, ´ëºÎºÐÀÇ È­ÀÏÀ» ºñ ¼øÂ÷Àû(random) À¸·Î Ã£´Â
+°æ¿ì¿¡´Â ÀÛÀº ¼öÄ¡°¡ ´õ ÁÁÀº ¼º´ÉÀ» ³¾¼ö ÀÖ½À´Ï´Ù. ¶ÇÇÑ ¸¹Àº IDE
+ÀåÄ¡¿¡¼­ ÀÌ¹Ì ³»ÀåµÈ ¹Ì¸® ÀÐ±â(read-ahead) ±â´ÉÀ» °¡Áö°í ÀÖ¾î ¿©·¯°¡Áö
+»óÈ²¿¡¼­ ÆÄÀÏ ½Ã½ºÅÛ ¹Ì¸® ÀÐ±â(read-ahead) ÇÊ¿ä¸¦ ´ú¾î ÁÝ´Ï´Ù.
+<DT><I>-A</I>
+
+<DD>
+IDE ÀåÄ¡ÀÇ ¹Ì¸® ÀÐ±â(read-lookahead) ±â´ÉÀ» ²ô°Å³ª ÄÓ¼ö ÀÖ½À´Ï´Ù.
+(´ë°³ ±âº»ÀûÀ¸·Î ±â´ÉÀÌ ÄÑÁ®(ON) ÀÖ½À´Ï´Ù).
+<DT><I>-c</I>
+
+<DD>
+(E)IDE ÀåÄ¡ÀÇ 32-bit ÀÔÃâ·Â(I/O) ±â´ÉÀ» ÄÑ°Å³ª ¾Ë¾Æº¼¼ö ÀÖ½À´Ï´Ù. ÀÌ
+¿É¼Ç¿¡¼­ ¼ýÀÚ·Î 32-bit ÀÔÃâ·Â(I/O)À» Á¶Á¤ÇÒ¼ö ÀÖ½À´Ï´Ù:
+32-bit ÀÔÃâ·Â(I/O)¸¦ ²ô·Á¸éÇ
+<I>0</I>
+
+,32-bit ÀÔÃâ·Â(I/O)¸¦ ÄÑ·Á¸é
+<I>1</I>
+
+,¸¶Áö¸·À¸·Î ¿©·¯ Ä¨¼Â¿¡¼­ ¿ä±¸µÇ´Â Æ¯º°ÇÑ µ¿±â ¹è¿­(sync sequence)À»
+Æ÷ÇÔÇÑ 32-bit ÀÔÃâ·Â(I/O)¸¦ ÄÑ·Á¸é
+<I>3.</I>
+
+ÀÌ °ª(3) Àº °ÅÀÇ ¸ðµç 32-bit IDE Ä¨¼Â¿¡¼­ µ¿ÀÛÇÏÁö¸¸, Á» ´õ
+ºÎ´ã(overhead)¸¦ ÁÙ¼ö ÀÖ½À´Ï´Ù. &quot;32-bit&quot; µ¥ÀÌÅÍ Àü¼ÛÀÌ PCI³ª VLB
+¹ö½º¿¡¼­ ÀÎÅÍÆäÀÌ½º Ä«µå »çÀÌ¶ó´Â °ÍÀ» ¸í½ÉÇÕ½Ã´Ù; ¸ðµç (E)IDE ÀåÄ¡´Â
+¾ÆÁ÷µµ ÀÎÅÍÆäÀÌ½º Ä«µå¿¡¼­ ÀåÄ¡±îÁö 16-bit ÀÇ ¸®º» ÄÉÀÌºí·Î ¿¬°áµÇ¾î
+ÀÖ½À´Ï´Ù.
+<DT><I>-C</I>
+
+<DD>
+IDE ÀåÄ¡ÀÇ Àü¿ø ¸ðµå »óÅÂ¸¦ °Ë»çÇÕ´Ï´Ù. ÀÌ°ÍÀº Ç×»ó ÀÌ Áß ÇÏ³ªÀÇ
+»óÅÂ°¡ µÉ °Í ÀÔ´Ï´Ù.
+<B>unknown</B>
+
+(ÀåÄ¡°¡ ÀÌ ¸í·É¾î¸¦ Áö¿øÇÏÁö ¾Ê½À´Ï´Ù.),
+<B>active/idle</B>
+
+(º¸Åë »óÅÂÀÔ´Ï´Ù.),
+<B>standby</B>
+
+(Àú Àü·Â »óÅÂÀÔ´Ï´Ù. ÀåÄ¡ÀÇ ¸ðÅÍ È¸ÀüÀÌ ¸ØÃä´Ï´Ù.),
+<B>sleeping</B>
+
+(ÀåÄ¡°¡ ¿ÏÀüÈ÷ Á¤ÁöÇÕ´Ï´Ù.).
+<B>-S,-y,-Y,-Z</B>
+
+¿É¼ÇÀ¸·Î IDE ÀåÄ¡ÀÇ Àü¿ø ¸ðµå¸¦ Á¶Á¤ ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+<DT><I>-d</I>
+
+<DD>
+ÀåÄ¡ÀÇ Á÷Á¢ ¸Þ¸ð¸® Á¢±Ù(DMA) ¿É¼ÇÀ» ÄÑ°Å³ª ²ø¼ö ÀÖ½À´Ï´Ù. ÀÌ ¿É¼ÇÀº
+DMA ¸¦ Áö¿øÇÏ°í IDE ±¸µ¿±â·Î ¾Ë·ÁÁø ¼Ò¼öÀÇ µå¶óÀÌºê¿Í ÀÎÅÍÆäÀÌ½ºÀÇ
+Á¶ÇÕ¿¡¼­ µ¿ÀÛÇÕ´Ï´Ù.( ±×¸®°í XT ÀÎÅÍÆäÀÌ½º )
+Æ¯º°È÷,  Intel Triton Ä¨¼ÂÀº ¸¹Àº µå¶óÀÌºê¿Í bus-mastered DMAÀÇ µ¿ÀÛÀÌ
+Áö¿øµË´Ï´Ù. (½ÇÇèÀû)
+ÀåÄ¡°¡ È®½ÇÈ÷ multiword DMA mode2 ·Î Á¦ÀÛµÇ¾ú´Ù¸é 
+<I>-X34</I>
+
+¿É¼ÇÀ»
+<I>-d1</I>
+
+¿É¼Ç°ú °°ÀÌ ¼³Á¤ÇÏ´Â °Íµµ ÁÁÀ» °Í ÀÌ´Ù.
+DMA ¿É¼ÇÀ» »ç¿ëÇÏ´Â °ÍÀº Ã³¸®·®ÀÌ³ª ½Ã½ºÅÛ ¼º´É Áõ°¡¿¡ ¾î¶°ÇÑ ÁõÁø¿¡µµ
+ÇÊ¿äÇÑ ÀåÄ¡´Â ¾Æ´ÏÁö¸¸, ¸¹Àº »ç¶÷µéÀº ¼º´ÉÀÌ Áõ°¡ÇÑ´Ù°í ºÐ¸íÈ÷
+¾Ë°íÀÖ½À´Ï´Ù.. ´ç½ÅÀÌ »ý°¢ÇÏ´Â À¯¿ë¼ºÀº ¾Æ¸¶ ¿©·¯°¡Áö ÀÏ °ÍÀÔ´Ï´Ù.
+<DT><I>-E</I>
+
+<DD>
+CD-ROMÀÇ ¼Óµµ¸¦ ¼³Á¤ÇÕ´Ï´Ù. ÀÌ°ÍÀº CD-ROMÀÌ ÀÚµ¿ÀûÀ¸·Î ¼Óµµ¸¦ ¹Ù²Ù±â
+¶§¹®¿¡ ÀÏ¹ÝÀûÀ¸·Î ÇÊ¿äÇÑ ¿É¼ÇÀº ¾Æ´Õ´Ï´Ù. ÇÏÁö¸¸ ¸¸¾à ´ç½ÅÀÌ ¼Óµµ¸¦
+¹Ù²Ù±â¸¦ ¿øÇÑ´Ù¸é, Àû´çÇÑ ¼Óµµ¸¦ ¼ýÀÚ·Î ÁÖ½Ã±æ ¹Ù¶ø´Ï´Ù. ´ë°³ ¼Óµµ´Â
+2¶Ç´Â 4 ÀÔ´Ï´Ù.À
+<DT><I>-f</I>
+
+<DD>
+ÀåÄ¡°¡ ³ª°¥¶§ ¹öÆÛ Ä³½¬(buffer cache)¸¦ µ¿±âÈ­ ½ÃÅ°°í ºñ¿ó´Ï´Ù. ÀÌ
+µ¿ÀÛÀº ¶ÇÇÑ 
+<I>-t</I>
+
+¿Í
+<I>-T</I>
+
+¿É¼ÇÀÌ µ¿ÀÛÇÒ¶§ °°ÀÌ ½ÇÇàµË´Ï´Ù.
+<DT><I>-g</I>
+
+<DD>
+ÀåÄ¡ÀÇ ±¸Á¶ (½Ç¸°´õ, Çìµå, ¼½ÅÍ), ÀåÄ¡ÀÇ Å©±â (¼½ÅÍ), ±×¸®°í ÀåÄ¡ÀÇ
+½ÃÀÛ º¯À§(offset) (¼½ÅÍ)¸¦ ÀåÄ¡ÀÇ ½ÃÀÛºÎºÐ¿¡¼­ Ç¥½ÃÇÕ´Ï´Ù.
+<DT><I>-h</I>
+
+<DD>
+»ç¿ë ¹æ¹ýÀ» °£°áÇÏ°Ô Ç¥½ÃÇÕ´Ï´Ù. (help)
+<DT><I>-i</I>
+
+<DD>
+°¡´ÉÇÏ´Ù¸é ºÎÆ® ½Ã°£¿¡ ¾òÀ»¼ö ÀÖ´Â È®ÀÎ Á¤º¸¸¦ Ç¥½ÃÇÕ´Ï´Ù. ÀÌ°ÍÀº
+Áö±ÝÀÇ IDE ÀåÄ¡ÀÇ Æ¯Â¡ÀÌ°í, ¿À·¡µÈ ÀåÄ¡¿¡¼­´Â ¾Æ¸¶ Áö¿øÇÏÁö ¾ÊÀ» °Í
+ÀÔ´Ï´Ù. ÀÌ ¿É¼ÇÀ¸·Î ¾òÀ»¼ö ÀÖ´Â Á¤º¸°¡ ¿Ç´ø, ¿ÇÁö ¾Ê´ø , ±×°ÍÀº
+½Ã½ºÅÛÀÇ ºÎÆÃ¿¡¼­ ¾ò¾îÁö´Â °Í ÀÔ´Ï´Ù. ÇÏÁö¸¸ ÇöÀçÀÇ ´ÙÁß ¼½ÅÍ ¸ðµå
+¼ö´Â Ç×»ó º¸¿© Áú °Í ÀÔ´Ï´Ù. È®ÀÎ Á¤º¸ÀÇ ÇØ¼®¿¡ °üÇØ Á» ´õ ¾Ë°í ½Í´Ù¸é
+<I>AT Attachment Interface for Disk Drives</I>
+
+(ANSI ASC X3T9.2 working draft, revision 4a, April 19/93)À» Âü°í
+ÇÏ½Ã±æ ¹Ù¶ø´Ï´Ù.
+<DT><I>-I</I>
+
+<DD>
+ÀåÄ¡·Î ºÎÅÍ Á÷Á¢ ¾î¶°ÇÑ º¯È­³ª ¼öÁ¤ÀÌ ¾ø´Â º»·¡ÀÇ È®ÀÎ Á¤º¸¸¦
+¿äÃ»ÇÕ´Ï´Ù. µý ¹æ¹ýÀ¸·Î´Â À¯»çÇÑ 
+<I>-i</I>
+
+¿É¼ÇÀÌ ÀÖ½À´Ï´Ù.
+<DT><I>-k</I>
+
+<DD>
+ÀåÄ¡ÀÇ ¸®¼Â¿¡µµ ¼ÂÆÃÀ» À¯ÁöÇÏ´Â ¿É¼Ç(keep_settings_over_rest)À»
+¼³Á¤ÇÏ°Å³ª º¸¿©ÁÝ´Ï´Ù. ÀÌ ¿É¼ÇÀ» ¼³Á¤ µÇ¾úÀ»¶§, ÀåÄ¡´Â ¼ÒÇÁÆ® ¸®¼ÂÀ»
+³Ñ¾î
+<I>-dmu</I>
+
+¿É¼ÇÀ» º¸Á¸ÇÕ´Ï´Ù, (¿¡·¯ º¹±¸ ¼ø¼­µ¿¾È ³¡³²À¸·Î). ÀÌ ¿É¼ÇÀº ±âº»ÀûÀ¸·Î
+<I>-dmu</I>
+
+¿É¼ÇÀÇ Á¶ÇÕÀ¸·Î ÀÏÀ¸Å³ ¼ö ÀÖ´Â ¸®¼ÂÀÇ ¼øÈ¯À» ¸·±âÀ§ÇØ ²¨Á®(off)
+ÀÖ½À´Ï´Ù.
+<I>-k</I>
+
+¿É¼ÇÀº ±×·± ±î´ß¿¡ ¼±ÅÃµÈ ¼³Á¤ÀÌ ¿Ã¹Ù¸¥ ½Ã½ºÅÛ µ¿ÀÛ°ú ±×¿¡ µû¸¥ ÀÚ½ÅÀÌ
+ÀÖÀ»¶§ ¼³Á¤µÇ¾î¾ß ÇÕ´Ï´Ù. ( -k ¿É¼Ç ) ½ÇÇà¿¡ ¾Õ¼­, ±âº»ÀûÀ¸·Î ¼³Á¤À»
+½ÃÇèÇØ º¸´Â °ÍÀÌ ÇÊ¿äÇÏ¸ç, ±×°ÍÀº ÀåÄ¡°¡ ÀÐ±â/¾²±â¿¡ ¹®Á¦°¡ ¾ø°í,
+¾î¶°ÇÑ ¿¡·¯ ±â·Ï(Ä¿³Î ¸Þ¼¼Áö)µµ ³ª¿ÀÁö ¾Ê¾Æ¾ß ÇÑ´Ù.(´ëºÎºÐÀÇ
+½Ã½ºÅÛ¿¡¼­´Â /var/adm/messages ¸¦ º¸ÀÚ)
+<DT><I>-K</I>
+
+<DD>
+¸®¼Â¿¡µµ Æ¯Â¡À» À¯ÁöÇÏ´Â ¿É¼Ç(keep_features_over_reset)À» ¼³Á¤ÇÕ´Ï´Ù.
+ÀÌ ¿É¼ÇÀº ÀåÄ¡¸¦ ¼ÒÇÁÆ® ¸®¼Â¿¡µµ
+<I>-APSWXZ</I>
+
+¿É¼ÇÀ¸·Î À¯Áö½ÃÅµ´Ï´Ù, (¿¡·¯ º¹±¸ ¼ø¼­µ¿¾È ³¡³²À¸·Î). ¸ðµç ÀåÄ¡°¡
+ÀÌ°ÍÀ» Áö¿øÇÏ´Â °ÍÀº ¾Æ´Õ´Ï´Ù.
+<DT><I>-L</I>
+
+<DD>
+ÀåÄ¡ÀÇ µµ¾î¶ôÀ» ¼³Á¤ÇÕ´Ï´Ù. ÀÌ ¿É¼ÇÀ»
+
+À¸·Î ¼³Á¤ÇÔÀ¸·Î½á ÀÌµ¿¼º ÀåÄ¡(¿¹. Syquest, ZIP, Jazz..)ÀÇ µµ¾î¸¦
+Àá±Þ´Ï´Ù. ±×¸®°í ÀÌ ¿É¼ÇÀ»
+
+À¸·Î ¼³Á¤ÇÏ¹Ç·Î½á µµ¾î¶ôÀ» Ç® ¼ö ÀÖ½À´Ï´Ù. ÀÏ¹ÝÀûÀ¸·Î ¸®´ª½º´Â µð½ºÅ©
+»ç¿ë¿¡ µû¶ó µµ¾î¶ôÀ» ÀÚµ¿ÀûÀ¸·Î À¯ÁöÇÕ´Ï´Ù.(¸¶¿îÆ® µÇ¾î ÀÖ´Ù¸é
+¾ðÁ¦µçÁö µµ¾î¶ôÀÌ ÀÛµ¿µË´Ï´Ù.) ÇÏÁö¸¸ ½Ã½ºÅÛÀÇ ¼Ë´Ù¿î½Ã, ¸¸¾à ·çÆ®
+ÆÄÆ¼¼ÇÀÌ ÀÌµ¿¼º ÀåÄ¡¿¡ ÀÖ´Ù¸é ·çÆ®ÆÄÆ¼¼ÇÀÌ ¼Ë´Ù¿îÈÄ¿¡µµ
+(read-only»óÅÂÀÇ)¸¶¿îÆ®µÈÃ¤·Î ³²¾ÆÀÖ¾î ¼º°¡½Ç¼ö ÀÖ½À´Ï´Ù. ±×·¸±â
+¶§¹®¿¡ ¼Ë´Ù¿îÈÄ¿¡ Ä«Æ®¸®Áö¸¦ Á¦°ÅÇÒ¼ö ÀÖµµ·Ï ·çÆ® ÆÄÀÏ½Ã½ºÅÛÀÌ
+read-only »óÅÂ·Î Àç ¸¶¿îÆ® µÈÈÄ µµ¾î¶ôÀ» Ç®¼ö ÀÖµµ·Ï ÀÌ ¿É¼ÇÀ»
+»ç¿ëÇÕ´Ï´Ù.
+<DT><I>-m</I>
+
+<DD>
+ÀåÄ¡ÀÇ ´ÙÁß ¼½ÅÍ ÀÔÃâ·Â(I/O)À» À§ÇØ ¼½ÅÍ ¼ö¸¦ ¼³Á¤ÇÏ°Å³ª Á¤º¸¸¦
+¾Ë¾Æ³À´Ï´Ù. ÀÌ ¿É¼ÇÀ» ²ô±â À§ÇØ¼­´Â
+<B>0</B>
+
+À» »ç¿ëÇÕ´Ï´Ù. IDE ºí·° ¸ðµå·Î ¾Ë·ÁÁø ´ÙÁß ¼½ÅÍ ¸ðµå´Â Áö±ÝÀÇ IDE ÇÏµå
+ÀåÄ¡ÀÇ Æ¯Â¡ÀÌ¸ç, ÀÌ°ÍÀº ÇÑ ÀÎÅÍ·´Æ®´ç ÇÏ³ªÀÇ ¼½ÅÍ¸¦ Àü¼ÛÇÏ´Â °Í¿¡ ºñÇØ
+ÇÑ ÀÎÅÍ·´Æ®´ç ¿©·¯°³ÀÇ ¼½ÅÍ¸¦ Àü¼ÛÀ» °¡´ÉÇÏ°Ô ÇÕ´Ï´Ù. ÀÌ ±â´ÉÀÌ ÄÑÁ³À»
+¶§ ÀÏ¹ÝÀûÀ¸·Î OSÀÇ µð½ºÅ© ÀÔÃâ·Â(I/O)ÀÇ ºÎ´ãÀÌ 30-50% °¨¼ÒÇÏ°Ô µË´Ï´Ù.
+¸¹Àº ½Ã½ºÅÛ¿¡¼­, ÀÌ ¿É¼ÇÀº ¶ÇÇÑ ¾îµð¿¡¶óµµ 5-50% ÀÇ Àü¼Û·®À» Áõ°¡ÇÏ°Ô
+ÇÕ´Ï´Ù. ÇÏÁö¸¸ ¾î¶² ÀåÄ¡´Â (´ëºÎºÐÀÇ À¯¸íÇÑ WD Caviar ½Ã¸®Áî)´Â ´ÙÁß
+¸ðµå°¡ ÄÑÁ³À»¶§ ½ÇÇàÀÌ ´õ ´À·ÁÁö´Â °Í Ã³·³ º¸ÀÔ´Ï´Ù. ´ç½Å¿¡°ÔÀÇ
+À¯¿ë¼ºÀº ¿©·¯°¡Áö ÀÏ °Í ÀÔ´Ï´Ù. ´ëºÎºÐÀÇ ÀåÄ¡´Â 2, 4, 8 ¶Ç´Â 16¼½ÅÍ
+°¡¿îµ¥ ÀûÀº ¼ÂÆÃÀ» Áö¿øÇÒ °Í ÀÔ´Ï´Ù. ´õ Å« ¼ÂÆÃµµ °¡´ÉÇÏÁö¸¸, ±×°ÍÀº
+¾îµð±îÁö³ª ÀåÄ¡¿¡ ´Þ·ÁÀÖ½À´Ï´Ù. 16 ¶Ç´Â 32·Î ¼³Á¤ÇÏ´Â°Ô ¸¹Àº
+½Ã½ºÅÛ¿¡¼­ ÃÖÀûÀÎ°Í °°½À´Ï´Ù. Western Digital Àº ¸¹Àº ±× È¸»çÀÇ
+ÀåÄ¡¿¡°Ô 4 ¶Ç´Â 8 Á¤µµÀÇ ÀûÀº ¼ÂÆÃÀ» ÇÏ±â¸¦ ±ÇÇÏ°í ÀÖ½À´Ï´Ù. ±×°ÍÀº
+ÀûÀº (32kB) ÀåÄ¡ ¹öÆÛ¿Í ÃÖÀûÈ­ µÇÁö ¸øÇÑ ¹öÆÛ ¾Ë°í¸®Áò ¶§¹®ÀÔ´Ï´Ù.
+<B>-i</B>
+
+¿É¼ÇÀº ÀÎ½ºÅçµÈ ÀåÄ¡ÀÇ ÃÖ´ë·Î °¡´ÉÇÑ ¼³Á¤ °ªÀ» ¾Ë·Á ÁÙ °Í ÀÔ´Ï´Ù.
+(Ãâ·Â¹°ÀÇ MaxMultSect ºÎºÐÀ» º¸½Ã±æ ¹Ù¶ø´Ï´Ù.) ¾î¶² ÀåÄ¡µéÀº ´ÙÁß
+¸ðµå¸¦ °¡´ÉÇÏ°Ô ÇØ´Þ¶ó°í ÁÖÀåÇÏ´Â°Í °°Áö¸¸, ¾î¶°ÇÑ ¼ÂÆÃ¿¡¼­ µ¥ÀÌÅÍ¸¦
+ÀÒ¾î¹ö¸®°Ô µË´Ï´Ù. ÀÌ·± µå¹® »óÈ²¿¡¼­ , ±×·± ½ÇÆÐ´Â Å©°Ô ÆÄÀÏ½Ã½ºÅÛÀ»
+¼Õ»ó½ÃÅ°´Â °á°ú°¡ µË´Ï´Ù.
+<DT><I>-p</I>
+
+<DD>
+IDE ÀÎÅÍÆäÀÌ½º Ä¨¼ÂÀ» ±¸Ã¼Àû PIO ¸ðµå·Î ´Ù½Ã ÇÁ·Î±×·¥ÇÏ´Â °ÍÀ»
+½ÃµµÇÏ°Å³ª ÀåÄ¡¿¡ ¸Â´Â &quot;ÃÖ»óÀÇ&quot; PIO ¸ðµå·Î ÀÚµ¿ÀûÀ¸·Î ¼³Á¤ÇÏ´Â °ÍÀ»
+½ÃµµÇÕ´Ï´Ù. ÀÌ ±â´ÉÀº Ä¿³Î¿¡¼­ Áö¿øµÇ´Â Àß ¾Ë·ÁÁø ¸î¸îÀÇ Ä¨¼Â¿¡¼­
+Áö¿øµÇ¸ç ±× °æ¿ì¶óµµ ±â²¯ÇØ¾ß ºÒÈ®½ÇÇÕ´Ï´Ù. ¾î¶² IDE Ä¨¼ÂÀº ´ÜÀÏ
+µå¶óÀÌºê¿¡ ´ëÇØ PIO ¸ðµå¸¦ º¯°æÇÏ´Â°ÍÀÌ ºÒ°¡´É ÇÕ´Ï´Ù. ÀÌ °æ¿ì¿¡ ÀÌ
+¿É¼ÇÀº ¾Æ¸¶µµ 
+<I>¾çÂÊÀÇ</I>
+
+µå¶óÀÌºêÀÇ PIO ¸ðµå¸¦ ¹Ù²Ù°Ô µÉ °Í ÀÔ´Ï´Ù. ¸¹Àº IDE Ä¨¼ÂÀº ±âº» 6°¡Áö
+(0¿¡¼­ 5) PIO ¸ðµåº¸´Ù Àû°Å³ª ¸¹À» °Í ÀÔ´Ï´Ù. ±×·¡¼­ Á¤È®ÇÑ ¼Óµµ
+¼ÂÆÃÀº ½ÇÁ¦·Î ¼öÇàÇÔ¿¡ ÀÖ¾î Ä¨¼Â/µå¶óÀÌ¹ö¿¡ ÀÇÇØ ¿©·¯°¡Áö·Î
+º¹ÀâÇÕ´Ï´Ù.
+<I>»ç¿ëÇÒ¶§ ¸Å¿ì Á¶½ÉÇÏ½Ê½Ã¿À!</I>
+
+ÀÌ ±â´ÉÀº ºÎÁÖÀÇÇÔ ¶§¹®¿¡ zero protection À» Æ÷ÇÔÇÏ°í ÀÖ°í ºñ¼º°øÀûÀÎ
+°á°ú¹°Àº ¾Æ¸¶µµ
+<I>½ÉÇÑ ÆÄÀÏ½Ã½ºÅÛÀÇ ¼Õ»ó</I>
+
+ÀÌ ÀÖÀ» °Í ÀÔ´Ï´Ù.
+<DT><I>-P</I>
+
+<DD>
+ÀåÄ¡ÀÇ ³»ºÎÀûÀÎ ¼±Àü´Þ(prefetch) ±¸Á¶¸¦ À§ÇÑ ÃÖ´ë ¼½ÅÍ ¼ö¸¦
+¼³Á¤ÇÕ´Ï´Ù. ¸ðµç ÀåÄ¡°¡ ÀÌ ±â´ÉÀ» Áö¿øÇÏ´Â °ÍÀº ¾Æ´Õ´Ï´Ù.
+<DT><I>-q</I>
+
+<DD>
+ÀÌ¾îÁö´Â ¿É¼ÇÀ» È­¸é¿¡´Â Ãâ·ÂÇÏÁö ¾Ê½À´Ï´Ù. ÀÌ°ÍÀº /etc/rc.d/rc.local
+¿¡¼­ ½ÇÇàµÉ ¶§ È­¸éÀÇ Ãâ·ÂÀ» ÁÙ¿©¼­ À¯¿ëÇÕ´Ï´Ù. ÀÌ°ÍÀº
+<I>-i</I>
+
+¿É¼Ç
+<I>-v</I>
+
+¿É¼Ç
+<I>-t</I>
+
+¿É¼Ç
+<I>-T</I>
+
+¿É¼Ç¿¡´Â Àû¿ëµÇÁö ¾Ê½À´Ï´Ù.
+<DT><I>-r</I>
+
+<DD>
+ÀåÄ¡ÀÇ ÀÐ±â Àü¿ë(read-only)À» ¼³Á¤ÇÏ°Å³ª Á¤º¸¸¦ ¾ò½À´Ï´Ù. ¼³Á¤ÇÒ¶§, ÀÌ
+ÀåÄ¡ÀÇ ¾²±â´Â Çã°¡µÇÁö ¾Ê½À´Ï´Ù.
+<DT><I>-R</I>
+
+<DD>
+IDE ÀÎÅÍÆäÀÌ½º¸¦ µî·ÏÇÕ´Ï´Ù.
+<B>À§ÇèÇÕ´Ï´Ù.</B>
+
+´õ ¸¹Àº Á¤º¸¸¦ À§ÇØ¼­
+<B>-U</B>
+
+¿É¼ÇÀ» º¸½Ã±æ ¹Ù¶ø´Ï´Ù.
+<DT><I>-S</I>
+
+<DD>
+µå¶óÀÌºêÀÇ standby (spindown) ½Ã°£À» ¼³Á¤ÇÕ´Ï´Ù. ÀÌ ¼öÄ¡´Â
+µå¶óÀÌºê¿¡°Ô Àü¿ø Àý¾àÀ» À§ÇØ ½ºÇÉµé ¸ðÅÍ¸¦ ¸ØÃâ¶§ ±îÁö ¾ó¸¶³ª ±â´Ù¸±
+°ÍÀÎ°¡(¾î¶°ÇÑ µð½ºÅ© È°µ¿¾øÀÌ)¸¦ °áÁ¤ÇÏ°Ô µË´Ï´Ù. ÀÌ·± »óÈ²¿¡¼­
+µå¶óÀÌºê´Â ¿¬¼ÓµÇ´Â µð½ºÅ© Á¢±Ù¿¡ ¹ÝÀÀÇÏ±â À§ÇØ 30ÃÊÁ¤µµ °É¸± °Í
+ÀÌÁö¸¸ ´ëºÎºÐÀÇ µå¶óÀÌºê´Â ´õ ºü¸¨´Ï´Ù. timeout ¼öÄ¡´Â Á» Æ¯ÀÌÇÕ´Ï´Ù.
+ÀÌ ¼öÄ¡°¡ 0 ÀÏ¶§´Â ÀÌ ¿É¼ÇÀ» ²ü´Ï´Ù. ¼öÄ¡°¡ 1 ¿¡¼­ 240 ÀÏ¶§ ¼öÄ¡´ç
+5ÃÊÀÇ ½Ã°£À» °¡Áý´Ï´Ù. µû¶ó¼­ ÀÌ ¶§´Â 5ÃÊ¿¡¼­ 20ºÐ »çÀÌ°¡ µË´Ï´Ù.
+¼öÄ¡°¡ 241 ¿¡¼­ 251 ÀÏ¶§´Â ¼öÄ¡ 1 ´ç 30ºÐÀÇ ½Ã°£À» °¡Áý´Ï´Ù. µû¶ó¼­ ÀÌ
+¶§´Â 30ºÐ¿¡¼­ 5.5 ½Ã°£ÀÌ µË´Ï´Ù. 252´Â 21ºÐÀÇ timeout À» ÀÇ¹ÌÇÏ°í
+253Àº Á¦ÀÛ»ç¿¡¼­ Á¤ÀÇµÈ timeout ÀÔ´Ï´Ù. ±×¸®°í 255´Â 21ºÐ 15ÃÊ°¡
+µË´Ï´Ù.
+<DT><I>-T</I>
+
+<DD>
+ºñ±³¸¦ ¸ñÀûÀ¸·Î º¥Ä¡¸¶Å©¸¦ À§ÇØ Ä³½¬¸¦ ÀÐ´Â ½Ã°£À» Àì´Ï´Ù. Á¤È®ÇÑ
+°á°ú¸¦ À§ÇØ ÀÌ°ÍÀ» Àû¾îµµ ¼ö ¸Þ°¡ ¹ÙÀÌÆ®ÀÇ ¸Þ¸ð¸® ÀÚ¿øÀÌ ³²Àº »óÅÂÀÇ
+»ç¿ëÇÏÁö ¾Ê´Â ½Ã½ºÅÛ(½ÇÇàÁßÀÎ ´Ù¸¥ ÇÁ·Î¼¼½º°¡ ¾ø´Â)¿¡¼­ 2-3¹ø Á¤µµ
+¹Ýº¹ÇØ¼­ ¼öÇàÇÕ´Ï´Ù. ÀÌ ¿É¼ÇÀº µð½ºÅ© Á¢±Ù(access)¾øÀÌ ¸®´ª½º ¹öÆÛ
+Ä³½¬·Î ºÎÅÍ Á÷Á¢ÀûÀ¸·Î ÀÐ¾î¿À´Â ¼Óµµ¸¦ Ç¥½ÃÇØÁÝ´Ï´Ù. ÀÌ ÃøÁ¤¹ýÀº º»·¡
+Å×½ºÆ® »óÅÂÀÇ ½Ã½ºÅÛÀÇ ÇÁ·Î¼¼¼­, Ä³½¬, ¸Þ¸ð¸®ÀÇ °á°ú¹°ÀÇ Ç¥½ÃÀÔ´Ï´Ù.
+<I>-t</I>
+
+¿É¼Ç°ú °°ÀÌ »ç¿ëÇÑ´Ù¸é, ¼öÁ¤µÈ ¿äÀÎ¿¡ ±âÃÊÇÑ
+<I>-T</I>
+
+ÀÇ °á°ú¿¡
+<I>-t</I>
+
+ÀÇ °á°ú¸¦ ÇÔ²² º¸°íÇÒ °Í ÀÔ´Ï´Ù.
+<DT><I>-t</I>
+
+<DD>
+ºñ±³¸¦ ¸ñÀûÀ¸·Î º¥Ä¡¸¶Å©¸¦ À§ÇØ ÀåÄ¡¸¦ ÀÐ´Â ½Ã°£À» Àì´Ï´Ù. Á¤È®ÇÑ
+°á°ú¸¦ À§ÇØ ÀÌ°ÍÀ» Àû¾îµµ ¼ö ¸Þ°¡ ¹ÙÀÌÆ®ÀÇ ¸Þ¸ð¸® ÀÚ¿øÀÌ ³²Àº »óÅÂÀÇ
+»ç¿ëÇÏÁö ¾Ê´Â ½Ã½ºÅÛ(½ÇÇàÁßÀÎ ´Ù¸¥ ÇÁ·Î¼¼½º°¡ ¾ø´Â)¿¡¼­ 2-3¹ø Á¤µµ
+¹Ýº¹ÇØ¼­ ¼öÇàÇÕ´Ï´Ù. ÀÌ ¿É¼ÇÀº ¾î¶°ÇÑ »çÀüÀÇ Ä³½¬°¡ µÇÁö ¾ÊÀº µ¥ÀÌÅÍ¸¦
+µð½ºÅ©¿¡¼­ ¹öÆÛ Ä³½¬¸¦ ÅëÇØ ÀÐ´Â ¼Óµµ¸¦ Ç¥½ÃÇÕ´Ï´Ù. ÀÌ ÃøÁ¤¹ýÀº
+¸®´ª½º¿¡¼­ ÆÄÀÏ½Ã½ºÅÛÀÇ ¾î¶°ÇÑ ºÎ´ãÀ» ÁÖÁö¾Ê°í ¾ó¸¶³ª ºü¸£°Ô
+µå¶óÀÌºê°¡ ¿¬¼ÓµÇ´Â µ¥ÀÌÅÍ¸¦ Áö¼ÓÀûÀ¸·Î ÀÐÀ»¼ö ÀÖ´ÂÁöÀÇ Ç¥½ÃÀÔ´Ï´Ù.
+Á¤È®ÇÑ ÃøÁ¤¹ýÀ» È®½ÇÈ÷ ÇÏ±â À§ÇØ¼­´Â, BLKFLSBUF ioctl ¸¦ »ç¿ëÇÏ¿© 
+<I>-t</I>
+
+°¡ ¼öÇàµÇ´Â µ¿¾È ¹öÆÛ Ä³½¬°¡ ºñ¿öÁ®¾ß ÇÕ´Ï´Ù.
+<I>-T</I>
+
+¿É¼Ç°ú °°ÀÌ »ç¿ëÇÑ´Ù¸é, ¼öÁ¤µÈ ¿äÀÎ¿¡ ±âÃÊÇÑ
+<I>-T</I>
+
+ÀÇ °á°ú¿¡
+<I>-t</I>
+
+ÀÇ °á°ú¸¦ ÇÔ²² º¸°íÇÒ °Í ÀÔ´Ï´Ù.
+<DT><I>-u</I>
+
+<DD>
+ÀåÄ¡ÀÇ interrupt-unmask ¸¦ ¼³Á¤ÇÏ°Å³ª Á¤º¸¸¦ ¾ò½À´Ï´Ù. ÀÌ ¿É¼ÇÀ»
+<B>1</B>
+
+·Î ¼³Á¤ÇÒ °æ¿ì ÀåÄ¡¿¡°Ô µð½ºÅ©ÀÇ ÀÎÅÍ·´Æ®°¡ ÁøÇàµÇ´Â µ¿¾È ´Ù¸¥
+ÀÎÅÍ·´Æ®¸¦ unmask ÇÏµµ·Ï Çã¶ôÇÕ´Ï´Ù. ÀÌ°ÍÀº ¸®´ª½ºÀÇ ¹ÝÀÀ¼ºÀ» Å©°Ô
+Áõ°¡½ÃÅ°°í &quot;serial port overrun&quot; ¿¡·¯¸¦ Á¦°ÅÇÕ´Ï´Ù.
+<B>ÀÌ ±â´ÉÀ» »ç¿ëÇÒ¶§´Â ÁÖÀÇÇÏ½Ê½Ã¿À:</B>
+
+¾î¶² µå¶óÀÌºê/ÄÜÆ®·Ñ·¯ Á¶ÇÕÀº ÀÌ ±â´ÉÀÌ ÄÑÁ³À»¶§(enable) ÀÔÃâ·Â(I/O)
+´ë±â½Ã°£ÀÌ Áõ°¡ÇÏ´Â °Í¿¡ °ü´ëÇÏÁö ¾ÊÀ»¼ö ÀÖ½À´Ï´Ù. °á°úÀûÀ¸·Î
+<B>ÆÄÀÏ½Ã½ºÅÛÀ» Å©°Ô ¼Õ»ó½ÃÅµ´Ï´Ù.</B>
+
+Æ¯º°È÷ 
+<B>CMD-640B</B>
+
+¿Í
+<B>RZ1000</B>
+
+(E)IDE ÀÎÅÍÆäÀÌ½º´Â
+Ä¿³Î 2.0.13 ÀÌÀü ¹öÁ¯¿¡¼­´Â ÀÌ ¿É¼ÇÀÌ »ç¿ëµÉ ¶§ 
+<B>½Å·ÚÇÒ¼ö ¾ø½À´Ï´Ù.</B>
+
+(ÇÏµå¿þ¾î °áÇÔ ¶§¹®)
+ÀÌÀü ¹öÁ¯ÀÇ Ä¿³ÎÀ» »ç¿ë ÇÒ¶§ ÀÌ·± ¹®Á¦¸¦ °íÄ¡±â À§ÇØ¼­´Â 
+<B>IDE prefetch</B>
+
+±â´ÉÀ» ÀÌ·± ÀÎÅÍÆäÀÌ½º ¿¡¼­ ²¨ ÁÖ½Ã±æ ¹Ù¶ø´Ï´Ù.(´ë°³ BIOS/CMOS ¼ÂÆÃ)
+(´ë°³ BIOS/CMOS ¼ÂÆÃ)
+<DT><I>-U</I>
+
+<DD>
+IDE ÀÎÅÍÆäÀÌ½º µî·ÏÀ» Á¦°ÅÇÕ´Ï´Ù.
+<B>À§ÇèÇÕ´Ï´Ù.</B>
+
+<B>-R</B>
+
+¿É¼Ç°ú °°ÀÌÇÕ´Ï´Ù. Æ¯º°È÷ hot-swapping ÇÏµå¿þ¾î¸¦ ¾²·Á°í
+¿¹Á¤µÇ¾ú½À´Ï´Ù.(¸Å¿ì µå¹´´Ï´Ù!). ÀÌ ¿É¼ÇÀÌ ´ç½ÅÀÇ ½Ã½ºÅÛ¿¡ ¸ÁÄ¡°Å³ª
+µ¥¹ÌÁö¸¦ ÁÙ¼öÀÖÀ¸¹Ç·Î ÃæºÐÇÑ Áö½Ä°ú
+<B>½ÅÁßÇÑ ÁÖÀÇ</B>
+
+¸¦ °¡Áö°í »ç¿ëÇÏ½Ã±â ¹Ù¶ø´Ï´Ù. hdparm ¼Ò½º ¹èÆ÷´Â 'contrib' µð·ºÅä¸®¸¦
+Æ÷ÇÔÇÏ°í ÀÖ½À´Ï´Ù. ¿©±â¿¡´Â »ç¿ëÀÚµéÀÌ º¸³»¿Â ThinkPad 600E ÀÇ
+UltraBay hot-swapping ½ºÅ©¸³Æ®°¡ µé¾îÀÖ½À´Ï´Ù. »ç¿ëÀº ¿©·¯ºÐ¿¡°Ô
+¸Ã±â°Ú½À´Ï´Ù.
+<DT><I>-v</I>
+
+<DD>
+-i ¿É¼ÇÀ» Á¦¿ÜÇÏ°í ¸ðµç ¼ÂÆÃÀ» Ç¥½ÃÇÕ´Ï´Ù.( IDE ¿¡¼­´Â -acdgkmnru ,
+SCSI ¿¡¼­´Â -gr , XT ¿¡¼­´Â -adgr °ú °°½À´Ï´Ù.) ¶ÇÇÑ ÀÌ°ÍÀº Æ¯º°È÷
+¾î¶°ÇÑ ¿É¼Çµµ ÁÖÁö ¾Ê¾ÒÀ»¶§ ±âº» µ¿ÀÛÀÔ´Ï´Ù.
+<DT><I>-W</I>
+
+<DD>
+IDE µå¶óÀÌºêÀÇ ¾²±â-Ä³½¬(write-caching) ±â´ÉÀ» ²ô°Å³ª ÄÕ´Ï´Ù.( ´ë°³
+±âº»ÀûÀ¸·Î ²¨Á®(OFF) ÀÖ½À´Ï´Ù.)
+<DT><I>-X</I>
+
+<DD>
+»õ·Î¿î (E)IDE/ATA2 µå¶óÀÌºê¸¦ À§ÇØ IDE Àü¼Û ¸ðµå¸¦ ¼³Á¤ÇÕ´Ï´Ù. ÀÌ
+¿É¼ÇÀº ±âº»ÀûÀ¸·Î
+<I>d1 </I>
+
+¿É¼Ç°ú °°ÀÌ ¾²ÀÌ¸ç ÀÌ°ÍÀº Áö¿øµÇ´Â ÀÎÅÍÆäÀÌ½º Ä¨¼Â ( Intel 430FX
+Triton °°Àº ) ¿¡¼­ µå¶óÀÌºê ¿¡°Ô/¿¡¼­ DMA ¸¦ ÄÑ¸ç, ÀÌ·¯ÇÑ Ä¨¼ÂÀº
+<I>-X34</I>
+
+¿É¼ÇÀÌ multiword DMA mode2 Àü¼ÛÀ» »ç¿ëÇÏ±â À§ÇØ ¾²ÀÔ´Ï´Ù. Ultra DMA À»
+Áö¿øÇÏ´Â ½Ã½ºÅÛ¿¡¼­´Â,
+<I>-X66</I>
+
+¿É¼ÇÀÌ UltraDMA mode2 Àü¼ÛÀ» »ç¿ëÇÏ±â À§ÇØ ¾²ÀÔ´Ï´Ù.( ´ç½ÅÀº UltraDMA
+Ä¨¼ÂÀ» »ç¿ëÇÏ±â À§ÇØ ÁØºñ°¡ ÇÊ¿äÇÕ´Ï´Ù.) À§¿¡ °ÍÀº ±×·¸´Ù ÇÏ°í, 
+°ÅÀÇ ¸ðµç Áö±ÝÀÇ IDE µå¶óÀÌºê°¡ Àü¿øÀ» Å³ ¶§ ºÎÅÍ °¡Àå ºü¸¥ PIO
+Àü¼Û¸ðµå¸¦ ±âº»À¸·Î ÇÏ±â ¶§¹®¿¡ ÀÌ ¿É¼ÇÀÇ »ç¿ëÀº 
+<I>Á»Ã³·³ ÇÊ¿äÇÏÁö ¾Ê½À´Ï´Ù.</I>
+
+¹«ÀÇ¹ÌÇÑ ÀÌ°ÍÀº ÇÊ¿äÇÏÁö ¾ÊÀ»¼öµµ À§ÇèÇÒ¼öµµ ÀÖ½À´Ï´Ù. ¾çÂÊ ¸ðµÎÀÇ
+Àü¼Û ¸ðµå¸¦ Áö¿øÇÏ´Â µå¶óÀÌºê¿¡¼­´Â
+<I>-X</I>
+
+´Â
+<I>´ÜÁö</I>
+
+Àü¼Û ¸ðµå¸¦ ¹Ù²Ù´Âµ¥ »ç¿ëµË´Ï´Ù. µ¥ÀÌÅÍÀÇ ¼Õ½ÇÀÌ³ª ¼Õ»óÀ» ¸·±âÀ§ÇØ
+Àü¼Û¸ðµå¸¦ ¹Ù²Ù±â Àü¿¡ IDE ÀÎÅÍÆäÀÌ½º´Â Á¡ÆÛ°¡ ¼³Á¤µÇ°Å³ª ÇÁ·Î±×·¥
+µÇ¾îÀÖ¾î¾ß ÇÕ´Ï´Ù.( 
+<I>-p</I>
+
+¿É¼ÇÀ» º¸ÀÚ).
+<I>ÀÌ ¿É¼ÇÀ» »ç¿ëÇÒ¶§´Â ±ØÈ÷ ÁÖÀÇÇÏ±æ ¹Ù¶ø´Ï´Ù!</I>
+
+PIO(Programmed Input/Output) Àü¼Û ¸ðµå´Â ¸®´ª½º¿¡¼­ »ç¿ëµÇ°í, ÀÌ
+¼öÄ¡´Â °£´ÜÇÏ°Ô ¿øÇÏ´Â PIO ¸ðµå ¹øÈ£¿¡¼­ 8 À» ´õÇÑ °ªÀÔ´Ï´Ù.
+±×·¡¼­ 09 °ªÀº PIO ¸ðµå1·Î ¼³Á¤µÇ°í 10Àº PIO ¸ðµå2·Î ¼³Á¤µÇ¸ç 11 Àº
+PIO ¸ðµå3 ÀÔ´Ï´Ù. 00 °ªÀ¸·Î ¼³Á¤ÇÏ¸é µå¶óÀÌºêÀÇ &quot;±âº»&quot; PIO ¸ðµå·Î
+¼³Á¤µË´Ï´Ù. ±×¸®°í 01Àº IORDY ¸¦ ²ü´Ï´Ù. multiword DMA ¿¡¼­´Â ¿øÇÏ´Â
+DMA ¸ðµå¿¡ 32¸¦ ´õÇÑ °ªÀÌ »ç¿ëµË´Ï´Ù. ±×¸®°í UltraDMA ¿¡¼­´Â ¿øÇÏ´Â
+UltraDMA ¸ðµå¿¡ 64 ¸¦ ´õÇÑ °ªÀÌ »ç¿ëµË´Ï´Ù.
+<DT><I>-y</I>
+
+<DD>
+°­Á¦·Î IDE µå¶óÀÌºê¸¦ ½Å¼ÓÈ÷ Àú Àü·Â ¼Ò¸ðÀÇ
+<B>standby</B>
+
+¸ðµå·Î µé¾î°¡°Ô ÇÕ´Ï´Ù. ´ë°³´Â ½ºÇÉµé ¸ðÅÍ¸¦ ¸ØÃß°Ô ÇÕ´Ï´Ù. ÇöÀç Àü¿ø
+¸ðµå »óÅÂ´Â 
+<B>-C </B>
+
+¿É¼Ç¿¡¼­ Ã¼Å©ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+<DT><I>-Y</I>
+
+<DD>
+°­Á¦·Î IDE µå¶óÀÌºê¸¦ ½Å¼ÓÈ÷ °¡Àå ÀûÀº Àü·ÂÀ» ¼Ò¸ðÇÏ´Â
+<B>sleep</B>
+
+¸ðµå·Î µé¾î°©´Ï´Ù. ¿ÏÀüÈ÷ shut downÀ» ÇÕ´Ï´Ù. µå¶óÀÌºê°¡ ´Ù½Ã
+Á¢±Ù(access)ÇÒ¼ö ÀÖÀ¸·Á¸é ÇÏµå È¤Àº ¼ÒÇÁÆ® ¸®¼ÂÀÌ ÇÊ¿äÇÕ´Ï´Ù.(
+¸®´ª½º IDE µå¶óÀÌ¹ö´Â ÇÊ¿äÇÒ ¶§ ÀÚµ¿ÀûÀ¸·Î ¸®¼ÂÀ» Á¶ÀýÇÕ´Ï´Ù.)
+ÇöÀç Àü¿ø ¸ðµå »óÅÂ´Â
+<B>-C</B>
+
+¿É¼Ç¿¡¼­ Ã¼Å©ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+<DT><I>-Z</I>
+
+<DD>
+ºÒÆíÇÑ ½Ã°£¿¡ idle/spin-down À» ¸·±âÀ§ÇØ Seagate µå¶óÀÌºêÀÇ
+<BR>&nbsp;ÀÚµ¿&nbsp;Àü·Â-º¸È£&nbsp;±â´ÉÀ»&nbsp;²ü´Ï´Ù.&nbsp;(ST3xxx&nbsp;¸ðµ¨?)
+<DT></DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>¹ö±×</H2>
+
+<DD>
+À§¿¡¼­ ¸»ÇÑ °Í°ú °°ÀÌ
+-B -m sectcount
+¿Í
+-B -u 1
+¿É¼ÇÀº Ã³À½¿¡ °æ°í¿Í ÇÔ²² »ç¿ëµÇ¾ß ÇÏ´Â °ÍÀÌ Æ²¸²¾ø½À´Ï´Ù. µÇµµ·ÏÀÌ¸é´
+read-only ÆÄÀÏ ½Ã½ºÅÛ¿¡¼­ »ç¿ëµÇ¾î¾ß ÇÕ´Ï´Ù. ´ëºÎºÐÀÇ µå¶óÀÌºê´Â ÀÌ
+±â´É µé°ú Àß µ¿ÀÛÇÏÁö¸¸, ¸î¸îÀÇ µå¶óÀÌºê/ÄÜÆ®·Ñ·¯ Á¶ÇÕÀº 100% È£È¯µÇ´Â
+°ÍÀÌ ¾Æ´Õ´Ï´Ù. ÆÄÀÏ½Ã½ºÅÛÀ» ¼Õ»ó½ÃÅ³ ¼ö ÀÖ½À´Ï´Ù. ½ÇÇèÇØ º¸±â Àü¿¡
+¸ðµç °ÍÀ» ¹é¾÷ÇÏ½Ê½Ã¿À!
+<P>
+
+¾î¶² ¿É¼Ç (¿¹¸¦ µé¾î SCSI ¿¡¼­ -r) Àº ÇÊ¿äÇÑ ioctl() °¡ ¿À·¡µÈ
+Ä¿³Î¿¡´Â ¾ø±â ¶§¹®¿¡ ¿À·¡µÈ Ä¿³Î¿¡¼­ µ¿ÀÛÇÏÁö ¾ÊÀ»¼öµµ ÀÖ½À´Ï´Ù.
+<P>
+
+ÀÌ À¯Æ¿¸®Æ¼°¡ ±âº»ÀûÀ¸·Î (E)IDE ÇÏµå µð½ºÅ© ÀåÄ¡¿¡¼­ »ç¿ëÇÏ°í ÇßÁö¸¸,
+¿©·¯°¡Áö ¿É¼ÇÀÌ SCSI ÇÏµå µð½ºÅ© ÀåÄ¡¿Í XT ÀÎÅÍÆäÀÌ½ºÀÇ MFM/RLL ÇÏµå
+µð½ºÅ©¿¡¼­µµ À¯È¿ÇÏ¸ç µ¿ÀÛÇÕ´Ï´Ù.
+<A NAME="lbAG">&nbsp;</A>
+<H2>ÀúÀÚ</H2>
+
+<B>hdparm</B>
+
+Àº ¸¹Àº netfolk ·Î ºÎÅÍ Á¦¾È°ú ÇÔ²² ¸®´ª½º¿¡¼­ (E)IDE µå¶óÀÌ¹öÀÇ
+ÁÖ¿äÇÑ °³¹ßÀÚÀÌ°í, À¯ÁöÀÚÀÎ Mark Lord &lt;<A HREF="mailto:mlord@pobox.com">mlord@pobox.com</A>&gt;°¡ ½è½À´Ï´Ù.
+<P>
+
+Seagate ÀÚµ¿ Àü·Â º¸È£ Á¦°Å ÄÚµå´Â Tomi
+Leppikangas(<A HREF="mailto:tomilepp@paju.oulu.fi">tomilepp@paju.oulu.fi</A>) ·Î ºÎÅÍ Á¦°øÀ» ¹Þ¾Ò½À´Ï´Ù.
+<A NAME="lbAH">&nbsp;</A>
+<H2>Âü°í</H2>
+
+<B>AT Attachment Interface for Disk Drives,</B>
+
+ANSI ASC X3T9.2 working draft, revision 4a, April 19, 1993.
+<P>
+
+<B>AT Attachment Interface with Extensions (ATA-2),</B>
+
+ANSI ASC X3T9.2 working draft, revision 2f, July 26, 1994.
+<P>
+
+<B>Western Digital Enhanced IDE Implementation Guide,</B>
+
+by Western Digital Corportation, revision 5.0, November 10, 1993.
+<P>
+
+<B>Enhanced Disk Drive Specification,</B>
+
+by Phoenix Technologies Ltd., version 1.0, January 25, 1994.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">¸íÄª</A><DD>
+<DT><A HREF="#lbAC">°³¿ä</A><DD>
+<DT><A HREF="#lbAD">¼³¸í</A><DD>
+<DT><A HREF="#lbAE">¿É¼Ç</A><DD>
+<DT><A HREF="#lbAF">¹ö±×</A><DD>
+<DT><A HREF="#lbAG">ÀúÀÚ</A><DD>
+<DT><A HREF="#lbAH">Âü°í</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:02 GMT, March 25, 2004
+</BODY>
+</HTML>

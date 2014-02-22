@@ -1,0 +1,385 @@
+<HTML><HEAD><TITLE>Manpage of man</TITLE>
+</HEAD><BODY>
+<H1>man</H1>
+Section: User Commands  (1)<BR>Updated: September 2, 1995<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+man - 온라인 매뉴얼 페이지를 형식화하고 표시한다.
+<BR>
+
+manpath - 맨페이지를 위한 검색 경로를 결정한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+man [-acdfFhkKtwW] [-m system] [-p string] [-C config_file] [-M path]
+[-P pager] [-S section_list] [section] name ...
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>man</B>
+
+은 온라인 매뉴얼 페이지를 형식화하고 표시한다.
+이 버전은
+<B>MANPATH</B>
+
+와
+<B>(MAN)PAGER</B>
+
+환경 변수를 인식한다. 그러므로 자신의 개인적인 맨 페이지 묶음을 가질 수 있고
+형식화된 페이지를 표시하기 위해 좋아하는 프로그램을 선택할 수 있다. 만약
+<I>section</I>
+
+이 지정되면,
+<B>man</B>
+
+은 단지 그 섹션에서만 매뉴얼을 찾아 보여준다.
+명령행 옵션이나 환경 변수를 통해서 섹션 검색 순서와
+소스 파일에 대해 어느 전처리기를 사용할 것인지 지정할 수 있다.
+만약
+<I>name</I>
+
+이 / 을 포함하면, 이것은 파일명으로 먼저 처리된다. 그래서
+<B>man ./foo.5</B>
+
+혹은
+<B>man /cd/foo/bar.1.gz</B>
+
+처럼 지정할 수 있다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>옵션</H2>
+
+<DL COMPACT>
+<DT><B>-C  config_file</B>
+
+<DD>
+사용할 man.conf 파일을 지정한다. 기본값은
+<B>/etc/man.config</B>
+
+이다.
+(
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+man.config">man.config</A>(5)</B>를
+
+보라.)
+<DT><B>-M  path</B>
+
+<DD>
+맨 페이지 검색을 위한 디렉토리 리스트를 지정한다.
+이 옵션이 주어지지 않으면, 환경 변수
+<B>MANPATH</B>
+
+를 사용한다. 만약 환경 변수를 발견하지 못하면
+<B>/etc/man.config</B>
+
+에 정의된 기본 목록을 사용한다.
+<DT><B>-P  pager</B>
+
+<DD>
+사용할 페이저를 지정한다.
+이 옵션은
+<B>MANPAGER</B>
+
+환경 변수보다 우선한다.
+<B>PAGER</B>
+
+환경 변수보다도 우선한다. 기본 설정으로
+<B>man 은</B>
+
+<B>/usr/bin/less</B>
+
+-is 를 이용한다.
+<DT><B>-S  section_list</B>
+
+<DD>
+검색할 매뉴얼 섹션들을 콜론으로 구분하여 지정한다.
+이 옵션은
+<B>MANSECT</B>
+
+환경 변수보다 우선한다.
+<DT><B>-a</B>
+
+<DD>
+기본 설정으로
+<B>man</B>
+
+은 첫번째 발견된 매뉴얼 페이지를 표시한 뒤 종료한다.
+이 옵션을 사용하면
+<B>man</B>
+
+은 첫번째 뿐만 아니라
+<B>name</B>
+
+에 맞는 모든 매뉴얼 페이지를 표시한다.
+<DT><B>-c</B>
+
+<DD>
+최신의 cat 페이지가 존재하여도 소스 맨 페이지를 재형식화한다.
+만일 cat 페이지가 다른 수의 칼럼을 가진 스크린에 맞게 형식화되었거나,
+이전에 형식화된 페이지가 손상되었다면, 이 옵션이 쓸모 있을 것이다.
+<DT><B>-d</B>
+
+<DD>
+실제로 맨 페이지를 표시하지 않고, 디버깅 정보를 출력한다.
+<DT><B>-D</B>
+
+<DD>
+표시와 디버깅 정보 둘다 출력한다.
+<DT><B>-f</B>
+
+<DD>
+<B>whatis</B>
+
+와 같다.
+<DT><B>-F</B> or <B>--preformat</B>
+
+<DD>
+형식화만 하고 표시하지 않는다.
+<DT><B>-h</B>
+
+<DD>
+간단한 도움말 메시지를 출력하고 종료한다.
+<DT><B>-k</B>
+
+<DD>
+<B>apropos</B>
+
+와 같다.
+<DT><B>-K</B>
+
+<DD>
+*모든* 맨 페이지에서 지정한 문자열을 찾는다. 이 옵션을 사용하면 매우 느리다!
+가능하면 섹션을 지정하는 것이 좋다.
+<DT><B>-m  system</B>
+
+<DD>
+접근 가능한 다른 운영체제의 매뉴얼 페이지가 있다면, 검색할 운영체제
+<B>system</B>
+
+을 지정한다.
+<DT><B>-p  string</B>
+
+<DD>
+<B>nroff</B>
+
+혹은
+<B>troff</B>
+
+보다 먼저 실행하는 전처리기의 차례를 지정한다.
+사용 가능한 전처리기와 이를 가리키는 옵션은 다음과 같다:
+eqn (e), grap (g), pic (p), tbl (t), vgrind (v), refer (r).
+이 옵션은
+<B>MANROFFSEQ</B>
+
+환경 변수보다 우선한다.
+<DT><B>-t</B>
+
+<DD>
+맨 페이지의 형식화를 위해
+<B>/usr/bin/groff -Tps -mandoc</B>
+
+를 사용하고,
+<B>stdout</B>
+
+에 출력한다.
+<B>/usr/bin/groff -Tps -mandoc</B>
+
+에서의 출력은 인쇄하기 전에 필터를 통과시킬 필요가 있을지도 모른다.
+<DT><B>-w </B>or --path
+
+<DD>
+실제로 맨 페이지를 표시하지 않고, 형식화 혹은 표시된 파일의 위치를 출력한다.
+만약 인자가 없으면
+<B>man</B>
+
+은 맨 페이지를 검색하는 디렉토리의 목록을 출력한다.
+만약
+<B>manpath</B>
+
+가 man에 연결되어 있으면, &quot;manpath&quot;는 &quot;man --path&quot;와 같다.
+<DT><B>-W</B>
+
+<DD>
+-w와 비슷하지만, 추가 정보없이 한 행에 한 개씩 표시한다.
+이것은 다음과 같이 쉘 명령에서 사용하면 편리하다.
+
+<B>man -aW man | xargs ls -l</B>
+
+
+<P>
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>CAT 페이지</H2>
+
+man은 형식화된 맨 페이지를 다음에 그 페이지가 필요하게 되었을 때 형식화
+시간을 줄이기 위해 저장한다. 전통적으로, DIR/manX의 형식화된 페이지 버전은
+DIR/catX에 저장된다. 하지만 man dir을 다른 cat dir에 매핑하는 방법으로
+<B>/etc/man.config</B>
+
+에 다른 값을 지정할 수 있다.
+cat 디렉토리가 존재하지 않으면 cat 페이지를 저장하지 않는다.
+<P>
+
+<B>man</B>
+
+을 사용자 man에 suid 할 수 있다. 그러면, cat 디렉토리의 소유자가 man과
+모드 0755(단지 man에 의해 쓰기 가능), cat 파일 소유자가 man과 모드 0644 혹은
+0444(단지 man에 의해 쓰기 가능, 혹은 모두 쓰기 불가)면, 보통 유저는 cat 페이지를
+변경하거나, 다른 파일을 cat 디렉토리에 두거나 하는 것을 할 수 없다. 만약
+<B>man</B>
+
+이 suid 가 아니면, 모든 유저가 cat 페이지를 cat 디렉토리에 둘 수 있는 것처럼
+cat 디렉토리의 모드를 0777로 해야 한다.
+<P>
+
+비록 최근의 cat 페이지가 존재하더라도
+<B>-c</B>
+
+을 사용하면 페이지를 재형식화한다.
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>환경</H2>
+
+<DL COMPACT>
+<DT><B>MANPATH</B>
+
+<DD>
+<B>MANPATH</B>
+
+가 설정되면, 이것을 매뉴얼 페이지 검색을 위한 경로로 사용한다.
+<DT><B>MANROFFSEQ</B>
+
+<DD>
+<B>MANROFFSEQ</B>
+
+가 설정되면, 이것을
+<B>nroff</B>
+
+와
+<B>troff</B>
+
+의 앞에 실행하는 전처리기의 집합으로 결정하여 사용한다.
+기본 설정은
+<B>nroff</B>
+
+앞에 테이블 전처리기를 거친다.
+<DT><B>MANSECT</B>
+
+<DD>
+<B>MANSECT</B>
+
+가 설정되면, 이것을 검색을 위한 매뉴얼 섹션으로 결정한다.
+<DT><B>MANWIDTH</B>
+
+<DD>
+<B>MANWIDTH</B>
+
+가 설정되면, 이것을 표시하는 맨페이지의 폭으로 사용한다.
+그렇지 않으면, 화면의 전체 폭 이상으로 표시될 수도 있다.
+<DT><B>MANPAGER</B>
+
+<DD>
+<B>MANPAGER</B>
+
+가 설정되면, 이것을 맨페이지 표시기로 사용한다. 만약 없다면,
+<B>PAGER</B>
+
+가 사용된다. 만약 둘다 값을 가지고 있지 않으면
+<B>/usr/bin/less -is</B>
+
+를 사용한다.
+<DT><B>LANG</B>
+
+<DD>
+<B>LANG</B>
+
+가 설정되면, 이값을 man은 맨페이지를 첫번째로 보여주기 위한 하위
+디렉토리의 이름으로 지정한다. 따라서, `LANG=ko; man 1 foo'
+명령은 .../ko/man1/foo.1 에서 foo 맨페이지를 보여 줄려고 할 것이고,
+만약 file이 발견되지 않으면, .../man1/foo.1 을 찾는다. ...은 검색
+경로의 디렉토리이다.
+<DT><B>NLSPATH, LC_MESSAGES, LANG</B>
+
+<DD>
+환경 변수
+<B>NLSPATH</B>
+
+와
+<B>LC_MESSAGES</B>
+
+(또는 후자가 지정되어 있지 않으면
+<B>LANG</B>
+
+)는 메시지 카탈로그의 위치를 지정한다. (하지만 영어 메시지는 컴파일될 때
+지정되고, 영어를 위한 카탈로그는 필요하지 않다.)
+man에 의해 호출되는 <A HREF="http://localhost/cgi-bin/man/man2html?1+col">col</A>(1)과 같은 프로그램은 LC_CTYPE를 사용하는 점에 주의해라.
+<DT><B>PATH</B>
+
+<DD>
+<B>PATH</B>
+
+는 맨페이지를 위한 기본 검색 경로의 구성에 사용된다.
+<DT><B>SYSTEM</B>
+
+<DD>
+<B>SYSTEM</B>
+
+은 기본 설정을 가져오는 대신에 시스템 이름을 사용한다.
+(
+<B>-m</B>
+
+옵션과 함께 사용)
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+apropos">apropos</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+whatis">whatis</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+less">less</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+groff">groff</A>(1).
+<A NAME="lbAI">&nbsp;</A>
+<H2>버그</H2>
+
+<B>-t</B>
+
+옵션은 troff와 같은 프로그램이 설치되어 있는 경우에만 수행한다.
+<BR>
+
+만약 하이픈 대신에 \255 혹은 &lt;AD&gt;의 깜박임을 보면,
+`LESSCHARSET=latin1'을 환경에 넣어라.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>팁</H2>
+
+(global-set-key [(f1)] (lambda () (interactive) (manual-entry (current-word))))
+를
+<I>.emacs</I>
+
+파일에 추가하면, F1를 누를 때 현재의 커서 위치에서 라이브러리 호출을 위한 맨
+페이지를 보여 줄 것이다.
+<A NAME="lbAK">&nbsp;</A>
+<H2>역자</H2>
+
+배성훈 &lt;<A HREF="mailto:plodder@kldp.org">plodder@kldp.org</A>&gt;, 2000년 5월 5일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">옵션</A><DD>
+<DT><A HREF="#lbAF">CAT 페이지</A><DD>
+<DT><A HREF="#lbAG">환경</A><DD>
+<DT><A HREF="#lbAH">관련 항목</A><DD>
+<DT><A HREF="#lbAI">버그</A><DD>
+<DT><A HREF="#lbAJ">팁</A><DD>
+<DT><A HREF="#lbAK">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:55 GMT, March 25, 2004
+</BODY>
+</HTML>

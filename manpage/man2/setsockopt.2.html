@@ -1,0 +1,225 @@
+<HTML><HEAD><TITLE>Manpage of GETSOCKOPT</TITLE>
+</HEAD><BODY>
+<H1>GETSOCKOPT</H1>
+Section: Linux Programmer's Manual (2)<BR>Updated: 24 May 1999<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+getsockopt, setsockopt - 소켓의 옵션을 얻고 설정한다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/types.h">sys/types.h</A>&gt;</B>
+
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</B>
+
+<P>
+<B>int getsockopt(int </B><I>s</I><B>, int </B><I>level</I><B>, int </B><I>optname</I><B>,</B>
+
+<B>void *</B><I>optval</I><B>, socklen_t *</B><I>optlen</I><B>);</B>
+
+<P>
+<B>int setsockopt(int </B><I>s</I><B>, int </B><I>level</I><B>, int </B><I>optname</I><B>,</B>
+
+<B>const void *</B><I>optval</I><B>, socklen_t </B><I>optlen</I><B>);</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>Getsockopt</B>
+
+와
+<B>setsockopt</B>
+
+는 소켓과 일치하는
+manipulate the
+<I>options</I>
+
+을 다룬다. 옵션은 다중 프로토콜레벨에 존재할런지 모른다; 그 프로토콜레벨들은 항상
+최상의
+<B>소켓</B>
+
+레벨에 있다.
+
+소켓옵션을 조작할때, 옵션 지정과 옵션의 이름이 있는 레벨은 지정되어야 한다.
+소켓레벨에서 옵션을 조작하기 위해,
+<I>level</I>
+
+은
+<B>SOL_SOCKET</B>
+
+처럼 지정되어야 한다.
+
+매개변수
+<I>optval</I>
+
+와
+<I>optlen</I>
+
+는 
+<B>setsockopt</B>
+
+를 위해 옵션값을 접근하곤한다. 
+<B>getsockopt</B>
+
+때문에 그것들은 요청한 옵션이 반환되는동안 값이 있는 버퍼를 확인한다.
+<B>getsockopt</B>,
+
+때문에 
+<I>optlen</I>
+
+는 
+<I>optval</I>
+
+가 처음에 가리키는 버퍼의 크기를 포함하는 결과값 매개인수이고, 
+반환값의 실제 크기를 나타내는 반환을 수정한다. 옵션값이 제공되거나 반환되지
+않는다면, 
+<I>optval</I>
+
+는 NULL값 일런지 모른다.
+
+<I>Optname</I>
+
+와 다른 지정된 옵션은 해석을 위해 적절한 프로토콜 모듈에 해석이 안되는 것은 넘어간다.
+파일
+<I>&lt;<A HREF="file:/usr/include/sys/socket.h">sys/socket.h</A>&gt;</I>
+
+은 아래 설명된 소켓레벨 옵션을 위한 정의를 포함한다. 다른 프로토콜 레벨에 옵션은
+포맷과 이름이 다르다; 메뉴얼의 세션 4에 적절한 기재사항을 참고한다.
+
+대부분 소켓-레벨 옵션은 
+<I>optval</I>
+
+를 위해 
+<I>int</I>
+
+배개변수 사용한다.
+
+<B>setsockopt</B>
+
+를 위해, 매개변수는 boolean옵션이 가능하기위해 0이 아니어야 한다. 혹은 옵션이 불가능
+하면 0이다.
+
+<P>
+
+유효 소켓 옵션의 디스크립터는 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+socket">socket</A></B>(7)
+
+과 적당한 프로토콜 맨페이지를 본다..
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>반환값</H2>
+
+성공시, 0이 반환된다. 실패시, -1이 반환되고, 
+<I>errno</I>
+
+는 적절히 설정된다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>에러</H2>
+
+<DL COMPACT>
+<DT><B>EBADF</B>
+
+<DD>
+인수 
+<I>s</I>
+
+는 유효한 디스크립터가 아니다.
+<DT><B>ENOTSOCK</B>
+
+<DD>
+인수
+<I>s</I>
+
+는 소켓이 아니고, 파일이다.
+<DT><B>ENOPROTOOPT</B>
+
+<DD>
+옵션은 지정된 레벨에 알려지지 않았다.
+<DT><B>EFAULT</B>
+
+<DD>
+The address pointed to by 
+<I>optval</I>
+
+가 가리키는 주소는 프로세스 주소공간의 유효한 부분이 아니다. 
+<B>getsockopt</B>
+
+때문에 
+<I>optlen</I>
+
+가 프로세스 주소공간의 유효한 부분이 아니라면, 이 에러는 또한 반환될런지 모른다.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>호환</H2>
+
+SVr4, 4.4BSD (이러한 시스템 호출은 4.2BSD에서 처음 보였다).
+SVr4 는 추가적으로 ENOMEM와 ENOSR 에러코드를 문서화했지만, 
+<B>SO_SNDLOWAT</B>, <B>SO_RCVLOWAT</B>, <B>SO_SNDTIMEO</B>, <B>SO_RCVTIMEO</B>
+
+옵션은 문서화되지 않았다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>주의</H2>
+
+<B>getsockopt</B> 와 <B>setsockopt</B>
+
+의 다섯번째 인수는 실제 int [*]에 있다. 
+초안 표준(draft standard)는 아직 채택되지 않았지만, glibc2는 이미 따르고 있고, 
+socklen_t [*]를 갖는다.
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+accept">accept</A></B>(2)
+
+를 본다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>버그</H2>
+
+소켓옵션의 다수는 시스템의 저수준 레벨에서 다뤄져야한다.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+ioctl">ioctl</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+socket">socket</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getprotoent">getprotoent</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+protocols">protocols</A></B>(5),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+socket">socket</A></B>(7),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+unix">unix</A></B>(7),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+tcp">tcp</A></B>(7)
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>역자</H2>
+
+ASPLINUX&lt;<A HREF="mailto:man@asp-linux.co.kr">man@asp-linux.co.kr</A>&gt;, 2000년 7월 29일
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">반환값</A><DD>
+<DT><A HREF="#lbAF">에러</A><DD>
+<DT><A HREF="#lbAG">호환</A><DD>
+<DT><A HREF="#lbAH">주의</A><DD>
+<DT><A HREF="#lbAI">버그</A><DD>
+<DT><A HREF="#lbAJ">관련 항목</A><DD>
+<DT><A HREF="#lbAK">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:06:59 GMT, March 25, 2004
+</BODY>
+</HTML>

@@ -1,0 +1,79 @@
+<HTML><HEAD><TITLE>Manpage of MEMMEM</TITLE>
+</HEAD><BODY>
+<H1>MEMMEM</H1>
+Section: 리눅스 프로그래머 매뉴얼 (3)<BR>Updated: 1998년 2월 13일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+memmem - substring의 위치를 알아낸다.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;</B>
+
+<B>void *memmem(const void *</B><I>haystack</I><B>, size_t </B><I>haystacklen</I><B>,</B>
+<DL COMPACT><DT><DD><B>const void *</B><I>needle</I><B>, size_t </B><I>needlelen</I><B>);</B>
+</PRE>
+
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>memmem()</B> 함수는 길이가 <I>haystacklen</I>인 메모리 영역 <I>haystack</I>에서
+길이가 <I>needlelen</I>인 substring <I>needle</I>의 처음 발생한 시작 위치를 찾는다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+<B>memmem()</B> 함수는 substring의 시작 포이터를 반환하거나 substring이 발견되지
+않는다면 NULL을 반환한다.
+<A NAME="lbAF">&nbsp;</A>
+<H2>CONFORMING TO</H2>
+
+이 함수는 GNU 확장이다.
+<A NAME="lbAG">&nbsp;</A>
+<H2>BUGS</H2>
+
+이 함수는 Linux 라이브러리들 상위 버전과 libc 5.0.9 버전에서 문제가 있다.;
+`needle'와 `haystack'인자는 바뀌었으며 <I>needle</I>가 처음 발생한 끝에 대한 포인터가
+반환된다. libc 5.0.9가 여전히 넓게 사용되기 때문에 사용하기에는 위험한 함수이다.
+<BR>
+
+예전것과 최신 libc는 만일 <I>needle</I>가 비었다면, <I>haystack</I>-1 (<I>haystack</I> 대신에)가 반환된다.
+그리고 glibc (2.0.5)는 더 나쁘게 되었으며 `haystack'의 마지막 바이트에 대한 포인터를
+반환한다.
+희망적으로 이것은 고쳐질 것이다. <I>memmem</I>() 함수는 `needle'를 비어서 사용해서는
+안된다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+strstr">strstr</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>역자</H2>
+
+정강훈 &lt;<A HREF="mailto:skyeyes@soback.kornet.net">skyeyes@soback.kornet.net</A>&gt;, 2001년 2월 20일
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAF">CONFORMING TO</A><DD>
+<DT><A HREF="#lbAG">BUGS</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+<DT><A HREF="#lbAI">역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

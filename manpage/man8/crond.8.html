@@ -1,0 +1,88 @@
+<HTML><HEAD><TITLE>Manpage of CRON</TITLE>
+</HEAD><BODY>
+<H1>CRON</H1>
+Section: Maintenance Commands (8)<BR>Updated: 20 December 1993<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+crond - 계획된 명령을 실행하는 데몬 (Vixie Cron)
+<A NAME="lbAC">&nbsp;</A>
+<H2>사용법</H2>
+
+cron
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<I>crond</I>
+
+명령은 /etc/rc 또는 /etc/rc.local 파일에 의해서 실행되어야만 한다. 
+이 명령은 즉시 리턴함으로 `&amp;' 문자를 끝에 사용할 필요는 없다.
+<P>
+
+<I>crond</I>
+
+명령은 crontab 파일로 
+/var/spool/cron/ 디렉토리 안에 있는 각 사용자의 crontab 파일을 
+메모리에 실는다.
+또한, 
+<I>crond</I>
+
+명령은 시스템 전체의 crontab 파일인 /etc/crontab 파일을 찾아, 
+그것을 메모리에 실는다. 
+다음, 
+<I>crond</I>
+
+명령은 매분마다, 저장된 crontab 내용들을 확인하고, 
+그에 맞는 작업을 수행한다. 
+프로그램이 실행될 때, 필요에 따라, 그 결과를 
+MAILTO 환경 변수에 지정된 사용자에게 편지로 보내기도 한다.
+<P>
+
+추가로,
+<I>crond</I>
+
+명령은 cron 스풀 디렉토리가 바뀌었는지도 검사한다. 
+(또한 
+<I>/etc/crontab</I>
+
+파일도 검사한다.)
+그래서, 바뀌었다면, 그대로 적용된다.
+그래서, 비록 그 내용이 바뀌었다고 하더라도, 
+<I>crond</I>
+
+명령을 다시 실행 시킬 필요는 없다.
+각 사용자의 crontab 내용을 바꾸고 싶다면, 
+<I><A HREF="http://localhost/cgi-bin/man/man2html?1+crontab">crontab</A></I>(1)
+
+명령을 사용한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>관련 항목</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+crontab">crontab</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?5+crontab">crontab</A>(5)
+<A NAME="lbAF">&nbsp;</A>
+<H2>만든이</H2>
+
+<PRE>
+Paul Vixie &lt;<A HREF="mailto:paul@vix.com">paul@vix.com</A>&gt;
+
+</PRE>
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">사용법</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">관련 항목</A><DD>
+<DT><A HREF="#lbAF">만든이</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>

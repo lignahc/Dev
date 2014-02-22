@@ -1,0 +1,173 @@
+<HTML><HEAD><TITLE>Manpage of SWAPON</TITLE>
+</HEAD><BODY>
+<H1>SWAPON</H1>
+Section: 리눅스 프로그래머 매뉴얼 (8)<BR>Updated: 1995년 9월 25일<BR><A HREF="#index">Index</A>
+<BR />
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>이름</H2>
+
+swapon, swapoff - 페이징, 스와핑용 장치/화일 사용 설정
+<A NAME="lbAC">&nbsp;</A>
+<H2>개요</H2>
+
+<B>/sbin/swapon [-h -V]</B>
+
+<BR>
+
+<B>/sbin/swapon -a [-v]</B>
+
+<BR>
+
+<B>/sbin/swapon [-v] [-p </B><I>우선권</I><B>] </B><I> 특수화일 </I><B>...</B>
+
+<BR>
+
+<B>/sbin/swapoff [-h -V]</B>
+
+<BR>
+
+<B>/sbin/swapoff -a</B>
+
+<BR>
+
+<B>/sbin/swapoff</B><I> 특수화일 </I><B>...</B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>설명</H2>
+
+<B>Swapon</B>
+
+은 페이징(Paging)과 스와핑(Swapping)에 쓰이는 장치를 나타낼 때 사용된다.
+<B>swapon</B>
+
+은 보통 시스템의 다중 사용자 초기화 화일
+<I>/etc/rc</I>
+
+에서 모든 스왑 장치를 사용하려고 할 때 사용된다.
+<P>
+첫번째 형식에 대한 설명은 다음과 같다:
+<DL COMPACT>
+<DT><B>-h</B>
+
+<DD>
+도움말 제공
+<DT><B>-V</B>
+
+<DD>
+버전 출력
+<DT><B>-a</B>
+
+<DD>
+<I>/etc/fstab</I>
+
+에 ``sw'' 스왑 장치로 표기된 모든 장치를 스왑으로 설정한다.
+<DT><B>-p</B><I> 우선권</I>
+
+<DD>
+<B>swapon</B>
+
+에서 사용될 우선권을 설정한다.
+이 옵션은
+<B>swapon</B>
+
+이 커널 1.3.2 와 그 이후 버전에서 컴파일된 경우에만 가능하다.
+<I>priority</I>
+
+은 0 ~ 32767 사이의 값이다.
+스왑 우선권에 대한 자세한 내용은 
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+swapon">swapon</A></B>(2)
+
+을 참고하라.
+<B>pri=</B><I>value</I>
+
+이라는 항목을 
+<I>/etc/fstab</I>
+
+의 옵션 필드에 써넣으면 
+<B>swapon -a</B>
+
+할 때 이용된다.
+</DL>
+<P>
+
+<B>Swapoff</B>
+
+는 지정한 장치나 화일 상에서 또는 
+<B>-a</B>
+
+옵션을 사용할 때는
+<I>/etc/fstab</I>
+
+에 적힌 장치의 스와핑을 사용하지 않도록 한다.
+<A NAME="lbAE">&nbsp;</A>
+<H2>참고</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+swapon">swapon</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+swapoff">swapoff</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+fstab">fstab</A></B>(5), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+init">init</A></B>(8), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+mkswap">mkswap</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+rc">rc</A></B>(8), <B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8)
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>관련 화일</H2>
+
+<I>/dev/hd??</I>
+
+표준 페이징 장치((E)IDE)
+<BR>
+
+<I>/dev/sd??</I>
+
+표준 페이징 장치(SCSI)
+<BR>
+
+<I>/etc/fstab</I>
+
+아스키 형식의 화일 시스템 표기 테이블
+<A NAME="lbAG">&nbsp;</A>
+<H2>HISTORY</H2>
+
+<B>swapon</B>
+
+명령은 4.0BSD에서 생겼다.
+<A NAME="lbAH">&nbsp;</A>
+<H2>저자</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mount">mount</A></B>(8)
+
+맨페이지를 보면 완벽한 저자 목록을 알 수 있다. 주로 기여한 분들은 Doug
+Quale, H.J. Lu, Rick Sladkey, 그리고 Stephen Tweedie 이다.
+<A NAME="lbAI">&nbsp;</A>
+<H2>번역자</H2>
+
+<BR>
+
+이 만 용
+<B>&lt;<A HREF="mailto:geoman@nownuri.nowcom.co.kr">geoman@nownuri.nowcom.co.kr</A>&gt;</B>
+
+<BR>
+
+<B>         &lt;<A HREF="mailto:freeyong@soback.kornet.nm.kr">freeyong@soback.kornet.nm.kr</A>&gt;</B>
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">이름</A><DD>
+<DT><A HREF="#lbAC">개요</A><DD>
+<DT><A HREF="#lbAD">설명</A><DD>
+<DT><A HREF="#lbAE">참고</A><DD>
+<DT><A HREF="#lbAF">관련 화일</A><DD>
+<DT><A HREF="#lbAG">HISTORY</A><DD>
+<DT><A HREF="#lbAH">저자</A><DD>
+<DT><A HREF="#lbAI">번역자</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 08:07:01 GMT, March 25, 2004
+</BODY>
+</HTML>
